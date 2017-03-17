@@ -4,21 +4,21 @@ class AVLTree:
     class _AVLNode:
         def __init__(self, element):
             self.element = element    # Wartość w węźle.
-            self.parent = None    # Ojciec węzła.
+            self.__height = 0    # Wysokość węzła.
             self.__left = None    # Lewy syn węzła.
             self.__right = None    # Prawy syn węzła.
-            self.__height = 0    # Wysokość węzła.
+            self.__parent = None    # Ojciec węzła.
+
+        @property
+        def height(self):
+            return self.__height
 
         @property
         def left(self):
-            """Getter dla lewego syna węzła.
-            :returns: lewy syn węzła"""
             return self.__left
 
         @left.setter
         def left(self, node):
-            """Setter dla lewego syna węzła.
-            :param node: nowy syn węzła"""
             self.__left = node
 
             if self.__left is not None:
@@ -28,14 +28,10 @@ class AVLTree:
 
         @property
         def right(self):
-            """Getter dla prwwego syna węzła.
-            :returns: prawy syn węzła"""
             return self.__right
 
         @right.setter
         def right(self, node):
-            """Zamiana prawego dziecka węzła.
-            :param node: nowy syn węzła"""
             self.__right = node
 
             if self.__right is not None:
@@ -44,10 +40,12 @@ class AVLTree:
             self.count_height()
 
         @property
-        def height(self):
-            """Getter dla wysokości węzła.
-            :returns: wysokość węzła"""
-            return self.__height
+        def parent(self):
+            return self.__parent
+
+        @parent.setter
+        def parent(self, node):
+            self.__parent = node
 
         @property
         def balance(self):
@@ -61,22 +59,22 @@ class AVLTree:
         def is_root(self):
             """Sprawdzanie, czy węzeł jest korzeniem
             :returns: czy węzeł to korzeń"""
-            return self.parent is None
+            return self.__parent is None
 
         def is_left_son(self):
             """Sprawdzanie, czy węzeł jest lewym synem
             :returns: czy węzeł to lewy syn"""
-            return False if self.is_root() else self.parent.left is self
+            return False if self.is_root() else self.__parent.left is self
 
         def is_right_son(self):
             """Sprawdzanie, czy węzeł jest prawym synem
             :returns: czy węzeł to prawy syn"""
-            return False if self.is_root() else self.parent.right is self
+            return False if self.is_root() else self.__parent.right is self
 
         def count_height(self):
             """Wylicza wysokość wierzchołka."""
-            left_height = 0 if self.left is None else self.__left.height
-            right_height = 0 if self.right is None else self.__right.height
+            left_height = 0 if self.__left is None else self.__left.height
+            right_height = 0 if self.__right is None else self.__right.height
 
             self.__height = max(left_height, right_height)+1
 
@@ -87,9 +85,9 @@ class AVLTree:
             if element == self.element:
                 return self
             elif element < self.element:
-                return self.left
+                return self.__left
             else:
-                return self.right
+                return self.__right
 
         def minimum(self):
             """Wyszukiwanie minimum w swoim poddrzewie.
@@ -152,14 +150,17 @@ class AVLTree:
 
                 return ret_elem
 
-    def __init__(self):
+    def __init__(self, iterable=()):
         self.__tree = None    # korzeń drzewa
         self.__elems = 0    # liczba elementów drzewa
+
+        for i in iterable:
+            self.add(i)
 
     def __str__(self):
         """Tworzy tekstową reprezentację drzewa AVL
         :returns: tekstowa reprezentacja elementów"""
-        return "{["+", ".join( map(str, self) )+"]}"
+        return "{|"+", ".join( map(str, self) )+"|}"
 
     def __iter__(self):
         """Tworzenie iteratora dla drzewa.
@@ -210,7 +211,7 @@ class AVLTree:
             else:
                 node_parent.left = new_node
 
-            self.__rebalance(node_parent)
+            self.__rebalance(new_node)
         else:
             self.__tree = new_node
 
@@ -294,37 +295,43 @@ class AVLTree:
             self.__elems -= 1
 
     def __replace_subtree(self, node, root):
-        """Zamiana poddrzewa ukorzenionego w danym węźle
+        """Zamiana poddrzewa ukorzenionego w danym węźle.
         :param node: węzeł do zamiany
         :param root: korzeń nowego poddrzewa"""
-        if node.parent is not None:
-            if node.is_left_son():
-                node.parent.left = root
-            else:
-                node.parent.right = root
+        if node.is_root():
+            self.__tree = root
+            root.parent = None
+        elif node.is_left_son():
+            node.parent.left = root
+        else:
+            node.parent.right = root
 
-            node.parent = None
+        node.parent = None
 
     def __rotate(self, node):
         """Rotowanie węzła wzdłuż krawędzi z jego ojcem.
         :param node: węzeł do rotacji"""
-        node_parent = node.parent
-        self.__replace_subtree(node_parent, node)
+        if node.is_root():
+            return
 
-        if node.is_left_son():
-            node_parent.right = node.left
-            node.left = node_parent
-        elif node.is_right_son():
-            node_parent.left = node.right
-            node.right = node_parent
+        upper_node = node.parent
+
+        if node.is_right_son():
+            upper_node.right = node.left
+            self.__replace_subtree(upper_node, node)
+            node.left = upper_node
+        elif node.is_left_son():
+            upper_node.left = node.right
+            self.__replace_subtree(upper_node, node)
+            node.right = upper_node
 
     def __rebalance(self, node):
         """Przywracanie balansowania na ścieżce od wierzchołka do korzenia.
         :param node: wierzchołek początkowy"""
-        node.count_height()
-        new_balance = node.balance
+        while node is not None:
+            node.count_height()
+            new_balance = node.balance
 
-        while node is not None and node.parent is not None:
             if new_balance >= 2:
                 if node.left.balance > 0:
                     self.__rotate(node.left)

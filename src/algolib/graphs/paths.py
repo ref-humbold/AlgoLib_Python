@@ -14,12 +14,12 @@ def bellman_ford(wgraph, source):
     distances[source] = 0.0
 
     for _ in range(wgraph.num_vertex-1):
-        for v in wgraph.vertices():
-            for nb, wg in wgraph.neighbours(v):
+        for v in wgraph.get_vertices():
+            for nb, wg in wgraph.get_neighbours(v):
                 distances[nb] = min(distances[nb], distances[v]+wg)
 
-    for v in wgraph.vertices():
-        for nb, wg in wgraph.neighbours(v):
+    for v in wgraph.get_vertices():
+        for nb, wg in wgraph.get_neighbours(v):
             if distances[v] < _INF and distances[v]+wg < distances[nb]:
                 raise Exception("Graph contains a negative cycle.")
 
@@ -42,7 +42,7 @@ def dijkstra(wgraph, source):
         if not is_visited[v]:
             is_visited[v] = True
 
-            for nb, wg in wgraph.neighbours(v):
+            for nb, wg in wgraph.get_neighbours(v):
                 if distances[v]+wg < distances[nb]:
                     distances[nb] = distances[v]+wg
                     vertex_queue.put( (-distances[nb], nb) )
@@ -54,11 +54,11 @@ def floyd_warshall(wgraph):
     """Algorytm Floyda-Warshalla.
     :param wgraph: graf ważony
     :returns: macierz odległości"""
-    distances = wgraph.adjacency_matrix()
+    distances = wgraph.get_get_adjacency_matrix()
 
-    for w in wgraph.vertices():
-        for v in wgraph.vertices():
-            for u in wgraph.vertices():
+    for w in wgraph.get_vertices():
+        for v in wgraph.get_vertices():
+            for u in wgraph.get_vertices():
                 distances[v][u] = min(distances[v][u], distances[v][w]+distances[w][u])
 
     return distances

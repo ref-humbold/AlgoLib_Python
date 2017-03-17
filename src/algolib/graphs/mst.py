@@ -10,9 +10,9 @@ def kruskal(wgraph):
     size_mst = 0.0
     components = wgraph.num_vertex
     edge_queue = queue.PriorityQueue()
-    vertex_sets = DisjointSets(wgraph.vertices())
+    vertex_sets = DisjointSets(wgraph.get_vertices())
 
-    for v, s, wg in wgraph.weighted_edges():
+    for v, s, wg in wgraph.get_weighted_edges():
         if s > v:
             edge_queue.put( (-wg, v, s) )
 
@@ -44,7 +44,7 @@ def prim(wgraph, source):
             is_visited[v] = True
             size_mst += abs(edge_weight)
 
-            for s, wg in wgraph.weighted_neighbours(v):
+            for s, wg in wgraph.get_weighted_neighbours(v):
                 if not is_visited[s]:
                     vertex_queue.put( (-wg, s) )
 

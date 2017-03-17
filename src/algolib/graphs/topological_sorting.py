@@ -10,10 +10,10 @@ def sort_topological1(digraph):
     indegs = [0]*(digraph.num_vertex)
     order = []
 
-    for v, s in digraph.edges():
+    for v, s in digraph.get_edges():
         indegs[s] += 1
 
-    for v in digraph.vertices():
+    for v in digraph.get_vertices():
         if indegs[v] == 0:
             vertex_queue.put(v)
 
@@ -22,7 +22,7 @@ def sort_topological1(digraph):
         order.append(v)
         indegs[v] = None
 
-        for s in digraph.neighbours(v):
+        for s in digraph.get_neighbours(v):
             indegs[s] -= 1
 
             if indegs[s] == 0:
@@ -41,7 +41,7 @@ def sort_topological2(digraph):
     is_visited = [False]*(digraph.num_vertex)
     order = []
 
-    for v in digraph.vertices():
+    for v in digraph.get_vertices():
         if not is_visited[v]:
             _dfs(v, digraph, order, is_visited)
 
@@ -61,7 +61,7 @@ def dfs(vertex, digraph, order, is_visited):
     :param is_visited: czy wierzchołek odwiedzony"""
     is_visited[vertex] = True
 
-    for neighbour in digraph.neighbours(vertex):
+    for neighbour in digraph.get_neighbours(vertex):
         if not is_visited[neighbour]:
             _dfs(neighbour, digraph, order, is_visited)
 

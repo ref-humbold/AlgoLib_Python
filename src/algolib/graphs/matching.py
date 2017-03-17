@@ -3,31 +3,32 @@
 import queue
 import math
 
-_NO_MATCH = None    # Oznaczenie braku skojarzenia.
-_INF = math.inf    # Oznaczenie nieskończoności.
+NO_MATCH = None    # Oznaczenie braku skojarzenia.
+INF = math.inf    # Oznaczenie nieskończoności.
 
 def match(bigraph):
     """Wyznaczanie maksymalnego skojarzenia.
     :param bigraph: graf dwudzielny
     :returns: pary skojarzonych wierzchołków"""
-    augmenter = _MatchAugmenter(bigraph, [_NO_MATCH]*bigraph.vertex_number)
+    augmenter = MatchAugmenter(bigraph)
 
-    match_added = True
-
-    while match_added:
-        match_added = augmenter.augment_match()
+    while augmenter.augment_match():
+        pass
 
     matching = augmenter.matching
 
-    return [(v, matching[v]) for v in bigraph.first_set() if matching[v] is not _NO_MATCH]
+    return [(v, matching[v]) for v in bigraph.first_set() if matching[v] is not NO_MATCH]
 
 
-class _MatchAugmenter:
-    def __init__(self, bigraph, matching):
+class MatchAugmenter:
+    def __init__(self, bigraph, matching=None):
         self.__bigraph = bigraph    # Graf dwudzielny.
         self.__matching = matching    # Skojarzenia wierzchołków.
         self.__distances = None    # Odległości wierzchołków.
         self.__is_visited = None    # Lista odwiedzonych wierzchołków.
+
+        if matching is None:
+            self.__matching = [NO_MATCH]*bigraph.vertex_number
 
     @property
     def matching(self):
@@ -38,7 +39,7 @@ class _MatchAugmenter:
     def augment_match(self):
         """Powiększanie skojarzenia przy pomocy scieżek powiększających.
         :returns: czy powiększono skojarzenie"""
-        self.__distances = [_INF]*self.__bigraph.vertices_number
+        self.__distances = [INF]*self.__bigraph.vertices_number
         self.__is_visited = [False]*self.__bigraph.vertices_number
         self.__bfs()
 
@@ -55,9 +56,9 @@ class _MatchAugmenter:
         while not vertex_queue.empty():
             v = vertex_queue.get()
 
-            for nb in self.__bigraph.neighbours(v):
-                if self.__matching[nb] is not _NO_MATCH \
-                   and self.__distances[ self.__matching[nb] ] == _INF:
+            for nb in self.__bigraph.get_neighbours(v):
+                if self.__matching[nb] is not NO_MATCH \
+                   and self.__distances[ self.__matching[nb] ] == INF:
                     self.__distances[ self.__matching[nb] ] = self.__distances[v]+1
                     vertex_queue.put(self.__matching[nb])
 
@@ -66,8 +67,8 @@ class _MatchAugmenter:
         :returns: czy powiększono skojarzenie"""
         self.__is_visited[vertex] = True
 
-        for neighbour in self.__bigraph.neighbours(vertex):
-            if self.__matching[neighbour] is _NO_MATCH:
+        for neighbour in self.__bigraph.get_neighbours(vertex):
+            if self.__matching[neighbour] is NO_MATCH:
                 self.__matching[vertex] = neighbour
                 self.__matching[neighbour] = vertex
 

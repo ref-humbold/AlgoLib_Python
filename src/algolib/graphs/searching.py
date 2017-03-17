@@ -16,7 +16,7 @@ def bfs(graph, root):
     while not vertex_queue.empty():
         v = vertex_queue.get()
 
-        for nb in graph.neighbours(v):
+        for nb in graph.get_neighbours(v):
             if not is_visited[nb]:
                 is_visited[nb] = True
                 vertex_queue.put(nb)
@@ -41,7 +41,7 @@ def iter_dfs(graph, root):
         if not is_visited[v]:
             is_visited[v] = True
 
-            for nb in graph.neighbours(v):
+            for nb in graph.get_neighbours(v):
                 if not is_visited[nb]:
                     vertex_stack.put(nb)
 
@@ -66,6 +66,6 @@ def dfs_step(vertex, graph, is_visited):
     :param is_visited: lista odwiedzonych wierzchołków"""
     is_visited[vertex] = True
 
-    for neighbour in graph.neighbours(vertex):
+    for neighbour in graph.get_neighbours(vertex):
         if not is_visited[neighbour]:
             dfs_step(neighbour, graph, is_visited)

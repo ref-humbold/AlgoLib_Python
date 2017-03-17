@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 """STRUKTURY GRAFÓW DWUDZIELNYCH"""
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta
 from .graph import Graph, UndirectedSimpleGraph, UndirectedWeightedGraph
 
 class BipartiteGraph(Graph, metaclass=ABCMeta):
     def __init__(self, n, prt, *args, **kwargs):
         super().__init__(n, *args, **kwargs)
-        self.__parts = [v in prt for v in self.vertices()]    # Informacja o grupie wierzchołka.
+        self.__parts = [v in prt for v in self.get_vertices()]    # Informacja o grupie wierzchołka.
 
     def first_part(self):
         """Wierzchołki pierwszej grupy.
         :returns: generator wierzchołków z pierwszej grupy"""
-        return (v for v in self.vertices() if self.__parts[v])
+        return (v for v in self.get_vertices() if self.__parts[v])
 
     def second_part(self):
         """Wierzchołki drugiej grupy.
         :returns: generator wierzchołków z drugiej grupy"""
-        return (v for v in self.vertices() if not self.__parts[v])
+        return (v for v in self.get_vertices() if not self.__parts[v])
 
     def in_first_part(self, vertex):
         """Sprawdza, czy wierzchołek nalezy do pierwszej grupy.
@@ -37,9 +37,6 @@ class BipartiteGraph(Graph, metaclass=ABCMeta):
         :returns: czy wierzchołki są w różnych grupach"""
         return self.__parts[vertex1] != self.__parts[vertex2]
 
-    def _partition_error(self):
-        raise ValueError("Graph is not bipartite")
-
 
 class BipartiteSimpleGraph(UndirectedSimpleGraph, BipartiteGraph):
     def __init__(self, n, prt, edges=None):
@@ -51,7 +48,7 @@ class BipartiteSimpleGraph(UndirectedSimpleGraph, BipartiteGraph):
                     self._graphrepr[ e[0] ].append(e[1])
                     self._graphrepr[ e[1] ].append(e[0])
                 else:
-                    self._partition_error()
+                    raise ValueError("Graph is not bipartite")
 
 
 class BipartiteWeightedGraph(UndirectedWeightedGraph, BipartiteGraph):
@@ -64,4 +61,4 @@ class BipartiteWeightedGraph(UndirectedWeightedGraph, BipartiteGraph):
                     self._graphrepr[ e[0] ].append(e[1:3])
                     self._graphrepr[ e[1] ].append( (e[0], e[3]) )
                 else:
-                    self._partition_error()
+                    raise ValueError("Graph is not bipartite")
