@@ -2,13 +2,13 @@
 """ALGORYTM WYZNACZAJĄCY NAJMNIEJSZY LEKSYKOGRAFICZNIE NAJDŁUŻSZY PODCIĄG ROSNĄCY"""
 def find_lis(sequence):
     """Wyznaczanie najdłuższego podciągu rosnącego.
-    :param sequence: ciąg wejąciowy
-    :returns: najdłuźszy podciąg rosnący"""
+    :param sequence: ciąg wejściowy
+    :returns: najdłuższy podciąg rosnący"""
     previous_elem = [-1]*len(sequence)
     subseq_last = [0]
 
     for i, elem in enumerate(sequence[1:], start=1):
-        if elem > sequence[ subseq_last[-1] ]:
+        if elem > sequence[subseq_last[-1]]:
             previous_elem[i] = subseq_last[-1]
             subseq_last.append(i)
         else:
@@ -39,10 +39,9 @@ def search(sequence, subseq_last, index_begin, index_end, element):
     if index_begin == index_end:
         return index_begin
 
-    index_middle = (index_begin+index_end)//2
+    index_middle = (index_begin+index_end) // 2
 
-    if sequence[element] > sequence[ subseq_last[index_middle] ]:
+    if sequence[element] > sequence[subseq_last[index_middle]]:
         return search(sequence, subseq_last, index_middle+1, index_end, element)
     else:
         return search(sequence, subseq_last, index_begin, index_middle, element)
-

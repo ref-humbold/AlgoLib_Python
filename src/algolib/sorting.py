@@ -6,7 +6,7 @@ from random import randint
 def angle_sort(points):
     """Mutowalne sortowanie kątowe punktów na płaszczyźnie.
     :param points: lista punktów"""
-    polar = lambda xy: ((atan2( xy[1], xy[0] )*180/pi)%360, xy[0]**2+xy[1]**2)
+    polar = lambda xy: ((atan2(xy[1], xy[0])*180/pi)%360, xy[0]**2+xy[1]**2)
     points.sort(key=polar)
 
 
@@ -14,7 +14,7 @@ def angle_sorted(points):
     """Niemutowalne sortowanie kątowe punktów na płaszczyźnie.
     :param points: lista punktów
     :returns: lista punktów posortowana względem kąta"""
-    polar = lambda xy: ((atan2( xy[1], xy[0] )*180/pi)%360, xy[0]**2+xy[1]**2)
+    polar = lambda xy: ((atan2(xy[1], xy[0])*180/pi)%360, xy[0]**2+xy[1]**2)
 
     return sorted(points, key=polar)
 
@@ -154,11 +154,13 @@ def quick_sort(sequence, index_begin=0, index_end=-1):
 
         while index_pivot < index_back:
             if sequence[index_front] < sequence[index_pivot]:
-                sequence[index_pivot], sequence[index_front] = sequence[index_front], sequence[index_pivot]
+                sequence[index_pivot], sequence[index_front] = \
+                    sequence[index_front], sequence[index_pivot]
                 index_pivot = index_front
                 index_front += 1
             else:
-                sequence[index_front], sequence[index_back] = sequence[index_back], sequence[index_front]
+                sequence[index_front], sequence[index_back] = \
+                    sequence[index_back], sequence[index_front]
                 index_back -= 1
 
         quick_sort(sequence, index_begin, index_pivot-1)

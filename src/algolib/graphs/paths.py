@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
 """ALGORYTMY WYZNACZANIA NAJKRÓTSZYCH ŚCIEŻEK W GRAFIE WAŻONYM"""
 import queue
-import math
-
-_INF = math.inf    # Oznaczenie nieskończoności.
 
 def bellman_ford(wgraph, source):
     """Algorytm Bellmana-Forda.
     :param wgraph: graf ważony
     :param source: wierzchołek początkowy
     :return: lista odległości wierzchołków"""
-    distances = [_INF]*(wgraph.num_vertex+1)
+    distances = [wgraph.INF]*(wgraph.num_vertex+1)
     distances[source] = 0.0
 
     for _ in range(wgraph.num_vertex-1):
@@ -20,7 +17,7 @@ def bellman_ford(wgraph, source):
 
     for v in wgraph.get_vertices():
         for nb, wg in wgraph.get_neighbours(v):
-            if distances[v] < _INF and distances[v]+wg < distances[nb]:
+            if distances[v] < wgraph.INF and distances[v]+wg < distances[nb]:
                 raise Exception("Graph contains a negative cycle.")
 
     return distances
@@ -31,9 +28,9 @@ def dijkstra(wgraph, source):
     :param wgraph: graf ważony z wagami nieujemnymi
     :param source: wierzchołek początkowy"""
     vertex_queue = queue.PriorityQueue()
-    vertex_queue.put( (0.0, source) )
+    vertex_queue.put((0.0, source))
     is_visited = [False]*wgraph.num_vertex
-    distances = [_INF]*wgraph.num_vertex
+    distances = [wgraph.INF]*wgraph.num_vertex
     distances[source] = 0.0
 
     while not vertex_queue.empty():
@@ -45,7 +42,7 @@ def dijkstra(wgraph, source):
             for nb, wg in wgraph.get_neighbours(v):
                 if distances[v]+wg < distances[nb]:
                     distances[nb] = distances[v]+wg
-                    vertex_queue.put( (-distances[nb], nb) )
+                    vertex_queue.put((-distances[nb], nb))
 
     return distances
 

@@ -9,14 +9,14 @@ class GraphSep:
         :param n: liczba wierzchołków
         """
         self.__num_vertex = n    # lista wierzchołków grafu
-        self.__graphrepr = [ [] for i in range(n+1) ]    # lista sąsiedztwa grafu
+        self.__graphrepr = [[] for i in range(n+1)]    # lista sąsiedztwa grafu
 
     def find_vertex_separator(self):
         """
         WYZNACZANIE PUNKTÓW ARTYKULACJI
         :returns: lista punktów artykulacji
         """
-        self.__childs_dfs = [ [] for w in self.__graphrepr ]    # lista synów wierzchołka w drzewie DFS
+        self.__childs_dfs = [[] for w in self.__graphrepr]    # lista synów wierzchołka w drzewie DFS
         self.__depths_dfs = [0]+[self._NO_DEPTH]*self.__num_vertex    # głębokość wierzchołka w drzewie DFS
         self.__values_low = [None]*(self.__num_vertex+1)    # wartości funkcji LOW dla wierzchołków
 

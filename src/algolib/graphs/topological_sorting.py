@@ -43,7 +43,7 @@ def sort_topological2(digraph):
 
     for v in digraph.get_vertices():
         if not is_visited[v]:
-            _dfs(v, digraph, order, is_visited)
+            dfs(v, digraph, order, is_visited)
 
     order.reverse()
 
@@ -63,6 +63,6 @@ def dfs(vertex, digraph, order, is_visited):
 
     for neighbour in digraph.get_neighbours(vertex):
         if not is_visited[neighbour]:
-            _dfs(neighbour, digraph, order, is_visited)
+            dfs(neighbour, digraph, order, is_visited)
 
     order.append(vertex)

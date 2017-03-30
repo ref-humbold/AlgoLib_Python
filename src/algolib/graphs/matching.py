@@ -58,8 +58,8 @@ class MatchAugmenter:
 
             for nb in self.__bigraph.get_neighbours(v):
                 if self.__matching[nb] is not NO_MATCH \
-                   and self.__distances[ self.__matching[nb] ] == INF:
-                    self.__distances[ self.__matching[nb] ] = self.__distances[v]+1
+                   and self.__distances[self.__matching[nb]] == INF:
+                    self.__distances[self.__matching[nb]] = self.__distances[v]+1
                     vertex_queue.put(self.__matching[nb])
 
     def __dfs(self, vertex):

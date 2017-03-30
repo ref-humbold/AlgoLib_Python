@@ -11,8 +11,8 @@ class FlowGraphDinic:
         :param n: liczba wierzchołków
         """
         self.__num_vertex = n    # liczba wierzchołków grafu
-        self.__graphrepr = [ [] for i in range(n+1) ]    # sąsiedztwa grafu przep�ywowego
-        self.__capacities = [ [self._INF]*(n+1) for i in range(n+1) ]    # macierz przeputowo�ci kraw�dzi
+        self.__graphrepr = [[] for i in range(n+1)]    # sąsiedztwa grafu przep�ywowego
+        self.__capacities = [[self._INF]*(n+1) for i in range(n+1)]    # macierz przeputowo�ci kraw�dzi
 
     def flow(self, source, target):
         """
@@ -25,7 +25,7 @@ class FlowGraphDinic:
         max_flow = 0.0; is_flow_added = True
 
         while is_flow_added:
-            self.__layer_graph = [ [] for i in range(self.__num_vertex+1) ]
+            self.__layer_graph = [[] for i in range(self.__num_vertex+1)]
             is_flow_added = self.__bfs(source, target)
 
             if is_flow_added:
@@ -74,7 +74,7 @@ class FlowGraphDinic:
         new_blocking_flow = 0.0
 
         for neighbour in self.__layer_graph[vertex]:
-            flow_add = self.__dfs( neighbour, target, min(self.__capacities[vertex][neighbour], blocking_flow) )
+            flow_add = self.__dfs(neighbour, target, min(self.__capacities[vertex][neighbour], blocking_flow))
             blocking_flow -= flow_add
             new_blocking_flow += flow_add
             self.__capacities[vertex][neighbour] -= flow_add

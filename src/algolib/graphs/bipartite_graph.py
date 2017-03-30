@@ -45,8 +45,8 @@ class BipartiteSimpleGraph(UndirectedSimpleGraph, BipartiteGraph):
         if edges is not None:
             for e in edges:
                 if self.is_part_different(e[0], e[1]):
-                    self._graphrepr[ e[0] ].append(e[1])
-                    self._graphrepr[ e[1] ].append(e[0])
+                    self._graphrepr[e[0]].append(e[1])
+                    self._graphrepr[e[1]].append(e[0])
                 else:
                     raise ValueError("Graph is not bipartite")
 
@@ -58,7 +58,7 @@ class BipartiteWeightedGraph(UndirectedWeightedGraph, BipartiteGraph):
         if edges is not None:
             for e in edges:
                 if self.is_part_different(e[0], e[1]):
-                    self._graphrepr[ e[0] ].append(e[1:3])
-                    self._graphrepr[ e[1] ].append( (e[0], e[3]) )
+                    self._graphrepr[e[0]].append(e[1:3])
+                    self._graphrepr[e[1]].append((e[0], e[3]))
                 else:
                     raise ValueError("Graph is not bipartite")

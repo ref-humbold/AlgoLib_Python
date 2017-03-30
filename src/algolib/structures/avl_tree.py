@@ -160,7 +160,7 @@ class AVLTree:
     def __str__(self):
         """Tworzy tekstową reprezentację drzewa AVL
         :returns: tekstowa reprezentacja elementów"""
-        return "{|"+", ".join( map(str, self) )+"|}"
+        return "{|"+", ".join(map(str, self))+"|}"
 
     def __iter__(self):
         """Tworzenie iteratora dla drzewa.

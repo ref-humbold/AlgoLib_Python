@@ -5,7 +5,7 @@ from math import log
 class TreeGraph:
     def __init__(self, n):
         self.__num_vertex = n    # liczba wierzchołków grafu
-        self.__graphrepr = [ [] for i in range(n+1) ]    # lista sąsiedztwa grafu
+        self.__graphrepr = [[] for i in range(n+1)]    # lista sąsiedztwa grafu
         self.__is_visited = [False]*(n+1)    # czy wierzchołek odwiedzony
 
     def find_LCA(self, vertex1, vertex2, root = 1):
@@ -16,14 +16,14 @@ class TreeGraph:
         :param root: korzeń drzewa
         :returns: najniższy wspólny przodek
         """
-        self.__paths = [ [] for i in range(self.__num_vertex+1) ]    # ścieżki w drzewie
+        self.__paths = [[] for i in range(self.__num_vertex+1)]    # ścieżki w drzewie
         self.__pre_post_times = [None]*(self.__num_vertex+1)    # czas wejścia i wyjścia dla wierzchołka
 
         self.__dfs(root, root, 0)
 
         for i in range(1, log(self.__num_vertex, 2)+3):
             for w in range(1, self.__num_vertex+1):
-                self.__paths[w].append(self.__paths[ self.__paths[w][i-1] ][i-1])
+                self.__paths[w].append(self.__paths[self.__paths[w][i-1]][i-1])
 
     def __dfs(self, vertex, parent, timer):
         """

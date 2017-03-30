@@ -3,11 +3,9 @@
 from math import hypot
 
 def find_closest_points(points):
-    """
-    FUNKCJA OBSŁUGUJĄCA DO WYSZUKIWANIA PUNKTÓW
+    """FUNKCJA OBSŁUGUJĄCA DO WYSZUKIWANIA PUNKTÓW
     :param points: lista punktów
-    :returns: para najbliższych punktów
-    """
+    :returns: para najbliższych punktów"""
     points_x = sorted(points)
     points_y = [(pt[0], pt[1], i) for i, pt in enumerate(points_x)]
     points_y.sort(key=lambda p: (p[1], p[0], p[2]), reverse=True)
@@ -16,14 +14,12 @@ def find_closest_points(points):
 
 
 def search_closest(points_x, points_y, index_begin=0, index_end=-1):
-    """
-    ZNAJDOWANIE NAJBLIŻSZEJ PARY PUNKTÓW
+    """ZNAJDOWANIE NAJBLIŻSZEJ PARY PUNKTÓW
     :param points_x: lista punktów posortowana po współrzędnej x
     :param points_y: lista punktów posortowana po współrzędnej y
     :param index_begin: początek fragmentu listy punktów po x
     :param index_end: koniec fragmentu listy punktów po x
-    :returns: para najbliższych punktów
-    """
+    :returns: para najbliższych punktów"""
     index_begin %= len(points_x)
     index_end %= len(points_x)
     distance = lambda p, q: hypot(p[0]-q[0], p[1]-q[1])
@@ -51,12 +47,12 @@ def search_closest(points_x, points_y, index_begin=0, index_end=-1):
 
     closest_l = search_closest(points_x, points_yl, index_begin, index_middle)
     closest_r = search_closest(points_x, points_yr, index_middle+1, index_end)
-    min_distance = min( distance(closest_l[0], closest_l[1]), distance(closest_r[0], closest_r[1]) )
+    min_distance = min(distance(closest_l[0], closest_l[1]), distance(closest_r[0], closest_r[1]))
     belt_width = min_distance
     belt_points = [(i, pt[2] <= index_middle) for i, pt in enumerate(points_y)
                    if middle_x-belt_width <= pt[0] <= middle_x+belt_width]
 
-    for i in range( 1, len(belt_points) ):
+    for i in range(1, len(belt_points)):
         for j in range(i-1, -1, -1):
             pt1 = belt_points[i][0]
             pt2 = belt_points[j][0]

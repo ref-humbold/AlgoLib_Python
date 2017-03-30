@@ -89,7 +89,7 @@ def rec_mult(factor1, factor2, modulo=0):
         if modulo == 0:
             result = rec_mult(factor1+factor1, factor2>>1)
         else:
-            result = rec_mult( (factor1+factor1)%modulo, factor2>>1, modulo )
+            result = rec_mult((factor1+factor1)%modulo, factor2>>1, modulo)
 
     if (factor2&1) == 1:
         return factor1+result if modulo == 0 else (factor1+result)%modulo

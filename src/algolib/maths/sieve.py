@@ -7,11 +7,11 @@ def primes(*numbers):
     :param numbers: granice przedziału
     :returns: lista liczb pierwszych"""
     if len(numbers) == 1:
-        return _find_primes(0, numbers[0])
+        return find_primes(0, numbers[0])
     elif len(numbers) == 2:
-        return _find_primes(numbers[0], numbers[1])
+        return find_primes(numbers[0], numbers[1])
     else:
-        raise TypeError("Expected 1 or 2 arguments, got "+str( len(numbers) )+".")
+        raise TypeError("Expected 1 or 2 arguments, got "+str(len(numbers))+".")
 
 
 def find_primes(min_number, max_number):
@@ -27,11 +27,11 @@ def find_primes(min_number, max_number):
 
     for i, prm in enumerate(base_primes):
         if prm:
-            n = 2*i+3
+            n = 2 * i + 3
             begin = max(n*n-min_number, n-min_number%n)
 
             for j in range(n*n, len(base_primes), 2*n):
-                base_primes[ (j-3)//2 ] = False
+                base_primes[(j-3)//2] = False
 
             for j in range(begin, len(is_prime), n):
                 is_prime[j] = False

@@ -31,10 +31,10 @@ class KMRFactorsDict:
         """Budowa podsłów złożonych z pojedynczych znaków."""
         code_value = 0
         letters = sorted(self.__text)
-        self.__factors[ letters[0] ] = code_value
+        self.__factors[letters[0]] = code_value
 
         for i, ltr in enumerate(letters[1:], start=1):
-            if ltr != letters[i-1]:
+            if ltr != letters[i - 1]:
                 code_value += 1
                 self.__factors[ltr] = code_value
 
@@ -42,11 +42,11 @@ class KMRFactorsDict:
         """Budowa nowych podsłów o podwojonej długości.
         :param new_length: nowa długość podsłów"""
         code_value = 0
-        code_prev = lambda i: self.__factors[ self.__text[i:i+new_length//2] ]
-        code_next = lambda i: self.__factors[ self.__text[i+new_length//2:i+new_length] ]
+        code_prev = lambda i: self.__factors[self.__text[i:i + new_length // 2]]
+        code_next = lambda i: self.__factors[self.__text[i + new_length // 2:i+new_length]]
         codes = sorted([(code_prev(i), code_next(i), i)
-                        for i in range(len(self.__text)-new_length+1)])
-        self.__factors[ self.__text[codes[0][2]:codes[0][2]+new_length] ] = code_value
+                        for i in range(len(self.__text) - new_length + 1)])
+        self.__factors[self.__text[codes[0][2]:codes[0][2] + new_length]] = code_value
 
         for i, code in enumerate(codes[1:], start=1):
             if code != codes[i-1]:

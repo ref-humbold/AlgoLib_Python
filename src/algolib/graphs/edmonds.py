@@ -11,8 +11,8 @@ class FlowGraphEdmonds:
         :param n: liczba wierzchołków
         """
         self.__num_vertex = n    # liczba wierzchołków grafu
-        self.__graphrepr = [ [] for i in range(n+1) ]    # lista sąsiedztwa grafu przep�ywowego
-        self.__capacities = [ [self._INF]*(n+1) for i in range(n+1) ]    # macierz przeputowo�ci kraw�dzi
+        self.__graphrepr = [[] for i in range(n+1)]    # lista sąsiedztwa grafu przep�ywowego
+        self.__capacities = [[self._INF]*(n+1) for i in range(n+1)]    # macierz przeputowo�ci kraw�dzi
 
     def count_flow(self, source, target):
         """

@@ -9,7 +9,7 @@ class GraphMosty:
         :param n: liczba wierzchołków
         """
         self.__num_vertex = n    # liczba wierzchołków grafu
-        self.__graphrepr = [ [] for i in range(n+1) ]    # lista sąsiedztwa grafu
+        self.__graphrepr = [[] for i in range(n+1)]    # lista sąsiedztwa grafu
 
     def find_bridges(self):
         """
@@ -34,7 +34,7 @@ class GraphMosty:
         ALGORYTM DFS WYLICZAJ�CY FUNKCJ� LOW
         :param vertex: wierzchołek
         """
-        self.__depths_DFS[vertex] = self.__depths_DFS[ self.__parents_DFS[vertex] ]+1
+        self.__depths_DFS[vertex] = self.__depths_DFS[self.__parents_DFS[vertex]]+1
         self.__values_LOW[vertex] = self.__depths_DFS[vertex]
 
         for neghbour in self.__graphrepr[vertex]:

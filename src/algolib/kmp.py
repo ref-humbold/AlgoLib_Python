@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding:utf-8 -*-
 """ALGORYTM KNUTHA-MORRISA-PRATTA WYSZUKIWANIA WZORCA W TEKŚCIE"""
 def kmp(text, pattern):
     """Algorytm Knutha-Morrisa-Pratta.
@@ -17,7 +17,7 @@ def kmp(text, pattern):
             pos += 1
 
         if pos == len(pattern):
-            places.append(i-len(pattern)+1)
+            places.append(i - len(pattern) + 1)
             pos = pi_values[pos-1]
 
     return places
@@ -39,5 +39,4 @@ def prefix(pattern):
 
         pi_values.append(pos)
 
-    return pi
-
+    return pi_values
