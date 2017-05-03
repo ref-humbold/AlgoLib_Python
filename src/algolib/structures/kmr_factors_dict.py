@@ -8,14 +8,10 @@ class KMRFactorsDict:
 
     @property
     def factors(self):
-        """Getter dla słownika.
-        :returns: słownik podsłów bazowych"""
         return self.__factors
 
     @property
     def text(self):
-        """Getter dla słowa.
-        :returns: słowo"""
         return self.__text
 
     def kmr(self):

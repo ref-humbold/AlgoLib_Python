@@ -6,7 +6,7 @@ from random import randint
 def angle_sort(points):
     """Mutowalne sortowanie kątowe punktów na płaszczyźnie.
     :param points: lista punktów"""
-    polar = lambda xy: ((atan2(xy[1], xy[0])*180/pi)%360, xy[0]**2+xy[1]**2)
+    polar = lambda xy: ((atan2(xy[1], xy[0]) * 180.0 / pi) % 360.0, xy[0] ** 2 + xy[1] ** 2)
     points.sort(key=polar)
 
 
@@ -14,9 +14,10 @@ def angle_sorted(points):
     """Niemutowalne sortowanie kątowe punktów na płaszczyźnie.
     :param points: lista punktów
     :returns: lista punktów posortowana względem kąta"""
-    polar = lambda xy: ((atan2(xy[1], xy[0])*180/pi)%360, xy[0]**2+xy[1]**2)
+    points_copy = points[:]
+    angle_sort(points_copy)
 
-    return sorted(points, key=polar)
+    return points_copy
 
 
 def heap_sorted(sequence, index_begin=0, index_end=-1):
@@ -39,13 +40,13 @@ def heap_sort(sequence, index_begin=0, index_end=-1):
     index_end %= len(sequence)
     heap_size = index_end-index_begin
 
-    for i in range(index_begin+heap_size//2, index_begin-1, -1):
+    for i in range(index_begin + heap_size // 2, index_begin - 1, -1):
         move_down(sequence, i, index_begin, index_end)
 
     while heap_size > 1:
-        index_heap = index_begin+heap_size
+        index_heap = index_begin + heap_size
         sequence[index_heap], sequence[index_begin] = sequence[index_begin], sequence[index_heap]
-        move_down(sequence, index_begin, index_begin, index_heap-1)
+        move_down(sequence, index_begin, index_begin, index_heap - 1)
 
 
 def move_down(heap, vertex, index_begin, index_end):
@@ -55,8 +56,8 @@ def move_down(heap, vertex, index_begin, index_end):
     :param index_begin: początkowy indeks kopca
     :param index_end: końcowy indeks kopca"""
     next_vertex = None
-    left_vertex = vertex+vertex-index_begin+1
-    right_vertex = vertex+vertex-index_begin+2
+    left_vertex = vertex+vertex - index_begin + 1
+    right_vertex = vertex+vertex - index_begin + 2
 
     if right_vertex <= index_end:
         next_vertex = left_vertex if heap[right_vertex] < heap[left_vertex] else right_vertex
@@ -64,11 +65,13 @@ def move_down(heap, vertex, index_begin, index_end):
     if left_vertex == index_end:
         next_vertex = left_vertex
 
-    if next_vertex is not None:
-        if heap[next_vertex] > heap[vertex]:
-            heap[next_vertex], heap[vertex] = heap[vertex], heap[next_vertex]
+    if next_vertex is None:
+        return
 
-        move_down(heap, next_vertex, index_begin, index_end)
+    if heap[next_vertex] > heap[vertex]:
+        heap[next_vertex], heap[vertex] = heap[vertex], heap[next_vertex]
+
+    move_down(heap, next_vertex, index_begin, index_end)
 
 
 def merge_sorted(sequence, index_begin=0, index_end=-1):
@@ -90,11 +93,13 @@ def merge_sort(sequence, index_begin=0, index_end=-1):
     index_begin %= len(sequence)
     index_end %= len(sequence)
 
-    if index_begin < index_end:
-        index_middle = (index_begin+index_end)//2
-        merge_sort(sequence, index_begin, index_middle)
-        merge_sort(sequence, index_middle+1, index_end)
-        merge(sequence, index_begin, index_middle, index_end)
+    if index_begin >= index_end:
+        return
+
+    index_middle = (index_begin + index_end) // 2
+    merge_sort(sequence, index_begin, index_middle)
+    merge_sort(sequence, index_middle+1, index_end)
+    merge(sequence, index_begin, index_middle, index_end)
 
 
 def merge(sequence, index_begin, index_middle, index_end):
@@ -105,7 +110,7 @@ def merge(sequence, index_begin, index_middle, index_end):
     :param index_end: koniec fragmentu"""
     ordered = []
     iter1 = index_begin
-    iter2 = index_middle+1
+    iter2 = index_middle + 1
 
     while iter1 <= index_middle and iter2 <= index_end:
         if sequence[iter1] < sequence[iter2]:
@@ -116,12 +121,12 @@ def merge(sequence, index_begin, index_middle, index_end):
             iter2 += 1
 
     if iter1 <= index_middle:
-        ordered += sequence[iter1:index_middle+1]
+        ordered += sequence[iter1:index_middle + 1]
 
     if iter2 <= index_end:
-        ordered += sequence[iter2:index_end+1]
+        ordered += sequence[iter2:index_end + 1]
 
-    sequence[index_begin:index_begin+len(ordered)] = ordered
+    sequence[index_begin:index_begin + len(ordered)] = ordered
 
 
 def quick_sorted(sequence, index_begin=0, index_end=-1):
@@ -145,23 +150,25 @@ def quick_sort(sequence, index_begin=0, index_end=-1):
     index_end %= len(sequence)
     get_pivot = lambda i, j: sorted([randint(i, j), randint(i, j), randint(i, j)])[1]
 
-    if index_begin < index_end:
-        index_pivot = index_begin
-        index_front = index_begin+1
-        index_back = index_end
-        rdpv = get_pivot(index_begin, index_end)
-        sequence[index_pivot], sequence[rdpv] = sequence[rdpv], sequence[index_pivot]
+    if index_begin >= index_end:
+        return
 
-        while index_pivot < index_back:
-            if sequence[index_front] < sequence[index_pivot]:
-                sequence[index_pivot], sequence[index_front] = \
-                    sequence[index_front], sequence[index_pivot]
-                index_pivot = index_front
-                index_front += 1
-            else:
-                sequence[index_front], sequence[index_back] = \
-                    sequence[index_back], sequence[index_front]
-                index_back -= 1
+    index_pivot = index_begin
+    index_front = index_begin + 1
+    index_back = index_end
+    rdpv = get_pivot(index_begin, index_end)
+    sequence[index_pivot], sequence[rdpv] = sequence[rdpv], sequence[index_pivot]
 
-        quick_sort(sequence, index_begin, index_pivot-1)
-        quick_sort(sequence, index_pivot+1, index_end)
+    while index_pivot < index_back:
+        if sequence[index_front] < sequence[index_pivot]:
+            sequence[index_pivot], sequence[index_front] = \
+                sequence[index_front], sequence[index_pivot]
+            index_pivot = index_front
+            index_front += 1
+        else:
+            sequence[index_front], sequence[index_back] = \
+                sequence[index_back], sequence[index_front]
+            index_back -= 1
+
+    quick_sort(sequence, index_begin, index_pivot - 1)
+    quick_sort(sequence, index_pivot + 1, index_end)

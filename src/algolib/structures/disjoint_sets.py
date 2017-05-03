@@ -17,7 +17,8 @@ class DisjointSets:
         """Scalanie dwóch zbiorów.
         :param element1: element pierwszej składowej
         :param element2: element drugiej składowej"""
-        self.__represents[self.find_set(element1)] = self.find_set(element2)
+        if self.is_set_different(element1, element2):
+            self.__represents[self.find_set(element1)] = self.find_set(element2)
 
     def is_set_different(self, element1, element2):
         """Sprawdzanie, czy elementy są w różnych składowych.

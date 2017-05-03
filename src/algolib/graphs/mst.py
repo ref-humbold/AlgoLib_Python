@@ -8,13 +8,12 @@ def kruskal(wgraph):
     :param wgraph: graf ważony
     :returns: długość minimalnego drzewa spinającego"""
     size_mst = 0.0
-    components = wgraph.num_vertex
+    components = wgraph.vertices_number
     edge_queue = queue.PriorityQueue()
     vertex_sets = DisjointSets(wgraph.get_vertices())
 
     for v, s, wg in wgraph.get_weighted_edges():
-        if s > v:
-            edge_queue.put((-wg, v, s))
+        edge_queue.put((-wg, v, s))
 
     while components > 1 and not edge_queue.empty():
         edge_weight, edge_first, edge_second = edge_queue.get()
@@ -33,7 +32,7 @@ def prim(wgraph, source):
     :param source: początkowy wierzchołek
     :returns: długość minimalnego drzewa spinającego"""
     size_mst = 0.0
-    is_visited = [False]*(wgraph.num_vertex+1)
+    is_visited = [False] * (wgraph.vertices_number + 1)
     vertex_queue = queue.PriorityQueue()
     vertex_queue.put((0.0, source))
 

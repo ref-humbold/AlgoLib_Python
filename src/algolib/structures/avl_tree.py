@@ -136,12 +136,11 @@ class AVLTree:
 
             return pred
 
-    class _Iterator:
+    class _AVLIterator:
         def __init__(self, node):
             self.__current_node = node    # aktualny węzeł
 
         def __next__(self):
-            """Zwraca kolejną wartość w drzewie."""
             if self.__current_node is None:
                 raise StopIteration
             else:
@@ -150,22 +149,23 @@ class AVLTree:
 
                 return ret_elem
 
-    def __init__(self, iterable=()):
+    def __init__(self, iterable=None):
         self.__tree = None    # korzeń drzewa
         self.__elems = 0    # liczba elementów drzewa
 
-        for i in iterable:
-            self.add(i)
+        if iterable is not None:
+            for i in iterable:
+                self.add(i)
 
     def __str__(self):
         """Tworzy tekstową reprezentację drzewa AVL
         :returns: tekstowa reprezentacja elementów"""
-        return "{|"+", ".join(map(str, self))+"|}"
+        return "{|"+", ".join(map(str, self.__iter__()))+"|}"
 
     def __iter__(self):
         """Tworzenie iteratora dla drzewa.
         :returns: obiekt iteratora"""
-        return self._Iterator(self.__tree.minimum())
+        return self._AVLIterator(self.__tree.minimum())
 
     def __len__(self):
         """Określanie liczby elementów drzewa.
@@ -186,7 +186,7 @@ class AVLTree:
     def empty(self):
         """Określanie pustości drzewa.
         :returns: czy drzewo jest puste"""
-        return self.__tree  is None
+        return self.__tree is None
 
     def add(self, element):
         """Dodawanie elementu do drzewa.
