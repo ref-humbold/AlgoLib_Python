@@ -12,8 +12,8 @@ def kruskal(wgraph):
     edge_queue = queue.PriorityQueue()
     vertex_sets = DisjointSets(wgraph.get_vertices())
 
-    for v, s, wg in wgraph.get_weighted_edges():
-        edge_queue.put((-wg, v, s))
+    for v, u, wg in wgraph.get_weighted_edges():
+        edge_queue.put((-wg, v, u))
 
     while components > 1 and not edge_queue.empty():
         edge_weight, edge_first, edge_second = edge_queue.get()

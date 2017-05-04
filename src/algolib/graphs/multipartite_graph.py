@@ -3,12 +3,12 @@
 from abc import ABCMeta
 from .graph import Graph
 
-class GraphgroupitionException(Exception):
+class GraphPartitionException(Exception):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
 
-class MultigroupiteGraph(Graph, metaclass=ABCMeta):
+class MultipartiteGraph(Graph, metaclass=ABCMeta):
     def __init__(self, group, graph, *args, edges=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.__graph = graph    # Struktura grafu wielodzielnego.
@@ -18,7 +18,7 @@ class MultigroupiteGraph(Graph, metaclass=ABCMeta):
         if edges is not None:
             for e in edges:
                 if self.is_same_group(e[0], e[1]):
-                    raise GraphgroupitionException()
+                    raise GraphPartitionException()
 
     @property
     def groups_number(self):

@@ -6,7 +6,7 @@ def kmp(text, pattern):
     :param pattern: wzorzec
     :returns: lista pozycji wystąpień wzorca w słowie"""
     places = []
-    pi_values = prefix(pattern)
+    pi_values = _prefix(pattern)
     pos = 0
 
     for i, ltr in enumerate(text):
@@ -23,7 +23,7 @@ def kmp(text, pattern):
     return places
 
 
-def prefix(pattern):
+def _prefix(pattern):
     """Funkcja prefiksowa pi Knutha.
     :param pattern: wzorzec
     :returns: wartości funkcji prefiksowej"""

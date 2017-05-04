@@ -5,17 +5,17 @@ def find_bridges(ugraph):
     """Znajdowanie mostów w grafie.
     :param ugraph: graf nieskierowany
     :returns: lista krawędzi będących mostami"""
-    return GraphCutting(ugraph).bridges()
+    return _GraphCutting(ugraph).bridges()
 
 
-def find_vertex_separator(ugraph):
+def find_vertex_separators(ugraph):
     """Znajdowanie punktów artykulacji w grafie.
     :param ugraph: graf nieskierowany
     :returns: lista punktów artykulacji"""
-    return GraphCutting(ugraph).separators()
+    return _GraphCutting(ugraph).separators()
 
 
-class GraphCutting:
+class _GraphCutting:
     _NO_DEPTH = None    # oznaczenie braku głębokości (nieodwiedzenia) w drzewie DFS
 
     def __init__(self, graph):

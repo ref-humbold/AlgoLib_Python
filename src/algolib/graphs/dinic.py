@@ -40,7 +40,8 @@ class FlowGraphDinic:
         :param target: uj�cie
         :returns: czy uda si� powi�kszy� przep�yw
         """
-        vertex_layer = [None]*(self.__num_vertex+1); vertexlayer[source] = 0
+        vertex_layer = [None]*(self.__num_vertex+1)
+        vertex_layer[source] = 0
         vertex_queue = queue.Queue(); vertex_queue.put(source)
 
         while not vertex_queue.empty():

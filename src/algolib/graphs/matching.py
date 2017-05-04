@@ -10,7 +10,7 @@ def match(partgraph):
     """Wyznaczanie maksymalnego skojarzenia.
     :param partgraph: graf wielodzielny
     :returns: pary skojarzonych wierzchołków"""
-    augmenter = MatchAugmenter(partgraph)
+    augmenter = _MatchAugmenter(partgraph)
 
     while augmenter.augment_match():
         pass
@@ -20,7 +20,7 @@ def match(partgraph):
     return [(v, matching[v]) for v in partgraph.get_group(1) if matching[v] is not NO_MATCH]
 
 
-class MatchAugmenter:
+class _MatchAugmenter:
     def __init__(self, partgraph, matching=None):
         if partgraph.groups_number != 2:
             raise ValueError("Graph is not bipartite.")

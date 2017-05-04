@@ -10,10 +10,10 @@ def find_closest_points(points):
     points_y = [(pt[0], pt[1], i) for i, pt in enumerate(points_x)]
     points_y.sort(key=lambda p: (p[1], p[0], p[2]), reverse=True)
 
-    return search_closest(points_x, points_y)
+    return _search_closest(points_x, points_y)
 
 
-def search_closest(points_x, points_y, index_begin=0, index_end=-1):
+def _search_closest(points_x, points_y, index_begin=0, index_end=-1):
     """ZNAJDOWANIE NAJBLIŻSZEJ PARY PUNKTÓW
     :param points_x: lista punktów posortowana po współrzędnej x
     :param points_y: lista punktów posortowana po współrzędnej y
@@ -45,8 +45,8 @@ def search_closest(points_x, points_y, index_begin=0, index_end=-1):
     points_yl = [p for p in points_y if p[2] <= index_middle]
     points_yr = [p for p in points_y if p[2] > index_middle]
 
-    closest_l = search_closest(points_x, points_yl, index_begin, index_middle)
-    closest_r = search_closest(points_x, points_yr, index_middle+1, index_end)
+    closest_l = _search_closest(points_x, points_yl, index_begin, index_middle)
+    closest_r = _search_closest(points_x, points_yr, index_middle+1, index_end)
     min_distance = min(distance(closest_l[0], closest_l[1]), distance(closest_r[0], closest_r[1]))
     belt_width = min_distance
     belt_points = [(i, pt[2] <= index_middle) for i, pt in enumerate(points_y)

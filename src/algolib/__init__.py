@@ -1,5 +1,4 @@
-from .bfs_table import Table
-from .binary_search import binary_search
+from .two_sat import is_satisfiable
 from .kmp import kmp
 from .lis import find_lis
 from .najblizsze_punkty import find_closest_points

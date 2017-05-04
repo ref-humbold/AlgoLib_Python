@@ -41,15 +41,15 @@ def heap_sort(sequence, index_begin=0, index_end=-1):
     heap_size = index_end-index_begin
 
     for i in range(index_begin + heap_size // 2, index_begin - 1, -1):
-        move_down(sequence, i, index_begin, index_end)
+        _move_down(sequence, i, index_begin, index_end)
 
     while heap_size > 1:
         index_heap = index_begin + heap_size
         sequence[index_heap], sequence[index_begin] = sequence[index_begin], sequence[index_heap]
-        move_down(sequence, index_begin, index_begin, index_heap - 1)
+        _move_down(sequence, index_begin, index_begin, index_heap - 1)
 
 
-def move_down(heap, vertex, index_begin, index_end):
+def _move_down(heap, vertex, index_begin, index_end):
     """Przywracanie własności kopca.
     :param heap: kopiec
     :param vertex: wierzchołek kopca
@@ -71,7 +71,7 @@ def move_down(heap, vertex, index_begin, index_end):
     if heap[next_vertex] > heap[vertex]:
         heap[next_vertex], heap[vertex] = heap[vertex], heap[next_vertex]
 
-    move_down(heap, next_vertex, index_begin, index_end)
+    _move_down(heap, next_vertex, index_begin, index_end)
 
 
 def merge_sorted(sequence, index_begin=0, index_end=-1):
@@ -99,10 +99,10 @@ def merge_sort(sequence, index_begin=0, index_end=-1):
     index_middle = (index_begin + index_end) // 2
     merge_sort(sequence, index_begin, index_middle)
     merge_sort(sequence, index_middle+1, index_end)
-    merge(sequence, index_begin, index_middle, index_end)
+    _merge(sequence, index_begin, index_middle, index_end)
 
 
-def merge(sequence, index_begin, index_middle, index_end):
+def _merge(sequence, index_begin, index_middle, index_end):
     """Scalanie dwóch uporządkowanych fragmentów ciągu.
     :param sequence: ciąg
     :param index_begin: początek fragmentu

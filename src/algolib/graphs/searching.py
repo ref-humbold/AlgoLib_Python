@@ -7,7 +7,7 @@ def bfs(graph, root):
     :param graph: graf
     :param root: wierzchołek początkowy
     :returns: lista odwiedzonych wierzchołków"""
-    is_visited = [False]*graph.num_vertex
+    is_visited = [False]*graph.vertices_number
     vertex_queue = queue.Queue()
     vertex_queue.put(root)
 
@@ -29,7 +29,7 @@ def iter_dfs(graph, root):
     :param graph: graf
     :param root: wierzchołek początkowy
     :returns: lista odwiedzonych wierzchołków"""
-    is_visited = [False]*graph.num_vertex
+    is_visited = [False]*graph.vertices_number
     vertex_stack = queue.LifoQueue()
     vertex_stack.put(root)
 
@@ -53,13 +53,13 @@ def rec_dfs(graph, root):
     :param graph: graf
     :param root: wierzchołek początkowy
     :returns: lista odwiedzonych wierzchołków"""
-    is_visited = [False]*graph.num_vertex
-    dfs_step(root, graph, is_visited)
+    is_visited = [False] * graph.vertices_number
+    _dfs_step(root, graph, is_visited)
 
     return is_visited
 
 
-def dfs_step(vertex, graph, is_visited):
+def _dfs_step(vertex, graph, is_visited):
     """Krok rekurencyjnego DFS.
     :param vertex: aktualny wierzchołek
     :param graph: graf
@@ -68,4 +68,4 @@ def dfs_step(vertex, graph, is_visited):
 
     for neighbour in graph.get_neighbours(vertex):
         if not is_visited[neighbour]:
-            dfs_step(neighbour, graph, is_visited)
+            _dfs_step(neighbour, graph, is_visited)

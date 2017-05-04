@@ -1,5 +1,5 @@
-# NAJNIŻSZY WSPÓLNY PRZODEK DWÓCH WIERZCHOŁKÓW W DRZEWIE
 # -*- coding: utf-8 -*-
+"""NAJNIŻSZY WSPÓLNY PRZODEK DWÓCH WIERZCHOŁKÓW W DRZEWIE"""
 from math import log
 
 class TreeGraph:
@@ -8,7 +8,7 @@ class TreeGraph:
         self.__graphrepr = [[] for i in range(n+1)]    # lista sąsiedztwa grafu
         self.__is_visited = [False]*(n+1)    # czy wierzchołek odwiedzony
 
-    def find_LCA(self, vertex1, vertex2, root = 1):
+    def find_lca(self, vertex1, vertex2, root=1):
         """
         ZNAJDUJE NAJNIŻSZEGO WSPÓLNEGO PRZODKA
         :param vertex1: wierzchołek 1
@@ -24,6 +24,8 @@ class TreeGraph:
         for i in range(1, log(self.__num_vertex, 2)+3):
             for w in range(1, self.__num_vertex+1):
                 self.__paths[w].append(self.__paths[self.__paths[w][i-1]][i-1])
+
+        return self.__search_lca(vertex1, vertex2)
 
     def __dfs(self, vertex, parent, timer):
         """
@@ -44,7 +46,7 @@ class TreeGraph:
 
         return timer+1
 
-    def __search_LCA(self, vertex1, vertex2):
+    def __search_lca(self, vertex1, vertex2):
         """
         WYSZUKUJE NAJNIŻSZEGO WSPÓLNEGO PRZODKA
         :param vertex1: wierzchołek 1
@@ -63,7 +65,7 @@ class TreeGraph:
             candidate = self.__paths[vertex1][i]
 
             if not is_offspring(vertex2, candidate):
-                return self.__search_LCA(candidate, vertex2)
+                return self.__search_lca(candidate, vertex2)
 
-        return self.__search_LCA(self.__paths[vertex1][0], vertex2)
+        return self.__search_lca(self.__paths[vertex1][0], vertex2)
 

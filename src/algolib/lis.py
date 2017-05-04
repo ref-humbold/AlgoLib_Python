@@ -12,7 +12,7 @@ def find_lis(sequence):
             previous_elem[i] = subseq_last[-1]
             subseq_last.append(i)
         else:
-            index = search(sequence, subseq_last, 0, len(subseq_last)-1, i)
+            index = _search(sequence, subseq_last, 0, len(subseq_last)-1, i)
             subseq_last[index] = i
             previous_elem[i] = subseq_last[index-1] if index > 0 else -1
 
@@ -28,7 +28,7 @@ def find_lis(sequence):
     return longest_subseq
 
 
-def search(sequence, subseq_last, index_begin, index_end, element):
+def _search(sequence, subseq_last, index_begin, index_end, element):
     """Wyszukiwanie miejsca dla elementu.
     :param sequence: ciąg wejściowy
     :param subseq_last: końcowe elementy podciągów
@@ -42,6 +42,6 @@ def search(sequence, subseq_last, index_begin, index_end, element):
     index_middle = (index_begin+index_end) // 2
 
     if sequence[element] > sequence[subseq_last[index_middle]]:
-        return search(sequence, subseq_last, index_middle+1, index_end, element)
+        return _search(sequence, subseq_last, index_middle+1, index_end, element)
     else:
-        return search(sequence, subseq_last, index_begin, index_middle, element)
+        return _search(sequence, subseq_last, index_begin, index_middle, element)

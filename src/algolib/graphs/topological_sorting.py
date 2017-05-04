@@ -7,7 +7,7 @@ def sort_topological1(digraph):
     :param digraph: graf skierowany
     :returns: porządek topologiczny wierzchołków"""
     vertex_queue = queue.Queue()
-    indegs = [0]*(digraph.num_vertex)
+    indegs = [0]*(digraph.vertices_number)
     order = []
 
     for v, s in digraph.get_edges():
@@ -28,7 +28,7 @@ def sort_topological1(digraph):
             if indegs[s] == 0:
                 vertex_queue.put(s)
 
-    if len(order) != digraph.num_vertex+1:
+    if len(order) != digraph.vertices_number+1:
         raise Exception("Digraph contains a cycle, so it cannot be sorted topologically.")
 
     return order
@@ -38,22 +38,22 @@ def sort_topological2(digraph):
     """Sortowanie topologiczne z użyciem DFS.
     :param digraph: graf skierowany
     :returns: porządek topologiczny wierzchołków"""
-    is_visited = [False]*(digraph.num_vertex)
+    is_visited = [False]*(digraph.vertices_number)
     order = []
 
     for v in digraph.get_vertices():
         if not is_visited[v]:
-            dfs(v, digraph, order, is_visited)
+            _dfs(v, digraph, order, is_visited)
 
     order.reverse()
 
-    if len(order) != digraph.num_vertex+1:
+    if len(order) != digraph.vertices_number+1:
         raise Exception("Digraph contains a cycle, so it cannot be sorted topologically.")
 
     return order
 
 
-def dfs(vertex, digraph, order, is_visited):
+def _dfs(vertex, digraph, order, is_visited):
     """Algorytm DFS wyznaczający kolejność wierzchołków.
     :param vertex: aktualny wierzchołek
     :param digraph: graf skierowany
@@ -63,6 +63,6 @@ def dfs(vertex, digraph, order, is_visited):
 
     for neighbour in digraph.get_neighbours(vertex):
         if not is_visited[neighbour]:
-            dfs(neighbour, digraph, order, is_visited)
+            _dfs(neighbour, digraph, order, is_visited)
 
     order.append(vertex)
