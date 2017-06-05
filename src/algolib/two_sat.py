@@ -2,6 +2,7 @@
 """SPEŁNIALNOŚĆ FORMUŁ 2-CNF"""
 from .graphs import DirectedGraph
 
+
 def is_satisfiable(formula):
     """Sprawdzanie spełnialności formuły 2-CNF.
     :param formula: lista klauzul

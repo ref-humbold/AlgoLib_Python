@@ -3,11 +3,12 @@
 from math import atan2, pi
 from random import randint
 
+
 def angle_sort(points):
     """Mutowalne sortowanie kątowe punktów na płaszczyźnie.
     :param points: lista punktów"""
-    polar = lambda xy: ((atan2(xy[1], xy[0]) * 180.0 / pi) % 360.0, xy[0] ** 2 + xy[1] ** 2)
-    points.sort(key=polar)
+    points.sort(key=lambda xy: (
+        (atan2(xy[1], xy[0]) * 180.0 / pi) % 360.0, xy[0] ** 2 + xy[1] ** 2))
 
 
 def angle_sorted(points):
@@ -38,7 +39,7 @@ def heap_sort(sequence, index_begin=0, index_end=-1):
     :param index_end: końcowy indeks ciągu"""
     index_begin %= len(sequence)
     index_end %= len(sequence)
-    heap_size = index_end-index_begin
+    heap_size = index_end - index_begin
 
     for i in range(index_begin + heap_size // 2, index_begin - 1, -1):
         _move_down(sequence, i, index_begin, index_end)
@@ -56,8 +57,8 @@ def _move_down(heap, vertex, index_begin, index_end):
     :param index_begin: początkowy indeks kopca
     :param index_end: końcowy indeks kopca"""
     next_vertex = None
-    left_vertex = vertex+vertex - index_begin + 1
-    right_vertex = vertex+vertex - index_begin + 2
+    left_vertex = vertex + vertex - index_begin + 1
+    right_vertex = vertex + vertex - index_begin + 2
 
     if right_vertex <= index_end:
         next_vertex = left_vertex if heap[right_vertex] < heap[left_vertex] else right_vertex
@@ -98,7 +99,7 @@ def merge_sort(sequence, index_begin=0, index_end=-1):
 
     index_middle = (index_begin + index_end) // 2
     merge_sort(sequence, index_begin, index_middle)
-    merge_sort(sequence, index_middle+1, index_end)
+    merge_sort(sequence, index_middle + 1, index_end)
     _merge(sequence, index_begin, index_middle, index_end)
 
 
@@ -148,7 +149,6 @@ def quick_sort(sequence, index_begin=0, index_end=-1):
     :param index_end: końcowy indeks ciągu"""
     index_begin %= len(sequence)
     index_end %= len(sequence)
-    get_pivot = lambda i, j: sorted([randint(i, j), randint(i, j), randint(i, j)])[1]
 
     if index_begin >= index_end:
         return
@@ -156,7 +156,8 @@ def quick_sort(sequence, index_begin=0, index_end=-1):
     index_pivot = index_begin
     index_front = index_begin + 1
     index_back = index_end
-    rdpv = get_pivot(index_begin, index_end)
+    rdpv = sorted([randint(index_begin, index_end), randint(
+        index_begin, index_end), randint(index_begin, index_end)])[1]
     sequence[index_pivot], sequence[rdpv] = sequence[rdpv], sequence[index_pivot]
 
     while index_pivot < index_back:
