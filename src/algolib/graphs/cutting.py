@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """WYSZUKIWANIE MOSTÓW I PUNKTÓW ARTYKULACJI W GRAFIE"""
 
+
 def find_bridges(ugraph):
     """Znajdowanie mostów w grafie.
     :param ugraph: graf nieskierowany
@@ -16,14 +17,20 @@ def find_vertex_separators(ugraph):
 
 
 class _GraphCutting:
-    _NO_DEPTH = None    # oznaczenie braku głębokości (nieodwiedzenia) w drzewie DFS
+    # Oznaczenie braku głębokości (nieodwiedzenia) w drzewie DFS.
+    _NO_DEPTH = None
 
     def __init__(self, graph):
-        self.__graph = graph    # reprezentacja grafu nieskierowanego
-        self.__dfs_parents = [None] * graph.get_vertices_number()    # ojciec w drzewie DFS
-        self.__dfs_children = [[] for _ in self.__graph.get_vertices_number()]    # lista synów w drzewie DFS
-        self.__dfs_depths = [self._NO_DEPTH] * graph.get_vertices_number()    # głębokość w drzewie DFS
-        self.__low_values = [None] * graph.get_vertices_number()    # wartości funkcji LOW
+        # Reprezentacja grafu nieskierowanego.
+        self.__graph = graph
+        # Ojciec w drzewie DFS.
+        self.__dfs_parents = [None] * graph.get_vertices_number()
+        # Lista synów w drzewie DFS.
+        self.__dfs_children = [[] for _ in self.__graph.get_vertices_number()]
+        # Głębokość w drzewie DFS.
+        self.__dfs_depths = [self._NO_DEPTH] * graph.get_vertices_number()
+        # Wartości funkcji LOW.
+        self.__low_values = [None] * graph.get_vertices_number()
 
     def bridges(self):
         """Znajdowanie mostów.
@@ -32,10 +39,8 @@ class _GraphCutting:
             if self.__dfs_depths[v] is self._NO_DEPTH:
                 self.__dfs(v, None, 0)
 
-        has_bridge = lambda v: self.__low_values[v] == self.__dfs_depths[v] \
-                               and not self.__is_dfs_root(v)
-
-        return [(v, self.__dfs_parents[v]) for v in self.__graph.get_vertices() if has_bridge(v)]
+        return [(v, self.__dfs_parents[v]) for v in self.__graph.get_vertices()
+                if self.__has_bridge(v)]
 
     def separators(self):
         """Znajdowanie punktów artykulacji.
@@ -44,12 +49,23 @@ class _GraphCutting:
             if self.__dfs_depths[v] is self._NO_DEPTH:
                 self.__dfs(v, None, 0)
 
-        is_separator = lambda v: len(self.__dfs_children[v]) > 1 \
-                                 if self.__is_dfs_root(v) \
-                                 else any(self.__low_values[c] >= self.__dfs_depths[v] \
-                                          for c in self.__dfs_children[v])
+        return [v for v in self.__graph.get_vertices() if self.__is_separator(v)]
 
-        return [v for v in self.__graph.get_vertices() if is_separator(v)]
+    def __has_bridge(self, vertex):
+        """Sparwdzanie, czy od wierzchołka wychodzi krawędź będąca mostem.
+        :param vertex: wierzchołek
+        :returns: czy wierzchołek incydentny z mostem"""
+        return self.__low_values[vertex] == self.__dfs_depths[vertex] \
+            and not self.__is_dfs_root(vertex)
+
+    def __is_separator(self, vertex):
+        """Sparwdzanie, czy wierzchołek jest punktem artykulacji.
+        :param vertex: wierzchołek
+        :returns: czy wierzchołek to punkt artykulacji"""
+        return len(self.__dfs_children[vertex]) > 1 \
+            if self.__is_dfs_root(vertex) \
+            else any(self.__low_values[c] >= self.__dfs_depths[vertex]
+                     for c in self.__dfs_children[vertex])
 
     def __is_dfs_root(self, vertex):
         """Sprawdzanie, czy wierzchołek jest korzeniem drzewa DFS
@@ -69,8 +85,8 @@ class _GraphCutting:
             if self.__dfs_depths[neighbour] is self._NO_DEPTH:
                 self.__dfs_children[vertex].append(neighbour)
                 self.__dfs(neighbour, vertex, depth + 1)
-                self.__low_values[vertex] = min(self.__low_values[vertex], \
+                self.__low_values[vertex] = min(self.__low_values[vertex],
                                                 self.__low_values[neighbour])
             elif neighbour != parent:
-                self.__low_values[vertex] = min(self.__low_values[vertex], \
+                self.__low_values[vertex] = min(self.__low_values[vertex],
                                                 self.__dfs_depths[neighbour])

@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 import queue
 
+
 class FlowGraphDinic:
-    _INF = float(1<<30)    # oznaczenie nieskończoności
+    _INF = float(1 << 30)    # oznaczenie nieskończoności
 
     def __init__(self, n):
         """
@@ -11,8 +12,9 @@ class FlowGraphDinic:
         :param n: liczba wierzchołków
         """
         self.__num_vertex = n    # liczba wierzchołków grafu
-        self.__graphrepr = [[] for i in range(n+1)]    # sąsiedztwa grafu przep�ywowego
-        self.__capacities = [[self._INF]*(n+1) for i in range(n+1)]    # macierz przeputowo�ci kraw�dzi
+        self.__graphrepr = [[] for i in range(n + 1)]    # sąsiedztwa grafu przep�ywowego
+        # macierz przeputowo�ci kraw�dzi
+        self.__capacities = [[self._INF] * (n + 1) for i in range(n + 1)]
 
     def flow(self, source, target):
         """
@@ -22,10 +24,11 @@ class FlowGraphDinic:
         :returns: maksymalny przep�yw sieci
         """
         self.__layer_graph = []    # lista sąsiedztwa grafu warstwowego
-        max_flow = 0.0; is_flow_added = True
+        max_flow = 0.0
+        is_flow_added = True
 
         while is_flow_added:
-            self.__layer_graph = [[] for i in range(self.__num_vertex+1)]
+            self.__layer_graph = [[] for i in range(self.__num_vertex + 1)]
             is_flow_added = self.__bfs(source, target)
 
             if is_flow_added:
@@ -40,9 +43,10 @@ class FlowGraphDinic:
         :param target: uj�cie
         :returns: czy uda si� powi�kszy� przep�yw
         """
-        vertex_layer = [None]*(self.__num_vertex+1)
+        vertex_layer = [None] * (self.__num_vertex + 1)
         vertex_layer[source] = 0
-        vertex_queue = queue.Queue(); vertex_queue.put(source)
+        vertex_queue = queue.Queue()
+        vertex_queue.put(source)
 
         while not vertex_queue.empty():
             v = vertex_queue.get()
@@ -53,10 +57,10 @@ class FlowGraphDinic:
             for nb in self.__graphrepr[v]:
                 if self.__capacities[v][nb] > 0.0:
                     if vertex_layer[nb] is None:
-                        vertex_layer[nb] = vertex_layer[v]+1
+                        vertex_layer[nb] = vertex_layer[v] + 1
                         vertex_queue.put(nb)
 
-                    if vertex_layer[nb] == vertex_layer[v]+1:
+                    if vertex_layer[nb] == vertex_layer[v] + 1:
                         self.__layer_graph[v].append(nb)
 
         return False
@@ -75,7 +79,8 @@ class FlowGraphDinic:
         new_blocking_flow = 0.0
 
         for neighbour in self.__layer_graph[vertex]:
-            flow_add = self.__dfs(neighbour, target, min(self.__capacities[vertex][neighbour], blocking_flow))
+            flow_add = self.__dfs(neighbour, target, min(
+                self.__capacities[vertex][neighbour], blocking_flow))
             blocking_flow -= flow_add
             new_blocking_flow += flow_add
             self.__capacities[vertex][neighbour] -= flow_add
@@ -85,4 +90,3 @@ class FlowGraphDinic:
                 break
 
         return new_blocking_flow
-

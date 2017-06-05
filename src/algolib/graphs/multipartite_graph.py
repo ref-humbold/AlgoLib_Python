@@ -1,19 +1,22 @@
 # -*- coding: utf-8 -*-
 """STRUKTURY GRAFÓW WIELODZIELNYCH"""
-from abc import ABCMeta
 from .graph import Graph
 
+
 class GraphPartitionException(Exception):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self):
+        super().__init__()
 
 
-class MultipartiteGraph(Graph, metaclass=ABCMeta):
-    def __init__(self, group, graph, *args, edges=None, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.__graph = graph    # Struktura grafu wielodzielnego.
-        self.__groups_number = group    # Maksymalna liczba grup wierzchołków.
-        self.__groups = []    # Numery grup wierzchołków.
+class MultipartiteGraph(Graph):
+    def __init__(self, group, ugraph, edges=None):
+        super().__init__()
+        # Struktura grafu wielodzielnego.
+        self.__graph = ugraph
+        # Maksymalna liczba grup wierzchołków.
+        self.__groups_number = group
+        # Numery grup wierzchołków.
+        self.__groups = []
 
         if edges is not None:
             for e in edges:
@@ -32,37 +35,57 @@ class MultipartiteGraph(Graph, metaclass=ABCMeta):
     def edges_number(self):
         return self.__graph.edges_number
 
-    def get_vertices(self):
-        return self.__graph.get_vertices()
+    def get_vertices(self, group=None, **kwargs):
+        """meth: Graph.get_vertices
+        :param group: numer grupy wierzchołków"""
+        if group is None:
+            return self.__graph.get_vertices()
+
+        return (v for v in self.__graph.get_vertices() if self.__groups[v] == group)
 
     def get_edges(self):
+        """meth: Graph.get_edges"""
         return self.__graph.get_edges()
 
-    def get_neighbours(self, vertex):
-        return self.__graph.get_neighbours(vertex)
+    def add_vertex(self, group=1, **kwargs):
+        """meth: Graph.add_vertex
+        :param group: numer grupy wierzchołka"""
+        self.__groups.append(group)
+        self.__graph.add_vertex()
+
+    def add_edge(self, vertex1, vertex2):
+        """meth: Graph.add_edge"""
+        if self.is_same_group(vertex1, vertex2):
+            raise GraphPartitionException()
+
+        self.__graph.add_edge(vertex1, vertex2)
+
+    def get_neighbours(self, vertex, group=None, **kwargs):
+        """meth: Graph.get_neighbours
+        :param group: numer grupy sąsiadów"""
+        if group is None:
+            return self.__graph.get_neighbours(vertex)
+
+        return (v for v in self.__graph.get_neighbours(vertex) if self.__groups[v] == group)
 
     def get_outdegree(self, vertex):
+        """meth: Graph.get_outdegree"""
         return self.__graph.get_outdegree(vertex)
 
     def get_indegree(self, vertex):
+        """meth: Graph.get_indegree"""
         return self.__graph.get_indegree(vertex)
 
-    def get_group(self, group):
-        """Wierzchołki zadanej grupy.
-        :param group: numer grupy
-        :returns: generator wierzchołków z pierwszej grupy"""
-        return (v for v in self.get_vertices() if self.__groups[v] == group)
-
     def is_in_group(self, vertex, group):
-        """Sprawdza, czy wierzchołek nalezy do pierwszej grupy.
+        """Sprawdzanie, czy wierzchołek nalezy do zadanej grupy.
         :param vertex: wierzchołek
         :param group: numer grupy
-        :returns: czy wierzchołek jest w pierwszej grupie"""
+        :returns: czy wierzchołek jest w grupie"""
         return self.__groups[vertex] == group
 
     def is_same_group(self, vertex1, vertex2):
-        """Sprawdza, czy  wierzchołki są w różnych grupach.
+        """Sprawdzanie, czy wierzchołki należą do tej samej grupy.
         :param vertex1: pierwszy wierzchołek
         :param vertex2: drugi wierzchołek
-        :returns: czy wierzchołki są w różnych grupach"""
+        :returns: czy wierzchołki są w jednej grupie"""
         return self.__groups[vertex1] == self.__groups[vertex2]

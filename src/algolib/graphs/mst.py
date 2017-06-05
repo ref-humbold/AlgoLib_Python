@@ -3,6 +3,7 @@
 import queue
 from ..structures.disjoint_sets import DisjointSets
 
+
 def kruskal(wgraph):
     """Algorytm Kruskala wyliczjący długość MST.
     :param wgraph: graf ważony
@@ -18,7 +19,7 @@ def kruskal(wgraph):
     while components > 1 and not edge_queue.empty():
         edge_weight, edge_first, edge_second = edge_queue.get()
 
-        if vertex_sets.is_set_different(edge_first, edge_second):
+        if not vertex_sets.is_same_set(edge_first, edge_second):
             size_mst += abs(edge_weight)
             components -= 1
             vertex_sets.union_set(edge_first, edge_second)

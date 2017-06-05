@@ -2,8 +2,9 @@
 """ALGORYTM WYZNACZANIA LICZB PIERWSZYCH PRZEZ SITO ERASTOTENESA"""
 from math import sqrt
 
+
 def primes(*numbers):
-    """Funkcja obsługująca.
+    """Wyznaczanie liczb pierwszych.
     :param numbers: granice przedziału
     :returns: lista liczb pierwszych"""
     if len(numbers) == 1:
@@ -11,7 +12,7 @@ def primes(*numbers):
     elif len(numbers) == 2:
         return _find_primes(numbers[0], numbers[1])
     else:
-        raise TypeError("Expected 1 or 2 arguments, got "+str(len(numbers))+".")
+        raise TypeError("Expected 1 or 2 arguments, got " + str(len(numbers)) + ".")
 
 
 def _find_primes(min_number, max_number):
@@ -22,18 +23,18 @@ def _find_primes(min_number, max_number):
     if max_number < 2:
         return []
 
-    is_prime = [i == 2 or (i > 2 and i%2 == 1) for i in range(min_number, max_number + 1)]
-    base_primes = [True]*int(sqrt(max_number) // 2)
+    is_prime = [i == 2 or (i > 2 and i % 2 == 1) for i in range(min_number, max_number + 1)]
+    base_primes = [True] * int(sqrt(max_number) // 2)
 
-    for i, prm in enumerate(base_primes):
-        if prm:
-            n = 2 * i + 3
-            begin = max(n * n - min_number, n - min_number%n)
+    for i, prime in enumerate(base_primes):
+        if prime:
+            num = 2 * i + 3
+            begin = max(num * num - min_number, num - min_number % num)
 
-            for j in range(n * n, len(base_primes), 2 * n):
+            for j in range(num * num, len(base_primes), 2 * num):
                 base_primes[(j - 3) // 2] = False
 
-            for j in range(begin, len(is_prime), n):
+            for j in range(begin, len(is_prime), num):
                 is_prime[j] = False
 
-    return [min_number+i for i, prm in enumerate(is_prime) if prm]
+    return [min_number + i for i, prime in enumerate(is_prime) if prime]

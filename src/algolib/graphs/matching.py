@@ -3,8 +3,11 @@
 import queue
 import math
 
-NO_MATCH = None    # Oznaczenie braku skojarzenia.
-INF = math.inf    # Oznaczenie nieskończoności.
+# Oznaczenie braku skojarzenia.
+NO_MATCH = None
+# Oznaczenie nieskończoności.
+INF = math.inf
+
 
 def match(partgraph):
     """Wyznaczanie maksymalnego skojarzenia.
@@ -25,13 +28,17 @@ class _MatchAugmenter:
         if partgraph.groups_number != 2:
             raise ValueError("Graph is not bipartite.")
 
-        self.__partgraph = partgraph    # Graf dwudzielny.
-        self.__matching = matching    # Skojarzenia wierzchołków.
-        self.__distances = None    # Odległości wierzchołków.
-        self.__is_visited = None    # Lista odwiedzonych wierzchołków.
+        # Reprezentacja grafu dwudzielnego.
+        self.__partgraph = partgraph
+        # Skojarzenia wierzchołków.
+        self.__matching = matching
+        # Odległości wierzchołków.
+        self.__distances = None
+        # Lista odwiedzonych wierzchołków.
+        self.__is_visited = None
 
         if matching is None:
-            self.__matching = [NO_MATCH]*partgraph.vertices_number
+            self.__matching = [NO_MATCH] * partgraph.vertices_number
 
     @property
     def matching(self):
@@ -42,8 +49,8 @@ class _MatchAugmenter:
     def augment_match(self):
         """Powiększanie skojarzenia przy pomocy scieżek powiększających.
         :returns: czy powiększono skojarzenie"""
-        self.__distances = [INF]*self.__partgraph.vertices_number
-        self.__is_visited = [False]*self.__partgraph.vertices_number
+        self.__distances = [INF] * self.__partgraph.vertices_number
+        self.__is_visited = [False] * self.__partgraph.vertices_number
         self.__bfs()
 
         return any([self.__dfs(v) for v in self.__partgraph.get_group(1)])

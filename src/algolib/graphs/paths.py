@@ -2,6 +2,7 @@
 """ALGORYTMY WYZNACZANIA NAJKRÓTSZYCH ŚCIEŻEK W GRAFIE WAŻONYM"""
 import queue
 
+
 def bellman_ford(diwgraph, source):
     """Algorytm Bellmana-Forda.
     :param diwgraph: skierowany graf ważony
@@ -57,6 +58,6 @@ def floyd_warshall(diwgraph):
     for w in diwgraph.get_vertices():
         for v in diwgraph.get_vertices():
             for u in diwgraph.get_vertices():
-                distances[v][u] = min(distances[v][u], distances[v][w]+distances[w][u])
+                distances[v][u] = min(distances[v][u], distances[v][w] + distances[w][u])
 
     return distances

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """ALGORYTMY TESTOWANIA PIERWSZOŚCI"""
 from random import randint
-from .maths import gcd, power
+from .maths import gcd, power_mod
+
 
 def fermat_test(number):
     """Test pierwszości Fermata.
@@ -10,13 +11,13 @@ def fermat_test(number):
     if number == 2 or number == 3:
         return True
 
-    if number < 2 or number %2 == 0 or number%3 == 0:
+    if number < 2 or number % 2 == 0 or number % 3 == 0:
         return False
 
     for _ in range(10):
         rdval = randint(2, number - 2)
 
-        if gcd(rdval, number) > 1 or power(rdval, number - 1, number) != 1:
+        if gcd(rdval, number) > 1 or power_mod(rdval, number - 1, number) != 1:
             return False
 
     return True
@@ -29,17 +30,17 @@ def miller_test(number):
     if number == 2 or number == 3:
         return True
 
-    if number < 2 or number %2 == 0 or number%3 == 0:
+    if number < 2 or number % 2 == 0 or number % 3 == 0:
         return False
 
-    expon, multip = _distribute(number-1)
+    expon, multip = _distribute(number - 1)
 
     for _ in range(10):
         rdval = randint(2, number - 2)
 
-        if power(rdval, multip, number) != 1:
+        if power_mod(rdval, multip, number) != 1:
             for i in range(expon):
-                if power(rdval, (1 << i) * multip, number) == number - 1:
+                if power_mod(rdval, (1 << i) * multip, number) == number - 1:
                     return False
 
     return True

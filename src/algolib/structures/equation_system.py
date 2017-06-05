@@ -1,15 +1,29 @@
 # -*- coding: utf-8 -*-
 """STRUKTURA UKŁADÓW RÓWNAŃ LINIOWYCH Z ALGORYTMEM ELIMINACJI GAUSSA"""
+
+
+class InfiniteSolutionsException(Exception):
+    def __init__(self):
+        super().__init__()
+
+
+class NoSolutionException(Exception):
+    def __init__(self):
+        super().__init__()
+
+
 class EquationSystem:
     def __init__(self, numeq):
-        self.__equations = numeq    # liczba równań układu
-        self.__coeffs = [[0.0] * numeq for i in range(numeq)]    # macierz współczynników równania
-        self.__free_terms = [0.0] * numeq    # wektor wyrazów wolnych równania
+        # Liczba równań układu.
+        self.__equations = numeq
+        # Macierz współczynników równania.
+        self.__coeffs = [[0.0] * numeq for i in range(numeq)]
+        # Wektor wyrazów wolnych równania.
+        self.__free_terms = [0.0] * numeq
 
-    def equation(self):
-        """Getter dla układu równań
-        :returns: macierz układu i wektor wyrazów wolnych"""
-        return self.__coeffs, self.__free_terms
+    @property
+    def equations_number(self):
+        return self.__equations
 
     def solve(self):
         """Wyliczanie rozwiązań układu równań liniowych.
@@ -17,22 +31,17 @@ class EquationSystem:
         self.gaussian_reduce()
 
         if self.__coeffs[-1][-1] == 0 and self.__free_terms[-1] == 0:
-            raise Exception("System of equations has got infinitely many solutions.")
+            raise InfiniteSolutionsException()
 
         if self.__coeffs[-1][-1] == 0 and self.__free_terms[-1] != 0:
-            raise Exception("System of equations has got no solution.")
+            raise NoSolutionException()
 
-        solution = [self.__free_terms[-1] / self.__coeffs[-1][-1]]
+        solution = [None] * self.__equations
+        solution[-1] = self.__free_terms[-1] / self.__coeffs[-1][-1]
 
-        for equ in range(-2, -self.__equations-1, -1):
-            value = self.__free_terms[equ]
-
-            for i, sol in enumerate(solution):
-                value -= self.__coeffs[equ][-1 - i]*sol
-
-            solution.append(value / self.__coeffs[equ][equ])
-
-        solution.reverse()
+        for equ in range(-2, -self.__equations - 1, -1):
+            solution[equ] = sum((-self.__coeffs[equ][i] * solution[i] for i in range(-1, equ, -1)),
+                                self.__free_terms[equ]) / self.__coeffs[equ][equ]
 
         return solution
 
@@ -49,13 +58,13 @@ class EquationSystem:
                     index_min = i
 
             if self.__coeffs[index_min][equ] != 0:
-                self.__change(index_min, equ)
+                self.change(index_min, equ)
 
-                for i in range(equ+1, self.__equations):
+                for i in range(equ + 1, self.__equations):
                     param = self.__coeffs[i][equ] / self.__coeffs[equ][equ]
-                    self.__linear_comb(i, equ, -param)
+                    self.linear_comb(i, equ, -param)
 
-    def __change(self, equ1, equ2):
+    def change(self, equ1, equ2):
         """Zamiana równań miejscami.
         :param eq1: numer pierwszego równania
         :param eq2: numer drugiego równania"""
@@ -66,12 +75,12 @@ class EquationSystem:
         self.__free_terms[equ1], self.__free_terms[equ2] = \
             self.__free_terms[equ2], self.__free_terms[equ1]
 
-    def __linear_comb(self, equ1, equ2, cst):
+    def linear_comb(self, equ1, equ2, constant):
         """Przekształcenie równania przez kombinację liniową z innym równaniem.
         :param eq1: numer równania przekształcanego
         :param eq2: numer drugiego równania
-        :param cst: stała kombinacji liniowej"""
+        :param constant: stała kombinacji liniowej"""
         for i in range(self.__equations):
-            self.__coeffs[equ1][i] += cst * self.__coeffs[equ2][i]
+            self.__coeffs[equ1][i] += constant * self.__coeffs[equ2][i]
 
-        self.__free_terms[equ1] += cst * self.__free_terms[equ2]
+        self.__free_terms[equ1] += constant * self.__free_terms[equ2]

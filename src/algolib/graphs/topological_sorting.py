@@ -2,16 +2,19 @@
 """ALGORYTMY SORTOWANIA TOPOLOGICZNEGO"""
 import queue
 
+
+class DirectedCyclicGraphException(Exception):
+    def __init__(self):
+        super().__init__()
+
+
 def sort_topological1(digraph):
     """Sortowanie topologiczne przez liczenie poprzedników.
     :param digraph: graf skierowany
     :returns: porządek topologiczny wierzchołków"""
     vertex_queue = queue.Queue()
-    indegs = [0]*(digraph.vertices_number)
+    indegs = [digraph.get_indegree(v) for v in digraph.get_vertices()]
     order = []
-
-    for v, s in digraph.get_edges():
-        indegs[s] += 1
 
     for v in digraph.get_vertices():
         if indegs[v] == 0:
@@ -28,8 +31,8 @@ def sort_topological1(digraph):
             if indegs[s] == 0:
                 vertex_queue.put(s)
 
-    if len(order) != digraph.vertices_number+1:
-        raise Exception("Digraph contains a cycle, so it cannot be sorted topologically.")
+    if len(order) != digraph.vertices_number + 1:
+        raise DirectedCyclicGraphException()
 
     return order
 
@@ -38,7 +41,7 @@ def sort_topological2(digraph):
     """Sortowanie topologiczne z użyciem DFS.
     :param digraph: graf skierowany
     :returns: porządek topologiczny wierzchołków"""
-    is_visited = [False]*(digraph.vertices_number)
+    is_visited = [False] * (digraph.vertices_number)
     order = []
 
     for v in digraph.get_vertices():
@@ -47,8 +50,8 @@ def sort_topological2(digraph):
 
     order.reverse()
 
-    if len(order) != digraph.vertices_number+1:
-        raise Exception("Digraph contains a cycle, so it cannot be sorted topologically.")
+    if len(order) != digraph.vertices_number + 1:
+        raise DirectedCyclicGraphException()
 
     return order
 

@@ -3,26 +3,23 @@
 from abc import ABCMeta, abstractmethod
 import math
 
+
 class Graph(metaclass=ABCMeta):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self):
+        super().__init__()
 
     @property
     @abstractmethod
     def vertices_number(self):
-        """Getter dla liczby wierzchołków.
-        :returns: liczba wierzchołków"""
         pass
 
     @property
     @abstractmethod
     def edges_number(self):
-        """Getter dla liczby krawędzi.
-        :returns: liczba krawędzi"""
         pass
 
     @abstractmethod
-    def get_vertices(self):
+    def get_vertices(self, **kwargs):
         """Wszystkie wierzchołki.
         :returns: generator wierzchołków"""
         pass
@@ -34,7 +31,7 @@ class Graph(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def add_vertex(self):
+    def add_vertex(self, **kwargs):
         """Dodawanie nowego wierzchołka.
         :returns: oznaczenie wierzchołka"""
         pass
@@ -47,7 +44,7 @@ class Graph(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def get_neighbours(self, vertex):
+    def get_neighbours(self, vertex, **kwargs):
         """Sąsiedzi wierzchołka.
         :param vertex: numer wierzchołka
         :returns: generator sąsiadów wierzchołka"""
@@ -68,9 +65,9 @@ class Graph(metaclass=ABCMeta):
         pass
 
 
-class WeightedGraph(Graph, metaclass=ABCmeta):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+class WeightedGraph(Graph, metaclass=ABCMeta):
+    def __init__(self):
+        super().__init__()
 
     @abstractmethod
     def get_weighted_edges(self):
@@ -95,23 +92,25 @@ class WeightedGraph(Graph, metaclass=ABCmeta):
 
 
 class SimpleGraph(Graph, metaclass=ABCMeta):
-    INF = math.inf    # Oznaczenie nieskończoności
-    _DEFAULT_WEIGHT = 1.0    # Domyślna waga krawędzi
+    # Oznaczenie nieskończoności.
+    INF = math.inf
+    # Domyślna waga krawędzi.
+    _DEFAULT_WEIGHT = 1.0
 
-    def __init__(self, n, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._graphrepr = [set() for i in range(n)]    # Lista sąsiedztwa grafu.
+    def __init__(self, n):
+        super().__init__()
+        # Lista sąsiedztwa grafu.
+        self._graphrepr = [set() for i in range(n)]
 
     @property
     def vertices_number(self):
-        """meth: Graph.vertices_number"""
         return len(self._graphrepr)
 
     def get_vertices(self):
         """meth: Graph.get_vertices"""
         return (v for v in range(self.vertices_number))
 
-    def add_vertex(self):
+    def add_vertex(self, **kwargs):
         """meth: Graph.add_vertex"""
         self._graphrepr.append(set())
 
@@ -127,8 +126,8 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
 
 
 class DirectedGraph(SimpleGraph):
-    def __init__(self, n, *args, edges=None, **kwargs):
-        super().__init__(n, *args, **kwargs)
+    def __init__(self, n, edges=None):
+        super().__init__(n, edges=edges)
 
         if edges is not None:
             for e in edges:
@@ -165,8 +164,8 @@ class DirectedGraph(SimpleGraph):
 
 
 class DirectedWeightedGraph(DirectedGraph, WeightedGraph):
-    def __init__(self, n, *args, edges=None, **kwargs):
-        super().__init__(n, *args, **kwargs)
+    def __init__(self, n, edges=None):
+        super().__init__(n)
 
         if edges is not None:
             for e in edges:
@@ -198,8 +197,8 @@ class DirectedWeightedGraph(DirectedGraph, WeightedGraph):
 
 
 class UndirectedGraph(SimpleGraph):
-    def __init__(self, n, *args, edges=None, **kwargs):
-        super().__init__(n, *args, **kwargs)
+    def __init__(self, n, edges=None):
+        super().__init__(n)
 
         if edges is not None:
             for e in edges:
@@ -209,7 +208,10 @@ class UndirectedGraph(SimpleGraph):
     @property
     def edges_number(self):
         """:meth: Graph.edges_number"""
-        return sum(self.get_outdegree(v) for v in self.get_vertices()) >> 1
+        return sum(self.get_outdegree(v) + 1
+                   if v in self.get_neighbours(v)
+                   else self.get_outdegree(v)
+                   for v in self.get_vertices()) / 2
 
     def get_edges(self):
         """:meth: Graph.get_edges"""
@@ -236,8 +238,8 @@ class UndirectedGraph(SimpleGraph):
 
 
 class UndirectedWeightedGraph(UndirectedGraph, WeightedGraph):
-    def __init__(self, n, *args, edges=None, **kwargs):
-        super().__init__(n, *args, **kwargs)
+    def __init__(self, n, edges=None):
+        super().__init__(n)
 
         if edges is not None:
             for e in edges:
@@ -246,7 +248,7 @@ class UndirectedWeightedGraph(UndirectedGraph, WeightedGraph):
 
     def get_weighted_edges(self):
         """:meth: WeightedGraph.get_weighted_edges"""
-        return ((v, u, wg) for v in self.get_vertices() for u, wg in self.get_neighbours(v) \
+        return ((v, u, wg) for v in self.get_vertices() for u, wg in self.get_neighbours(v)
                 if u > v)
 
     def add_weighted_edge(self, vertex1, vertex2, weight):
@@ -265,6 +267,6 @@ class UndirectedWeightedGraph(UndirectedGraph, WeightedGraph):
         """Zamiana krawędzi nieskierowanych na skierowane z zachowaniem wag.
         :returns: graf ze skierowanymi krawędziami ważonymi"""
         diwedges = list(self.get_weighted_edges()) \
-                   + [(u, v, wg) for v, u, wg in self.get_weighted_edges()]
+            + [(u, v, wg) for v, u, wg in self.get_weighted_edges()]
 
         return DirectedWeightedGraph(self.vertices_number, edges=diwedges)

@@ -2,12 +2,13 @@
 """ALGORYTMY PRZESZUKIWANIA GRAFU"""
 import queue
 
+
 def bfs(graph, root):
     """Algorytm BFS.
     :param graph: graf
     :param root: wierzchołek początkowy
     :returns: lista odwiedzonych wierzchołków"""
-    is_visited = [False]*graph.vertices_number
+    is_visited = [False] * graph.vertices_number
     vertex_queue = queue.Queue()
     vertex_queue.put(root)
 
@@ -29,7 +30,7 @@ def iter_dfs(graph, root):
     :param graph: graf
     :param root: wierzchołek początkowy
     :returns: lista odwiedzonych wierzchołków"""
-    is_visited = [False]*graph.vertices_number
+    is_visited = [False] * graph.vertices_number
     vertex_stack = queue.LifoQueue()
     vertex_stack.put(root)
 
