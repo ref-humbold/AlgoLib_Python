@@ -21,8 +21,10 @@ class DisjointSets:
     def make_set(self, element):
         """Tworzenie nowego zbioru jednoelementowego.
         :param element: nowy element"""
-        if element not in self.__represents:
-            self.__represents[element] = element
+        if element in self.__represents:
+            raise ValueError("Value {0} already present.".format(element))
+
+        self.__represents[element] = element
 
     def find_set(self, element):
         """Ustalanie reprezentanta zbioru.
@@ -38,11 +40,11 @@ class DisjointSets:
         :param element1: element pierwszego zbioru
         :param element2: element drugiego zbioru"""
         if not self.is_same_set(element1, element2):
-            self.__represents[self.find_set(element1)] = self.find_set(element2)
+            self.__represents[self.find_set(element2)] = self.find_set(element1)
 
     def is_same_set(self, element1, element2):
         """Sprawdzanie, czy elementy należą do tego samego zbioru.
         :param element1: element pierwszego zbioru
         :param element2: element drugiego zbioru
         :returns: czy elementy znajdują się w jednym zbiorze"""
-        return self.find_set(element1) != self.find_set(element2)
+        return self.find_set(element1) == self.find_set(element2)

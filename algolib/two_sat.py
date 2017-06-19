@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 """SPEŁNIALNOŚĆ FORMUŁ 2-CNF"""
 from .graphs import DirectedGraph
 

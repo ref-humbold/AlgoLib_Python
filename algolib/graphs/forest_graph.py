@@ -4,22 +4,26 @@ from .graph import Graph
 from ..structures import DisjointSets
 
 
-class CycleCreationException(Exception):
+class CycleException(Exception):
     def __init__(self):
         super().__init__()
 
 
-class TreeGraph(Graph):
+class ForestGraph(Graph):
     def __init__(self, ugraph, edges=None):
         super().__init__()
-        # Struktura grafu drzewa.
+        # Struktura grafu drzew.
         self.__graph = ugraph
-        # Struktura składowych drzewa.
+        # Struktura składowych drzew.
         self.__components = DisjointSets(ugraph.get_vertices())
 
         if edges is not None:
             for e in edges:
                 self.add_edge(e[0], e[1])
+
+    @property
+    def trees_number(self):
+        return len(self.__components)
 
     @property
     def vertices_number(self):
@@ -46,8 +50,8 @@ class TreeGraph(Graph):
 
     def add_edge(self, vertex1, vertex2):
         """meth: Graph.get_edge"""
-        if self.__components.is_same_set(vertex1, vertex2):
-            raise CycleCreationException()
+        if self.is_same_tree(vertex1, vertex2):
+            raise CycleException()
 
         self.__components.union_set(vertex1, vertex2)
         return self.__graph.add_edge(vertex1, vertex2)
@@ -63,3 +67,10 @@ class TreeGraph(Graph):
     def get_indegree(self, vertex):
         """meth: Graph.get_indegree"""
         return self.__graph.get_indegree(vertex)
+
+    def is_same_tree(self, vertex1, vertex2):
+        """Sprawdzanie, czy wierzchołki należą do tego samego drzewa.
+        :param vertex1: pierwszy wierzchołek
+        :param vertex2: drugi wierzchołek
+        :returns: czy wierzchołki są w jednym drzewie"""
+        return self.__components.is_same_set(vertex1, vertex2)

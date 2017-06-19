@@ -21,6 +21,9 @@ def _search_closest(points_x, points_y, index_begin=0, index_end=-1):
     :param index_begin: początek fragmentu listy punktów po x
     :param index_end: koniec fragmentu listy punktów po x
     :returns: para najbliższych punktów"""
+    def distance(pt1, pt2):
+        return hypot(pt1[0] - pt2[0], pt1[1] - pt2[1])
+
     index_begin %= len(points_x)
     index_end %= len(points_x)
 
@@ -48,8 +51,8 @@ def _search_closest(points_x, points_y, index_begin=0, index_end=-1):
     closest_l = _search_closest(points_x, points_yl, index_begin, index_middle)
     closest_r = _search_closest(
         points_x, points_yr, index_middle + 1, index_end)
-    min_distance = min(distance(closest_l[0], closest_l[1]), distance(
-        closest_r[0], closest_r[1]))
+    min_distance = min(distance(closest_l[0], closest_l[1]),
+                       distance(closest_r[0], closest_r[1]))
     belt_width = min_distance
     belt_points = [(i, pt[2] <= index_middle) for i, pt in enumerate(points_y)
                    if middle_x - belt_width <= pt[0] <= middle_x + belt_width]
@@ -70,11 +73,3 @@ def _search_closest(points_x, points_y, index_begin=0, index_end=-1):
                     closest_points = (points_y[pt1], points_y[pt2])
 
     return closest_points
-
-
-def distance(pt1, pt2):
-    """Wyznaczanie odległości punktów od siebie
-    :param pt1: punkt 1
-    :param pt2: punkt 2
-    :returns: odległość między punktami"""
-    return hypot(pt1[0] - pt2[0], pt1[1] - pt2[1])

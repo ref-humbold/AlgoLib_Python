@@ -5,53 +5,49 @@ from abc import ABCMeta, abstractmethod
 
 class AVLTree:
     class _AVLNode(metaclass=ABCMeta):
-        @abstractmethod
         @property
+        @abstractmethod
         def element(self):
             pass
 
-        @abstractmethod
         @element.setter
+        @abstractmethod
         def element(self, element):
             pass
 
-        @abstractmethod
         @property
+        @abstractmethod
         def height(self):
             pass
 
-        @abstractmethod
         @property
+        @abstractmethod
         def left(self):
             pass
 
-        @abstractmethod
         @left.setter
+        @abstractmethod
         def left(self, node):
             pass
 
-        @abstractmethod
         @property
+        @abstractmethod
         def right(self):
             pass
 
-        @abstractmethod
         @right.setter
+        @abstractmethod
         def right(self, node):
             pass
 
-        @abstractmethod
         @property
+        @abstractmethod
         def parent(self):
             pass
 
-        @abstractmethod
         @parent.setter
-        def parent(self, node):
-            pass
-
         @abstractmethod
-        def __str__(self):
+        def parent(self, node):
             pass
 
         @abstractmethod
@@ -137,12 +133,6 @@ class AVLTree:
         def parent(self, node):
             self.__parent = node
 
-        def __str__(self):
-            left_string = "" if self.__left is None else str(self.__left)
-            right_string = "" if self.__right is None else str(self.__right)
-
-            return "[" + left_string + " " + str(self.__element) + " " + right_string + "]"
-
         def count_balance(self):
             """meth: AVLTree._AVLNode.count_balance"""
             left_height = 0 if self.__left is None else self.__left.height
@@ -206,9 +196,6 @@ class AVLTree:
         def parent(self, node):
             self.__parent = node
 
-        def __str__(self):
-            return "[NULL]"
-
         def count_balance(self):
             """meth: AVLTree._AVLNode.count_balance"""
             return 0
@@ -228,18 +215,12 @@ class AVLTree:
     class _AVLIterator:
         def __init__(self, node):
             # Aktualny węzeł.
-            self.__current_node = node
+            self._current_node = node
 
         def __next__(self):
-            if self.__current_node.height < 0:
-                raise StopIteration
+            pass
 
-            ret_elem = self.__current_node.element
-            self.__current_node = self.__successor(self.__current_node)
-
-            return ret_elem
-
-        def __successor(self, node):
+        def _successor(self, node):
             """Wyznaczanie następnika węzła w drzewie.
             :param node: węzeł
             :returns: wezeł z następną wartością"""
@@ -252,6 +233,46 @@ class AVLTree:
                 succ = succ.parent
 
             return succ
+
+        def _predecessor(self, node):
+            """Wyznaczanie poprzednika węzła w drzewie.
+            :param node: węzeł
+            :returns: wezeł z poprzednią wartością"""
+            pred = node
+
+            if pred.left is not None:
+                return pred.left.maximum()
+
+            while pred.height >= 0 and pred.element >= node.element:
+                pred = pred.parent
+
+            return pred
+
+    class _AVLFwdIterator(_AVLIterator):
+        def __init__(self, node):
+            super().__init__(node)
+
+        def __next__(self):
+            if self._current_node.height < 0:
+                raise StopIteration
+
+            ret_elem = self._current_node.element
+            self._current_node = self._successor(self._current_node)
+
+            return ret_elem
+
+    class _AVLRevIterator(_AVLIterator):
+        def __init__(self, node):
+            super().__init__(node)
+
+        def __next__(self):
+            if self._current_node.height < 0:
+                raise StopIteration
+
+            ret_elem = self._current_node.element
+            self._current_node = self._predecessor(self._current_node)
+
+            return ret_elem
 
     def __init__(self, iterable=None):
         # Korzeń drzewa.
@@ -266,12 +287,17 @@ class AVLTree:
     def __str__(self):
         """Tworzy tekstową reprezentację drzewa AVL
         :returns: tekstowa reprezentacja elementów"""
-        return "{|" + ", ".join(map(str, self.__iter__())) + "|}"
+        return "{|" + ", ".join(map(str, self)) + "|}"
 
     def __iter__(self):
         """Tworzenie iteratora dla drzewa.
         :returns: obiekt iteratora"""
-        return self._AVLIterator(self.__get_root().minimum())
+        return self._AVLFwdIterator(self.__get_root().minimum())
+
+    def __reversed__(self):
+        """Tworzenie odwróconego iteratora dla drzewa.
+        :returns: obiekt odwróconego iteratora"""
+        return self._AVLRevIterator(self.__get_root().maximum())
 
     def __len__(self):
         """Określanie liczby elementów drzewa.
@@ -304,7 +330,7 @@ class AVLTree:
         if node_parent is None:
             the_node = self.__get_root()
         else:
-            self.__get_subtree(node_parent, element)
+            the_node = self.__get_subtree(node_parent, element)
 
         if the_node is not None:
             return False

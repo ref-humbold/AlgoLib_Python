@@ -173,7 +173,8 @@ class DirectedWeightedGraph(DirectedGraph, WeightedGraph):
 
     def get_weighted_edges(self):
         """:meth: WeightedGraph.get_weighted_edges"""
-        return ((v, u, wg) for v in self.get_vertices() for u, wg in self.get_neighbours(v))
+        return ((v, u, wg) for v in self.get_vertices()
+                for u, wg in self.get_weighted_neighbours(v))
 
     def add_weighted_edge(self, vertex1, vertex2, weight):
         """:meth: WeightedGraph.add_weighted_edge"""
@@ -248,7 +249,7 @@ class UndirectedWeightedGraph(UndirectedGraph, WeightedGraph):
 
     def get_weighted_edges(self):
         """:meth: WeightedGraph.get_weighted_edges"""
-        return ((v, u, wg) for v in self.get_vertices() for u, wg in self.get_neighbours(v)
+        return ((v, u, wg) for v in self.get_vertices() for u, wg in self.get_weighted_neighbours(v)
                 if u > v)
 
     def add_weighted_edge(self, vertex1, vertex2, weight):

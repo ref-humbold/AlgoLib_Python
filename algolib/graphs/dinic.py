@@ -1,5 +1,5 @@
-# ALGORYTM DINICA: MAKSYMALNY PRZEP�YW
 # -*- coding: utf-8 -*-
+"""ALGORYTM DINICA: MAKSYMALNY PRZEPŁYW"""
 import queue
 
 
@@ -12,8 +12,8 @@ class FlowGraphDinic:
         :param n: liczba wierzchołków
         """
         self.__num_vertex = n    # liczba wierzchołków grafu
-        self.__graphrepr = [[] for i in range(n + 1)]    # sąsiedztwa grafu przep�ywowego
-        # macierz przeputowo�ci kraw�dzi
+        self.__graphrepr = [[] for i in range(n + 1)]    # sąsiedztwa grafu przepływowego
+        # macierz przeputowości krawędzi
         self.__capacities = [[self._INF] * (n + 1) for i in range(n + 1)]
 
     def flow(self, source, target):
