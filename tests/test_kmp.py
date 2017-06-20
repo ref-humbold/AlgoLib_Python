@@ -5,6 +5,9 @@ from algolib import kmp
 
 
 class KMPTest(unittest.TestCase):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
     def setUp(self):
         pass
 

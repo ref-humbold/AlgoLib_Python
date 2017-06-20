@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TESTY DLA ALGORYTMU KNUTHA-MORRISA-PRATTA"""
+"""TESTY DLA STRUKTURY ZBIORÓW ROZŁĄCZNYCH"""
 import unittest
 from algolib.structures import DisjointSets
 
@@ -71,8 +71,8 @@ class KMPTest(unittest.TestCase):
     def test_union_set_when_same_sets_2(self):
         elem1 = 3
         elem2 = 8
-        self.__test_object.union_set(elem1, elem2)
 
+        self.__test_object.union_set(elem1, elem2)
         self.__test_object.union_set(elem2, elem1)
 
         self.assertTrue(self.__test_object.is_same_set(elem1, elem2))
@@ -96,8 +96,8 @@ class KMPTest(unittest.TestCase):
     def test_is_same_set_when_same_sets_2(self):
         elem1 = 3
         elem2 = 8
-        self.__test_object.union_set(elem1, elem2)
 
+        self.__test_object.union_set(elem1, elem2)
         result = self.__test_object.is_same_set(elem1, elem2)
 
         self.assertTrue(result)

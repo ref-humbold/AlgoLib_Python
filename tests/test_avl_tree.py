@@ -85,16 +85,16 @@ class AVLTreeTest(unittest.TestCase):
 
     def test_add_when_new_element(self):
         for i in [111, 140, 187]:
-            added = self.__test_object.add(i)
+            result = self.__test_object.add(i)
 
-            self.assertTrue(added)
+            self.assertTrue(result)
             self.assertIn(i, self.__test_object)
 
     def test_add_when_present_element(self):
         for i in [14, 30, 45]:
-            added = self.__test_object.add(i)
+            result = self.__test_object.add(i)
 
-            self.assertFalse(added)
+            self.assertFalse(result)
             self.assertIn(i, self.__test_object)
 
     def test_remove_when_present_element(self):

@@ -134,25 +134,25 @@ class AVLTree:
             self.__parent = node
 
         def count_balance(self):
-            """meth: AVLTree._AVLNode.count_balance"""
+            """:meth: AVLTree._AVLNode.count_balance"""
             left_height = 0 if self.__left is None else self.__left.height
             right_height = 0 if self.__right is None else self.__right.height
 
             return left_height - right_height
 
         def recount_height(self):
-            """meth: AVLTree._AVLNode.recount_height"""
+            """:meth: AVLTree._AVLNode.recount_height"""
             left_height = 0 if self.__left is None else self.__left.height
             right_height = 0 if self.__right is None else self.__right.height
 
             self.__height = max(left_height, right_height) + 1
 
         def minimum(self):
-            """meth: AVLTree._AVLNode.minimum"""
+            """:meth: AVLTree._AVLNode.minimum"""
             return self if self.__left is None else self.__left.minimum()
 
         def maximum(self):
-            """meth: AVLTree._AVLNode.maximum"""
+            """:meth: AVLTree._AVLNode.maximum"""
             return self if self.__right is None else self.__right.maximum()
 
     class _AVLNodeNull(_AVLNode):
@@ -197,19 +197,19 @@ class AVLTree:
             self.__parent = node
 
         def count_balance(self):
-            """meth: AVLTree._AVLNode.count_balance"""
+            """:meth: AVLTree._AVLNode.count_balance"""
             return 0
 
         def recount_height(self):
-            """meth: AVLTree._AVLNode.recount_height"""
+            """:meth: AVLTree._AVLNode.recount_height"""
             pass
 
         def minimum(self):
-            """meth: AVLTree._AVLNode.minimum"""
+            """:meth: AVLTree._AVLNode.minimum"""
             raise AttributeError
 
         def maximum(self):
-            """meth: AVLTree._AVLNode.maximum"""
+            """:meth: AVLTree._AVLNode.maximum"""
             raise AttributeError
 
     class _AVLIterator:

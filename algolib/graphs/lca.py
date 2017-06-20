@@ -37,13 +37,14 @@ class _LCAFinder:
         :param vertex2: wierzchołek 2
         :param root: korzeń drzewa
         :returns: najniższy wspólny przodek"""
-        self.__paths = [[] for _ in range(self.__graph.vertices_number + 1)]
-        self.__pre_post_times = [None] * (self.__graph.vertices_number + 1)
+        self.__paths = [[] for v in self.__graph.get_vertices()]
+        self.__pre_post_times = [None] * self.__graph.vertices_number
         self.__dfs(root, root, 0)
 
-        for i in range(1, log(self.__graph.vertices_number, 2) + 3):
+        for i in range(0, int(log(self.__graph.vertices_number, 2)) + 3):
             for v in self.__graph.get_vertices():
-                self.__paths[v].append(self.__paths[self.__paths[v][i - 1]][i - 1])
+                if self.__paths[v] != []:
+                    self.__paths[v].append(self.__paths[self.__paths[v][i]][i])
 
         return self.__search(vertex1, vertex2)
 
@@ -75,12 +76,12 @@ class _LCAFinder:
         :param timer: aktualny czas
         :returns: nowy czas po przetworzeniu wierzchołka"""
         self.__pre_post_times[vertex] = ()
-        self.__paths[vertex][0] = parent
+        self.__paths[vertex].append(parent)
         pre_time = timer
         timer += 1
 
         for neighbour in self.__graph.get_neighbours(vertex):
-            if self.__pre_post_times[neighbour] is not None:
+            if self.__pre_post_times[neighbour] is None:
                 timer = self.__dfs(neighbour, vertex, timer)
 
         self.__pre_post_times[vertex] = (pre_time, timer)

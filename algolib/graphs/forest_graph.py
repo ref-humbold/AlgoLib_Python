@@ -34,22 +34,22 @@ class ForestGraph(Graph):
         return self.__graph.edges_number
 
     def get_vertices(self):
-        """meth: Graph.get_vertices"""
+        """:meth: Graph.get_vertices"""
         return self.__graph.get_vertices()
 
     def get_edges(self):
-        """meth: Graph.get_edges"""
+        """:meth: Graph.get_edges"""
         return self.__graph.get_edges()
 
     def add_vertex(self):
-        """meth: Graph.add_vertex"""
+        """:meth: Graph.add_vertex"""
         vertex = self.__graph.add_vertex()
         self.__components.make_set(vertex)
 
         return vertex
 
     def add_edge(self, vertex1, vertex2):
-        """meth: Graph.get_edge"""
+        """:meth: Graph.get_edge"""
         if self.is_same_tree(vertex1, vertex2):
             raise CycleException()
 
@@ -57,15 +57,15 @@ class ForestGraph(Graph):
         return self.__graph.add_edge(vertex1, vertex2)
 
     def get_neighbours(self, vertex):
-        """meth: Graph.get_neighbours"""
+        """:meth: Graph.get_neighbours"""
         return self.__graph.get_neighbours(vertex)
 
     def get_outdegree(self, vertex):
-        """meth: Graph.get_outdegree"""
+        """:meth: Graph.get_outdegree"""
         return self.__graph.get_outdegree(vertex)
 
     def get_indegree(self, vertex):
-        """meth: Graph.get_indegree"""
+        """:meth: Graph.get_indegree"""
         return self.__graph.get_indegree(vertex)
 
     def is_same_tree(self, vertex1, vertex2):
