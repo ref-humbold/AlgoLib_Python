@@ -24,13 +24,13 @@ class _GraphCutting:
         # Reprezentacja grafu nieskierowanego.
         self.__graph = graph
         # Ojciec w drzewie DFS.
-        self.__dfs_parents = [None] * graph.get_vertices_number()
+        self.__dfs_parents = [None] * graph.vertices_number
         # Lista synów w drzewie DFS.
-        self.__dfs_children = [[] for _ in self.__graph.get_vertices_number()]
+        self.__dfs_children = [[] for _ in self.__graph.get_vertices()]
         # Głębokość w drzewie DFS.
-        self.__dfs_depths = [self._NO_DEPTH] * graph.get_vertices_number()
+        self.__dfs_depths = [self._NO_DEPTH] * graph.vertices_number
         # Wartości funkcji LOW.
-        self.__low_values = [None] * graph.get_vertices_number()
+        self.__low_values = [None] * graph.vertices_number
 
     def bridges(self):
         """Znajdowanie mostów.
@@ -39,8 +39,8 @@ class _GraphCutting:
             if self.__dfs_depths[v] is self._NO_DEPTH:
                 self.__dfs(v, None, 0)
 
-        return [(v, self.__dfs_parents[v]) for v in self.__graph.get_vertices()
-                if self.__has_bridge(v)]
+        return {(min(v, self.__dfs_parents[v]), max(v, self.__dfs_parents[v]))
+                for v in self.__graph.get_vertices() if self.__has_bridge(v)}
 
     def separators(self):
         """Znajdowanie punktów artykulacji.
@@ -49,7 +49,7 @@ class _GraphCutting:
             if self.__dfs_depths[v] is self._NO_DEPTH:
                 self.__dfs(v, None, 0)
 
-        return [v for v in self.__graph.get_vertices() if self.__is_separator(v)]
+        return {v for v in self.__graph.get_vertices() if self.__is_separator(v)}
 
     def __has_bridge(self, vertex):
         """Sparwdzanie, czy od wierzchołka wychodzi krawędź będąca mostem.

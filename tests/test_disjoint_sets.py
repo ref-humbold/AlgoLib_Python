@@ -4,7 +4,7 @@ import unittest
 from algolib.structures import DisjointSets
 
 
-class KMPTest(unittest.TestCase):
+class DisjointSetsTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.__test_object = None

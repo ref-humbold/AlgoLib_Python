@@ -10,8 +10,7 @@ class UndirectedGraph(SimpleGraph):
 
         if edges is not None:
             for e in edges:
-                self._graphrepr[e[0]].add(e[1])
-                self._graphrepr[e[1]].add(e[0])
+                self.add_edge(e[0], e[1])
 
     @property
     def edges_number(self):
@@ -23,7 +22,7 @@ class UndirectedGraph(SimpleGraph):
 
     def get_edges(self):
         """:meth: Graph.get_edges"""
-        return ((v, u) for v in self.get_vertices() for u in self.get_neighbours(v) if u > v)
+        return ((v, u) for v in self.get_vertices() for u in self.get_neighbours(v) if u >= v)
 
     def add_edge(self, vertex1, vertex2):
         """:meth: Graph.add_edge"""
@@ -53,9 +52,8 @@ class UndirectedWeightedGraph(UndirectedGraph, WeightedGraph):
         super().__init__(n)
 
         if edges is not None:
-            for e in edges:
-                self._graphrepr[e[0]].add((e[1], e[2]))
-                self._graphrepr[e[1]].add((e[0], e[2]))
+            for e in map(lambda e: e if len(e) > 2 else (e[0], e[1], self._DEFAULT_WEIGHT), edges):
+                self.add_weighted_edge(e[0], e[1], e[2])
 
     def get_weighted_edges(self):
         """:meth: WeightedGraph.get_weighted_edges"""

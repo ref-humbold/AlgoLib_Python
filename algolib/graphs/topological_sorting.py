@@ -12,7 +12,7 @@ def sort_topological1(digraph):
     """Sortowanie topologiczne przez liczenie poprzedników.
     :param digraph: graf skierowany
     :returns: porządek topologiczny wierzchołków"""
-    vertex_queue = queue.Queue()
+    vertex_queue = queue.PriorityQueue()
     indegs = [digraph.get_indegree(v) for v in digraph.get_vertices()]
     order = []
 
@@ -31,41 +31,42 @@ def sort_topological1(digraph):
             if indegs[s] == 0:
                 vertex_queue.put(s)
 
-    if len(order) != digraph.vertices_number + 1:
+    if len(order) != digraph.vertices_number:
         raise DirectedCyclicGraphException()
 
-    return order
+    return iter(order)
 
 
 def sort_topological2(digraph):
     """Sortowanie topologiczne z użyciem DFS.
     :param digraph: graf skierowany
     :returns: porządek topologiczny wierzchołków"""
-    is_visited = [False] * (digraph.vertices_number)
+    indices = [None] * (digraph.vertices_number)
     order = []
+    index = 0
 
-    for v in digraph.get_vertices():
-        if not is_visited[v]:
-            _dfs(v, digraph, order, is_visited)
+    for v in reversed(sorted(digraph.get_vertices())):
+        if indices[v] is None:
+            _dfs(v, index, digraph, order, indices)
+            index += 1
 
-    order.reverse()
-
-    if len(order) != digraph.vertices_number + 1:
-        raise DirectedCyclicGraphException()
-
-    return order
+    return (v for v in reversed(order))
 
 
-def _dfs(vertex, digraph, order, is_visited):
+def _dfs(vertex, index, digraph, order, indices):
     """Algorytm DFS wyznaczający kolejność wierzchołków.
     :param vertex: aktualny wierzchołek
+    :param index: numer iteracji
     :param digraph: graf skierowany
     :param order: aktualny porządek topologiczny
-    :param is_visited: czy wierzchołek odwiedzony"""
-    is_visited[vertex] = True
+    :param indices: indeksy iteracji i przetwarzania wierzchołków"""
+    indices[vertex] = (index, True)
 
     for neighbour in digraph.get_neighbours(vertex):
-        if not is_visited[neighbour]:
-            _dfs(neighbour, digraph, order, is_visited)
+        if indices[neighbour] is None:
+            _dfs(neighbour, index, digraph, order, indices)
+        elif indices[neighbour][0] == index and indices[neighbour][1]:
+            raise DirectedCyclicGraphException()
 
     order.append(vertex)
+    indices[vertex] = (index, False)

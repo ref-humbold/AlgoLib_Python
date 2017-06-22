@@ -137,7 +137,7 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
 
     def get_outdegree(self, vertex):
         """:meth: Graph.get_outdegree"""
-        return self._graphrepr[vertex]
+        return len(self._graphrepr[vertex])
 
     @abstractmethod
     def get_indegree(self, vertex):

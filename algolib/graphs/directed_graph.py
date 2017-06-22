@@ -5,11 +5,11 @@ from .graph import SimpleGraph, WeightedGraph
 
 class DirectedGraph(SimpleGraph):
     def __init__(self, n, edges=None):
-        super().__init__(n, edges=edges)
+        super().__init__(n)
 
         if edges is not None:
             for e in edges:
-                self._graphrepr[e[0]].add(e[1])
+                self.add_edge(e[0], e[1])
 
     @property
     def edges_number(self):
@@ -36,12 +36,12 @@ class DirectedGraph(SimpleGraph):
 
     def reverse(self):
         """Odwracanie skierowania grafu"""
-        revgraph = [set() for _ in self.vertices_number()]
+        revgraphrepr = [set() for _ in self.get_vertices()]
 
         for v, u in self.get_edges():
-            revgraph[u].add((v, self._DEFAULT_WEIGHT))
+            revgraphrepr[u].add((v, self._DEFAULT_WEIGHT))
 
-        self._graphrepr = revgraph
+        self._graphrepr = revgraphrepr
 
 
 class DirectedWeightedGraph(DirectedGraph, WeightedGraph):
@@ -49,8 +49,8 @@ class DirectedWeightedGraph(DirectedGraph, WeightedGraph):
         super().__init__(n)
 
         if edges is not None:
-            for e in edges:
-                self._graphrepr[e[0]].add(e[1:3])
+            for e in map(lambda e: e if len(e) > 2 else (e[0], e[1], self._DEFAULT_WEIGHT), edges):
+                self.add_weighted_edge(e[0], e[1], e[2])
 
     def get_weighted_edges(self):
         """:meth: WeightedGraph.get_weighted_edges"""
@@ -73,9 +73,9 @@ class DirectedWeightedGraph(DirectedGraph, WeightedGraph):
 
     def reverse(self):
         """:meth: DirectedGraph.reverse"""
-        revgraph = [set() for _ in self.vertices_number()]
+        revgraphrepr = [set() for _ in self.get_vertices()]
 
         for v, u, wg in self.get_weighted_edges():
-            revgraph[u].add((v, wg))
+            revgraphrepr[u].add((v, wg))
 
-        self._graphrepr = revgraph
+        self._graphrepr = revgraphrepr

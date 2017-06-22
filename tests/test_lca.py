@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """TESTY DLA ALGORYTMU NAJNIŻSZEGO WSPÓLNEGO PRZODKA"""
 import unittest
-from algolib.graphs import find_lca, ForestGraph, UndirectedGraph, SimpleGraph
+from algolib.graphs import find_lca, ForestGraph, UndirectedGraph
 
 
-class KMPTest(unittest.TestCase):
+class LCATest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.__trees = None
@@ -62,3 +62,11 @@ class KMPTest(unittest.TestCase):
         result = find_lca(self.__trees, vertex1, vertex2)
 
         self.assertEqual(0, result)
+
+    def test_find_lca_5(self):
+        vertex1 = 11
+        vertex2 = 10
+
+        result = find_lca(self.__trees, vertex1, vertex2, 11)
+
+        self.assertEqual(11, result)
