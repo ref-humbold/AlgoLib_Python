@@ -9,6 +9,10 @@ class Graph(metaclass=ABCMeta):
         super().__init__()
 
     @property
+    def inf(self):
+        return math.inf
+
+    @property
     @abstractmethod
     def vertices_number(self):
         pass
@@ -20,14 +24,12 @@ class Graph(metaclass=ABCMeta):
 
     @abstractmethod
     def get_vertices(self, **kwargs):
-        """Wszystkie wierzchołki.
-        :returns: generator wierzchołków"""
+        """:returns: generator wierzchołków"""
         pass
 
     @abstractmethod
     def get_edges(self):
-        """Wszystkie krawędzie.
-        :returns: generator krawędzi"""
+        """:returns: generator krawędzi"""
         pass
 
     @abstractmethod
@@ -45,23 +47,20 @@ class Graph(metaclass=ABCMeta):
 
     @abstractmethod
     def get_neighbours(self, vertex, **kwargs):
-        """Sąsiedzi wierzchołka.
-        :param vertex: numer wierzchołka
+        """:param vertex: numer wierzchołka
         :returns: generator sąsiadów wierzchołka"""
         pass
 
     @abstractmethod
     def get_outdegree(self, vertex):
-        """Stopień wyjściowy wierzchołka.
-        :param vertex: numer wierzchołka
-        :returns: wartość stopnia wyjściowego wierzchołka"""
+        """:param vertex: numer wierzchołka
+        :returns: stopień wyjściowy wierzchołka"""
         pass
 
     @abstractmethod
     def get_indegree(self, vertex):
-        """Stopień wejściowy wierzchołka.
-        :param vertex: numer wierzchołka
-        :returns: wartość stopnia wejściowego wierzchołka"""
+        """:param vertex: numer wierzchołka
+        :returns: stopień wejściowy wierzchołka"""
         pass
 
 
@@ -71,8 +70,7 @@ class WeightedGraph(Graph, metaclass=ABCMeta):
 
     @abstractmethod
     def get_weighted_edges(self):
-        """Wszystkie krawędzie wraz z ich wagami.
-        :returns: generator krawędzi z wagami"""
+        """:returns: generator krawędzi z wagami"""
         pass
 
     @abstractmethod
@@ -85,15 +83,12 @@ class WeightedGraph(Graph, metaclass=ABCMeta):
 
     @abstractmethod
     def get_weighted_neighbours(self, vertex):
-        """Sąsiedzi wierzchołka wraz z wagami.
-        :param vertex: numer wierzchołka
+        """:param vertex: numer wierzchołka
         :returns: lista sąsiadów wierzchołka wraz z wagami krawędzi"""
         pass
 
 
 class SimpleGraph(Graph, metaclass=ABCMeta):
-    # Oznaczenie nieskończoności.
-    INF = math.inf
     # Domyślna waga krawędzi.
     _DEFAULT_WEIGHT = 1.0
 

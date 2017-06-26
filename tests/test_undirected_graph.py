@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 """TESTY DLA GRAFÓW NIESKIEROWANYCH"""
 import unittest
-from algolib.graphs import DirectedGraph, UndirectedGraph
+from algolib.graphs import DirectedSimpleGraph, UndirectedSimpleGraph
 
 
-class UndirectedGraphTest(unittest.TestCase):
+class UndirectedSimpleGraphTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.__test_object = None
 
     def setUp(self):
-        self.__test_object = UndirectedGraph(10)
+        self.__test_object = UndirectedSimpleGraph(10)
 
     def tearDown(self):
         self.__test_object = None
@@ -113,7 +113,7 @@ class UndirectedGraphTest(unittest.TestCase):
 
         result = self.__test_object.as_directed()
 
-        self.assertIsInstance(result, DirectedGraph)
+        self.assertIsInstance(result, DirectedSimpleGraph)
         self.assertListEqual(sorted(self.__test_object.get_vertices()),
                              sorted(result.get_vertices()))
         self.assertListEqual([(0, 8), (1, 5), (2, 4), (3, 6), (3, 9), (4, 2), (5, 1), (6, 3),

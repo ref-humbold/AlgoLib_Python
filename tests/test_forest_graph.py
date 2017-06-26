@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """TESTY DLA STRUKTURY GRAFÓW DRZEW"""
 import unittest
-from algolib.graphs import ForestGraph, UndirectedGraph, CycleException
+from algolib.graphs import ForestGraph, UndirectedSimpleGraph, CycleException
 
 
 class ForestGraphTest(unittest.TestCase):
@@ -10,7 +10,7 @@ class ForestGraphTest(unittest.TestCase):
         self.__test_object = None
 
     def setUp(self):
-        self.__test_object = ForestGraph(UndirectedGraph(10))
+        self.__test_object = ForestGraph(UndirectedSimpleGraph(10))
 
     def tearDown(self):
         self.__test_object = None

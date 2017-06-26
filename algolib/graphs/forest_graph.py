@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """STRUKTURY GRAFÓW DRZEW"""
-from .graph import Graph
+from .undirected_graph import UndirectedGraph
 from ..structures import DisjointSets
 
 
@@ -9,7 +9,7 @@ class CycleException(Exception):
         super().__init__()
 
 
-class ForestGraph(Graph):
+class ForestGraph(UndirectedGraph):
     def __init__(self, ugraph, edges=None):
         super().__init__()
         # Struktura grafu drzew.
@@ -54,7 +54,7 @@ class ForestGraph(Graph):
             raise CycleException()
 
         self.__components.union_set(vertex1, vertex2)
-        return self.__graph.add_edge(vertex1, vertex2)
+        self.__graph.add_edge(vertex1, vertex2)
 
     def get_neighbours(self, vertex):
         """:meth: Graph.get_neighbours"""
@@ -67,6 +67,10 @@ class ForestGraph(Graph):
     def get_indegree(self, vertex):
         """:meth: Graph.get_indegree"""
         return self.__graph.get_indegree(vertex)
+
+    def as_directed(self):
+        """:meth: UndirectedGraph.as_directed"""
+        return self.__graph.as_directed
 
     def is_same_tree(self, vertex1, vertex2):
         """Sprawdzanie, czy wierzchołki należą do tego samego drzewa.

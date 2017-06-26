@@ -7,8 +7,11 @@ def kmp(text, pattern):
     :param text: słowo
     :param pattern: wzorzec
     :returns: lista pozycji wystąpień wzorca w słowie"""
-    if not isinstance(text, str) or not isinstance(pattern, str):
-        raise TypeError("Arguments should be strings.")
+    if not isinstance(text, str):
+        raise TypeError("Text should be of type str, not {0}.".format(type(text).__name__))
+
+    if not isinstance(pattern, str):
+        raise TypeError("Pattern should be of type str, not {0}.".format(type(pattern).__name__))
 
     if pattern == "":
         return []

@@ -1,9 +1,20 @@
 # -*- coding: utf-8 -*-
 """STRUKTURY GRAFÓW SKIEROWANYCH"""
-from .graph import SimpleGraph, WeightedGraph
+from abc import ABCMeta, abstractmethod
+from .graph import Graph, SimpleGraph, WeightedGraph
 
 
-class DirectedGraph(SimpleGraph):
+class DirectedGraph(Graph, metaclass=ABCMeta):
+    def __init__(self):
+        super().__init__()
+
+    @abstractmethod
+    def reverse(self):
+        """Odwracanie skierowania grafu."""
+        pass
+
+
+class DirectedSimpleGraph(SimpleGraph, DirectedGraph):
     def __init__(self, n, edges=None):
         super().__init__(n)
 
@@ -35,7 +46,7 @@ class DirectedGraph(SimpleGraph):
         return sum(1 for _, v in self.get_edges() if v == vertex)
 
     def reverse(self):
-        """Odwracanie skierowania grafu"""
+        """:meth: DirectedGraph.get_indegree"""
         revgraphrepr = [set() for _ in self.get_vertices()]
 
         for v, u in self.get_edges():
@@ -44,7 +55,7 @@ class DirectedGraph(SimpleGraph):
         self._graphrepr = revgraphrepr
 
 
-class DirectedWeightedGraph(DirectedGraph, WeightedGraph):
+class DirectedWeightedSimpleGraph(DirectedSimpleGraph, WeightedGraph):
     def __init__(self, n, edges=None):
         super().__init__(n)
 

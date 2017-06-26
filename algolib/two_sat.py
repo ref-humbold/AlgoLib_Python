@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """SPEŁNIALNOŚĆ FORMUŁ 2-CNF"""
-from .graphs import DirectedGraph
+from .graphs import DirectedSimpleGraph
 
 
 def is_satisfiable(formula):
@@ -16,7 +16,7 @@ def _make_graph(formula):
     """Wyznaczanie grafu implikacji formuły 2-CNF.
     :param formula: lista klauzul
     :returns: skierowany graf implikacji"""
-    digraph = DirectedGraph(2 * _count_variables(formula))
+    digraph = DirectedSimpleGraph(2 * _count_variables(formula))
 
     for clause in formula:
         digraph.add_edge(_vertex(-clause[0]), _vertex(clause[1]))

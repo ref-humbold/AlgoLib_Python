@@ -12,7 +12,7 @@ def primes(*numbers):
     elif len(numbers) == 2:
         return _find_primes(numbers[0], numbers[1])
     else:
-        raise TypeError("Expected 1 or 2 arguments, got " + str(len(numbers)) + ".")
+        raise TypeError("Expected 1 or 2 arguments, got {0}.".format(len(numbers)))
 
 
 def _find_primes(min_number, max_number):

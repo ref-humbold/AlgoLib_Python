@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 """TESTY DLA GRAFÓW SKIEROWANYCH"""
 import unittest
-from algolib.graphs import DirectedGraph
+from algolib.graphs import DirectedSimpleGraph
 
 
-class DirectedGraphTest(unittest.TestCase):
+class DirectedSimpleGraphTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.__test_object = None
 
     def setUp(self):
-        self.__test_object = DirectedGraph(10)
+        self.__test_object = DirectedSimpleGraph(10)
 
     def tearDown(self):
         self.__test_object = None

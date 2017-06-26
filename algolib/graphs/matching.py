@@ -1,12 +1,6 @@
 # -*- coding: utf-8 -*-
 """ALGORYTM HOPCROFTA-KARPA WYZNACZANIA SKOJARZEŃ W GRAFIE DWUDZIELNYM"""
 import queue
-import math
-
-# Oznaczenie braku skojarzenia.
-NO_MATCH = None
-# Oznaczenie nieskończoności.
-INF = math.inf
 
 
 def match(partgraph):
@@ -20,7 +14,7 @@ def match(partgraph):
 
     matching = augmenter.matching
 
-    return [(v, matching[v]) for v in partgraph.get_group(1) if matching[v] is not NO_MATCH]
+    return [(v, matching[v]) for v in partgraph.get_group(1) if matching[v] is not None]
 
 
 class _MatchAugmenter:
@@ -29,7 +23,7 @@ class _MatchAugmenter:
             raise ValueError("Graph is not bipartite.")
 
         # Reprezentacja grafu dwudzielnego.
-        self.__partgraph = partgraph
+        self.__graph = partgraph
         # Skojarzenia wierzchołków.
         self.__matching = matching
         # Odległości wierzchołków.
@@ -38,37 +32,36 @@ class _MatchAugmenter:
         self.__is_visited = None
 
         if matching is None:
-            self.__matching = [NO_MATCH] * partgraph.vertices_number
+            self.__matching = [None] * partgraph.vertices_number
 
     @property
     def matching(self):
-        """Getter dla aktualnego skojarzenia.
-        :returns: skojarzenia wierzchołków"""
+        """:returns: skojarzenia wierzchołków"""
         return self.__matching
 
     def augment_match(self):
         """Powiększanie skojarzenia przy pomocy scieżek powiększających.
         :returns: czy powiększono skojarzenie"""
-        self.__distances = [INF] * self.__partgraph.vertices_number
-        self.__is_visited = [False] * self.__partgraph.vertices_number
+        self.__distances = [self.__graph.inf] * self.__graph.vertices_number
+        self.__is_visited = [False] * self.__graph.vertices_number
         self.__bfs()
 
-        return any([self.__dfs(v) for v in self.__partgraph.get_group(1)])
+        return any([self.__dfs(v) for v in self.__graph.get_group(1)])
 
     def __bfs(self):
         """Algorytm BFS wyliczający odległości wierzchołków."""
         vertex_queue = queue.Queue()
 
-        for v in self.__partgraph.get_group(1):
+        for v in self.__graph.get_group(1):
             self.__distances[v] = 0
             vertex_queue.put(v)
 
         while not vertex_queue.empty():
             v = vertex_queue.get()
 
-            for nb in self.__partgraph.get_neighbours(v):
-                if self.__matching[nb] is not NO_MATCH \
-                   and self.__distances[self.__matching[nb]] == INF:
+            for nb in self.__graph.get_neighbours(v):
+                if self.__matching[nb] is not None \
+                   and self.__distances[self.__matching[nb]] == self.__graph.inf:
                     self.__distances[self.__matching[nb]] = self.__distances[v] + 1
                     vertex_queue.put(self.__matching[nb])
 
@@ -77,8 +70,8 @@ class _MatchAugmenter:
         :returns: czy powiększono skojarzenie"""
         self.__is_visited[vertex] = True
 
-        for neighbour in self.__partgraph.get_neighbours(vertex):
-            if self.__matching[neighbour] is NO_MATCH:
+        for neighbour in self.__graph.get_neighbours(vertex):
+            if self.__matching[neighbour] is None:
                 self.__matching[vertex] = neighbour
                 self.__matching[neighbour] = vertex
 

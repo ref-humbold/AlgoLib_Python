@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """STRUKTURY GRAFÓW WIELODZIELNYCH"""
-from .graph import Graph
+from .undirected_graph import UndirectedGraph
 
 
 class GraphPartitionException(Exception):
@@ -8,7 +8,7 @@ class GraphPartitionException(Exception):
         super().__init__()
 
 
-class MultipartiteGraph(Graph):
+class MultipartiteGraph(UndirectedGraph):
     def __init__(self, group, ugraph, edges=None):
         super().__init__()
         # Struktura grafu wielodzielnego.
@@ -75,6 +75,10 @@ class MultipartiteGraph(Graph):
     def get_indegree(self, vertex):
         """:meth: Graph.get_indegree"""
         return self.__graph.get_indegree(vertex)
+
+    def as_directed(self):
+        """:meth: UndirectedGraph.as_directed"""
+        return self.__graph.as_directed
 
     def is_in_group(self, vertex, group):
         """Sprawdzanie, czy wierzchołek nalezy do zadanej grupy.

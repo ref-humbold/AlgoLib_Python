@@ -43,12 +43,10 @@ def sort_topological2(digraph):
     :returns: porządek topologiczny wierzchołków"""
     indices = [None] * (digraph.vertices_number)
     order = []
-    index = 0
 
     for v in reversed(sorted(digraph.get_vertices())):
         if indices[v] is None:
-            _dfs(v, index, digraph, order, indices)
-            index += 1
+            _dfs(v, v, digraph, order, indices)
 
     return (v for v in reversed(order))
 

@@ -1,10 +1,22 @@
 # -*- coding: utf-8 -*-
 """STRUKTURY GRAFÓW NIESKIEROWANYCH"""
-from .graph import SimpleGraph, WeightedGraph
-from .directed_graph import DirectedGraph, DirectedWeightedGraph
+from abc import ABCMeta, abstractmethod
+from .graph import Graph, SimpleGraph, WeightedGraph
+from .directed_graph import DirectedSimpleGraph, DirectedWeightedSimpleGraph
 
 
-class UndirectedGraph(SimpleGraph):
+class UndirectedGraph(Graph, metaclass=ABCMeta):
+    def __init__(self):
+        super().__init__()
+
+    @abstractmethod
+    def as_directed(self):
+        """Zamiana krawędzi nieskierowanych na skierowane.
+        :returns: graf ze skierowanymi krawędziami"""
+        pass
+
+
+class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
     def __init__(self, n, edges=None):
         super().__init__(n)
 
@@ -40,14 +52,13 @@ class UndirectedGraph(SimpleGraph):
         return self.get_outdegree(vertex)
 
     def as_directed(self):
-        """Zamiana krawędzi nieskierowanych na skierowane.
-        :returns: graf ze skierowanymi krawędziami"""
+        """:meth: UndirectedGraph.as_directed"""
         diedges = list(self.get_edges()) + [(u, v) for v, u in self.get_edges()]
 
-        return DirectedGraph(self.vertices_number, edges=diedges)
+        return DirectedSimpleGraph(self.vertices_number, edges=diedges)
 
 
-class UndirectedWeightedGraph(UndirectedGraph, WeightedGraph):
+class UndirectedWeightedSimpleGraph(UndirectedSimpleGraph, WeightedGraph):
     def __init__(self, n, edges=None):
         super().__init__(n)
 
@@ -76,9 +87,8 @@ class UndirectedWeightedGraph(UndirectedGraph, WeightedGraph):
         return iter(self._graphrepr[vertex])
 
     def as_directed(self):
-        """Zamiana krawędzi nieskierowanych na skierowane z zachowaniem wag.
-        :returns: graf ze skierowanymi krawędziami ważonymi"""
+        """:meth: UndirectedGraph.as_directed"""
         diwedges = list(self.get_weighted_edges()) \
             + [(u, v, wg) for v, u, wg in self.get_weighted_edges()]
 
-        return DirectedWeightedGraph(self.vertices_number, edges=diwedges)
+        return DirectedWeightedSimpleGraph(self.vertices_number, edges=diwedges)
