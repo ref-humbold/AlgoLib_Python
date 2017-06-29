@@ -24,15 +24,12 @@ class DirectedSimpleGraph(SimpleGraph, DirectedGraph):
 
     @property
     def edges_number(self):
-        """:meth: Graph.edges_number"""
         return sum(1 for v in self.get_vertices() for u in self.get_neighbours(v))
 
     def get_edges(self):
-        """:meth: Graph.edges"""
         return ((v, u) for v in self.get_vertices() for u in self.get_neighbours(v))
 
     def add_edge(self, vertex1, vertex2):
-        """:meth: Graph.add_edge"""
         if not 0 <= vertex1 < self.vertices_number:
             raise IndexError("No such vertex: " + str(vertex1))
 
@@ -42,11 +39,9 @@ class DirectedSimpleGraph(SimpleGraph, DirectedGraph):
         self._graphrepr[vertex1].add((vertex2, self._DEFAULT_WEIGHT))
 
     def get_indegree(self, vertex):
-        """:meth: Graph.get_indegree"""
         return sum(1 for _, v in self.get_edges() if v == vertex)
 
     def reverse(self):
-        """:meth: DirectedGraph.get_indegree"""
         revgraphrepr = [set() for _ in self.get_vertices()]
 
         for v, u in self.get_edges():
@@ -64,12 +59,10 @@ class DirectedWeightedSimpleGraph(DirectedSimpleGraph, WeightedGraph):
                 self.add_weighted_edge(e[0], e[1], e[2])
 
     def get_weighted_edges(self):
-        """:meth: WeightedGraph.get_weighted_edges"""
         return ((v, u, wg) for v in self.get_vertices()
                 for u, wg in self.get_weighted_neighbours(v))
 
     def add_weighted_edge(self, vertex1, vertex2, weight):
-        """:meth: WeightedGraph.add_weighted_edge"""
         if not 0 <= vertex1 < self.vertices_number:
             raise IndexError("No such vertex: " + str(vertex1))
 
@@ -79,11 +72,9 @@ class DirectedWeightedSimpleGraph(DirectedSimpleGraph, WeightedGraph):
         self._graphrepr[vertex1].add((vertex2, weight))
 
     def get_weighted_neighbours(self, vertex):
-        """:meth: WeightedGraph.get_weighted_neighbours"""
         return iter(self._graphrepr[vertex])
 
     def reverse(self):
-        """:meth: DirectedGraph.reverse"""
         revgraphrepr = [set() for _ in self.get_vertices()]
 
         for v, u, wg in self.get_weighted_edges():

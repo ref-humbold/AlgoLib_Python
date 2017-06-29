@@ -107,34 +107,27 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
         pass
 
     def get_vertices(self):
-        """:meth: Graph.get_vertices"""
         return (v for v in range(self.vertices_number))
 
     @abstractmethod
     def get_edges(self):
-        """:meth: Graph.get_edges"""
         pass
 
     def add_vertex(self, **kwargs):
-        """:meth: Graph.add_vertex"""
         self._graphrepr.append(set())
 
         return len(self._graphrepr) - 1
 
     @abstractmethod
     def add_edge(self, vertex1, vertex2):
-        """:meth: Graph.add_edge"""
         pass
 
     def get_neighbours(self, vertex):
-        """:meth: Graph.get_neighbours"""
         return (v for v in map(lambda wv: wv[0], self._graphrepr[vertex]))
 
     def get_outdegree(self, vertex):
-        """:meth: Graph.get_outdegree"""
         return len(self._graphrepr[vertex])
 
     @abstractmethod
     def get_indegree(self, vertex):
-        """:meth: Graph.get_indegree"""
         pass

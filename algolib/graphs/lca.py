@@ -4,7 +4,7 @@ from math import log
 
 
 def find_lca(treegraph, vertex1, vertex2, root=0):
-    """Znajduje najniższego wspólnego przodka.
+    """Wyznaczanie najniższego wspólnego przodka.
     :param treegraph: graf drzewo
     :param vertex1: wierzchołek 1
     :param vertex2: wierzchołek 2
@@ -17,39 +17,35 @@ def find_lca(treegraph, vertex1, vertex2, root=0):
        or not treegraph.is_same_tree(vertex2, root):
         raise ValueError("Root vertex does not belong to the tree.")
 
-    lca_finder = _LCAFinder(treegraph)
-
-    return lca_finder.search_lca(vertex1, vertex2, root)
+    return _LCAFinder(treegraph).search_lca(vertex1, vertex2, root)
 
 
 class _LCAFinder:
-    def __init__(self, fgraph):
-        # reprezentacja drzewa
-        self.__graph = fgraph
-        # ścieżki w drzewie
-        self.__paths = None
-        # czas wejścia i wyjścia dla wierzchołka
-        self.__pre_post_times = None
+    def __init__(self, treegraph):
+        # Reprezentacja drzewa.
+        self.__graph = treegraph
+        # Skompresowane ścieżki do korzenia drzewa.
+        self.__paths = [[] for v in self.__graph.get_vertices()]
+        # Czas wejścia i wyjścia dla wierzchołka.
+        self.__pre_post_times = [None] * self.__graph.vertices_number
 
     def search_lca(self, vertex1, vertex2, root):
-        """Wyszukuje najniższego wpólnego przodka.
+        """Wyszukiwanie najniższego wspólnego przodka.
         :param vertex1: wierzchołek 1
         :param vertex2: wierzchołek 2
         :param root: korzeń drzewa
         :returns: najniższy wspólny przodek"""
-        self.__paths = [[] for v in self.__graph.get_vertices()]
-        self.__pre_post_times = [None] * self.__graph.vertices_number
         self.__dfs(root, root, 0)
 
         for i in range(0, int(log(self.__graph.vertices_number, 2)) + 3):
             for v in self.__graph.get_vertices():
-                if self.__paths[v] != []:
+                if len(self.__paths[v]) > 0:
                     self.__paths[v].append(self.__paths[self.__paths[v][i]][i])
 
         return self.__search(vertex1, vertex2)
 
     def __search(self, vertex1, vertex2):
-        """Wyszukuje najniższego wpólnego przodka.
+        """Wyszukiwanie najniższego wspólnego przodka.
         :param vertex1: wierzchołek 1
         :param vertex2: wierzchołek 2
         :returns: najniższy wspólny przodek"""

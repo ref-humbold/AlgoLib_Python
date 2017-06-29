@@ -56,7 +56,7 @@ class _GraphCutting:
             and not self.__is_dfs_root(vertex)
 
     def __is_separator(self, vertex):
-        """Sparwdzanie, czy wierzchołek jest punktem artykulacji.
+        """Sprawdzanie, czy wierzchołek jest punktem artykulacji.
         :param vertex: wierzchołek
         :returns: czy wierzchołek to punkt artykulacji"""
         return len(self.__dfs_children[vertex]) > 1 \
@@ -66,6 +66,7 @@ class _GraphCutting:
 
     def __is_dfs_root(self, vertex):
         """Sprawdzanie, czy wierzchołek jest korzeniem drzewa DFS
+        :param vertex: wierzchołek
         :returns: czy wierzchołek to korzeń"""
         return self.__dfs_depths[vertex] == 0
 

@@ -31,7 +31,24 @@ class LCATest(unittest.TestCase):
         with self.assertRaises(ValueError):
             find_lca(self.__trees, vertex1, vertex2, root)
 
-    def test_find_lca_1(self):
+    def test_find_lca_when_same_vertex(self):
+        vertex = 6
+
+        result = find_lca(self.__trees, vertex, vertex)
+
+        self.assertEqual(vertex, result)
+
+    def test_find_lca_when_vertices_changed(self):
+        vertex1 = 5
+        vertex2 = 7
+
+        result1 = find_lca(self.__trees, vertex1, vertex2)
+        result2 = find_lca(self.__trees, vertex2, vertex1)
+
+        self.assertEqual(1, result1)
+        self.assertEqual(1, result2)
+
+    def test_find_lca_when_vertices_in_different_subtrees(self):
         vertex1 = 5
         vertex2 = 7
 
@@ -39,34 +56,35 @@ class LCATest(unittest.TestCase):
 
         self.assertEqual(1, result)
 
-    def test_find_lca_2(self):
+    def test_find_lca_when_root_is_lca(self):
         vertex1 = 3
         vertex2 = 9
+        root = 0
 
-        result = find_lca(self.__trees, vertex1, vertex2)
+        result = find_lca(self.__trees, vertex1, vertex2, root)
 
-        self.assertEqual(0, result)
+        self.assertEqual(root, result)
 
-    def test_find_lca_3(self):
+    def test_find_lca_when_vertices_are_offsprings(self):
         vertex1 = 8
         vertex2 = 2
 
         result = find_lca(self.__trees, vertex1, vertex2)
 
-        self.assertEqual(2, result)
+        self.assertEqual(vertex2, result)
 
-    def test_find_lca_4(self):
-        vertex1 = 4
-        vertex2 = 0
-
-        result = find_lca(self.__trees, vertex1, vertex2)
-
-        self.assertEqual(0, result)
-
-    def test_find_lca_5(self):
+    def test_find_lca_root_is_one_of_vertices_1(self):
         vertex1 = 11
         vertex2 = 10
 
-        result = find_lca(self.__trees, vertex1, vertex2, 11)
+        result = find_lca(self.__trees, vertex1, vertex2, vertex1)
 
-        self.assertEqual(11, result)
+        self.assertEqual(vertex1, result)
+
+    def test_find_lca_when_root_is_one_of_vertices_2(self):
+        vertex1 = 4
+        vertex2 = 0
+
+        result = find_lca(self.__trees, vertex1, vertex2, vertex2)
+
+        self.assertEqual(vertex2, result)

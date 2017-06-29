@@ -25,11 +25,11 @@ def sort_topological1(digraph):
         order.append(v)
         indegs[v] = None
 
-        for s in digraph.get_neighbours(v):
-            indegs[s] -= 1
+        for nb in digraph.get_neighbours(v):
+            indegs[nb] -= 1
 
-            if indegs[s] == 0:
-                vertex_queue.put(s)
+            if indegs[nb] == 0:
+                vertex_queue.put(nb)
 
     if len(order) != digraph.vertices_number:
         raise DirectedCyclicGraphException()
@@ -63,7 +63,7 @@ def _dfs(vertex, index, digraph, order, indices):
     for neighbour in digraph.get_neighbours(vertex):
         if indices[neighbour] is None:
             _dfs(neighbour, index, digraph, order, indices)
-        elif indices[neighbour][0] == index and indices[neighbour][1]:
+        elif indices[neighbour] == (index, True):
             raise DirectedCyclicGraphException()
 
     order.append(vertex)

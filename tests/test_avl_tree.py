@@ -109,6 +109,7 @@ class AVLTreeTest(unittest.TestCase):
             result = self.__test_object.remove(i)
 
             self.assertFalse(result)
+            self.assertNotIn(i, self.__test_object)
 
     def test_clear(self):
         self.__test_object.clear()
