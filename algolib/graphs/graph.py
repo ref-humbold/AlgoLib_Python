@@ -17,25 +17,25 @@ class Graph(metaclass=ABCMeta):
     def vertices_number(self):
         pass
 
-    @property
-    @abstractmethod
-    def edges_number(self):
-        pass
-
     @abstractmethod
     def get_vertices(self, **kwargs):
         """:returns: generator wierzchołków"""
         pass
 
     @abstractmethod
-    def get_edges(self):
-        """:returns: generator krawędzi"""
-        pass
-
-    @abstractmethod
     def add_vertex(self, **kwargs):
         """Dodawanie nowego wierzchołka.
         :returns: oznaczenie wierzchołka"""
+        pass
+
+    @property
+    @abstractmethod
+    def edges_number(self):
+        pass
+
+    @abstractmethod
+    def get_edges(self):
+        """:returns: generator krawędzi"""
         pass
 
     @abstractmethod
@@ -101,22 +101,22 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
     def vertices_number(self):
         return len(self._graphrepr)
 
-    @property
-    @abstractmethod
-    def edges_number(self):
-        pass
-
     def get_vertices(self):
         return (v for v in range(self.vertices_number))
-
-    @abstractmethod
-    def get_edges(self):
-        pass
 
     def add_vertex(self, **kwargs):
         self._graphrepr.append(set())
 
         return len(self._graphrepr) - 1
+
+    @property
+    @abstractmethod
+    def edges_number(self):
+        pass
+
+    @abstractmethod
+    def get_edges(self):
+        pass
 
     @abstractmethod
     def add_edge(self, vertex1, vertex2):

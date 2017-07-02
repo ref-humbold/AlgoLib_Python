@@ -43,7 +43,7 @@ class AVLTreeTest(unittest.TestCase):
     def test_len_when_not_empty(self):
         result = len(self.__test_object)
 
-        self.assertEqual(14, result)
+        self.assertEqual(len(self.__numbers), result)
 
     def test_in_when_present_element(self):
         for i in self.__numbers:

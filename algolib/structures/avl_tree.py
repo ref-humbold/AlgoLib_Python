@@ -317,12 +317,8 @@ class AVLTree:
         :param element: wartość do dodania
         :returns: czy dodano nowy element"""
         node_parent = self.__find_node_parent(element)
-        the_node = None
-
-        if node_parent is None:
-            the_node = self.__get_inner_root()
-        else:
-            the_node = self.__get_subtree(node_parent, element)
+        the_node = self.__get_inner_root() if node_parent is None \
+            else self.__get_subtree(node_parent, element)
 
         if the_node is not None:
             return False
@@ -348,12 +344,8 @@ class AVLTree:
         :param element: wartość do usunięcia
         :returns: czy element został usunięty"""
         node_parent = self.__find_node_parent(element)
-        the_node = None
-
-        if node_parent is None:
-            the_node = self.__get_inner_root()
-        else:
-            the_node = self.__get_subtree(node_parent, element)
+        the_node = self.__get_inner_root() if node_parent is None \
+            else self.__get_subtree(node_parent, element)
 
         if the_node is None:
             return False
@@ -418,12 +410,9 @@ class AVLTree:
         tree_iter = self.__get_inner_root()
         iter_parent = None
 
-        while tree_iter is not None:
-            if tree_iter.element == element:
-                break
-            else:
-                iter_parent = tree_iter
-                tree_iter = self.__get_subtree(tree_iter, element)
+        while tree_iter is not None and tree_iter.element != element:
+            iter_parent = tree_iter
+            tree_iter = self.__get_subtree(tree_iter, element)
 
         return iter_parent
 

@@ -17,7 +17,7 @@ class TopologicalSortingTest(unittest.TestCase):
 
     def test_sort_topological1_when_acyclic_graph(self):
         graph = DirectedSimpleGraph(6, [(0, 2), (0, 4), (1, 0), (1, 4), (3, 1),
-                                  (3, 0), (3, 2), (5, 1), (5, 2), (5, 4)])
+                                        (3, 0), (3, 2), (5, 1), (5, 2), (5, 4)])
 
         result = sort_topological1(graph)
 
@@ -25,7 +25,7 @@ class TopologicalSortingTest(unittest.TestCase):
 
     def test_sort_topological1_when_cyclic_graph(self):
         graph = DirectedSimpleGraph(6, [(0, 2), (0, 4), (1, 0), (1, 4), (2, 1), (3, 1),
-                                  (3, 0), (3, 2), (5, 1), (5, 2), (5, 4)])
+                                        (3, 0), (3, 2), (5, 1), (5, 2), (5, 4)])
 
         with self.assertRaises(DirectedCyclicGraphException):
             sort_topological1(graph)
@@ -39,7 +39,7 @@ class TopologicalSortingTest(unittest.TestCase):
 
     def test_sort_topological2_when_acyclic_graph(self):
         graph = DirectedSimpleGraph(6, [(0, 2), (0, 4), (1, 0), (1, 4), (3, 1),
-                                  (3, 0), (3, 2), (5, 1), (5, 2), (5, 4)])
+                                        (3, 0), (3, 2), (5, 1), (5, 2), (5, 4)])
 
         result = sort_topological2(graph)
 
@@ -48,7 +48,7 @@ class TopologicalSortingTest(unittest.TestCase):
 
     def test_sort_topological2_when_cyclic_graph(self):
         graph = DirectedSimpleGraph(6, [(0, 2), (0, 4), (1, 0), (1, 4), (2, 1), (3, 1),
-                                  (3, 0), (3, 2), (5, 1), (5, 2), (5, 4)])
+                                        (3, 0), (3, 2), (5, 1), (5, 2), (5, 4)])
 
         with self.assertRaises(DirectedCyclicGraphException):
             sort_topological2(graph)
