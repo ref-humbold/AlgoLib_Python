@@ -37,6 +37,9 @@ def power_mod(base, exponent, modulo):
     if exponent < 0:
         raise ArithmeticError("Negative exponent.")
 
+    if modulo < 0:
+        raise ArithmeticError("Negative modulo.")
+
     if base == 0 and exponent == 0:
         return float('nan')
 
@@ -58,16 +61,20 @@ def mult_mod(factor1, factor2, modulo):
     :returns: wynik mnożenia wzięty modulo"""
     result = 0
 
+    if modulo < 0:
+        raise ArithmeticError("Negative modulo.")
+
+    if factor1 < 0:
+        return modulo - mult_mod(-factor1, factor2, modulo)
+
     if factor2 < 0:
         return modulo - mult_mod(factor1, -factor2, modulo)
 
     while factor2 > 0:
         if (factor2 & 1) == 1:
-            result = result + \
-                factor1 if modulo == 0 else (result + factor1) % modulo
+            result = result + factor1 if modulo == 0 else (result + factor1) % modulo
 
         factor2 >>= 1
-        factor1 = factor1 + \
-            factor1 if modulo == 0 else (factor1 + factor1) % modulo
+        factor1 = factor1 + factor1 if modulo == 0 else (factor1 + factor1) % modulo
 
     return result

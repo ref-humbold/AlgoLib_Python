@@ -4,7 +4,7 @@ from random import randint
 from .maths import gcd, power_mod
 
 
-def fermat_test(number):
+def fermat_prime(number):
     """Test pierwszości Fermata.
     :param number: testowana liczba
     :returns: czy liczba prawdopodobnie jest pierwsza"""
@@ -23,7 +23,7 @@ def fermat_test(number):
     return True
 
 
-def miller_test(number):
+def miller_prime(number):
     """Test pierwszości Millera-Rabina.
     :param number: testowana liczba
     :returns: czy liczba prawdopodobnie jest pierwsza"""
