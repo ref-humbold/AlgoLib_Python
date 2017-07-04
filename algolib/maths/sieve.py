@@ -34,8 +34,8 @@ def _find_primes_range(min_number, max_number):
             num = 2 * i + 3
             begin = num * num - min_number if min_number < num * num else -min_number % num
 
-            for j in range(num * num, len(base_primes), 2 * num):
-                base_primes[(j - 3) // 2] = False
+            for j in range((num * num - 3) // 2, len(base_primes), num):
+                base_primes[j] = False
 
             for j in range(begin, len(is_prime), num):
                 is_prime[j] = False
