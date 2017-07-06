@@ -2,7 +2,7 @@
 """ALGORYTMY WYZNACZANIA PODCIĄGU SPÓJNEGO O MAKSYMALNEJ SUMIE"""
 
 
-def find_maxsum_subseq1(sequence):
+def find_maximum_subarray(sequence):
     """Wyznaczanie spójnego podciągu o maksymalnej sumie w sposób dynamiczny.
     :param sequence: ciąg
     :returns: elementy spójnego podciągu o maksymalnej sumie"""
@@ -21,10 +21,10 @@ def find_maxsum_subseq1(sequence):
     return max_subseq
 
 
-def find_maxsum_subseq2(sequence):
-    """Wyznaczanie spójnego podciągu o maksymalnej sumie za pomocą drzewa parzedziałowego.
+def find_maximal_sum(sequence):
+    """Wyznaczanie maksymalnej sumy spójnego podciągu za pomocą drzewa parzedziałowego.
     :param sequence: ciąg
-    :returns: elementy spójnego podciągu o maksymalnej sumie"""
+    :returns: maksymalna suma"""
     size = 1
 
     while size < 2 * len(sequence):
