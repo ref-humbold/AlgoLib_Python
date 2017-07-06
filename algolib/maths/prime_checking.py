@@ -14,10 +14,10 @@ def fermat_prime(number):
     if number < 2 or number % 2 == 0 or number % 3 == 0:
         return False
 
-    for _ in range(10):
-        rdval = randint(2, number - 2)
+    for _ in range(12):
+        rdv = randint(1, number - 1)
 
-        if gcd(rdval, number) > 1 or power_mod(rdval, number - 1, number) != 1:
+        if gcd(rdv, number) > 1 or power_mod(rdv, number - 1, number) != 1:
             return False
 
     return True
@@ -35,13 +35,12 @@ def miller_prime(number):
 
     expon, multip = _distribute(number - 1)
 
-    for _ in range(10):
-        rdval = randint(2, number - 2)
+    for _ in range(12):
+        rdv = randint(1, number - 1)
 
-        if power_mod(rdval, multip, number) != 1:
-            for i in range(expon):
-                if power_mod(rdval, (1 << i) * multip, number) == number - 1:
-                    return False
+        if power_mod(rdv, multip, number) != 1 and \
+                all(power_mod(rdv, (1 << i) * multip, number) != number - 1 for i in range(expon)):
+            return False
 
     return True
 

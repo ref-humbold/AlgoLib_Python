@@ -64,6 +64,9 @@ def mult_mod(factor1, factor2, modulo):
     if modulo < 0:
         raise ArithmeticError("Negative modulo.")
 
+    if factor1 < 0 and factor2 < 0:
+        return mult_mod(-factor1, -factor2, modulo)
+
     if factor1 < 0:
         return modulo - mult_mod(-factor1, factor2, modulo)
 
