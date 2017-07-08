@@ -166,7 +166,7 @@ class AVLTree:
 
         @property
         def height(self):
-            return -1
+            return 0
 
         @property
         def left(self):
@@ -176,6 +176,9 @@ class AVLTree:
         def left(self, node):
             self.__inner = node
 
+            if self.__inner is not None:
+                self.__inner.parent = self
+
         @property
         def right(self):
             return self.__inner
@@ -183,6 +186,9 @@ class AVLTree:
         @right.setter
         def right(self, node):
             self.__inner = node
+
+            if self.__inner is not None:
+                self.__inner.parent = self
 
         @property
         def parent(self):
@@ -221,7 +227,7 @@ class AVLTree:
             if succ.right is not None:
                 return succ.right.minimum()
 
-            while succ.height >= 0 and succ.element <= node.element:
+            while succ.height > 0 and succ.element <= node.element:
                 succ = succ.parent
 
             return succ
@@ -235,7 +241,7 @@ class AVLTree:
             if pred.left is not None:
                 return pred.left.maximum()
 
-            while pred.height >= 0 and pred.element >= node.element:
+            while pred.height > 0 and pred.element >= node.element:
                 pred = pred.parent
 
             return pred
@@ -245,7 +251,7 @@ class AVLTree:
             super().__init__(node)
 
         def __next__(self):
-            if self._current_node.height < 0:
+            if self._current_node.height == 0:
                 raise StopIteration
 
             ret_elem = self._current_node.element
@@ -258,7 +264,7 @@ class AVLTree:
             super().__init__(node)
 
         def __next__(self):
-            if self._current_node.height < 0:
+            if self._current_node.height == 0:
                 raise StopIteration
 
             ret_elem = self._current_node.element
@@ -277,8 +283,8 @@ class AVLTree:
                 self.add(i)
 
     def __str__(self):
-        """Tworzy tekstową reprezentację drzewa AVL
-        :returns: tekstowa reprezentacja elementów"""
+        """Tworzenie tekstowej reprezentacji drzewa AVL.
+        :returns: tekstowa reprezentacja drzewa elementów"""
         return "{|" + ", ".join(map(str, self)) + "|}"
 
     def __iter__(self):
@@ -305,7 +311,7 @@ class AVLTree:
 
         node_parent = self.__find_node_parent(element)
 
-        return True if node_parent is None else self.__get_subtree(node_parent, element) is not None
+        return node_parent is None or self.__get_subtree(node_parent, element) is not None
 
     def empty(self):
         """Określanie pustości drzewa.
@@ -368,16 +374,13 @@ class AVLTree:
 
     def __set_inner_root(self, node):
         """:param node: węzeł, który zostanie wewnętrznym korzeniem"""
-        if node is not None:
-            node.parent = self.__tree
-
         self.__tree.left = node
 
     def __is_inner_root(self, node):
         """Sprawdzanie, czy węzeł jest wewnętrznym korzeniem.
         :param node: węzeł
         :returns: czy węzeł to korzeń"""
-        return node.parent.height < 0
+        return node.parent.height == 0
 
     def __is_left_son(self, node):
         """Sprawdzanie, czy węzeł jest lewym synem.
@@ -421,18 +424,10 @@ class AVLTree:
         :param root: korzeń drzewa"""
         if root.left is not None and root.right is not None:
             self.__delete_node(root)
-        elif root.left is not None and root.right is None:
-            root.left.element, root.element = root.element, root.left.element
-            self.__set_inner_root(root.left)
-            root.left = None
-            self.__elems -= 1
-        elif root.left is None and root.right is not None:
-            root.right.element, root.element = root.element, root.right.element
-            self.__set_inner_root(root.right)
-            root.right = None
-            self.__elems -= 1
         else:
-            self.clear()
+            new_root = root.left if root.left is not None else root.right
+            self.__set_inner_root(new_root)
+            self.__elems -= 1
 
     def __delete_node(self, node):
         """Usuwanie elementu z węzła wewnętrznego drzewa.
@@ -482,7 +477,7 @@ class AVLTree:
     def __rebalance(self, node):
         """Przywracanie balansowania na ścieżce od wierzchołka do korzenia.
         :param node: wierzchołek początkowy"""
-        while node.height >= 0:
+        while node.height > 0:
             node.recount_height()
             new_balance = node.count_balance()
 

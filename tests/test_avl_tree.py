@@ -91,18 +91,59 @@ class AVLTreeTest(unittest.TestCase):
             self.assertIn(i, self.__test_object)
 
     def test_add_when_present_element(self):
-        for i in [14, 30, 45]:
+        for i in [14, 24, 30, 45]:
             result = self.__test_object.add(i)
 
             self.assertFalse(result)
             self.assertIn(i, self.__test_object)
 
     def test_remove_when_present_element(self):
-        for i in [14, 30, 45]:
+        for i in [14, 24, 30, 45]:
             result = self.__test_object.remove(i)
 
             self.assertTrue(result)
             self.assertNotIn(i, self.__test_object)
+
+    def test_remove_root_when_two_elements1(self):
+        root = 27
+        elem = 11
+
+        self.__test_object = AVLTree([root, elem])
+
+        result = self.__test_object.remove(root)
+
+        self.assertTrue(result)
+        self.assertNotIn(root, self.__test_object)
+        self.assertIn(elem, self.__test_object)
+
+    def test_remove_root_when_two_elements2(self):
+        root = 11
+        elem = 27
+        self.__test_object = AVLTree([root, elem])
+
+        result = self.__test_object.remove(root)
+
+        self.assertTrue(result)
+        self.assertNotIn(root, self.__test_object)
+        self.assertIn(elem, self.__test_object)
+
+    def test_remove_root_when_one_element(self):
+        root = 0
+        self.__test_object = AVLTree([root])
+
+        result = self.__test_object.remove(root)
+
+        self.assertTrue(result)
+        self.assertNotIn(root, self.__test_object)
+        self.assertTrue(self.__test_object.empty())
+
+    def test_remove_when_empty(self):
+        self.__test_object = AVLTree()
+
+        result = self.__test_object.remove(0)
+
+        self.assertFalse(result)
+        self.assertTrue(self.__test_object.empty())
 
     def test_remove_when_outer_element(self):
         for i in [111, 140, 187]:
