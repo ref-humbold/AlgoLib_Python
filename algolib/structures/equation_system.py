@@ -2,14 +2,12 @@
 """STRUKTURA UKŁADÓW RÓWNAŃ LINIOWYCH Z ALGORYTMEM ELIMINACJI GAUSSA"""
 
 
-class InfiniteSolutionsException(Exception):
-    def __init__(self):
-        super().__init__()
+class InfiniteSolutionsException(ValueError):
+    pass
 
 
-class NoSolutionException(Exception):
-    def __init__(self):
-        super().__init__()
+class NoSolutionException(ValueError):
+    pass
 
 
 class EquationSystem:
