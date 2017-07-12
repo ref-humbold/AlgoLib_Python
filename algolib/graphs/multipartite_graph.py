@@ -3,9 +3,8 @@
 from .undirected_graph import UndirectedGraph
 
 
-class GraphPartitionException(Exception):
-    def __init__(self):
-        super().__init__()
+class GraphPartitionException(ValueError):
+    pass
 
 
 class MultipartiteGraph(UndirectedGraph):
@@ -31,10 +30,6 @@ class MultipartiteGraph(UndirectedGraph):
     def vertices_number(self):
         return self.__graph.vertices_number
 
-    @property
-    def edges_number(self):
-        return self.__graph.edges_number
-
     def get_vertices(self, group=None, **kwargs):
         """:param group: numer grupy wierzchołków
         :returns: generator wierzchołków z zadanej grupy"""
@@ -43,15 +38,19 @@ class MultipartiteGraph(UndirectedGraph):
 
         return (v for v in self.__graph.get_vertices() if self.__groups[v] == group)
 
-    def get_edges(self):
-        return self.__graph.get_edges()
-
     def add_vertex(self, group=1, **kwargs):
         """Dodawanie nowego wierzchołka do zadanej grupy.
         :param group: numer grupy
         :returns: oznaczenie wierzchołka"""
         self.__groups.append(group)
         self.__graph.add_vertex()
+
+    @property
+    def edges_number(self):
+        return self.__graph.edges_number
+
+    def get_edges(self):
+        return self.__graph.get_edges()
 
     def add_edge(self, vertex1, vertex2):
         if self.is_same_group(vertex1, vertex2):

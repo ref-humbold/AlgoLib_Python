@@ -3,9 +3,8 @@
 import queue
 
 
-class DirectedCyclicGraphException(Exception):
-    def __init__(self):
-        super().__init__()
+class DirectedCyclicGraphException(ValueError):
+    pass
 
 
 def sort_topological1(digraph):

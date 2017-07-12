@@ -4,9 +4,8 @@ from .undirected_graph import UndirectedGraph
 from ..structures import DisjointSets
 
 
-class CycleException(Exception):
-    def __init__(self):
-        super().__init__()
+class CycleException(ValueError):
+    pass
 
 
 class ForestGraph(UndirectedGraph):
@@ -29,21 +28,21 @@ class ForestGraph(UndirectedGraph):
     def vertices_number(self):
         return self.__graph.vertices_number
 
-    @property
-    def edges_number(self):
-        return self.__graph.edges_number
-
     def get_vertices(self):
         return self.__graph.get_vertices()
-
-    def get_edges(self):
-        return self.__graph.get_edges()
 
     def add_vertex(self):
         vertex = self.__graph.add_vertex()
         self.__components.make_set(vertex)
 
         return vertex
+
+    @property
+    def edges_number(self):
+        return self.__graph.edges_number
+
+    def get_edges(self):
+        return self.__graph.get_edges()
 
     def add_edge(self, vertex1, vertex2):
         if self.is_same_tree(vertex1, vertex2):
