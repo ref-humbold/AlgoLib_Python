@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """STRUKTURY GRAFÓW NIESKIEROWANYCH"""
 from abc import ABCMeta, abstractmethod
-from .graph import Graph, SimpleGraph, WeightedGraph
+from .graph import Graph, SimpleGraph, WeightedGraph, NoSuchVertexException
 from .directed_graph import DirectedSimpleGraph, DirectedWeightedSimpleGraph
 
 
@@ -41,15 +41,18 @@ class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
 
     def add_edge(self, vertex1, vertex2):
         if not 0 <= vertex1 < self.vertices_number:
-            raise IndexError("No such vertex: " + str(vertex1))
+            raise NoSuchVertexException(str(vertex1))
 
         if not 0 <= vertex2 < self.vertices_number:
-            raise IndexError("No such vertex: " + str(vertex2))
+            raise NoSuchVertexException(str(vertex2))
 
         self._graphrepr[vertex1].add((vertex2, self._DEFAULT_WEIGHT))
         self._graphrepr[vertex2].add((vertex1, self._DEFAULT_WEIGHT))
 
     def get_indegree(self, vertex):
+        if not 0 <= vertex < self.vertices_number:
+            raise NoSuchVertexException(str(vertex))
+
         return self.get_outdegree(vertex)
 
     def as_directed(self):
@@ -72,15 +75,18 @@ class UndirectedWeightedSimpleGraph(UndirectedSimpleGraph, UndirectedWeightedGra
 
     def add_weighted_edge(self, vertex1, vertex2, weight):
         if not 0 <= vertex1 < self.vertices_number:
-            raise IndexError("No such vertex: " + str(vertex1))
+            raise NoSuchVertexException(str(vertex1))
 
         if not 0 <= vertex2 < self.vertices_number:
-            raise IndexError("No such vertex: " + str(vertex2))
+            raise NoSuchVertexException(str(vertex2))
 
         self._graphrepr[vertex1].add((vertex2, weight))
         self._graphrepr[vertex2].add((vertex1, weight))
 
     def get_weighted_neighbours(self, vertex):
+        if not 0 <= vertex < self.vertices_number:
+            raise NoSuchVertexException(str(vertex))
+
         return iter(self._graphrepr[vertex])
 
     def as_directed(self):

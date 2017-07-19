@@ -4,7 +4,7 @@ from .directed_graph import DirectedGraph, DirectedSimpleGraph, \
     DirectedWeightedGraph, DirectedWeightedSimpleGraph
 from .edmonds import FlowGraphEdmonds
 from .forest_graph import ForestGraph, CycleException
-from .graph import Graph, SimpleGraph, WeightedGraph
+from .graph import Graph, SimpleGraph, WeightedGraph, NoSuchVertexException
 from .matching import match
 from .lca import find_lca
 from .mst import kruskal, prim

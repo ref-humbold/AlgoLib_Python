@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """STRUKTURY GRAFÓW SKIEROWANYCH"""
 from abc import ABCMeta, abstractmethod
-from .graph import Graph, SimpleGraph, WeightedGraph
+from .graph import Graph, SimpleGraph, WeightedGraph, NoSuchVertexException
 
 
 class DirectedGraph(Graph, metaclass=ABCMeta):
@@ -36,14 +36,17 @@ class DirectedSimpleGraph(SimpleGraph, DirectedGraph):
 
     def add_edge(self, vertex1, vertex2):
         if not 0 <= vertex1 < self.vertices_number:
-            raise IndexError("No such vertex: " + str(vertex1))
+            raise NoSuchVertexException(str(vertex1))
 
         if not 0 <= vertex2 < self.vertices_number:
-            raise IndexError("No such vertex: " + str(vertex2))
+            raise NoSuchVertexException(str(vertex2))
 
         self._graphrepr[vertex1].add((vertex2, self._DEFAULT_WEIGHT))
 
     def get_indegree(self, vertex):
+        if not 0 <= vertex < self.vertices_number:
+            raise NoSuchVertexException(str(vertex))
+
         return sum(1 for _, v in self.get_edges() if v == vertex)
 
     def reverse(self):
@@ -69,14 +72,17 @@ class DirectedWeightedSimpleGraph(DirectedSimpleGraph, DirectedWeightedGraph):
 
     def add_weighted_edge(self, vertex1, vertex2, weight):
         if not 0 <= vertex1 < self.vertices_number:
-            raise IndexError("No such vertex: " + str(vertex1))
+            raise NoSuchVertexException(str(vertex1))
 
         if not 0 <= vertex2 < self.vertices_number:
-            raise IndexError("No such vertex: " + str(vertex2))
+            raise NoSuchVertexException(str(vertex2))
 
         self._graphrepr[vertex1].add((vertex2, weight))
 
     def get_weighted_neighbours(self, vertex):
+        if not 0 <= vertex < self.vertices_number:
+            raise NoSuchVertexException(str(vertex))
+
         return iter(self._graphrepr[vertex])
 
     def reverse(self):

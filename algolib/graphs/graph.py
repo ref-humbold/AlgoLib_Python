@@ -4,6 +4,10 @@ from abc import ABCMeta, abstractmethod
 import math
 
 
+class NoSuchVertexException(IndexError):
+    pass
+
+
 class Graph(metaclass=ABCMeta):
     def __init__(self):
         super().__init__()
@@ -104,7 +108,7 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
     def get_vertices(self):
         return (v for v in range(self.vertices_number))
 
-    def add_vertex(self, **kwargs):
+    def add_vertex(self):
         self._graphrepr.append(set())
 
         return len(self._graphrepr) - 1
@@ -123,9 +127,15 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
         pass
 
     def get_neighbours(self, vertex):
+        if not 0 <= vertex < self.vertices_number:
+            raise NoSuchVertexException(str(vertex))
+
         return (v for v in map(lambda wv: wv[0], self._graphrepr[vertex]))
 
     def get_outdegree(self, vertex):
+        if not 0 <= vertex < self.vertices_number:
+            raise NoSuchVertexException(str(vertex))
+
         return len(self._graphrepr[vertex])
 
     @abstractmethod
