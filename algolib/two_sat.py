@@ -9,6 +9,8 @@ def is_satisfiable(formula):
     :returns: czy formuła spełnialna"""
     digraph = _make_graph(formula)
 
+    # TODO algorytm 2sat i silnie spójne składowe
+
     return False
 
 

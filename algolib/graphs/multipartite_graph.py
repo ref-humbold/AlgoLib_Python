@@ -8,19 +8,14 @@ class GraphPartitionException(ValueError):
 
 
 class MultipartiteGraph(UndirectedGraph):
-    def __init__(self, group, ugraph, edges=None):
+    def __init__(self, group, ugraph):
         super().__init__()
         # Struktura grafu wielodzielnego.
         self.__graph = ugraph
         # Maksymalna liczba grup wierzchołków.
         self.__groups_number = group
         # Numery grup wierzchołków.
-        self.__groups = []
-
-        if edges is not None:
-            for e in edges:
-                if self.is_same_group(e[0], e[1]):
-                    raise GraphPartitionException()
+        self.__groups = [1 for v in self.__graph.get_vertices()]
 
     @property
     def groups_number(self):
@@ -43,7 +38,8 @@ class MultipartiteGraph(UndirectedGraph):
         :param group: numer grupy
         :returns: oznaczenie wierzchołka"""
         self.__groups.append(group)
-        self.__graph.add_vertex()
+
+        return self.__graph.add_vertex()
 
     @property
     def edges_number(self):
