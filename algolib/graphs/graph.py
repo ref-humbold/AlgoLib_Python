@@ -22,12 +22,12 @@ class Graph(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def get_vertices(self, **kwargs):
+    def get_vertices(self):
         """:returns: generator wierzchołków"""
         pass
 
     @abstractmethod
-    def add_vertex(self, **kwargs):
+    def add_vertex(self):
         """Dodawanie nowego wierzchołka.
         :returns: oznaczenie wierzchołka"""
         pass
@@ -50,7 +50,7 @@ class Graph(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def get_neighbours(self, vertex, **kwargs):
+    def get_neighbours(self, vertex):
         """:param vertex: numer wierzchołka
         :returns: generator sąsiadów wierzchołka"""
         pass

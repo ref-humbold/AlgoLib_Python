@@ -2,18 +2,18 @@
 """WYSZUKIWANIE MOSTÓW I PUNKTÓW ARTYKULACJI W GRAFIE"""
 
 
-def find_bridges(ugraph):
+def find_edge_cut(ugraph):
     """Wyznaczanie mostów w grafie.
     :param ugraph: graf nieskierowany
     :returns: lista krawędzi będących mostami"""
-    return _GraphCutting(ugraph).bridges()
+    return _GraphCutting(ugraph).edge_cut()
 
 
-def find_vertex_separators(ugraph):
+def find_vertex_cut(ugraph):
     """Wyznaczanie punktów artykulacji w grafie.
     :param ugraph: graf nieskierowany
     :returns: lista punktów artykulacji"""
-    return _GraphCutting(ugraph).separators()
+    return _GraphCutting(ugraph).vertex_cut()
 
 
 class _GraphCutting:
@@ -29,7 +29,7 @@ class _GraphCutting:
         # Wartości funkcji LOW.
         self.__low_values = [None] * graph.vertices_number
 
-    def bridges(self):
+    def edge_cut(self):
         """Znajdowanie mostów.
         :returns: lista krawędzi będących mostami"""
         for v in self.__graph.get_vertices():
@@ -39,7 +39,7 @@ class _GraphCutting:
         return ((min(v, self.__dfs_parents[v]), max(v, self.__dfs_parents[v]))
                 for v in self.__graph.get_vertices() if self.__has_bridge(v))
 
-    def separators(self):
+    def vertex_cut(self):
         """Znajdowanie punktów artykulacji.
         :returns: lista punktów artykulacji"""
         for v in self.__graph.get_vertices():

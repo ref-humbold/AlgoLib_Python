@@ -1,4 +1,4 @@
-from .cutting import find_bridges, find_vertex_separators
+from .cutting import find_edge_cut, find_vertex_cut
 from .dinic import FlowGraphDinic
 from .directed_graph import DirectedGraph, DirectedSimpleGraph, \
     DirectedWeightedGraph, DirectedWeightedSimpleGraph
