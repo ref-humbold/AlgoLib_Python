@@ -10,6 +10,6 @@ then
 fi
 
 echo "\033[1;34mRunning PyUnit tests:\033[0m"
-python3 -m xmlrunner discover $TEST_DIR
+python3 -m xmlrunner discover -s $TEST_DIR -t .
 echo "\033[1;34mMoving XML reports to output directory...\033[0m"
 rm -rf $PYUNIT_OUTPUT_DIR && mkdir $PYUNIT_OUTPUT_DIR && mv TEST-*.xml $PYUNIT_OUTPUT_DIR
