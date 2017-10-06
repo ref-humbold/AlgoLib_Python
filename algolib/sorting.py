@@ -101,20 +101,20 @@ def _move_down(heap, vertex, index_begin, index_end):
     _move_down(heap, next_vertex, index_begin, index_end)
 
 
-def merge_sorted(sequence, index_begin=0, index_end=None):
-    """Niemutowalne sortowanie listy przez scalanie.
+def mergedown_sorted(sequence, index_begin=0, index_end=None):
+    """Niemutowalne sortowanie listy przez scalanie top-down.
     :param seq: ciąg
     :param index_begin: początkowy indeks listy
     :param index_end: końcowy indeks listy
     :returns: lista posortowanych elementów"""
     sequence_list = list(sequence)
-    merge_sort(sequence_list, index_begin, index_end)
+    mergedown_sort(sequence_list, index_begin, index_end)
 
     return sequence_list
 
 
-def merge_sort(sequence, index_begin=0, index_end=None):
-    """Mutowalne sortowanie listy przez scalanie.
+def mergedown_sort(sequence, index_begin=0, index_end=None):
+    """Mutowalne sortowanie listy przez scalanie top-down.
     :param sequence: lista
     :param index_begin: początkowy indeks listy
     :param index_end: końcowy indeks listy"""
@@ -143,9 +143,59 @@ def merge_sort(sequence, index_begin=0, index_end=None):
         return
 
     index_middle = (index_begin + index_end) // 2
-    merge_sort(sequence, index_begin, index_middle)
-    merge_sort(sequence, index_middle, index_end)
+    mergedown_sort(sequence, index_begin, index_middle)
+    mergedown_sort(sequence, index_middle, index_end)
     _merge(sequence, index_begin, index_middle, index_end)
+
+
+def mergeup_sorted(sequence, index_begin=0, index_end=None):
+    """Niemutowalne sortowanie listy przez scalanie bottom-up.
+    :param seq: ciąg
+    :param index_begin: początkowy indeks listy
+    :param index_end: końcowy indeks listy
+    :returns: lista posortowanych elementów"""
+    sequence_list = list(sequence)
+    mergeup_sort(sequence_list, index_begin, index_end)
+
+    return sequence_list
+
+
+def mergeup_sort(sequence, index_begin=0, index_end=None):
+    """Mutowalne sortowanie listy przez scalanie bottom-up.
+    :param sequence: lista
+    :param index_begin: początkowy indeks listy
+    :param index_end: końcowy indeks listy"""
+    if not isinstance(sequence, list):
+        raise TypeError("Sequence should be of type list, not {0}.".format(
+            type(sequence).__name__))
+
+    if sequence == []:
+        return
+
+    if index_end is None:
+        index_end = len(sequence)
+
+    if abs(index_begin) > len(sequence):
+        raise IndexError("List beginning index out of range.")
+
+    if abs(index_end) > len(sequence):
+        raise IndexError("List ending index out of range.")
+
+    if index_end < len(sequence):
+        index_end %= len(sequence)
+
+    index_begin %= len(sequence)
+
+    if index_end - index_begin <= 1:
+        return
+
+    i = 2
+
+    while i < 2 * (index_end - index_begin):
+        for j in range(index_begin, index_end, i):
+            _merge(sequence, j, min(j + i // 2, index_end), min(j + i, index_end))
+
+        i *= 2
 
 
 def _merge(sequence, index_begin, index_middle, index_end):
@@ -159,6 +209,8 @@ def _merge(sequence, index_begin, index_middle, index_end):
     iter2 = index_middle
 
     while iter1 < index_middle and iter2 < index_end:
+        print(index_begin, index_middle, index_end, iter1, iter2)
+
         if sequence[iter1] < sequence[iter2]:
             ordered.append(sequence[iter1])
             iter1 += 1
@@ -168,6 +220,8 @@ def _merge(sequence, index_begin, index_middle, index_end):
 
     ordered += sequence[iter1:index_middle]
     ordered += sequence[iter2:index_end]
+
+    print(ordered)
 
     sequence[index_begin:index_begin + len(ordered)] = ordered
 
