@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """TESTY DLA ALGORYTMÓW SORTOWANIA"""
 import unittest
-from algolib import angle_sort, angle_sorted, heap_sort, heap_sorted, mergedown_sort, \
-    mergedown_sorted, mergeup_sort, mergeup_sorted, quick_sort, quick_sorted
+from algolib import angle_sorted, heap_sorted, mergedown_sorted, mergeup_sorted, quick_sorted
 
 
 class SortingTest(unittest.TestCase):
@@ -21,6 +20,7 @@ class SortingTest(unittest.TestCase):
 
         result = angle_sorted(sequence)
 
+        self.assertIsInstance(result, list)
         self.assertListEqual([(0, 0), (3, 2), (2, 3), (-2, 3), (-3, 2),
                               (-3, -2), (-2, -3), (2, -3), (3, -2)], result)
         self.assertListEqual(sequence_copy, sequence)
@@ -34,26 +34,19 @@ class SortingTest(unittest.TestCase):
         self.assertListEqual([(0, 0), (3, 2), (2, 3), (-2, 3), (-3, 2),
                               (-3, -2), (-2, -3), (2, -3), (3, -2)], result)
 
-    def test_angle_sort(self):
-        sequence = [(0, 0), (-2, -3), (-3, -2), (3, -2), (-2, 3), (3, 2), (2, -3), (2, 3), (-3, 2)]
+    def test_angle_sorted_when_all_equal(self):
+        sequence = [(1, 2), (1, 2), (1, 2), (1, 2), (1, 2), (1, 2), (1, 2)]
 
-        angle_sort(sequence)
+        result = angle_sorted(sequence)
 
-        self.assertListEqual([(0, 0), (3, 2), (2, 3), (-2, 3), (-3, 2),
-                              (-3, -2), (-2, -3), (2, -3), (3, -2)], sequence)
+        self.assertListEqual([(1, 2), (1, 2), (1, 2), (1, 2), (1, 2), (1, 2), (1, 2)], result)
 
-    def test_angle_sort_when_empty_list(self):
+    def test_angle_sorted_when_empty_list(self):
         sequence = []
 
-        angle_sort(sequence)
+        result = angle_sorted(sequence)
 
-        self.assertListEqual([], sequence)
-
-    def test_angle_sort_when_argument_is_not_list(self):
-        sequence = {(0, 0), (-2, -3), (-3, -2), (3, -2), (-2, 3), (3, 2), (2, -3), (2, 3), (-3, 2)}
-
-        with self.assertRaises(TypeError):
-            angle_sort(sequence)
+        self.assertListEqual([], result)
 
     def test_heap_sorted(self):
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
@@ -61,6 +54,7 @@ class SortingTest(unittest.TestCase):
 
         result = heap_sorted(sequence)
 
+        self.assertIsInstance(result, list)
         self.assertListEqual(sorted(sequence_copy), result)
         self.assertListEqual(sequence_copy, sequence)
 
@@ -72,62 +66,54 @@ class SortingTest(unittest.TestCase):
         self.assertIsInstance(result, list)
         self.assertListEqual(sorted(sequence), result)
 
-    def test_heap_sort(self):
-        sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
-        sequence_copy = sequence[:]
+    def test_heap_sorted_when_all_equal(self):
+        sequence = [10, 10, 10, 10, 10, 10, 10, 10, 10]
 
-        heap_sort(sequence)
+        result = heap_sorted(sequence)
 
-        self.assertListEqual(sorted(sequence_copy), sequence)
+        self.assertListEqual([10, 10, 10, 10, 10, 10, 10, 10, 10], result)
 
-    def test_heap_sort_when_indices(self):
+    def test_heap_sorted_when_indices(self):
         index1 = 3
         index2 = -2
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
         sequence_sorted = sequence[:index1] + sorted(sequence[index1:index2]) + sequence[index2:]
 
-        heap_sort(sequence, index1, index2)
+        result = heap_sorted(sequence, index1, index2)
 
-        self.assertListEqual(sequence_sorted, sequence)
+        self.assertListEqual(sequence_sorted, result)
 
-    def test_heap_sort_when_index_out_of_range_1(self):
+    def test_heap_sorted_when_left_index_out_of_range(self):
         index1 = -13
         index2 = -2
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
 
         with self.assertRaises(IndexError):
-            heap_sort(sequence, index1, index2)
+            heap_sorted(sequence, index1, index2)
 
-    def test_heap_sort_when_index_out_of_range_2(self):
+    def test_heap_sorted_when_right_index_out_of_range(self):
         index1 = 3
         index2 = 17
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
 
         with self.assertRaises(IndexError):
-            heap_sort(sequence, index1, index2)
+            heap_sorted(sequence, index1, index2)
 
-    def test_heap_sort_when_indices_reversed(self):
+    def test_heap_sorted_when_indices_reversed(self):
         index1 = 7
         index2 = 3
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
-        sequence_copy = sequence[:]
 
-        heap_sort(sequence, index1, index2)
+        result = heap_sorted(sequence, index1, index2)
 
-        self.assertListEqual(sequence_copy, sequence)
+        self.assertListEqual(sequence, result)
 
-    def test_heap_sort_when_empty_list(self):
+    def test_heap_sorted_when_empty_list(self):
         sequence = []
 
-        heap_sort(sequence)
+        result = heap_sorted(sequence)
 
-        self.assertListEqual([], sequence)
-
-    def test_heap_sort_when_argument_is_not_list(self):
-        sequence = {3, 17, -6, 0, 9, -12, 7, 4, 2}
-
-        with self.assertRaises(TypeError):
-            heap_sort(sequence)
+        self.assertListEqual([], result)
 
     def test_mergedown_sorted(self):
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
@@ -135,7 +121,8 @@ class SortingTest(unittest.TestCase):
 
         result = mergedown_sorted(sequence)
 
-        self.assertListEqual(sorted(sequence_copy), result)
+        self.assertIsInstance(result, list)
+        self.assertListEqual(sorted(sequence), result)
         self.assertListEqual(sequence_copy, sequence)
 
     def test_mergedown_sorted_when_argument_is_not_list(self):
@@ -146,62 +133,54 @@ class SortingTest(unittest.TestCase):
         self.assertIsInstance(result, list)
         self.assertListEqual(sorted(sequence), result)
 
-    def test_mergedown_sort(self):
-        sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
-        sequence_copy = sequence[:]
+    def test_mergedown_sorted_when_all_equal(self):
+        sequence = [10, 10, 10, 10, 10, 10, 10, 10, 10]
 
-        mergedown_sort(sequence)
+        result = mergedown_sorted(sequence)
 
-        self.assertListEqual(sorted(sequence_copy), sequence)
+        self.assertListEqual([10, 10, 10, 10, 10, 10, 10, 10, 10], result)
 
-    def test_mergedown_sort_when_indices(self):
+    def test_mergedown_sorted_when_indices(self):
         index1 = 3
         index2 = -2
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
         sequence_sorted = sequence[:index1] + sorted(sequence[index1:index2]) + sequence[index2:]
 
-        mergedown_sort(sequence, index1, index2)
+        result = mergedown_sorted(sequence, index1, index2)
 
-        self.assertListEqual(sequence_sorted, sequence)
+        self.assertListEqual(sequence_sorted, result)
 
-    def test_mergedown_sort_when_index_out_of_range_1(self):
+    def test_mergedown_sorted_when_left_index_out_of_range(self):
         index1 = -13
         index2 = -2
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
 
         with self.assertRaises(IndexError):
-            mergedown_sort(sequence, index1, index2)
+            mergedown_sorted(sequence, index1, index2)
 
-    def test_mergedown_sort_when_index_out_of_range_2(self):
+    def test_mergedown_sorted_when_right_index_out_of_range(self):
         index1 = 3
         index2 = 17
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
 
         with self.assertRaises(IndexError):
-            mergedown_sort(sequence, index1, index2)
+            mergedown_sorted(sequence, index1, index2)
 
-    def test_mergedown_sort_when_indices_reversed(self):
+    def test_mergedown_sorted_when_indices_reversed(self):
         index1 = 7
         index2 = 3
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
-        sequence_copy = sequence[:]
 
-        mergedown_sort(sequence, index1, index2)
+        result = mergedown_sorted(sequence, index1, index2)
 
-        self.assertListEqual(sequence_copy, sequence)
+        self.assertListEqual(sequence, result)
 
-    def test_mergedown_sort_when_empty_list(self):
+    def test_mergedown_sorted_when_empty_list(self):
         sequence = []
 
-        mergedown_sort(sequence)
+        result = mergedown_sorted(sequence)
 
-        self.assertListEqual([], sequence)
-
-    def test_mergedown_sort_when_argument_is_not_list(self):
-        sequence = {3, 17, -6, 0, 9, -12, 7, 4, 2}
-
-        with self.assertRaises(TypeError):
-            mergedown_sort(sequence)
+        self.assertListEqual([], result)
 
     def test_mergeup_sorted(self):
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
@@ -209,6 +188,7 @@ class SortingTest(unittest.TestCase):
 
         result = mergeup_sorted(sequence)
 
+        self.assertIsInstance(result, list)
         self.assertListEqual(sorted(sequence_copy), result)
         self.assertListEqual(sequence_copy, sequence)
 
@@ -220,62 +200,54 @@ class SortingTest(unittest.TestCase):
         self.assertIsInstance(result, list)
         self.assertListEqual(sorted(sequence), result)
 
-    def test_mergeup_sort(self):
-        sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
-        sequence_copy = sequence[:]
+    def test_mergeup_sorted_when_all_equal(self):
+        sequence = [10, 10, 10, 10, 10, 10, 10, 10, 10]
 
-        mergeup_sort(sequence)
+        result = mergeup_sorted(sequence)
 
-        self.assertListEqual(sorted(sequence_copy), sequence)
+        self.assertListEqual([10, 10, 10, 10, 10, 10, 10, 10, 10], result)
 
-    def test_mergeup_sort_when_indices(self):
+    def test_mergeup_sorted_when_indices(self):
         index1 = 3
         index2 = -2
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
         sequence_sorted = sequence[:index1] + sorted(sequence[index1:index2]) + sequence[index2:]
 
-        mergeup_sort(sequence, index1, index2)
+        result = mergeup_sorted(sequence, index1, index2)
 
-        self.assertListEqual(sequence_sorted, sequence)
+        self.assertListEqual(sequence_sorted, result)
 
-    def test_mergeup_sort_when_index_out_of_range_1(self):
+    def test_mergeup_sorted_when_left_index_out_of_range(self):
         index1 = -13
         index2 = -2
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
 
         with self.assertRaises(IndexError):
-            mergeup_sort(sequence, index1, index2)
+            mergeup_sorted(sequence, index1, index2)
 
-    def test_mergeup_sort_when_index_out_of_range_2(self):
+    def test_mergeup_sorted_when_right_index_out_of_range(self):
         index1 = 3
         index2 = 17
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
 
         with self.assertRaises(IndexError):
-            mergeup_sort(sequence, index1, index2)
+            mergeup_sorted(sequence, index1, index2)
 
-    def test_mergeup_sort_when_indices_reversed(self):
+    def test_mergeup_sorted_when_indices_reversed(self):
         index1 = 7
         index2 = 3
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
-        sequence_copy = sequence[:]
 
-        mergeup_sort(sequence, index1, index2)
+        result = mergeup_sorted(sequence, index1, index2)
 
-        self.assertListEqual(sequence_copy, sequence)
+        self.assertListEqual(sequence, result)
 
-    def test_mergeup_sort_when_empty_list(self):
+    def test_mergeup_sorted_when_empty_list(self):
         sequence = []
 
-        mergeup_sort(sequence)
+        result = mergeup_sorted(sequence)
 
-        self.assertListEqual([], sequence)
-
-    def test_mergeup_sort_when_argument_is_not_list(self):
-        sequence = {3, 17, -6, 0, 9, -12, 7, 4, 2}
-
-        with self.assertRaises(TypeError):
-            mergeup_sort(sequence)
+        self.assertListEqual([], result)
 
     def test_quick_sorted(self):
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
@@ -283,6 +255,7 @@ class SortingTest(unittest.TestCase):
 
         result = quick_sorted(sequence)
 
+        self.assertIsInstance(result, list)
         self.assertListEqual(sorted(sequence_copy), result)
         self.assertListEqual(sequence_copy, sequence)
 
@@ -294,59 +267,52 @@ class SortingTest(unittest.TestCase):
         self.assertIsInstance(result, list)
         self.assertListEqual(sorted(sequence), result)
 
-    def test_quick_sort(self):
-        sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
-        sequence_copy = sequence[:]
+    def test_quick_sorted_when_all_equal(self):
+        sequence = [10, 10, 10, 10, 10, 10, 10, 10, 10]
 
-        quick_sort(sequence)
+        result = quick_sorted(sequence)
 
-        self.assertListEqual(sorted(sequence_copy), sequence)
+        self.assertListEqual([10, 10, 10, 10, 10, 10, 10, 10, 10], result)
 
-    def test_quick_sort_when_indices(self):
+    def test_quick_sorted_when_indices(self):
         index1 = 3
         index2 = -2
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
         sequence_sorted = sequence[:index1] + sorted(sequence[index1:index2]) + sequence[index2:]
 
-        quick_sort(sequence, index1, index2)
+        result = quick_sorted(sequence, index1, index2)
 
-        self.assertListEqual(sequence_sorted, sequence)
+        self.assertListEqual(sequence_sorted, result)
 
-    def test_quick_sort_when_index_out_of_range_1(self):
+    def test_quick_sorted_when_left_index_out_of_range(self):
         index1 = -13
         index2 = -2
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
 
         with self.assertRaises(IndexError):
-            quick_sort(sequence, index1, index2)
+            quick_sorted(sequence, index1, index2)
 
-    def test_quick_sort_when_index_out_of_range_2(self):
+    def test_quick_sorted_when_right_index_out_of_range(self):
         index1 = 3
         index2 = 17
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
 
         with self.assertRaises(IndexError):
-            quick_sort(sequence, index1, index2)
+            quick_sorted(sequence, index1, index2)
 
-    def test_quick_sort_when_indices_reversed(self):
+    def test_quick_sorted_when_indices_reversed(self):
         index1 = 7
         index2 = 3
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
         sequence_copy = sequence[:]
 
-        quick_sort(sequence, index1, index2)
+        result = quick_sorted(sequence, index1, index2)
 
-        self.assertListEqual(sequence_copy, sequence)
+        self.assertListEqual(sequence_copy, result)
 
-    def test_quick_sort_when_empty_list(self):
+    def test_quick_sorted_when_empty_list(self):
         sequence = []
 
-        quick_sort(sequence)
+        result = quick_sorted(sequence)
 
-        self.assertListEqual([], sequence)
-
-    def test_quick_sort_when_argument_is_not_list(self):
-        sequence = {3, 17, -6, 0, 9, -12, 7, 4, 2}
-
-        with self.assertRaises(TypeError):
-            quick_sort(sequence)
+        self.assertListEqual([], result)
