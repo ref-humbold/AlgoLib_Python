@@ -64,14 +64,13 @@ class AVLTree:
         @abstractmethod
         def minimum(self):
             """Wyszukiwanie minimum w swoim poddrzewie.
-            :returns: węzeł z minimalną wartością w drzewie"""
+            :returns: węzeł z minimalną wartością w poddrzewie"""
             pass
 
         @abstractmethod
         def maximum(self):
-            """Wyszukiwanie maksimum w drzewie.
-            :param root: korzeń drzewa
-            :returns: węzeł z maksymalną wartością w drzewie"""
+            """Wyszukiwanie maksimum w swoim poddrzewie.
+            :returns: węzeł z maksymalną wartością w poddrzewie"""
             pass
 
     class _AVLInnerNode(_AVLNode):
@@ -170,33 +169,30 @@ class AVLTree:
 
         @property
         def left(self):
-            return self.__inner
+            return None
 
         @left.setter
         def left(self, node):
-            self.__inner = node
-
-            if self.__inner is not None:
-                self.__inner.parent = self
+            pass
 
         @property
         def right(self):
-            return self.__inner
+            return None
 
         @right.setter
         def right(self, node):
+            pass
+
+        @property
+        def parent(self):
+            return self.__inner
+
+        @parent.setter
+        def parent(self, node):
             self.__inner = node
 
             if self.__inner is not None:
                 self.__inner.parent = self
-
-        @property
-        def parent(self):
-            return None
-
-        @parent.setter
-        def parent(self, node):
-            pass
 
         def count_balance(self):
             return 0
@@ -246,7 +242,7 @@ class AVLTree:
 
             return pred
 
-    class _AVLFwdIterator(_AVLIterator):
+    class _AVLSuccIterator(_AVLIterator):
         def __init__(self, node):
             super().__init__(node)
 
@@ -259,7 +255,7 @@ class AVLTree:
 
             return ret_elem
 
-    class _AVLRevIterator(_AVLIterator):
+    class _AVLPredIterator(_AVLIterator):
         def __init__(self, node):
             super().__init__(node)
 
@@ -290,12 +286,12 @@ class AVLTree:
     def __iter__(self):
         """Tworzenie iteratora dla drzewa.
         :returns: obiekt iteratora"""
-        return self._AVLFwdIterator(self.__get_inner_root().minimum())
+        return self._AVLSuccIterator(self.__get_inner_root().minimum())
 
     def __reversed__(self):
         """Tworzenie odwróconego iteratora dla drzewa.
         :returns: obiekt odwróconego iteratora"""
-        return self._AVLRevIterator(self.__get_inner_root().maximum())
+        return self._AVLPredIterator(self.__get_inner_root().maximum())
 
     def __len__(self):
         """Określanie liczby elementów drzewa.
@@ -370,11 +366,11 @@ class AVLTree:
 
     def __get_inner_root(self):
         """:returns: wewnętrzny korzeń drzewa"""
-        return self.__tree.right
+        return self.__tree.parent
 
     def __set_inner_root(self, node):
         """:param node: węzeł, który zostanie wewnętrznym korzeniem"""
-        self.__tree.left = node
+        self.__tree.parent = node
 
     def __is_inner_root(self, node):
         """Sprawdzanie, czy węzeł jest wewnętrznym korzeniem.
