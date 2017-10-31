@@ -1,0 +1,11 @@
+# ignore pycache
+
+/**/__pycache__
+
+#ignore Python compiled files
+
+/**/*.pyc
+
+# ignore PyUnit output
+
+/pyunit_results
