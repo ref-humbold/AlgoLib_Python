@@ -6,15 +6,15 @@ class DisjointSets:
     def __init__(self, universe=None):
         # Słownik reprezentantów elementów.
         self.__represents = {} if universe is None else {i: i for i in universe}
+        # Liczba zbiorów.
+        self.__elems = len(self.__represents)
 
     def __len__(self):
-        """Liczenie zbiorów.
-        :returns: liczba zbiorów"""
-        return len({self.find_set(e) for e in self.__represents})
+        """:returns: liczba zbiorów"""
+        return self.__elems
 
     def __contains__(self, element):
-        """Należenie do dowolnego zbioru.
-        :param element: element
+        """:param element: element
         :returns: czy element w jednym ze zbiorów"""
         return element in self.__represents
 
@@ -25,6 +25,7 @@ class DisjointSets:
             raise ValueError("Value {0} already present.".format(element))
 
         self.__represents[element] = element
+        self.__elems += 1
 
     def find_set(self, element):
         """Ustalanie reprezentanta zbioru.
@@ -41,6 +42,7 @@ class DisjointSets:
         :param element2: element drugiego zbioru"""
         if not self.is_same_set(element1, element2):
             self.__represents[self.find_set(element2)] = self.find_set(element1)
+            self.__elems -= 1
 
     def is_same_set(self, element1, element2):
         """Sprawdzanie, czy elementy należą do tego samego zbioru.

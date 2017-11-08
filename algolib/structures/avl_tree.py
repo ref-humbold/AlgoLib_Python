@@ -279,28 +279,23 @@ class AVLTree:
                 self.add(i)
 
     def __str__(self):
-        """Tworzenie tekstowej reprezentacji drzewa AVL.
-        :returns: tekstowa reprezentacja drzewa elementów"""
+        """:returns: tekstowa reprezentacja drzewa elementów"""
         return "{|" + ", ".join(map(str, self)) + "|}"
 
     def __iter__(self):
-        """Tworzenie iteratora dla drzewa.
-        :returns: obiekt iteratora"""
+        """:returns: obiekt iteratora"""
         return self._AVLSuccIterator(self.__get_inner_root().minimum())
 
     def __reversed__(self):
-        """Tworzenie odwróconego iteratora dla drzewa.
-        :returns: obiekt odwróconego iteratora"""
+        """:returns: obiekt odwróconego iteratora"""
         return self._AVLPredIterator(self.__get_inner_root().maximum())
 
     def __len__(self):
-        """Określanie liczby elementów drzewa.
-        :returns: liczba elemenów drzewa"""
+        """:returns: liczba elemenów drzewa"""
         return self.__elems
 
     def __contains__(self, element):
-        """Sprawdzanie występowania elementu w drzewie.
-        :param element: wartość do znalezienia
+        """:param element: wartość do znalezienia
         :returns: czy wartość w drzewie"""
         if self.empty():
             return False
@@ -310,8 +305,7 @@ class AVLTree:
         return node_parent is None or self.__get_subtree(node_parent, element) is not None
 
     def empty(self):
-        """Określanie pustości drzewa.
-        :returns: czy drzewo jest puste"""
+        """:returns: czy drzewo jest puste"""
         return self.__get_inner_root() is None
 
     def add(self, element):
