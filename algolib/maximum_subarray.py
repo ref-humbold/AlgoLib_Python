@@ -6,19 +6,20 @@ def find_maximum_subarray(sequence):
     """Wyznaczanie spójnego podciągu o maksymalnej sumie w sposób dynamiczny.
     :param sequence: ciąg
     :returns: elementy spójnego podciągu o maksymalnej sumie"""
-    actual_subseq = []
-    max_subseq = []
+    actual = [0, []]
+    maximal = (0, [])
 
     for elem in sequence:
-        if sum(actual_subseq) < 0.0:
-            actual_subseq = []
+        if actual[0] < 0.0:
+            actual = [0, []]
 
-        actual_subseq.append(elem)
+        actual[0] += elem
+        actual[1].append(elem)
 
-        if sum(actual_subseq) > sum(max_subseq):
-            max_subseq = actual_subseq[:]
+        if actual[0] > maximal[0]:
+            maximal = (actual[0], actual[1][:])
 
-    return max_subseq
+    return maximal[1]
 
 
 def find_maximal_sum(sequence):
@@ -28,7 +29,7 @@ def find_maximal_sum(sequence):
     size = 1
 
     while size < 2 * len(sequence):
-        size <<= 1
+        size *= 2
 
     interval_sums = [0.0] * size
     prefix_sums = [0.0] * size
@@ -41,7 +42,7 @@ def find_maximal_sum(sequence):
         interval_sums[index] = max(all_sums[index], 0.0)
         prefix_sums[index] = max(all_sums[index], 0.0)
         suffix_sums[index] = max(all_sums[index], 0.0)
-        index >>= 1
+        index //= 2
 
         while index > 0:
             index_left = index + index
@@ -53,6 +54,6 @@ def find_maximal_sum(sequence):
             suffix_sums[index] = max(suffix_sums[index_right],
                                      suffix_sums[index_left] + all_sums[index_right])
             all_sums[index] = all_sums[index_left] + all_sums[index_right]
-            index >>= 1
+            index //= 2
 
     return interval_sums[1]
