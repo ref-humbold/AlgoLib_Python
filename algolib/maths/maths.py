@@ -26,33 +26,6 @@ def lcm(number1, number2):
     return max_number // gcd(number1, number2) * min_number
 
 
-def power_mod(base, exponent, modulo):
-    """Szybkie potęgowanie binarne modulowane.
-    :param base: podstawa
-    :param exponent: wykładnik
-    :param modulo: modulo
-    :returns: wynik potęgowania"""
-    result = 1
-
-    if exponent < 0:
-        raise ArithmeticError("Negative exponent.")
-
-    if modulo < 0:
-        raise ArithmeticError("Negative modulo.")
-
-    if base == 0 and exponent == 0:
-        return float('nan')
-
-    while exponent > 0:
-        if (exponent & 1) == 1:
-            result = mult_mod(result, base, modulo)
-
-        base = mult_mod(base, base, modulo)
-        exponent >>= 1
-
-    return result
-
-
 def mult_mod(factor1, factor2, modulo):
     """Szybkie mnożenie binarne modulowane.
     :param factor1: pierwszy czynnik
@@ -74,10 +47,37 @@ def mult_mod(factor1, factor2, modulo):
         return modulo - mult_mod(factor1, -factor2, modulo)
 
     while factor2 > 0:
-        if (factor2 & 1) == 1:
-            result = result + factor1 if modulo == 0 else (result + factor1) % modulo
+        if factor2 % 2 == 1:
+            result = factor1 + result if modulo == 0 else (factor1 + result) % modulo
 
-        factor2 >>= 1
         factor1 = factor1 + factor1 if modulo == 0 else (factor1 + factor1) % modulo
+        factor2 >>= 1
+
+    return result
+
+
+def power_mod(base, exponent, modulo):
+    """Szybkie potęgowanie binarne modulowane.
+    :param base: podstawa
+    :param exponent: wykładnik
+    :param modulo: modulo
+    :returns: wynik potęgowania"""
+    result = 1
+
+    if modulo < 0:
+        raise ArithmeticError("Negative modulo.")
+
+    if exponent < 0:
+        raise ArithmeticError("Negative exponent.")
+
+    if base == 0 and exponent == 0:
+        return float('nan')
+
+    while exponent > 0:
+        if exponent % 2 == 1:
+            result = mult_mod(base, result, modulo)
+
+        base = mult_mod(base, base, modulo)
+        exponent >>= 1
 
     return result
