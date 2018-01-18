@@ -18,8 +18,8 @@ class DisjointSets:
         :returns: czy element w jednym ze zbiorów"""
         return element in self.__represents
 
-    def make_set(self, element):
-        """Tworzenie nowego zbioru jednoelementowego.
+    def add_elem(self, element):
+        """Dodawanie nowego elementu jako singleton.
         :param element: nowy element"""
         if element in self.__represents:
             raise ValueError("Value {0} already present.".format(element))

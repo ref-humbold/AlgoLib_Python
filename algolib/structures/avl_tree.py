@@ -51,13 +51,23 @@ class AVLTree:
             pass
 
         @abstractmethod
+        def is_left_son(self):
+            """Sprawdzanie, czy węzeł jest lewym synem.
+            :returns: czy węzeł to lewy syn"""
+
+        @abstractmethod
+        def is_right_son(self):
+            """Sprawdzanie, czy węzeł jest prawym synem.
+            :returns: czy węzeł to prawy syn"""
+
+        @abstractmethod
         def count_balance(self):
             """Wyliczanie balansu wierzchołka.
             :returns: wartość balansu"""
             pass
 
         @abstractmethod
-        def recount_height(self):
+        def count_height(self):
             """Wylicza wysokość wierzchołka."""
             pass
 
@@ -109,7 +119,7 @@ class AVLTree:
             if self.__left is not None:
                 self.__left.parent = self
 
-            self.recount_height()
+            self.count_height()
 
         @property
         def right(self):
@@ -122,7 +132,7 @@ class AVLTree:
             if self.__right is not None:
                 self.__right.parent = self
 
-            self.recount_height()
+            self.count_height()
 
         @property
         def parent(self):
@@ -132,13 +142,19 @@ class AVLTree:
         def parent(self, node):
             self.__parent = node
 
+        def is_left_son(self):
+            return self.parent is not None and self.parent.left is self
+
+        def is_right_son(self):
+            return self.parent is not None and self.parent.right is self
+
         def count_balance(self):
             left_height = 0 if self.__left is None else self.__left.height
             right_height = 0 if self.__right is None else self.__right.height
 
             return left_height - right_height
 
-        def recount_height(self):
+        def count_height(self):
             left_height = 0 if self.__left is None else self.__left.height
             right_height = 0 if self.__right is None else self.__right.height
 
@@ -165,7 +181,7 @@ class AVLTree:
 
         @property
         def height(self):
-            return 0
+            return -1
 
         @property
         def left(self):
@@ -194,10 +210,16 @@ class AVLTree:
             if self.__inner is not None:
                 self.__inner.parent = self
 
+        def is_left_son(self):
+            return False
+
+        def is_right_son(self):
+            return False
+
         def count_balance(self):
             return 0
 
-        def recount_height(self):
+        def count_height(self):
             pass
 
         def minimum(self):
@@ -223,10 +245,10 @@ class AVLTree:
             if succ.right is not None:
                 return succ.right.minimum()
 
-            while succ.height > 0 and succ.element <= node.element:
+            while succ.height > 0 and not succ.is_left_son():
                 succ = succ.parent
 
-            return succ
+            return succ if succ.height <= 0 else succ.parent
 
         def _predecessor(self, node):
             """Wyznaczanie poprzednika węzła w drzewie.
@@ -237,17 +259,17 @@ class AVLTree:
             if pred.left is not None:
                 return pred.left.maximum()
 
-            while pred.height > 0 and pred.element >= node.element:
+            while pred.height > 0 and not pred.is_right_son():
                 pred = pred.parent
 
-            return pred
+            return pred if pred.height < 0 else pred.parent
 
     class _AVLSuccIterator(_AVLIterator):
         def __init__(self, node):
             super().__init__(node)
 
         def __next__(self):
-            if self._current_node.height == 0:
+            if self._current_node.height < 0:
                 raise StopIteration
 
             ret_elem = self._current_node.element
@@ -260,7 +282,7 @@ class AVLTree:
             super().__init__(node)
 
         def __next__(self):
-            if self._current_node.height == 0:
+            if self._current_node.height < 0:
                 raise StopIteration
 
             ret_elem = self._current_node.element
@@ -327,7 +349,7 @@ class AVLTree:
             else:
                 node_parent.left = new_node
 
-            self.__rebalance(new_node)
+            self.__balance(new_node)
         else:
             self.__set_inner_root(new_node)
 
@@ -370,19 +392,7 @@ class AVLTree:
         """Sprawdzanie, czy węzeł jest wewnętrznym korzeniem.
         :param node: węzeł
         :returns: czy węzeł to korzeń"""
-        return node.parent.height == 0
-
-    def __is_left_son(self, node):
-        """Sprawdzanie, czy węzeł jest lewym synem.
-        :param node: węzeł
-        :returns: czy węzeł to lewy syn"""
-        return False if self.__is_inner_root(node) else node.parent.left is node
-
-    def __is_right_son(self, node):
-        """Sprawdzanie, czy węzeł jest prawym synem.
-        :param node: węzeł
-        :returns: czy węzeł to prawy syn"""
-        return False if self.__is_inner_root(node) else node.parent.right is node
+        return node.parent.height < 0
 
     def __get_subtree(self, node, element):
         """Wyznaczanie poddrzewa, w którym mógłby znależć się element.
@@ -431,7 +441,7 @@ class AVLTree:
             node_parent = node.parent
 
             self.__replace_subtree(node, son)
-            self.__rebalance(node_parent)
+            self.__balance(node_parent)
             self.__elems -= 1
 
     def __replace_subtree(self, node1, node2):
@@ -440,9 +450,9 @@ class AVLTree:
         :param node2: korzeń nowego poddrzewa"""
         if self.__is_inner_root(node1):
             self.__set_inner_root(node2)
-        elif self.__is_left_son(node1):
+        elif node1.is_left_son(node1):
             node1.parent.left = node2
-        elif self.__is_right_son(node1):
+        elif node1.is_right_son(node1):
             node1.parent.right = node2
 
         node1.parent = None
@@ -455,20 +465,20 @@ class AVLTree:
 
         upper_node = node.parent
 
-        if self.__is_right_son(node):
+        if node.is_right_son():
             upper_node.right = node.left
             self.__replace_subtree(upper_node, node)
             node.left = upper_node
-        elif self.__is_left_son(node):
+        elif node.is_left_son():
             upper_node.left = node.right
             self.__replace_subtree(upper_node, node)
             node.right = upper_node
 
-    def __rebalance(self, node):
+    def __balance(self, node):
         """Przywracanie balansowania na ścieżce od wierzchołka do korzenia.
         :param node: wierzchołek początkowy"""
         while node.height > 0:
-            node.recount_height()
+            node.count_height()
             new_balance = node.count_balance()
 
             if new_balance >= 2:

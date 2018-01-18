@@ -33,7 +33,7 @@ class ForestGraph(UndirectedGraph):
 
     def add_vertex(self):
         vertex = self.__graph.add_vertex()
-        self.__components.make_set(vertex)
+        self.__components.add_elem(vertex)
 
         return vertex
 
