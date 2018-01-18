@@ -30,19 +30,19 @@ class DisjointSetsTest(unittest.TestCase):
 
         self.assertFalse(result)
 
-    def test_make_set_when_new_element(self):
+    def test_add_elem_when_new_element(self):
         elem = 20
 
-        self.__test_object.make_set(elem)
+        self.__test_object.add_elem(elem)
 
         self.assertIn(elem, self.__test_object)
         self.assertEqual(elem, self.__test_object.find_set(elem))
 
-    def test_make_set_when_present_element(self):
+    def test_add_elem_when_present_element(self):
         elem = 7
 
         with self.assertRaises(ValueError):
-            self.__test_object.make_set(elem)
+            self.__test_object.add_elem(elem)
 
     def test_find_set(self):
         elem = 4
