@@ -450,9 +450,9 @@ class AVLTree:
         :param node2: korzeń nowego poddrzewa"""
         if self.__is_inner_root(node1):
             self.__set_inner_root(node2)
-        elif node1.is_left_son(node1):
+        elif node1.is_left_son():
             node1.parent.left = node2
-        elif node1.is_right_son(node1):
+        elif node1.is_right_son():
             node1.parent.right = node2
 
         node1.parent = None
