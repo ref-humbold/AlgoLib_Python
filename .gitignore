@@ -1,4 +1,4 @@
-# Python output
+# Python output folders and files
 **/__pycache__
 **/*.pyc
 pyunit_results
