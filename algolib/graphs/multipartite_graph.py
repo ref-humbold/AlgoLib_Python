@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """STRUKTURY GRAFÓW WIELODZIELNYCH"""
-from .undirected_graph import UndirectedGraph
+from .undirected_graph import UndirectedGraph, UndirectedSimpleGraph
 
 
 class GraphPartitionException(ValueError):
@@ -8,10 +8,10 @@ class GraphPartitionException(ValueError):
 
 
 class MultipartiteGraph(UndirectedGraph):
-    def __init__(self, group, ugraph):
+    def __init__(self, n, group):
         super().__init__()
         # Struktura grafu wielodzielnego.
-        self.__graph = ugraph
+        self.__graph = UndirectedSimpleGraph(n)
         # Maksymalna liczba grup wierzchołków.
         self.__groups_number = group
         # Numery grup wierzchołków.

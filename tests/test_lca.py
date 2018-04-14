@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """TESTY DLA ALGORYTMU NAJNIŻSZEGO WSPÓLNEGO PRZODKA"""
 import unittest
-from algolib.graphs import find_lca, ForestGraph, UndirectedSimpleGraph
+from algolib.graphs import find_lca, ForestGraph
 
 
 class LCATest(unittest.TestCase):
@@ -10,8 +10,8 @@ class LCATest(unittest.TestCase):
         self.__trees = None
 
     def setUp(self):
-        self.__trees = ForestGraph(UndirectedSimpleGraph(
-            12), [(0, 1), (0, 2), (1, 3), (1, 4), (1, 5), (2, 6), (4, 7), (6, 8), (6, 9), (10, 11)])
+        self.__trees = ForestGraph(
+            12, [(0, 1), (0, 2), (1, 3), (1, 4), (1, 5), (2, 6), (4, 7), (6, 8), (6, 9), (10, 11)])
 
     def tearDown(self):
         self.__trees = None

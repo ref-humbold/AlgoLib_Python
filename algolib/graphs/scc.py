@@ -7,20 +7,20 @@ def find_scc(digraph):
     """Algorytm wyznaczania silnie spójnych składowych grafu.
     :param digraph: graf skierowany
     :returns: numery silnie spójnych składowych dla wierzchołków"""
-    comps = _StrongComponents(digraph).find_scc()
+    comps = _GraphComponents(digraph).find_scc()
     components = [set() for i in range(max(comps) + 1)]
 
-    for vertex in digraph.get_vertices():
-        components[comps[vertex]].add(vertex)
+    for v in digraph.get_vertices():
+        components[comps[v]].add(v)
 
     return components
 
 
-class _StrongComponents:
+class _GraphComponents:
     def __init__(self, digraph):
         self.__digraph = digraph
-        self.__components = [None for v in digraph.get_vertices()]
-        self.__postorder = [None for v in digraph.get_vertices()]
+        self.__components = [None] * digraph.vertices_number
+        self.__postorder = [None] * digraph.vertices_number
 
     def find_scc(self):
         """Algorytm wyznaczania silnie spójnych składowych grafu.
@@ -28,17 +28,17 @@ class _StrongComponents:
         timer = 0
         component = 0
 
-        for vertex in self.__digraph.get_vertices():
-            if self.__postorder[vertex] is None:
-                timer = self.__dfs_order(vertex, timer)
+        for v in self.__digraph.get_vertices():
+            if self.__postorder[v] is None:
+                timer = self.__dfs_order(v, timer)
                 timer += 1
 
         self.__postorder.sort(reverse=True)
         self.__digraph.reverse()
 
-        for _, vertex in self.__postorder:
-            if self.__components[vertex] is None:
-                self.__dfs_scc(vertex, component)
+        for _, v in self.__postorder:
+            if self.__components[v] is None:
+                self.__dfs_scc(v, component)
                 component += 1
 
         return self.__components

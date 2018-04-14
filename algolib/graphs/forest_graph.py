@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """STRUKTURY GRAFÓW DRZEW"""
-from .undirected_graph import UndirectedGraph
+from .undirected_graph import UndirectedGraph, UndirectedSimpleGraph
 from ..structures import DisjointSets
 
 
@@ -9,12 +9,12 @@ class CycleException(ValueError):
 
 
 class ForestGraph(UndirectedGraph):
-    def __init__(self, ugraph, edges=None):
+    def __init__(self, n, edges=None):
         super().__init__()
         # Struktura grafu drzew.
-        self.__graph = ugraph
+        self.__graph = UndirectedSimpleGraph(n)
         # Struktura składowych drzew.
-        self.__components = DisjointSets(ugraph.get_vertices())
+        self.__components = DisjointSets(self.__graph.get_vertices())
 
         if edges is not None:
             for e in edges:

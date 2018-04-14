@@ -40,7 +40,7 @@ class _MatchAugmenter:
         return self.__matching
 
     def augment_match(self):
-        """Powiększanie skojarzenia przy pomocy scieżek powiększających.
+        """Powiększanie skojarzenia przy pomocy ścieżek powiększających.
         :returns: czy powiększono skojarzenie"""
         self.__distances = [self.__graph.inf] * self.__graph.vertices_number
         self.__is_visited = [False] * self.__graph.vertices_number
