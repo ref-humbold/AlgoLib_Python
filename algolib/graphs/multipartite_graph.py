@@ -15,7 +15,7 @@ class MultipartiteGraph(UndirectedGraph):
         # Maksymalna liczba grup wierzchołków.
         self.__groups_number = group
         # Numery grup wierzchołków.
-        self.__groups = [1 for v in self.__graph.get_vertices()]
+        self.__groups = [0] * self.__graph.vertices_number
 
     @property
     def groups_number(self):
@@ -25,15 +25,15 @@ class MultipartiteGraph(UndirectedGraph):
     def vertices_number(self):
         return self.__graph.vertices_number
 
-    def get_vertices(self, *, group=0):
+    def get_vertices(self, *, group=None):
         """:param group: numer grupy wierzchołków
         :returns: generator wierzchołków z zadanej grupy"""
-        if group == 0:
+        if group is None:
             return self.__graph.get_vertices()
 
         return (v for v in self.__graph.get_vertices() if self.__groups[v] == group)
 
-    def add_vertex(self, *, group=1):
+    def add_vertex(self, *, group=0):
         """Dodawanie nowego wierzchołka do zadanej grupy.
         :param group: numer grupy
         :returns: oznaczenie wierzchołka"""
@@ -54,11 +54,11 @@ class MultipartiteGraph(UndirectedGraph):
 
         self.__graph.add_edge(vertex1, vertex2)
 
-    def get_neighbours(self, vertex, *, group=0):
+    def get_neighbours(self, vertex, *, group=None):
         """:param vertex: numer wierzchołka
         :param group: numer grupy sąsiadów
         :returns: generator sąsiadów wierzchołka z zadanej grupy"""
-        if group == 0:
+        if group is None:
             return self.__graph.get_neighbours(vertex)
 
         return (v for v in self.__graph.get_neighbours(vertex) if self.__groups[v] == group)

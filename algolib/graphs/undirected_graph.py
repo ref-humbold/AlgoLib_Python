@@ -16,6 +16,11 @@ class UndirectedGraph(Graph, metaclass=ABCMeta):
         pass
 
 
+class UndirectedWeightedGraph(UndirectedGraph, WeightedGraph, metaclass=ABCMeta):
+    def __init__(self):
+        super().__init__()
+
+
 class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
     def __init__(self, n, edges=None):
         super().__init__(n)
@@ -56,7 +61,7 @@ class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
         return DirectedSimpleGraph(self.vertices_number, edges=diedges)
 
 
-class UndirectedWeightedSimpleGraph(UndirectedSimpleGraph, WeightedGraph):
+class UndirectedWeightedSimpleGraph(UndirectedSimpleGraph, UndirectedWeightedGraph):
     def __init__(self, n, edges=None):
         super().__init__(n)
 

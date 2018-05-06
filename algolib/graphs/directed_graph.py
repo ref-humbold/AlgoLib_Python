@@ -14,6 +14,11 @@ class DirectedGraph(Graph, metaclass=ABCMeta):
         pass
 
 
+class DirectedWeightedGraph(DirectedGraph, WeightedGraph, metaclass=ABCMeta):
+    def __init__(self):
+        super().__init__()
+
+
 class DirectedSimpleGraph(SimpleGraph, DirectedGraph):
     def __init__(self, n, edges=None):
         super().__init__(n)
@@ -53,7 +58,7 @@ class DirectedSimpleGraph(SimpleGraph, DirectedGraph):
         self._graphrepr = revgraphrepr
 
 
-class DirectedWeightedSimpleGraph(DirectedSimpleGraph, WeightedGraph):
+class DirectedWeightedSimpleGraph(DirectedSimpleGraph, DirectedWeightedGraph):
     def __init__(self, n, edges=None):
         super().__init__(n)
 
