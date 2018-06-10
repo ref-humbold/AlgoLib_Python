@@ -60,9 +60,6 @@ class ForestGraph(UndirectedGraph):
     def get_indegree(self, vertex):
         return self.__graph.get_indegree(vertex)
 
-    def as_directed(self):
-        return self.__graph.as_directed
-
     def is_same_tree(self, vertex1, vertex2):
         """Sprawdzanie, czy wierzchołki należą do tego samego drzewa.
         :param vertex1: pierwszy wierzchołek

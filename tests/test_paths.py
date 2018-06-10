@@ -35,7 +35,7 @@ class PathsTest(unittest.TestCase):
     def test_bellman_ford_when_undirected_graph(self):
         source = 1
 
-        result = dijkstra(self.__uwgraph.as_directed(), source)
+        result = bellman_ford(self.__uwgraph.as_directed(), source)
         i = self.__diwgraph.inf
 
         self.assertListEqual([4, 0, i, 7, 7, 8, i, 10, 10, i], result)

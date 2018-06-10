@@ -9,12 +9,6 @@ class UndirectedGraph(Graph, metaclass=ABCMeta):
     def __init__(self):
         super().__init__()
 
-    @abstractmethod
-    def as_directed(self):
-        """Zamiana krawędzi nieskierowanych na skierowane.
-        :returns: graf ze skierowanymi krawędziami"""
-        pass
-
 
 class UndirectedWeightedGraph(UndirectedGraph, WeightedGraph, metaclass=ABCMeta):
     def __init__(self):
@@ -56,6 +50,8 @@ class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
         return self.get_outdegree(vertex)
 
     def as_directed(self):
+        """Zamiana krawędzi nieskierowanych na skierowane.
+        :returns: graf ze skierowanymi krawędziami"""
         diedges = list(self.get_edges()) + [(u, v) for v, u in self.get_edges()]
 
         return DirectedSimpleGraph(self.vertices_number, edges=diedges)
@@ -90,6 +86,8 @@ class UndirectedWeightedSimpleGraph(UndirectedSimpleGraph, UndirectedWeightedGra
         return iter(self._graphrepr[vertex])
 
     def as_directed(self):
+        """Zamiana krawędzi nieskierowanych na skierowane.
+        :returns: graf ze skierowanymi krawędziami"""
         diwedges = list(self.get_weighted_edges()) \
             + [(u, v, wg) for v, u, wg in self.get_weighted_edges()]
 
