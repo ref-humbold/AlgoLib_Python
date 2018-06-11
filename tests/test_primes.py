@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-"""TESTY DLA ALGORYTMU SITA ERASTOTENESA"""
+"""TESTY DLA ALGORYTMÓW DLA LICZB PIERWSZYCH"""
 import unittest
 from algolib.maths import find_primes
 
 
-class SieveTest(unittest.TestCase):
+class PrimesTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
