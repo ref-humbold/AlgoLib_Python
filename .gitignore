@@ -1,4 +1,6 @@
-# Python output folders and files
+# Python output
 **/__pycache__
 **/*.pyc
+
+# PyTest output
 pyunit_results
