@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ALGORYTMY TESTOWANIA PIERWSZOŚCI"""
+"""ALGORYTMY DLA LICZB PIERWSZYCH"""
 from random import randint
 from math import sqrt
 from .maths import gcd, power_mod
