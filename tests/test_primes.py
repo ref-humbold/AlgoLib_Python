@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """TESTY DLA ALGORYTMÓW DLA LICZB PIERWSZYCH"""
 import unittest
-from algolib.maths import find_primes
+from algolib.math import find_primes
 
 
 class PrimesTest(unittest.TestCase):

@@ -2,7 +2,7 @@
 """TESTY DLA ALGORYTMÓW MATEMATYCZNYCH"""
 import unittest
 from math import isnan
-from algolib.maths import gcd, lcm, power_mod, mult_mod
+from algolib.math import gcd, lcm, power_mod, mult_mod
 
 
 class MathsTest(unittest.TestCase):
