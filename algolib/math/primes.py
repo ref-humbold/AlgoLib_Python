@@ -2,7 +2,7 @@
 """ALGORYTMY DLA LICZB PIERWSZYCH"""
 from random import randint
 from math import sqrt
-from .math import gcd, power_mod
+from .maths import gcd, power_mod
 
 
 def find_primes(*numbers):
