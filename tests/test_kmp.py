@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """TESTY DLA ALGORYTMU KNUTHA-MORRISA-PRATTA"""
 import unittest
-from algolib import kmp
+from algolib.text import kmp
 
 
 class KMPTest(unittest.TestCase):
