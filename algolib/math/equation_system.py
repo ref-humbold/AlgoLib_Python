@@ -12,16 +12,15 @@ class NoSolutionException(ValueError):
 
 class EquationSystem:
     def __init__(self, numeq, coef=None, frees=None):
+        self.__validate(coef, frees, numeq)
+
         # Liczba równań układu.
         self.__equations = numeq
         # Macierz współczynników równania.
-        self.__coeffs = [[0.0] * numeq for _ in range(numeq)] \
-            if coef is None \
-            else self.__validate_coef(coef, numeq)
+        self.__coeffs = coef if coef is not None \
+            else [[0.0] * numeq for _ in range(numeq)]
         # Wektor wyrazów wolnych równania.
-        self.__free_terms = [0.0] * numeq \
-            if frees is None \
-            else self.__validate_frees(frees, numeq)
+        self.__free_terms = frees if frees is not None else [0.0] * numeq
 
     @property
     def equations_number(self):
@@ -99,14 +98,17 @@ class EquationSystem:
 
         self.__free_terms[equ1] += constant * self.__free_terms[equ2]
 
-    def __validate_coef(self, coef, numeq):
-        if len(coef) != numeq and all(map(lambda e: len(e) == numeq, coef)):
+    @staticmethod
+    def __validate(coef, frees, numeq):
+        if coef is None and frees is None:
+            return
+
+        if coef is not None and frees is None \
+           or coef is None and frees is not None:
+            raise ValueError("Incorrect number of equations")
+
+        if len(coef) != numeq or len(frees) != numeq:
+            raise ValueError("Incorrect number of equations")
+
+        if any(map(lambda e: len(e) != numeq, coef)):
             raise ValueError("Coefficient matrix is not a square matrix")
-
-        return coef
-
-    def __validate_frees(self, frees, numeq):
-        if len(frees) != numeq:
-            raise ValueError("Incorrect number of free terms")
-
-        return frees
