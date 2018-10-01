@@ -56,13 +56,22 @@ class EquationSystem:
                     index_min = i
 
             if self.__coeffs[index_min][equ] != 0:
-                self.change(index_min, equ)
+                self.swap(index_min, equ)
 
                 for i in range(equ + 1, self.__equations):
                     param = self.__coeffs[i][equ] / self.__coeffs[equ][equ]
-                    self.linear_comb(i, equ, -param)
+                    self.combine(i, equ, -param)
 
-    def change(self, equ1, equ2):
+    def mult(self, equ, constant):
+        """Pomnożenie równania przez niezerową stałą.
+        :param equ: numer równania
+        :param constant: stała"""
+        if constant == 0:
+            raise ValueError("Constant cannot be zero")
+
+        self.__coeffs[equ] = list(map(lambda cf: cf * constant, self.__coeffs[equ]))
+
+    def swap(self, equ1, equ2):
         """Zamiana równań miejscami.
         :param eq1: numer pierwszego równania
         :param eq2: numer drugiego równania"""
@@ -73,7 +82,7 @@ class EquationSystem:
         self.__free_terms[equ1], self.__free_terms[equ2] = \
             self.__free_terms[equ2], self.__free_terms[equ1]
 
-    def linear_comb(self, equ1, equ2, constant):
+    def combine(self, equ1, equ2, constant):
         """Przekształcenie równania przez kombinację liniową z innym równaniem.
         :param eq1: numer równania przekształcanego
         :param eq2: numer drugiego równania
