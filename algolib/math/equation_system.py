@@ -11,13 +11,17 @@ class NoSolutionException(ValueError):
 
 
 class EquationSystem:
-    def __init__(self, numeq):
+    def __init__(self, numeq, coef=None, frees=None):
         # Liczba równań układu.
         self.__equations = numeq
         # Macierz współczynników równania.
-        self.__coeffs = [[0.0] * numeq for _ in range(numeq)]
+        self.__coeffs = [[0.0] * numeq for _ in range(numeq)] \
+            if coef is None \
+            else self.__validate_coef(coef, numeq)
         # Wektor wyrazów wolnych równania.
-        self.__free_terms = [0.0] * numeq
+        self.__free_terms = [0.0] * numeq \
+            if frees is None \
+            else self.__validate_frees(frees, numeq)
 
     @property
     def equations_number(self):
@@ -90,10 +94,19 @@ class EquationSystem:
         :param eq1: numer równania przekształcanego
         :param eq2: numer drugiego równania
         :param constant: stała kombinacji liniowej"""
-        if constant == 0:
-            raise ValueError("Constant cannot be zero")
-
         for i in range(self.__equations):
             self.__coeffs[equ1][i] += constant * self.__coeffs[equ2][i]
 
         self.__free_terms[equ1] += constant * self.__free_terms[equ2]
+
+    def __validate_coef(self, coef, numeq):
+        if len(coef) != numeq and all(map(lambda e: len(e) == numeq, coef)):
+            raise ValueError("Coefficient matrix is not a square matrix")
+
+        return coef
+
+    def __validate_frees(self, frees, numeq):
+        if len(frees) != numeq:
+            raise ValueError("Incorrect number of free terms")
+
+        return frees
