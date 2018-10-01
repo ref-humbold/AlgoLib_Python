@@ -15,7 +15,7 @@ class EquationSystem:
         # Liczba równań układu.
         self.__equations = numeq
         # Macierz współczynników równania.
-        self.__coeffs = [[0.0] * numeq for i in range(numeq)]
+        self.__coeffs = [[0.0] * numeq for _ in range(numeq)]
         # Wektor wyrazów wolnych równania.
         self.__free_terms = [0.0] * numeq
 
@@ -69,7 +69,10 @@ class EquationSystem:
         if constant == 0:
             raise ValueError("Constant cannot be zero")
 
-        self.__coeffs[equ] = list(map(lambda cf: cf * constant, self.__coeffs[equ]))
+        for i in range(self.__equations):
+            self.__coeffs[equ][i] *= constant
+
+        self.__free_terms[equ] *= constant
 
     def swap(self, equ1, equ2):
         """Zamiana równań miejscami.
@@ -87,6 +90,9 @@ class EquationSystem:
         :param eq1: numer równania przekształcanego
         :param eq2: numer drugiego równania
         :param constant: stała kombinacji liniowej"""
+        if constant == 0:
+            raise ValueError("Constant cannot be zero")
+
         for i in range(self.__equations):
             self.__coeffs[equ1][i] += constant * self.__coeffs[equ2][i]
 
