@@ -20,7 +20,7 @@ class KMPTest(unittest.TestCase):
 
         result = kmp(text, pattern)
 
-        self.assertListEqual([0], result)
+        self.assertListEqual([0], list(result))
 
     def test_kmp_when_pattern_found_twice(self):
         text = "abcdae"
@@ -28,7 +28,7 @@ class KMPTest(unittest.TestCase):
 
         result = kmp(text, pattern)
 
-        self.assertListEqual([0, 4], result)
+        self.assertListEqual([0, 4], list(result))
 
     def test_kmp_when_pattern_found_twice_and_intersects(self):
         text = "aaabcde"
@@ -36,7 +36,7 @@ class KMPTest(unittest.TestCase):
 
         result = kmp(text, pattern)
 
-        self.assertListEqual([0, 1], result)
+        self.assertListEqual([0, 1], list(result))
 
     def test_kmp_when_pattern_not_found(self):
         text = "abcde"
@@ -44,7 +44,7 @@ class KMPTest(unittest.TestCase):
 
         result = kmp(text, pattern)
 
-        self.assertListEqual([], result)
+        self.assertListEqual([], list(result))
 
     def test_kmp_when_pattern_is_empty_string(self):
         text = "abcde"
@@ -52,7 +52,7 @@ class KMPTest(unittest.TestCase):
 
         result = kmp(text, pattern)
 
-        self.assertListEqual([], result)
+        self.assertListEqual([], list(result))
 
     def test_kmp_when_pattern_is_none(self):
         text = "abcde"
@@ -74,7 +74,7 @@ class KMPTest(unittest.TestCase):
 
         result = kmp(text, pattern)
 
-        self.assertListEqual([], result)
+        self.assertListEqual([], list(result))
 
     def test_kmp_when_text_is_none(self):
         text = None

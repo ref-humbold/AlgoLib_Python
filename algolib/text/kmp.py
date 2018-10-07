@@ -3,20 +3,29 @@
 
 
 def kmp(text, pattern):
-    """Algorytm Knutha-Morrisa-Pratta.
+    """Algorytm Knutha-Morrisa-Pratta
     :param text: słowo
     :param pattern: wzorzec
-    :returns: lista pozycji wystąpień wzorca w słowie"""
+    :returns: generator pozycji wystąpień wzorca w słowie"""
+    print(type(text).__name__, type(pattern).__name__)
+
     if not isinstance(text, str):
-        raise TypeError("Text should be of type str, not {0}.".format(type(text).__name__))
+        raise TypeError("Text should be of type 'str', not {0}.".format(type(text).__name__))
 
     if not isinstance(pattern, str):
-        raise TypeError("Pattern should be of type str, not {0}.".format(type(pattern).__name__))
+        raise TypeError("Pattern should be of type 'str', not {0}.".format(type(pattern).__name__))
 
+    return _match(text, pattern)
+
+
+def _match(text, pattern):
+    """Wyszukiwanie wystąpień wzorca w słowie
+    :param text: słowo
+    :param pattern: wzorzec
+    :returns: generator pozycji wystąpień wzorca w słowie"""
     if pattern == "":
-        return []
+        return
 
-    places = []
     pi_values = _prefix(pattern)
     pos = 0
 
@@ -28,14 +37,12 @@ def kmp(text, pattern):
             pos += 1
 
         if pos == len(pattern):
-            places.append(i - len(pattern) + 1)
+            yield i - len(pattern) + 1
             pos = pi_values[pos - 1]
-
-    return places
 
 
 def _prefix(pattern):
-    """Funkcja prefiksowa pi Knutha.
+    """Funkcja prefiksowa pi Knutha
     :param pattern: wzorzec
     :returns: wartości funkcji prefiksowej"""
     pi_values = [0]

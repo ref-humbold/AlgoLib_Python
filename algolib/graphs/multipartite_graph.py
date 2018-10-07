@@ -8,12 +8,12 @@ class GraphPartitionException(ValueError):
 
 
 class MultipartiteGraph(UndirectedGraph):
-    def __init__(self, n, group):
+    def __init__(self, n, gr):
         super().__init__()
         # Struktura grafu wielodzielnego.
         self.__graph = UndirectedSimpleGraph(n)
         # Maksymalna liczba grup wierzchołków.
-        self.__groups_number = group
+        self.__groups_number = gr
         # Numery grup wierzchołków.
         self.__groups = [0] * self.__graph.vertices_number
 

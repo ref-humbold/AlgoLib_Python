@@ -12,7 +12,7 @@ class NoSolutionException(ValueError):
 
 class EquationSystem:
     def __init__(self, numeq, coef=None, frees=None):
-        self.__validate(coef, frees, numeq)
+        EquationSystem.__validate(coef, frees, numeq)
 
         # Liczba równań układu.
         self.__equations = numeq
@@ -22,8 +22,7 @@ class EquationSystem:
         # Wektor wyrazów wolnych równania.
         self.__free_terms = frees if frees is not None else [0.0] * numeq
 
-    @property
-    def equations_number(self):
+    def __len__(self):
         return self.__equations
 
     def solve(self):
