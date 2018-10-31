@@ -8,68 +8,88 @@ def find_closest_points(points):
     :param points: lista punktów
     :returns: para najbliższych punktów"""
     points_x = sorted(points)
-    points_y = [(pt[0], pt[1], i) for i, pt in enumerate(points_x)]
-    points_y.sort(key=lambda p: (p[1], p[0], p[2]), reverse=True)
 
-    return _search_closest(points_x, points_y)
+    return _search_closest(points_x, 0, len(points_x))
 
 
-def _search_closest(points_x, points_y, index_begin=0, index_end=-1):
+def _search_closest(points_x, index_begin, index_end):
     """ZNAJDOWANIE NAJBLIŻSZEJ PARY PUNKTÓW
-    :param points_x: lista punktów posortowana po współrzędnej x
-    :param points_y: lista punktów posortowana po współrzędnej y
-    :param index_begin: początek fragmentu listy punktów po x
-    :param index_end: koniec fragmentu listy punktów po x
+    :param points_x: lista punktów posortowana po współrzędnej X
+    :param index_begin: początek fragmentu listy punktów
+    :param index_end: koniec fragmentu listy punktów
     :returns: para najbliższych punktów"""
-    def distance(pt1, pt2):
-        return hypot(pt1[0] - pt2[0], pt1[1] - pt2[1])
-
-    index_begin %= len(points_x)
-    index_end %= len(points_x)
-
     if index_end - index_begin == 1:
-        return (points_x[index_begin][0], points_x[index_end][0])
+        return (points_x[index_begin], points_x[index_end])
 
     if index_end - index_begin == 2:
-        index_middle = index_begin + 1
-        distance12 = distance(points_x[index_begin], points_x[index_middle])
-        distance23 = distance(points_x[index_middle], points_x[index_end])
-        distance31 = distance(points_x[index_begin], points_x[index_end])
-
-        if distance12 <= distance23 and distance12 <= distance31:
-            return (points_x[index_begin][0], points_x[index_middle][0])
-        elif distance23 <= distance12 and distance23 <= distance31:
-            return (points_x[index_middle][0], points_x[index_end][0])
-        else:
-            return (points_x[index_begin][0], points_x[index_end][0])
+        return _search_three(points_x[index_begin],
+                             points_x[index_begin + 1],
+                             points_x[index_end])
 
     index_middle = (index_begin + index_end) // 2
     middle_x = (points_x[index_middle][0] + points_x[index_middle + 1][0]) // 2
-    points_yl = [p for p in points_y if p[2] <= index_middle]
-    points_yr = [p for p in points_y if p[2] > index_middle]
 
-    closest_l = _search_closest(points_x, points_yl, index_begin, index_middle)
-    closest_r = _search_closest(
-        points_x, points_yr, index_middle + 1, index_end)
-    min_distance = min(distance(closest_l[0], closest_l[1]),
-                       distance(closest_r[0], closest_r[1]))
-    belt_width = min_distance
-    belt_points = [(i, pt[2] <= index_middle) for i, pt in enumerate(points_y)
-                   if middle_x - belt_width <= pt[0] <= middle_x + belt_width]
+    closest_l = _search_closest(points_x, index_begin, index_middle)
+    closest_r = _search_closest(points_x, index_middle + 1, index_end)
+
+    if _distance(closest_l[0], closest_l[1]) <= _distance(closest_r[0], closest_r[1]):
+        closest_points = closest_l
+        belt_width = _distance(closest_l[0], closest_l[1])
+    else:
+        closest_points = closest_r
+        belt_width = _distance(closest_r[0], closest_r[1])
+
+    belt_points = _check_belt(points_x, middle_x, belt_width)
+
+    if belt_points is not None:
+        return belt_points
+
+    return closest_points
+
+
+def _search_three(point1, point2, point3):
+    distance12 = _distance(point1, point2)
+    distance23 = _distance(point2, point3)
+    distance31 = _distance(point1, point3)
+
+    if distance12 <= distance23 and distance12 <= distance31:
+        return (point1, point2)
+
+    if distance23 <= distance12 and distance23 <= distance31:
+        return (point2, point3)
+
+    return (point1, point3)
+
+
+def _check_belt(points_x, middle_x, belt_width):
+    """SPRAWDZANIE PUNKTÓW PRZY POŁĄCZENIU POŁÓWEK
+    :param points_x: lista punktów posortowana po współrzędnej X
+    :param middle_x: współrzędna podziału połówek
+    :param belt_width: szerokość paska przy połączeniu
+    :returns: najbliższa para punktów w pasku"""
+    closest_points = None
+    min_distance = belt_width
+    belt_points = sorted([p for p in points_x
+                          if middle_x - belt_width <= p[0] <= middle_x + belt_width],
+                         key=lambda p: (p[1], p[0]))
 
     for i in range(1, len(belt_points)):
         for j in range(i - 1, -1, -1):
-            pt1 = belt_points[i][0]
-            pt2 = belt_points[j][0]
+            point1 = belt_points[i]
+            point2 = belt_points[j]
 
-            if points_y[pt2][1] < points_y[pt1][1] + belt_width:
+            if point2[1] < point1[1] + belt_width:
                 break
 
-            if belt_points[i][1] != belt_points[j][1]:
-                points_distance = distance(points_y[pt1], points_y[pt2])
+            if (point1[0] - middle_x) * (point2[0] - middle_x) < 0:
+                points_distance = _distance(point1, point2)
 
                 if points_distance < min_distance:
                     min_distance = points_distance
-                    closest_points = (points_y[pt1], points_y[pt2])
+                    closest_points = (point1, point2)
 
     return closest_points
+
+
+def _distance(pt1, pt2):
+    return hypot(pt1[0] - pt2[0], pt1[1] - pt2[1])

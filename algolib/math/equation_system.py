@@ -11,16 +11,18 @@ class NoSolutionException(ValueError):
 
 
 class EquationSystem:
-    def __init__(self, numeq):
+    def __init__(self, numeq, coef=None, frees=None):
+        EquationSystem.__validate(coef, frees, numeq)
+
         # Liczba równań układu.
         self.__equations = numeq
         # Macierz współczynników równania.
-        self.__coeffs = [[0.0] * numeq for i in range(numeq)]
+        self.__coeffs = coef if coef is not None \
+            else [[0.0] * numeq for _ in range(numeq)]
         # Wektor wyrazów wolnych równania.
-        self.__free_terms = [0.0] * numeq
+        self.__free_terms = frees if frees is not None else [0.0] * numeq
 
-    @property
-    def equations_number(self):
+    def __len__(self):
         return self.__equations
 
     def solve(self):
@@ -56,13 +58,25 @@ class EquationSystem:
                     index_min = i
 
             if self.__coeffs[index_min][equ] != 0:
-                self.change(index_min, equ)
+                self.swap(index_min, equ)
 
                 for i in range(equ + 1, self.__equations):
                     param = self.__coeffs[i][equ] / self.__coeffs[equ][equ]
-                    self.linear_comb(i, equ, -param)
+                    self.combine(i, equ, -param)
 
-    def change(self, equ1, equ2):
+    def mult(self, equ, constant):
+        """Pomnożenie równania przez niezerową stałą.
+        :param equ: numer równania
+        :param constant: stała"""
+        if constant == 0:
+            raise ValueError("Constant cannot be zero")
+
+        for i in range(self.__equations):
+            self.__coeffs[equ][i] *= constant
+
+        self.__free_terms[equ] *= constant
+
+    def swap(self, equ1, equ2):
         """Zamiana równań miejscami.
         :param eq1: numer pierwszego równania
         :param eq2: numer drugiego równania"""
@@ -73,7 +87,7 @@ class EquationSystem:
         self.__free_terms[equ1], self.__free_terms[equ2] = \
             self.__free_terms[equ2], self.__free_terms[equ1]
 
-    def linear_comb(self, equ1, equ2, constant):
+    def combine(self, equ1, equ2, constant):
         """Przekształcenie równania przez kombinację liniową z innym równaniem.
         :param eq1: numer równania przekształcanego
         :param eq2: numer drugiego równania
@@ -82,3 +96,18 @@ class EquationSystem:
             self.__coeffs[equ1][i] += constant * self.__coeffs[equ2][i]
 
         self.__free_terms[equ1] += constant * self.__free_terms[equ2]
+
+    @staticmethod
+    def __validate(coef, frees, numeq):
+        if coef is None and frees is None:
+            return
+
+        if coef is not None and frees is None \
+           or coef is None and frees is not None:
+            raise ValueError("Incorrect number of equations")
+
+        if len(coef) != numeq or len(frees) != numeq:
+            raise ValueError("Incorrect number of equations")
+
+        if any(map(lambda e: len(e) != numeq, coef)):
+            raise ValueError("Coefficient matrix is not a square matrix")
