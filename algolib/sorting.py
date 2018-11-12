@@ -171,8 +171,6 @@ def _merge(sequence, index_begin, index_middle, index_end):
     iter2 = index_middle
 
     while iter1 < index_middle and iter2 < index_end:
-        print(index_begin, index_middle, index_end, iter1, iter2)
-
         if sequence[iter1] < sequence[iter2]:
             ordered.append(sequence[iter1])
             iter1 += 1
@@ -182,9 +180,6 @@ def _merge(sequence, index_begin, index_middle, index_end):
 
     ordered += sequence[iter1:index_middle]
     ordered += sequence[iter2:index_end]
-
-    print(ordered)
-
     sequence[index_begin:index_begin + len(ordered)] = ordered
 
 

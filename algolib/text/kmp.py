@@ -7,8 +7,6 @@ def kmp(text, pattern):
     :param text: słowo
     :param pattern: wzorzec
     :returns: generator pozycji wystąpień wzorca w słowie"""
-    print(type(text).__name__, type(pattern).__name__)
-
     if not isinstance(text, str):
         raise TypeError("Text should be of type 'str', not {0}.".format(type(text).__name__))
 

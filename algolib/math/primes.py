@@ -83,9 +83,6 @@ def _find_primes_range(min_number, max_number):
             for j in range(begin, len(is_prime), num):
                 is_prime[j] = False
 
-    for i, prime in enumerate(is_prime):
-        print(min_number + i, prime, end="|")
-
     return (min_number + i for i, prime in enumerate(is_prime) if prime)
 
 
