@@ -2,5 +2,5 @@
 **/__pycache__
 **/*.pyc
 
-# PyTest, Nose
-nosetest_results
+# PyTest, Nose2
+nose2_results
