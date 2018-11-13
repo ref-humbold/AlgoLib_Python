@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""DRZEWO AVL"""
+"""AVL TREE STRUCTURE"""
 
 
 class AVLTree:

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""STRUKTURA ZBIORÓW ROZŁĄCZNYCH UNION-FIND"""
+"""DISJOINT SETS STRUCTURE (UNION-FIND)"""
 
 
 class DisjointSets:

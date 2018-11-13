@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ALGORYTM WYZNACZANIA NAJBLIŻSZEJ PARY PUNKTÓW NA PŁASZCZYŹNIE"""
+"""CLOSEST PAIR OF POINTS ON A PLANE"""
 from math import hypot
 
 

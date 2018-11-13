@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-"""ALGORYTMY SORTOWANIA"""
+"""SORTING ALGORITHMS"""
 from math import atan2, pi
 from random import randint
 
 
 def angle_sorted(points):
-    """Niemutowalne sortowanie kątowe punktów na płaszczyźnie.
-    :param points: ciąg punktów
-    :returns: lista punktów posortowana względem kąta"""
+    """Immutable soting of 2D points by angle
+    :param points: sequence of points
+    :returns: list of points sorted by angle"""
     points_list = list(points)
 
     points_list.sort(key=lambda xy: (

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ALGORYTMY WYZNACZANIA PODCIĄGU SPÓJNEGO O MAKSYMALNEJ SUMIE"""
+"""ALGORITHMS FOR MAXIMUM SUBARRAY"""
 
 
 def find_maximum_subarray(sequence):

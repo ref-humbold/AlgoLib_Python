@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""SŁOWNIK PODSŁÓW BAZOWYCH Z ALGORYTMEM KARPA-MILLERA-ROSENBERGA"""
+"""KARP-MILLER-ROSENBERG ALGORITHM"""
 
 
 def kmr(text):

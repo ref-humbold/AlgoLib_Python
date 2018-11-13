@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ALGORYTM WYZNACZJĄCY OTOCZKĘ WYPUKŁĄ PUNKTÓW NA PŁASZCZYŹNIE"""
+"""GRAHAM'S ALGORITHM FOR CONVEX HULL ON A PLANE"""
 
 
 def convex_hull(points):

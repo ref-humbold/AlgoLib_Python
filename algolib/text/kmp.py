@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ALGORYTM KNUTHA-MORRISA-PRATTA WYSZUKIWANIA WZORCA W TEKŚCIE"""
+"""KNUTH-MORRIS-PRATT ALGORITHM"""
 
 
 def kmp(text, pattern):

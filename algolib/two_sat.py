@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""SPEŁNIALNOŚĆ FORMUŁ 2-CNF"""
+"""SATISFIABILITY OF 2-CNF FORMULAS"""
 from .graphs import DirectedSimpleGraph
 
 
