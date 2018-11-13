@@ -3,4 +3,4 @@
 **/*.pyc
 
 # PyTest, Nose2
-nose2_results
+nose2-junit.xml
