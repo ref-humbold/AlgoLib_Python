@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""NAJNIŻSZY WSPÓLNY PRZODEK DWÓCH WIERZCHOŁKÓW W DRZEWIE"""
+"""LOWEST COMMON ANCESTOR IN TREES"""
 from math import log
 
 

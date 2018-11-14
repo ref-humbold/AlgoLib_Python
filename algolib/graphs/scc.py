@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ALGORYTM WYZNACZANIA SILNIE SPÓLJNYCH SKŁADOWYCH W GRAFIE SKIEROWANYM"""
+"""STRONGLY CONNECTED COMPONENTS ALGORITHM"""
 from .directed_graph import DirectedGraph
 
 

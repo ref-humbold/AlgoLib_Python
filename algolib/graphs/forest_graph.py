@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""STRUKTURY GRAFÓW DRZEW"""
+"""TREES STRUCTURES"""
 from .undirected_graph import UndirectedGraph, UndirectedSimpleGraph
 from ..structures import DisjointSets
 

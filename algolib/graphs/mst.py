@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ALGORYTMY WYZNACZAJĄCE MINIMALNE DRZEWO SPINAJĄCE"""
+"""MINIMAL SPANNING TREE ALGORITHMS"""
 import queue
 from ..structures.disjoint_sets import DisjointSets
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ALGORYTMY SORTOWANIA TOPOLOGICZNEGO"""
+"""TOPOLOGICAL SORTING ALGORITHMS"""
 import queue
 
 

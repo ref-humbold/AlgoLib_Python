@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""STRUKTURA UKŁADÓW RÓWNAŃ LINIOWYCH Z ALGORYTMEM ELIMINACJI GAUSSA"""
+"""LINEAR EQUATIONS SYSTEM WITH GAUSS ELIMINATION ALGORITHM"""
 
 
 class InfiniteSolutionsException(ValueError):

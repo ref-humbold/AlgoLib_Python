@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""STRUKTURY GRAFÓW SKIEROWANYCH"""
+"""DIRECTED GRAPHS STRUCTURE"""
 from abc import ABCMeta, abstractmethod
 from .graph import Graph, SimpleGraph, WeightedGraph, NoSuchVertexException
 
