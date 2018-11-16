@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""LINEAR EQUATIONS SYSTEM WITH GAUSS ELIMINATION ALGORITHM"""
+"""LINEAR EQUATIONS SYSTEM STRUCTURE"""
 
 
 class InfiniteSolutionsException(ValueError):

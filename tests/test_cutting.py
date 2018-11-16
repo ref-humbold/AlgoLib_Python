@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TESTY DLA ALGORYTMÓW WYSZUKIWANIA MOSTÓW I PUNKTÓW ARTYKULACJI"""
+"""TESTS FOR GRAPH CUTTING ALGORITHMS"""
 import unittest
 from algolib.graphs import find_edge_cut, find_vertex_cut, UndirectedSimpleGraph
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""UNDIRECTED GRAPHS STRUCTURE"""
+"""UNDIRECTED GRAPHS STRUCTURES"""
 from abc import ABCMeta, abstractmethod
 from .graph import Graph, SimpleGraph, WeightedGraph, NoSuchVertexException
 from .directed_graph import DirectedSimpleGraph, DirectedWeightedSimpleGraph

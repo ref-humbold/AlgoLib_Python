@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ALGORYTMY WYZNACZANIA NAJKRÓTSZYCH ŚCIEŻEK W GRAFIE WAŻONYM"""
+"""SHORTEST PATHS ALGORITHMS"""
 import queue
 
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""WYSZUKIWANIE MOSTÓW I PUNKTÓW ARTYKULACJI W GRAFIE"""
+"""GRAPH CUTTING ALGORITHMS (EDGE CUT AND VERTEX CUT)"""
 
 
 def find_edge_cut(ugraph):

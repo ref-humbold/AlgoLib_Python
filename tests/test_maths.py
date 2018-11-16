@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TESTY DLA ALGORYTMÓW MATEMATYCZNYCH"""
+"""TESTS FOR BASIC MATHEMATICS ALGORITHMS"""
 import unittest
 from math import isnan
 from algolib.math import gcd, lcm, power_mod, mult_mod

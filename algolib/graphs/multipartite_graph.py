@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""MULTIPARTITE GRAPHS STRUCTURES"""
+"""MULTIPARTITE GRAPHS STRUCTURE"""
 from .undirected_graph import UndirectedGraph, UndirectedSimpleGraph
 
 

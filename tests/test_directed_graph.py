@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TESTY DLA GRAFÓW SKIEROWANYCH"""
+"""TESTS FOR DIRECTED GRAPHS STRUCTURES"""
 import unittest
 from algolib.graphs import DirectedSimpleGraph
 

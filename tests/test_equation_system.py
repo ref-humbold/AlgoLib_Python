@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TESTY DLA STRUKTURY UKŁADÓW RÓWNAŃ"""
+"""TESTS FOR LINEAR EQUATIONS SYSTEM STRUCTURE"""
 import unittest
 from algolib.math import EquationSystem, NoSolutionException, InfiniteSolutionsException
 

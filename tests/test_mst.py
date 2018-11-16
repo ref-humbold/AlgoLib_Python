@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TESTY DLA ALGORYTMÓW MINIMALNEGO DRZEWA SPINAJĄCEGO"""
+"""TESTS FOR MINIMAL SPANNING TREE ALGORITHMS"""
 import unittest
 from algolib.graphs import kruskal, prim, UndirectedWeightedSimpleGraph
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TESTY DLA ALGORYTMÓW SORTOWANIA"""
+"""TESTS FOR SORTING ALGORITHMS"""
 import unittest
 from algolib import angle_sorted, heap_sorted, mergedown_sorted, mergeup_sorted, quick_sorted
 

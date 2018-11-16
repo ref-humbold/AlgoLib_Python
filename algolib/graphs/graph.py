@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""BASIC GRAPHS STRUCTURE"""
+"""BASIC GRAPHS STRUCTURES"""
 from abc import ABCMeta, abstractmethod
 import math
 

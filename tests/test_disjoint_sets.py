@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TESTY DLA STRUKTURY ZBIORÓW ROZŁĄCZNYCH"""
+"""TESTS FOR DISJOINT SETS STRUCTURE (UNION-FIND)"""
 import unittest
 from algolib.structures import DisjointSets
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""LOWEST COMMON ANCESTOR IN TREES"""
+"""LOWEST COMMON ANCESTOR ALGORITHM"""
 from math import log
 
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TESTY DLA ALGORYTMU WYZNACZANIA SILNIE SPÓLJNYCH SKŁADOWYCH"""
+"""TESTS FOR STRONGLY CONNECTED COMPONENTS ALGORITHM"""
 import unittest
 from algolib.graphs import find_scc, DirectedSimpleGraph
 
