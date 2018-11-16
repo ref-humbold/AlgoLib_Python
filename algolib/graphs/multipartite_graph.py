@@ -69,6 +69,9 @@ class MultipartiteGraph(UndirectedGraph):
     def get_indegree(self, vertex):
         return self.__graph.get_indegree(vertex)
 
+    def as_directed(self):
+        return self.__graph.as_directed()
+
     def is_in_group(self, vertex, group):
         """Sprawdzanie, czy wierzchołek nalezy do zadanej grupy.
         :param vertex: wierzchołek
