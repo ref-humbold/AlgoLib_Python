@@ -3,7 +3,7 @@
 
 
 def gcd(number1, number2):
-    """Największy wspólny dzielnik dwóch liczb.
+    """Największy wspólny dzielnik dwóch liczb
     :param number1: pierwsza liczba
     :param number2: druga liczba
     :returns: największy wspólny dzielnik"""
@@ -16,7 +16,7 @@ def gcd(number1, number2):
 
 
 def lcm(number1, number2):
-    """Najmniejsza wspólna wielokrotność dwóch liczb.
+    """Najmniejsza wspólna wielokrotność dwóch liczb
     :param number1: pierwsza liczba
     :param number2: druga liczba
     :returns: najmniejsza wspólna wielokrotność"""
@@ -27,7 +27,7 @@ def lcm(number1, number2):
 
 
 def mult_mod(factor1, factor2, modulo):
-    """Szybkie mnożenie binarne modulowane.
+    """Szybkie mnożenie binarne modulowane
     :param factor1: pierwszy czynnik
     :param factor2: drugi czynnik
     :param modulo: modulo
@@ -35,7 +35,7 @@ def mult_mod(factor1, factor2, modulo):
     result = 0
 
     if modulo < 0:
-        raise ArithmeticError("Negative modulo.")
+        raise ArithmeticError("Negative modulo")
 
     if factor1 < 0 and factor2 < 0:
         return mult_mod(-factor1, -factor2, modulo)
@@ -57,7 +57,7 @@ def mult_mod(factor1, factor2, modulo):
 
 
 def power_mod(base, exponent, modulo):
-    """Szybkie potęgowanie binarne modulowane.
+    """Szybkie potęgowanie binarne modulowane
     :param base: podstawa
     :param exponent: wykładnik
     :param modulo: modulo
@@ -65,10 +65,10 @@ def power_mod(base, exponent, modulo):
     result = 1
 
     if modulo < 0:
-        raise ArithmeticError("Negative modulo.")
+        raise ArithmeticError("Negative modulo")
 
     if exponent < 0:
-        raise ArithmeticError("Negative exponent.")
+        raise ArithmeticError("Negative exponent")
 
     if base == 0 and exponent == 0:
         return float('nan')

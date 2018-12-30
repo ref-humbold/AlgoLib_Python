@@ -6,7 +6,7 @@ from .maths import gcd, power_mod
 
 
 def find_primes(*numbers):
-    """Wyznaczanie liczb pierwszych.
+    """Wyznaczanie liczb pierwszych
     :param numbers: granice przedziału
     :returns: lista liczb pierwszych"""
     if len(numbers) == 1:
@@ -18,7 +18,7 @@ def find_primes(*numbers):
 
 
 def test_fermat(number):
-    """Test pierwszości Fermata.
+    """Test pierwszości Fermata
     :param number: testowana liczba
     :returns: czy liczba prawdopodobnie jest pierwsza"""
     if number == 2 or number == 3:
@@ -37,7 +37,7 @@ def test_fermat(number):
 
 
 def test_miller(number):
-    """Test pierwszości Millera-Rabina.
+    """Test pierwszości Millera-Rabina
     :param number: testowana liczba
     :returns: czy liczba prawdopodobnie jest pierwsza"""
     if number == 2 or number == 3:
@@ -59,7 +59,7 @@ def test_miller(number):
 
 
 def _find_primes_range(min_number, max_number):
-    """Wyznaczanie liczb pierwszych na przedziale domknietym.
+    """Wyznaczanie liczb pierwszych na przedziale domknietym
     :param min_number: dolna granica przedziału
     :param max_number: górna granica przedziału
     :returns: lista liczb pierwszych"""
@@ -87,7 +87,7 @@ def _find_primes_range(min_number, max_number):
 
 
 def _distribute(number):
-    """Rozkładanie liczby do testu Millera-Rabina.
+    """Rozkładanie liczby do testu Millera-Rabina
     :param number: rozkładana liczba
     :returns: rozkład liczby"""
     power = 2

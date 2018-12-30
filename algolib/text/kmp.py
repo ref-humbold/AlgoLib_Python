@@ -7,20 +7,6 @@ def kmp(text, pattern):
     :param text: słowo
     :param pattern: wzorzec
     :returns: generator pozycji wystąpień wzorca w słowie"""
-    if not isinstance(text, str):
-        raise TypeError("Text should be of type 'str', not {0}.".format(type(text).__name__))
-
-    if not isinstance(pattern, str):
-        raise TypeError("Pattern should be of type 'str', not {0}.".format(type(pattern).__name__))
-
-    return _match(text, pattern)
-
-
-def _match(text, pattern):
-    """Wyszukiwanie wystąpień wzorca w słowie
-    :param text: słowo
-    :param pattern: wzorzec
-    :returns: generator pozycji wystąpień wzorca w słowie"""
     if pattern == "":
         return
 
