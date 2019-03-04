@@ -6,9 +6,9 @@ class SuffixArray:
     def __init__(self, text):
         self.__length = len(text)
         self.__text = text
-        self.__suf_arr = []
-        self.__inv_arr = []
-        self.__lcp_arr = []
+        self.__suf_arr = self.__init_array()
+        self.__inv_arr = self.__init_inv()
+        self.__lcp_arr = self.__init_lcp()
 
     @property
     def text(self):
@@ -46,3 +46,31 @@ class SuffixArray:
         i2 = max(self.__inv_arr[suf1], self.__inv_arr[suf2])
 
         return min(self.__lcp_arr[i] for i in range(i1 + 1, i2 + 1))
+
+    def __init_array(self):
+        return self.__create_array(list(map(ord, txt)), 128)
+
+    def __init_inv():
+        arr = [0] * self.__length
+
+        for i in range(0, self.__length):
+            arr[self.__suf_arr[i]] = i
+
+        return arr
+
+    def __init_lcp():
+        arr = [0] * self.__length
+        ln = 0
+
+        for i in range(0, self.__length):
+            if self.__inv_arr[i] >= 1:
+                j = self.__suf_arr[self.__inv_arr[i] - 1]
+
+                while i + ln < self.__length and j + ln < self.__length \
+                        and self.__text[i + ln] == self.__text[j + ln]:
+                    ln += 1
+
+                arr[self.__inv_arr[i]] = ln
+                ln = 0 if ln == 0 else ln - 1
+
+        return arr
