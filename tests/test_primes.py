@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests for algorithms for prime numbers"""
+"""Test: prime numbers algorithms"""
 import unittest
 from algolib.math import find_primes
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests for suffix array structures"""
+"""Test: suffix array structure"""
 import unittest
 from algolib.text import SuffixArray
 

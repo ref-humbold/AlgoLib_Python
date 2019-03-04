@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests for maximum subarray algorithms"""
+"""Test: maximum subarray algorithms"""
 import unittest
 from algolib import find_maximum_subarray, find_maximal_sum
 

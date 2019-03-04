@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests for AVL tree structure"""
+"""Test: AVL tree structure"""
 import unittest
 from algolib.structures import AVLTree
 
