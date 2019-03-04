@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TESTS FOR STRONGLY CONNECTED COMPONENTS ALGORITHM"""
+"""Tests for strongly connected components algorithm"""
 import unittest
 from algolib.graphs import find_scc, DirectedSimpleGraph
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TESTS FOR KNUTH-MORRIS-PRATT ALGORITHM"""
+"""Tests for knuth-morris-pratt algorithm"""
 import unittest
 from algolib.text import kmp
 

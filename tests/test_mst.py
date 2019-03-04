@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TESTS FOR MINIMAL SPANNING TREE ALGORITHMS"""
+"""Tests for minimal spanning tree algorithms"""
 import unittest
 from algolib.graphs import kruskal, prim, UndirectedWeightedSimpleGraph
 

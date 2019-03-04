@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TESTS FOR UNDIRECTED GRAPHS STRUCTURES"""
+"""Tests for undirected graphs structures"""
 import unittest
 from algolib.graphs import DirectedSimpleGraph, UndirectedSimpleGraph
 

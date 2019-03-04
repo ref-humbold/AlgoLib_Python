@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TESTS FOR GRAPH CUTTING ALGORITHMS"""
+"""Tests for graph cutting algorithms"""
 import unittest
 from algolib.graphs import find_edge_cut, find_vertex_cut, UndirectedSimpleGraph
 

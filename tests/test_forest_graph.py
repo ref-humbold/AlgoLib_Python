@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TESTS FOR TREE GRAPHS STRUCTURE"""
+"""Tests for tree graphs structure"""
 import unittest
 from algolib.graphs import ForestGraph, CycleException
 

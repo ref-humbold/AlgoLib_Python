@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TESTS FOR LOWEST COMMON ANCESTOR ALGORITHM"""
+"""Tests for lowest common ancestor algorithm"""
 import unittest
 from algolib.graphs import find_lca, ForestGraph
 
