@@ -39,10 +39,8 @@ class DisjointSetsTest(unittest.TestCase):
         self.assertEqual(elem, self.__test_object.find_set(elem))
 
     def test_add_elem_when_present_element(self):
-        elem = 7
-
         with self.assertRaises(ValueError):
-            self.__test_object.add_elem(elem)
+            self.__test_object.add_elem(7)
 
     def test_find_set(self):
         elem = 4

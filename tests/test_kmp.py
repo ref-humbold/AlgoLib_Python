@@ -54,20 +54,6 @@ class KMPTest(unittest.TestCase):
 
         self.assertListEqual([], list(result))
 
-    def test_kmp_when_pattern_is_none(self):
-        text = "abcde"
-        pattern = None
-
-        with self.assertRaises(TypeError):
-            kmp(text, pattern)
-
-    def test_kmp_when_pattern_is_not_a_string(self):
-        text = "abcde"
-        pattern = 10
-
-        with self.assertRaises(TypeError):
-            kmp(text, pattern)
-
     def test_kmp_when_text_is_empty_string(self):
         text = ""
         pattern = "a"
@@ -75,17 +61,3 @@ class KMPTest(unittest.TestCase):
         result = kmp(text, pattern)
 
         self.assertListEqual([], list(result))
-
-    def test_kmp_when_text_is_none(self):
-        text = None
-        pattern = "a"
-
-        with self.assertRaises(TypeError):
-            kmp(text, pattern)
-
-    def test_kmp_when_text_is_not_a_string(self):
-        text = 10
-        pattern = "a"
-
-        with self.assertRaises(TypeError):
-            kmp(text, pattern)
