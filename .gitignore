@@ -4,3 +4,7 @@
 
 # PyTest, Nose2
 nose2-junit.xml
+
+# PyCharm
+.idea
+*.iml
