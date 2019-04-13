@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""LONGEST COMMON SUBSEQUENCE (LEAST LEXICOGRAPHICALLY)"""
+"""Longest common subsequence (least lexicographically)"""
 
 
 def find_lis(sequence):

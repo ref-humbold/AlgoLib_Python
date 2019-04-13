@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""GRAHAM'S ALGORITHM FOR CONVEX HULL ON A PLANE"""
+"""Graham's algorithm for convex hull on a plane"""
 
 
 def convex_hull(points):

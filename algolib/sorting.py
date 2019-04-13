@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""SORTING ALGORITHMS"""
+"""Sorting algorithms"""
 from math import atan2, pi
 from random import randint
 

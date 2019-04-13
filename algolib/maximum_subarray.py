@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""MAXIMUM SUBARRAY ALGORITHMS"""
+"""Maximum subarray algorithms"""
 
 
 def find_maximum_subarray(sequence):
