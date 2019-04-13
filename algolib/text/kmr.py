@@ -40,8 +40,8 @@ def _double_length(new_length, text, factors):
     :param factors: słownik podsłów bazowych"""
     code_value = 0
     codes = sorted([(factors[text[i:i + new_length // 2]],
-                     factors[text[i + new_length // 2:i + new_length]],
-                     i) for i in range(len(text) - new_length + 1)])
+                     factors[text[i + new_length // 2:i + new_length]], i)
+                    for i in range(len(text) - new_length + 1)])
     factors[text[codes[0][2]:codes[0][2] + new_length]] = code_value
 
     for i, code in enumerate(codes[1:], start=1):

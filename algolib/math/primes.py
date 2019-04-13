@@ -11,36 +11,33 @@ def find_primes(*numbers):
     :returns: lista liczb pierwszych"""
     if len(numbers) == 1:
         return _find_primes_range(0, numbers[0])
-    elif len(numbers) == 2:
+
+    if len(numbers) == 2:
         return _find_primes_range(numbers[0], numbers[1])
-    else:
-        raise TypeError("Expected 1 or 2 arguments, got {0}.".format(len(numbers)))
+
+    raise TypeError("Expected 1 or 2 arguments, got {0}".format(len(numbers)))
 
 
 def test_fermat(number):
     """Test pierwszości Fermata
     :param number: testowana liczba
     :returns: czy liczba prawdopodobnie jest pierwsza"""
-    if number == 2 or number == 3:
+    if number in (2, 3):
         return True
 
     if number < 2 or number % 2 == 0 or number % 3 == 0:
         return False
 
-    for _ in range(12):
-        rdv = randint(1, number - 1)
-
-        if gcd(rdv, number) > 1 or power_mod(rdv, number - 1, number) != 1:
-            return False
-
-    return True
+    return all(map(lambda rdv: gcd(rdv, number) == 1
+                   and power_mod(rdv, number - 1, number) == 1,
+                   [randint(1, number - 1) for _ in range(12)]))
 
 
 def test_miller(number):
     """Test pierwszości Millera-Rabina
     :param number: testowana liczba
     :returns: czy liczba prawdopodobnie jest pierwsza"""
-    if number == 2 or number == 3:
+    if number in (2, 3):
         return True
 
     if number < 2 or number % 2 == 0 or number % 3 == 0:
@@ -48,14 +45,10 @@ def test_miller(number):
 
     expon, multip = _distribute(number - 1)
 
-    for _ in range(12):
-        rdv = randint(1, number - 1)
-
-        if power_mod(rdv, multip, number) != 1 and \
-                all(power_mod(rdv, (1 << i) * multip, number) != number - 1 for i in range(expon)):
-            return False
-
-    return True
+    return all(map(lambda rdv: power_mod(rdv, multip, number) == 1
+                   or any(power_mod(rdv, (1 << i) * multip, number) == number - 1
+                          for i in range(expon)),
+                   [randint(1, number - 1) for _ in range(12)]))
 
 
 def _find_primes_range(min_number, max_number):
@@ -64,12 +57,14 @@ def _find_primes_range(min_number, max_number):
     :param max_number: górna granica przedziału
     :returns: lista liczb pierwszych"""
     if max_number < min_number:
-        raise ValueError("Second argument must be grater or equal to the first argument.")
+        raise ValueError(
+            "Second argument must be grater or equal to the first argument.")
 
     if max_number < 2:
         return []
 
-    is_prime = [i == 2 or (i > 2 and i % 2 == 1) for i in range(min_number, max_number + 1)]
+    is_prime = [i == 2 or (i > 2 and i % 2 == 1)
+                for i in range(min_number, max_number + 1)]
     base_primes = [True] * int(sqrt(max_number) / 2)
 
     for i, prime in enumerate(base_primes):

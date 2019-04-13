@@ -45,5 +45,5 @@ def _search(sequence, subseq_last, index_begin, index_end, index_elem):
 
     if sequence[index_elem] > sequence[subseq_last[index_middle]]:
         return _search(sequence, subseq_last, index_middle + 1, index_end, index_elem)
-    else:
-        return _search(sequence, subseq_last, index_begin, index_middle, index_elem)
+
+    return _search(sequence, subseq_last, index_begin, index_middle, index_elem)
