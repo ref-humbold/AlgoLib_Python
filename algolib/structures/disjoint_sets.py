@@ -5,18 +5,18 @@
 class DisjointSets:
     def __init__(self, universe=None):
         # Słownik reprezentantów elementów.
-        self.__represents = {} if universe is None else {e: e for e in universe}
+        self._represents = {} if universe is None else {e: e for e in universe}
         # Liczba zbiorów.
-        self.__elems = len(self.__represents)
+        self._elems = len(self._represents)
 
     def __len__(self):
         """:returns: liczba zbiorów"""
-        return self.__elems
+        return self._elems
 
     def __contains__(self, element):
         """:param element: element
         :returns: czy element w jednym ze zbiorów"""
-        return element in self.__represents
+        return element in self._represents
 
     def add_elem(self, element):
         """Dodawanie nowego elementu jako singleton
@@ -25,8 +25,8 @@ class DisjointSets:
         if element in self:
             raise ValueError("Value {0} already present.".format(element))
 
-        self.__represents[element] = element
-        self.__elems += 1
+        self._represents[element] = element
+        self._elems += 1
 
         return self
 
@@ -34,18 +34,18 @@ class DisjointSets:
         """Ustalanie reprezentanta zbioru
         :param element: element ze zbioru
         :returns: reprezentant elementu"""
-        if self.__represents[element] != element:
-            self.__represents[element] = self.find_set(self.__represents[element])
+        if self._represents[element] != element:
+            self._represents[element] = self.find_set(self._represents[element])
 
-        return self.__represents[element]
+        return self._represents[element]
 
     def union_set(self, element1, element2):
         """Scalanie dwóch zbiorów
         :param element1: element pierwszego zbioru
         :param element2: element drugiego zbioru"""
         if not self.is_same_set(element1, element2):
-            self.__represents[self.find_set(element2)] = self.find_set(element1)
-            self.__elems -= 1
+            self._represents[self.find_set(element2)] = self.find_set(element1)
+            self._elems -= 1
 
     def is_same_set(self, element1, element2):
         """Sprawdzanie, czy elementy należą do tego samego zbioru

@@ -12,13 +12,12 @@ class NoSolutionException(ValueError):
 
 class EquationSystem:
     def __init__(self, numeq, coeffs=None, frees=None):
-        EquationSystem.__validate(coeffs, frees, numeq)
+        EquationSystem._validate(coeffs, frees, numeq)
 
         # Liczba równań układu
         self.__equations = numeq
         # Macierz współczynników równania
-        self.__coeffs = coeffs if coeffs is not None \
-            else [[0.0] * numeq for _ in range(numeq)]
+        self.__coeffs = coeffs if coeffs is not None else [[0.0] * numeq for _ in range(numeq)]
         # Wektor wyrazów wolnych równania
         self.__frees = frees if frees is not None else [0.0] * numeq
 
@@ -98,7 +97,7 @@ class EquationSystem:
         self.__frees[equ1] += constant * self.__frees[equ2]
 
     @staticmethod
-    def __validate(coef, frees, numeq):
+    def _validate(coef, frees, numeq):
         if coef is None and frees is None:
             return
 
