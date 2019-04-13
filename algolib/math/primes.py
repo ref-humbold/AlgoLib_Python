@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ALGORITMS FOR PRIME NUMBERS"""
+"""Algoritms for prime numbers"""
 from random import randint
 from math import sqrt
 from .maths import gcd, power_mod

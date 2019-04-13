@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""LINEAR EQUATIONS SYSTEM STRUCTURE"""
+"""Linear equations system structure"""
 
 
 class InfiniteSolutionsException(ValueError):
@@ -26,7 +26,7 @@ class EquationSystem:
         return self.__equations
 
     def solve(self):
-        """Wyliczanie rozwiązań układu równań liniowych.
+        """Wyliczanie rozwiązań układu równań liniowych
         :returns: wektor wyniku równania"""
         self.gaussian_reduce()
 
@@ -46,7 +46,7 @@ class EquationSystem:
         return solution
 
     def gaussian_reduce(self):
-        """Algorytm eliminacji Gaussa."""
+        """Algorytm eliminacji Gaussa"""
         for equ in range(self.__equations - 1):
             index_min = equ
 

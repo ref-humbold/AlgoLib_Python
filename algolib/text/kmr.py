@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""KARP-MILLER-ROSENBERG ALGORITHM"""
+"""Karp-Miller-Rosenberg algorithm"""
 
 
 def kmr(text):
-    """Budowa słownika podsłów bazowych.
+    """Budowa słownika podsłów bazowych
     :param text : słowo
     :returns: słownik podsłów bazowych"""
     factors = _sign_letters(text)
@@ -17,7 +17,7 @@ def kmr(text):
 
 
 def _sign_letters(text):
-    """Budowa podsłów złożonych z pojedynczych znaków.
+    """Budowa podsłów złożonych z pojedynczych znaków
     :param text : słowo
     :returns: słownik dla pojedynczych znaków"""
     factors = {}
@@ -34,7 +34,7 @@ def _sign_letters(text):
 
 
 def _double_length(new_length, text, factors):
-    """Budowa nowych podsłów o podwojonej długości.
+    """Budowa nowych podsłów o podwojonej długości
     :param new_length: nowa długość podsłów
     :param text : słowo
     :param factors: słownik podsłów bazowych"""
