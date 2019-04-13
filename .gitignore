@@ -1,8 +1,6 @@
-# Python
+# Python, PyTest, Nose2
 **/__pycache__
 **/*.pyc
-
-# PyTest, Nose2
 nose2-junit.xml
 
 # PyCharm
