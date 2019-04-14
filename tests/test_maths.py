@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """Test: basic mathematics algorithms"""
 import unittest
+
 from math import isnan
-from algolib.math import gcd, lcm, power_mod, mult_mod
+
+from algolib.mathmat import gcd, lcm, mult_mod, power_mod
 
 
 class MathsTest(unittest.TestCase):

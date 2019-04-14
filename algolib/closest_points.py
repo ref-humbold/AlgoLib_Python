@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Closest pair of points on a plane"""
+"""Closest pair of points on a plane."""
 from math import hypot
 
 

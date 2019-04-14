@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Sorting algorithms"""
-from math import atan2, pi
+"""Sorting algorithms."""
 from random import randint
+
+from math import atan2, pi
 
 
 def angle_sorted(points):
@@ -10,8 +11,8 @@ def angle_sorted(points):
     :returns: list of points sorted by angle"""
     points_list = list(points)
 
-    points_list.sort(key=lambda xy: (
-        (atan2(xy[1], xy[0]) * 180.0 / pi) % 360.0, xy[0] ** 2 + xy[1] ** 2))
+    points_list.sort(
+        key=lambda xy: ((atan2(xy[1], xy[0]) * 180.0 / pi) % 360.0, xy[0] ** 2 + xy[1] ** 2))
 
     return points_list
 
@@ -47,8 +48,8 @@ def heap_sorted(sequence, index_begin=0, index_end=None):
 
     while heap_size > 1:
         index_heap = index_begin + heap_size - 1
-        sequence_list[index_heap], sequence_list[index_begin] = \
-            sequence_list[index_begin], sequence_list[index_heap]
+        sequence_list[index_heap], sequence_list[index_begin] = sequence_list[index_begin], \
+                                                                sequence_list[index_heap]
         _move_down(sequence_list, index_begin, index_begin, index_heap)
         heap_size -= 1
 
@@ -230,13 +231,13 @@ def _quick_sort(sequence, index_begin, index_end):
 
     while index_pivot < index_back:
         if sequence[index_front] < sequence[index_pivot]:
-            sequence[index_pivot], sequence[index_front] = \
-                sequence[index_front], sequence[index_pivot]
+            sequence[index_pivot], sequence[index_front] = sequence[index_front], sequence[
+                index_pivot]
             index_pivot = index_front
             index_front += 1
         else:
-            sequence[index_front], sequence[index_back] = \
-                sequence[index_back], sequence[index_front]
+            sequence[index_front], sequence[index_back] = sequence[index_back], sequence[
+                index_front]
             index_back -= 1
 
     _quick_sort(sequence, index_begin, index_pivot)

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """Test: linear equations system structure"""
 import unittest
-from algolib.math import EquationSystem, NoSolutionException, InfiniteSolutionsException
+
+from algolib.mathmat import EquationSystem, InfiniteSolutionsException, NoSolutionException
 
 
 class EquationSystemTest(unittest.TestCase):
@@ -27,8 +28,7 @@ class EquationSystemTest(unittest.TestCase):
         self.assertListEqual([1, 3, -2], result)
 
     def test_solve_when_no_solution(self):
-        self.__test_object = EquationSystem(
-            3, [[2, 3, -2], [7, -1, 0], [-1, -1.5, 1]], [15, 4, -1])
+        self.__test_object = EquationSystem(3, [[2, 3, -2], [7, -1, 0], [-1, -1.5, 1]], [15, 4, -1])
 
         with self.assertRaises(NoSolutionException):
             self.__test_object.solve()

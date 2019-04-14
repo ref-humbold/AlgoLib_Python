@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """Test: prime numbers algorithms"""
 import unittest
-from algolib.math import find_primes
+
+from algolib.mathmat import find_primes
 
 
 class PrimesTest(unittest.TestCase):
@@ -35,14 +36,15 @@ class PrimesTest(unittest.TestCase):
     def test_find_primes_one_arg(self):
         result = find_primes(100)
 
-        self.assertListEqual([2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41,
-                              43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97], list(result))
+        self.assertListEqual(
+            [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83,
+             89, 97], list(result))
 
     def test_find_primes_one_arg_when_max_is_prime(self):
         result = find_primes(67)
 
-        self.assertListEqual([2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41,
-                              43, 47, 53, 59, 61, 67], list(result))
+        self.assertListEqual(
+            [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67], list(result))
 
     def test_find_primes_one_arg_when_less_than_two(self):
         result = find_primes(1)
@@ -52,23 +54,25 @@ class PrimesTest(unittest.TestCase):
     def test_find_primes_two_args(self):
         result = find_primes(30, 200)
 
-        self.assertListEqual([31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101,
-                              103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167,
-                              173, 179, 181, 191, 193, 197, 199], list(result))
+        self.assertListEqual(
+            [31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113,
+             127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199],
+            list(result))
 
     def test_find_primes_two_args_when_min_less_than_sqrt_of_max(self):
         result = find_primes(5, 150)
 
-        self.assertListEqual([5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67,
-                              71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137,
-                              139, 149], list(result))
+        self.assertListEqual(
+            [5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89,
+             97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149], list(result))
 
     def test_find_primes_two_args_when_min_and_max_are_find_primes(self):
         result = find_primes(137, 317)
 
-        self.assertListEqual([137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197,
-                              199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271,
-                              277, 281, 283, 293, 307, 311, 313, 317], list(result))
+        self.assertListEqual(
+            [137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227,
+             229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317],
+            list(result))
 
     def test_find_primes_two_args_when_min_equals_max_and_prime(self):
         result = find_primes(41, 41)

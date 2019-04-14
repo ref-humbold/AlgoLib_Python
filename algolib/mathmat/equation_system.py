@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Linear equations system structure"""
+"""Structure of linear equation sysytem with Gauss elimination algorithm."""
 
 
 class InfiniteSolutionsException(ValueError):
@@ -14,11 +14,11 @@ class EquationSystem:
     def __init__(self, numeq, coeffs=None, frees=None):
         EquationSystem._validate(coeffs, frees, numeq)
 
-        # Liczba równań układu
+        # Number of equations.
         self.__equations = numeq
-        # Macierz współczynników równania
+        # Coefficients matrix.
         self.__coeffs = coeffs if coeffs is not None else [[0.0] * numeq for _ in range(numeq)]
-        # Wektor wyrazów wolnych równania
+        # Free values vector.
         self.__frees = frees if frees is not None else [0.0] * numeq
 
     def __len__(self):
@@ -45,7 +45,7 @@ class EquationSystem:
         return solution
 
     def gaussian_reduce(self):
-        """Algorytm eliminacji Gaussa"""
+        """Gauss elimination algorithm."""
         for equ in range(self.__equations - 1):
             index_min = equ
 
@@ -80,11 +80,10 @@ class EquationSystem:
         :param eq1: numer pierwszego równania
         :param eq2: numer drugiego równania"""
         for i in range(self.__equations):
-            self.__coeffs[equ1][i], self.__coeffs[equ2][i] = \
-                self.__coeffs[equ2][i], self.__coeffs[equ1][i]
+            self.__coeffs[equ1][i], self.__coeffs[equ2][i] = self.__coeffs[equ2][i], \
+                                                             self.__coeffs[equ1][i]
 
-        self.__frees[equ1], self.__frees[equ2] = \
-            self.__frees[equ2], self.__frees[equ1]
+        self.__frees[equ1], self.__frees[equ2] = self.__frees[equ2], self.__frees[equ1]
 
     def combine(self, equ1, equ2, constant):
         """Przekształcenie równania przez kombinację liniową z innym równaniem
@@ -101,8 +100,7 @@ class EquationSystem:
         if coef is None and frees is None:
             return
 
-        if coef is not None and frees is None \
-           or coef is None and frees is not None:
+        if coef is not None and frees is None or coef is None and frees is not None:
             raise ValueError("Incorrect number of equations")
 
         if len(coef) != numeq or len(frees) != numeq:
