@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TESTS FOR TOPOLOGICAL SORTING ALGORITHMS"""
+"""Test: topological sorting algorithms"""
 import unittest
 from algolib.graphs import sort_topological1, sort_topological2, DirectedSimpleGraph, \
     DirectedCyclicGraphException

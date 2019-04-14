@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-"""TESTS FOR LINEAR EQUATIONS SYSTEM STRUCTURE"""
+"""Test: linear equations system structure"""
 import unittest
-from algolib.math import EquationSystem, NoSolutionException, InfiniteSolutionsException
+
+from algolib.mathmat import EquationSystem, InfiniteSolutionsException, NoSolutionException
 
 
 class EquationSystemTest(unittest.TestCase):

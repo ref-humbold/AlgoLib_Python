@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""DISJOINT SETS STRUCTURE (UNION-FIND)"""
+"""Disjoint sets structure (union-find)"""
 
 
 class DisjointSets:

@@ -13,8 +13,7 @@ def find_lca(treegraph, vertex1, vertex2, root=0):
     if not treegraph.is_same_tree(vertex1, vertex2):
         raise ValueError("Vertices are not in the same tree.")
 
-    if not treegraph.is_same_tree(vertex1, root) \
-       or not treegraph.is_same_tree(vertex2, root):
+    if not treegraph.is_same_tree(vertex1, root) or not treegraph.is_same_tree(vertex2, root):
         raise ValueError("Root vertex does not belong to the tree.")
 
     return _LCAFinder(treegraph).search_lca(vertex1, vertex2, root)
@@ -49,9 +48,10 @@ class _LCAFinder:
         :param vertex1: wierzchołek 1
         :param vertex2: wierzchołek 2
         :returns: najniższy wspólny przodek"""
+
         def is_offspring(vt1, vt2):
-            return self.__pre_post_times[vt1][0] >= self.__pre_post_times[vt2][0] \
-                and self.__pre_post_times[vt1][1] <= self.__pre_post_times[vt2][1]
+            return self.__pre_post_times[vt1][0] >= self.__pre_post_times[vt2][0] and \
+                   self.__pre_post_times[vt1][1] <= self.__pre_post_times[vt2][1]
 
         if is_offspring(vertex1, vertex2):
             return vertex2

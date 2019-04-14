@@ -1,14 +1,19 @@
 # -*- coding: utf-8 -*-
-"""SUFFIX ARRAY IMPLEMENTATION"""
+"""Suffix array structure"""
 from queue import Queue
 
 
 class SuffixArray:
     def __init__(self, text):
+        # length of suffix array
         self._length = len(text)
+        # text
         self._text = text
+        # suffix array
         self._suf_arr = self._init_array()
+        # inversed suffix array
         self._inv_arr = self._init_inv()
+        # longest common prefices array
         self._lcp_arr = self._init_lcp()
 
     @property

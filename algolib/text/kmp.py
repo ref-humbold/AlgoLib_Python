@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-"""KNUTH-MORRIS-PRATT ALGORITHM"""
+"""Knuth-Morris-Pratt algorithm."""
 
 
 def kmp(text, pattern):
-    """Algorytm Knutha-Morrisa-Pratta
-    :param text: słowo
-    :param pattern: wzorzec
-    :returns: generator pozycji wystąpień wzorca w słowie"""
+    """Knuth-Morris-Pratt algorithm.
+    :param text: text
+    :param pattern: pattern to search for
+    :returns: generator of pattern occurrence positions"""
     if pattern == "":
         return
 
@@ -26,9 +26,9 @@ def kmp(text, pattern):
 
 
 def _prefix(pattern):
-    """Funkcja prefiksowa pi Knutha
-    :param pattern: wzorzec
-    :returns: wartości funkcji prefiksowej"""
+    """Knuth's pi prefix function.
+    :param pattern: pattern to count the function for
+    :returns: list of prefix function values"""
     pi_values = [0]
     pos = 0
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TESTS FOR SHORTEST PATHS ALGORITHMS"""
+"""Test: shortest paths algorithms"""
 import unittest
 from algolib.graphs import bellman_ford, dijkstra, floyd_warshall, \
     DirectedWeightedSimpleGraph, UndirectedWeightedSimpleGraph
