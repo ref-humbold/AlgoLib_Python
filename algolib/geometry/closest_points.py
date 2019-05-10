@@ -2,12 +2,14 @@
 """Closest pair of points on a plane."""
 from math import hypot
 
+from .points_sorting import sorted_by_x, sorted_by_y
+
 
 def find_closest_points(points):
     """FUNKCJA OBSŁUGUJĄCA DO WYSZUKIWANIA PUNKTÓW
     :param points: lista punktów
     :returns: para najbliższych punktów"""
-    points_x = sorted(points)
+    points_x = sorted_by_x(points)
 
     return _search_closest(points_x, 0, len(points_x))
 
@@ -27,17 +29,17 @@ def _search_closest(points_x, index_begin, index_end):
                              points_x[index_end])
 
     index_middle = (index_begin + index_end) // 2
-    middle_x = (points_x[index_middle][0] + points_x[index_middle + 1][0]) // 2
+    middle_x = (points_x[index_middle].x + points_x[index_middle + 1].x) // 2
 
     closest_l = _search_closest(points_x, index_begin, index_middle)
     closest_r = _search_closest(points_x, index_middle + 1, index_end)
 
-    if _distance(closest_l[0], closest_l[1]) <= _distance(closest_r[0], closest_r[1]):
+    if _distance(closest_l.x, closest_l.y) <= _distance(closest_r.x, closest_r.y):
         closest_points = closest_l
-        belt_width = _distance(closest_l[0], closest_l[1])
+        belt_width = _distance(closest_l.x, closest_l.y)
     else:
         closest_points = closest_r
-        belt_width = _distance(closest_r[0], closest_r[1])
+        belt_width = _distance(closest_r.x, closest_r.y)
 
     belt_points = _check_belt(points_x, middle_x, belt_width)
 
@@ -69,19 +71,18 @@ def _check_belt(points_x, middle_x, belt_width):
     :returns: najbliższa para punktów w pasku"""
     closest_points = None
     min_distance = belt_width
-    belt_points = sorted([p for p in points_x
-                          if middle_x - belt_width <= p[0] <= middle_x + belt_width],
-                         key=lambda p: (p[1], p[0]))
+    belt_points = sorted_by_y([p for p in points_x
+                               if middle_x - belt_width <= p.x <= middle_x + belt_width])
 
     for i in range(1, len(belt_points)):
         for j in range(i - 1, -1, -1):
             point1 = belt_points[i]
             point2 = belt_points[j]
 
-            if point2[1] < point1[1] + belt_width:
+            if point2.y < point1.y + belt_width:
                 break
 
-            if (point1[0] - middle_x) * (point2[0] - middle_x) < 0:
+            if (point1.x - middle_x) * (point2.x - middle_x) < 0:
                 points_distance = _distance(point1, point2)
 
                 if points_distance < min_distance:
@@ -92,4 +93,4 @@ def _check_belt(points_x, middle_x, belt_width):
 
 
 def _distance(pt1, pt2):
-    return hypot(pt1[0] - pt2[0], pt1[1] - pt2[1])
+    return hypot(pt1.x - pt2.x, pt1.y - pt2.y)
