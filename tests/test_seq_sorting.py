@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Test: sorting algorithms"""
+"""Test: Sequence sorting algorithms."""
 import unittest
-from algolib import angle_sorted, heap_sorted, mergedown_sorted, mergeup_sorted, quick_sorted
+from algolib import heap_sorted, mergedown_sorted, mergeup_sorted, quick_sorted
 
 
 class SortingTest(unittest.TestCase):
@@ -13,40 +13,6 @@ class SortingTest(unittest.TestCase):
 
     def tearDown(self):
         pass
-
-    def test_angle_sorted(self):
-        sequence = [(0, 0), (-2, -3), (-3, -2), (3, -2), (-2, 3), (3, 2), (2, -3), (2, 3), (-3, 2)]
-        sequence_copy = sequence[:]
-
-        result = angle_sorted(sequence)
-
-        self.assertIsInstance(result, list)
-        self.assertListEqual([(0, 0), (3, 2), (2, 3), (-2, 3), (-3, 2),
-                              (-3, -2), (-2, -3), (2, -3), (3, -2)], result)
-        self.assertListEqual(sequence_copy, sequence)
-
-    def test_angle_sorted_when_argument_is_not_list(self):
-        sequence = {(0, 0), (-2, -3), (-3, -2), (3, -2), (-2, 3), (3, 2), (2, -3), (2, 3), (-3, 2)}
-
-        result = angle_sorted(sequence)
-
-        self.assertIsInstance(result, list)
-        self.assertListEqual([(0, 0), (3, 2), (2, 3), (-2, 3), (-3, 2),
-                              (-3, -2), (-2, -3), (2, -3), (3, -2)], result)
-
-    def test_angle_sorted_when_all_equal(self):
-        sequence = [(1, 2), (1, 2), (1, 2), (1, 2), (1, 2), (1, 2), (1, 2)]
-
-        result = angle_sorted(sequence)
-
-        self.assertListEqual([(1, 2), (1, 2), (1, 2), (1, 2), (1, 2), (1, 2), (1, 2)], result)
-
-    def test_angle_sorted_when_empty_list(self):
-        sequence = []
-
-        result = angle_sorted(sequence)
-
-        self.assertListEqual([], result)
 
     def test_heap_sorted(self):
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
