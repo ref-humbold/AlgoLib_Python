@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Graham's algorithm for convex hull on a plane."""
+from .points_sorting import sorted_by_x
 
 
 def convex_hull(points):
@@ -7,9 +8,9 @@ def convex_hull(points):
     :param points: lista punktów na płaszczyźnie
     :returns: lista punktów otoczki"""
     def cross_product(pt1, pt2, pt3):
-        return (pt1[0] - pt2[0]) * (pt3[1] - pt2[1]) - (pt3[0] - pt2[0]) * (pt1[1] - pt2[1])
+        return (pt1.x - pt2.x) * (pt3.y - pt2.y) - (pt3.x - pt2.x) * (pt1.y - pt2.y)
 
-    points_sorted = sorted(points)
+    points_sorted = sorted_by_x(points)
     hull = points_sorted[:2]
 
     for point in points_sorted[2:]:
