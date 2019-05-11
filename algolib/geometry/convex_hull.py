@@ -7,24 +7,27 @@ def convex_hull(points):
     """Wyznaczanie otoczki wypukłej.
     :param points: lista punktów na płaszczyźnie
     :returns: lista punktów otoczki"""
-    def cross_product(pt1, pt2, pt3):
-        return (pt1.x - pt2.x) * (pt3.y - pt2.y) - (pt3.x - pt2.x) * (pt1.y - pt2.y)
 
-    points_sorted = sorted_by_x(points)
-    hull = points_sorted[:2]
+    points = sorted_by_x(points)
+    hull = points[:2]
 
-    for point in points_sorted[2:]:
-        while len(hull) > 1 and cross_product(hull[-2], hull[-1], point) <= 0:
-            del hull[-1]
-
-        hull.append(point)
+    for point in points[2:]:
+        _add_point(point, hull, 1)
 
     upper_size = len(hull)
 
-    for point in reversed(points_sorted[:-1]):
-        while len(hull) > upper_size and cross_product(hull[-2], hull[-1], point) <= 0:
-            del hull[-1]
-
-        hull.append(point)
+    for point in reversed(points[:-1]):
+        _add_point(point, hull, upper_size)
 
     return hull[:-1]
+
+
+def _add_point(point, hull, min_size):
+    while len(hull) > min_size and _cross_product(hull[-2], hull[-1], point) <= 0:
+        del hull[-1]
+
+    hull.append(point)
+
+
+def _cross_product(pt1, pt2, pt3):
+    return (pt1.x - pt2.x) * (pt3.y - pt2.y) - (pt3.x - pt2.x) * (pt1.y - pt2.y)

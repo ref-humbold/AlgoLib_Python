@@ -9,9 +9,9 @@ def find_closest_points(points):
     """FUNKCJA OBSŁUGUJĄCA DO WYSZUKIWANIA PUNKTÓW
     :param points: lista punktów
     :returns: para najbliższych punktów"""
-    points_x = sorted_by_x(points)
+    points = sorted_by_x(points)
 
-    return _search_closest(points_x, 0, len(points_x))
+    return _search_closest(points, 0, len(points))
 
 
 def _search_closest(points_x, index_begin, index_end):
@@ -30,7 +30,6 @@ def _search_closest(points_x, index_begin, index_end):
 
     index_middle = (index_begin + index_end) // 2
     middle_x = (points_x[index_middle].x + points_x[index_middle + 1].x) // 2
-
     closest_l = _search_closest(points_x, index_begin, index_middle)
     closest_r = _search_closest(points_x, index_middle + 1, index_end)
 
@@ -55,12 +54,12 @@ def _search_three(point1, point2, point3):
     distance31 = _distance(point1, point3)
 
     if distance12 <= distance23 and distance12 <= distance31:
-        return (point1, point2)
+        return point1, point2
 
     if distance23 <= distance12 and distance23 <= distance31:
-        return (point2, point3)
+        return point2, point3
 
-    return (point1, point3)
+    return point1, point3
 
 
 def _check_belt(points_x, middle_x, belt_width):
