@@ -2,7 +2,7 @@
 """Test: Sequence sorting algorithms."""
 import unittest
 
-from algolib.geometry import angle_sorted, p2d, sorted_by_x
+from algolib.geometry import angle_sorted, p2d, sorted_by_x, sorted_by_y
 
 
 class SortingTest(unittest.TestCase):
@@ -62,4 +62,17 @@ class SortingTest(unittest.TestCase):
         self.assertIsInstance(result, list)
         self.assertListEqual([p2d(-3, -2), p2d(-3, 2), p2d(-2, -3), p2d(-2, 3), p2d(0, 0),
                               p2d(2, -3), p2d(2, 3), p2d(3, -2), p2d(3, 2)], result)
+        self.assertListEqual(sequence_copy, sequence)
+
+    def test_sorted_by_y(self):
+        sequence = [p2d(0, 0), p2d(-2, -3), p2d(-3, -2), p2d(3, -2), p2d(-2, 3),
+                    p2d(3, 2), p2d(2, -3), p2d(2, 3), p2d(-3, 2)]
+        sequence_copy = sequence[:]
+
+        result = sorted_by_y(sequence)
+
+        self.assertIsInstance(result, list)
+        self.assertListEqual(
+            [p2d(-2, -3), p2d(2, -3), p2d(-3, -2), p2d(3, -2), p2d(0, 0), p2d(-3, 2),
+             p2d(3, 2), p2d(-2, 3), p2d(2, 3)], result)
         self.assertListEqual(sequence_copy, sequence)
