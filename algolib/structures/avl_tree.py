@@ -1,28 +1,15 @@
 # -*- coding: utf-8 -*-
-"""Avl tree structure"""
+"""AVL tree structure"""
 
 
 class AVLTree:
     class _AVLNode:
         def __init__(self, element):
-            # Wartość w węźle
-            self._element = element
-            # Wysokość węzła
-            self._height = 1
-            # Lewy syn węzła
-            self._left = None
-            # Prawy syn węzła
-            self._right = None
-            # Ojciec węzła
-            self._parent = None
-
-        @property
-        def element(self):
-            return self._element
-
-        @element.setter
-        def element(self, element):
-            self._element = element
+            self.element = element  # Value in the node
+            self._height = 1  # Height of the node
+            self._left = None  # Left child of the node
+            self._right = None  # Right child of the node
+            self._parent = None  # Parent of the node
 
         @property
         def height(self):
@@ -62,14 +49,6 @@ class AVLTree:
         def parent(self, parent):
             self._parent = parent
 
-        def is_left_son(self):
-            """:returns: czy węzeł to lewy syn"""
-            return self.parent is not None and self.parent.left is self
-
-        def is_right_son(self):
-            """:returns: czy węzeł to prawy syn"""
-            return self.parent is not None and self.parent.right is self
-
         def count_height(self):
             """Wyliczanie wysokość wierzchołka"""
             left_height = 0 if self._left is None else self._left.height
@@ -96,24 +75,17 @@ class AVLTree:
                 raise StopIteration
 
             ret_elem = self._current_node.element
-            self._current_node = self._successor(self._current_node)
+
+            if self._current_node.right is not None:
+                return self._current_node.right.minimum()
+
+            while self._current_node.parent is not None \
+                    and self._current_node.parent.left is not self._current_node:
+                self._current_node = self._current_node.parent
+
+            self._current_node = self._current_node.parent
 
             return ret_elem
-
-        @staticmethod
-        def _successor(node):
-            """Wyznaczanie następnika węzła w drzewie
-            :param node: węzeł
-            :returns: wezeł z następną wartością"""
-            succ = node
-
-            if succ.right is not None:
-                return succ.right.minimum()
-
-            while succ is not None and not succ.is_left_son():
-                succ = succ.parent
-
-            return succ if succ is None else succ.parent
 
     class _AVLPredIterator:
         def __init__(self, node):
@@ -124,24 +96,17 @@ class AVLTree:
                 raise StopIteration
 
             ret_elem = self._current_node.element
-            self._current_node = self._predecessor(self._current_node)
+
+            if self._current_node.left is not None:
+                return self._current_node.left.maximum()
+
+            while self._current_node.parent is not None \
+                    and self._current_node.parent.right is not self._current_node:
+                self._current_node = self._current_node.parent
+
+            self._current_node = self._current_node.parent
 
             return ret_elem
-
-        @staticmethod
-        def _predecessor(node):
-            """Wyznaczanie poprzednika węzła w drzewie
-            :param node: węzeł
-            :returns: wezeł z poprzednią wartością"""
-            pred = node
-
-            if pred.left is not None:
-                return pred.left.maximum()
-
-            while pred is not None and not pred.is_right_son():
-                pred = pred.parent
-
-            return pred if pred is None else pred.parent
 
     def __init__(self, elems=None):
         # Korzeń drzewa
@@ -172,12 +137,8 @@ class AVLTree:
     def __contains__(self, element):
         """:param element: wartość do znalezienia
         :returns: czy wartość w drzewie"""
-        if self.empty():
-            return False
-
-        node_parent = self._find_node_parent(element)
-
-        return node_parent is None or AVLTree._get_subtree(node_parent, element) is not None
+        return not self.empty() and self._find_node(element,
+                                                    lambda n, e: n.element == e) is not None
 
     def empty(self):
         """:returns: czy drzewo jest puste"""
@@ -187,25 +148,29 @@ class AVLTree:
         """Dodawanie elementu do drzewa
         :param element: wartość do dodania
         :returns: czy dodano nowy element"""
-        node_parent = self._find_node_parent(element)
-        the_node = self._root if node_parent is None \
-            else AVLTree._get_subtree(node_parent, element)
+        node_parent = self._find_node(element, lambda n, e: self._search(n, e) is None
+                                                            or self._search(n, e).element == e)
+
+        if node_parent is None:
+            new_node = self._AVLNode(element)
+            self._root = new_node
+            self._elems += 1
+
+            return True
+
+        the_node = self._search(node_parent, element)
 
         if the_node is not None:
             return False
 
-        new_node = AVLTree._AVLNode(element)
+        new_node = self._AVLNode(element)
 
-        if node_parent is not None:
-            if element < node_parent.element:
-                node_parent.left = new_node
-            else:
-                node_parent.right = new_node
-
-            self._balance(new_node)
+        if element < node_parent.element:
+            node_parent.left = new_node
         else:
-            self._root = new_node
+            node_parent.right = new_node
 
+        self._balance(new_node)
         self._elems += 1
 
         return True
@@ -214,17 +179,12 @@ class AVLTree:
         """Usuwanie elementu z drzewa
         :param element: wartość do usunięcia
         :returns: czy element został usunięty"""
-        node_parent = self._find_node_parent(element)
-        the_node = self._root if node_parent is None \
-            else AVLTree._get_subtree(node_parent, element)
+        the_node = self._find_node(element, lambda n, e: n.element == e)
 
         if the_node is None:
             return False
 
-        if node_parent is None:
-            self._delete_root(the_node)
-        else:
-            self._delete_node(the_node)
+        self._delete_node(the_node)
 
         return True
 
@@ -247,113 +207,23 @@ class AVLTree:
             self._tree.parent = None
 
     @staticmethod
-    def _is_root(node):
-        """:param node: węzeł
-        :returns: czy węzeł to korzeń"""
-        return node.parent is None
-
-    @staticmethod
-    def _get_subtree(node, element):
+    def _search(node, element):
         """Wyznaczanie poddrzewa, w którym mógłby znależć się element
         :param node: węzeł
         :param element: element
         :returns: korzeń poddrzewa, w którym znalazłby się element"""
-        if element == node.element:
-            return node
+        return node.left if element < node.element else \
+            node.right if element > node.element else node
 
-        if element < node.element:
-            return node.left
+    @staticmethod
+    def _is_left_child(node):
+        """:returns: czy węzeł to lewy syn"""
+        return node.parent is not None and node.parent.left is node
 
-        return node.right
-
-    def _find_node_parent(self, element):
-        """Wyszukiwanie ojca węzła z daną wartością
-        :param element: wartość do znalezienia
-        :returns: ojciec węzła z wartością"""
-        tree_iter = self._root
-        iter_parent = None
-
-        while tree_iter is not None and tree_iter.element != element:
-            iter_parent = tree_iter
-            tree_iter = AVLTree._get_subtree(tree_iter, element)
-
-        return iter_parent
-
-    def _delete_root(self, root):
-        """Usuwanie elementu z korzenia drzewa
-        :param root: korzeń drzewa"""
-        if root.left is not None and root.right is not None:
-            self._delete_node(root)
-        else:
-            new_root = root.left if root.left is not None else root.right
-            self._root = new_root
-            self._elems -= 1
-
-    def _delete_node(self, node):
-        """Usuwanie elementu z węzła wewnętrznego drzewa
-        :param node: węzeł do usunięcia"""
-        if node.left is not None and node.right is not None:
-            succ = node.right.minimum()
-            succ.element, node.element = node.element, succ.element
-            self._delete_node(succ)
-        else:
-            son = node.left if node.left is not None else node.right
-            node_parent = node.parent
-
-            self._replace_subtree(node, son)
-            self._balance(node_parent)
-            self._elems -= 1
-
-    def _replace_subtree(self, node1, node2):
-        """Zamiana poddrzewa ukorzenionego w danym węźle
-        :param node1: węzeł do zamiany
-        :param node2: korzeń nowego poddrzewa"""
-        if AVLTree._is_root(node1):
-            self._root = node2
-        elif node1.is_left_son():
-            node1.parent.left = node2
-        elif node1.is_right_son():
-            node1.parent.right = node2
-
-        node1.parent = None
-
-    def _rotate(self, node):
-        """Rotowanie węzła wzdłuż krawędzi z jego ojcem
-        :param node: węzeł do rotacji"""
-        if AVLTree._is_root(node):
-            return
-
-        upper_node = node.parent
-
-        if node.is_right_son():
-            upper_node.right = node.left
-            self._replace_subtree(upper_node, node)
-            node.left = upper_node
-        elif node.is_left_son():
-            upper_node.left = node.right
-            self._replace_subtree(upper_node, node)
-            node.right = upper_node
-
-    def _balance(self, node):
-        """Przywracanie balansowania na ścieżce od wierzchołka do korzenia
-        :param node: wierzchołek początkowy"""
-        while node is not None:
-            node.count_height()
-
-            if AVLTree._count_balance(node) >= 2:
-                if AVLTree._count_balance(node.left) > 0:
-                    self._rotate(node.left)
-                elif AVLTree._count_balance(node.left) < 0:
-                    self._rotate(node.left.right)
-                    self._rotate(node.left)
-            elif AVLTree._count_balance(node) <= -2:
-                if AVLTree._count_balance(node.right) < 0:
-                    self._rotate(node.right)
-                elif AVLTree._count_balance(node.right) > 0:
-                    self._rotate(node.right.left)
-                    self._rotate(node.right)
-
-            node = node.parent
+    @staticmethod
+    def _is_right_child(node):
+        """:returns: czy węzeł to prawy syn"""
+        return node.parent is not None and node.parent.right is node
 
     @staticmethod
     def _count_balance(node):
@@ -364,3 +234,81 @@ class AVLTree:
         right_height = 0 if node.right is None else node.right.height
 
         return left_height - right_height
+
+    def _find_node(self, element, predicate):
+        """Wyszukiwanie ojca węzła z daną wartością
+        :param element: wartość do znalezienia
+        :returns: ojciec węzła z wartością"""
+        node = self._root
+
+        while node is not None and not predicate(node, element):
+            node = AVLTree._search(node, element)
+
+        return node
+
+    def _delete_node(self, node):
+        """Usuwanie elementu z węzła wewnętrznego drzewa
+        :param node: węzeł do usunięcia"""
+        if node.left is not None and node.right is not None:
+            succ = node.right.minimum()
+            succ.element, node.element = node.element, succ.element
+            self._delete_node(succ)
+        else:
+            child = node.left if node.left is not None else node.right
+
+            if node.parent is not None:
+                node_parent = node.parent
+                self._replace_node(node, child)
+                self._balance(node_parent)
+            else:
+                self._root = child
+
+            self._elems -= 1
+
+    def _replace_node(self, node1, node2):
+        """Zamiana poddrzewa ukorzenionego w danym węźle
+        :param node1: węzeł do zamiany
+        :param node2: korzeń nowego poddrzewa"""
+        if self._is_left_child(node1):
+            node1.parent.left = node2
+        elif self._is_right_child(node1):
+            node1.parent.right = node2
+        else:
+            self._root = node2
+
+        node1.parent = None
+
+    def _rotate(self, node):
+        """Rotowanie węzła wzdłuż krawędzi z jego ojcem
+        :param node: węzeł do rotacji"""
+        if self._is_right_child(node):
+            upper_node = node.parent
+            upper_node.right = node.left
+            self._replace_node(upper_node, node)
+            node.left = upper_node
+        elif self._is_left_child(node):
+            upper_node = node.parent
+            upper_node.left = node.right
+            self._replace_node(upper_node, node)
+            node.right = upper_node
+
+    def _balance(self, node):
+        """Przywracanie balansowania na ścieżce od wierzchołka do korzenia
+        :param node: wierzchołek początkowy"""
+        while node is not None:
+            node.count_height()
+
+            if self._count_balance(node) >= 2:
+                if self._count_balance(node.left) > 0:
+                    self._rotate(node.left)
+                elif self._count_balance(node.left) < 0:
+                    self._rotate(node.left.right)
+                    self._rotate(node.left)
+            elif self._count_balance(node) <= -2:
+                if self._count_balance(node.right) < 0:
+                    self._rotate(node.right)
+                elif self._count_balance(node.right) > 0:
+                    self._rotate(node.right.left)
+                    self._rotate(node.right)
+
+            node = node.parent
