@@ -77,13 +77,13 @@ class AVLTree:
             ret_elem = self._current_node.element
 
             if self._current_node.right is not None:
-                return self._current_node.right.minimum()
+                self._current_node = self._current_node.right.minimum()
+            else:
+                while self._current_node.parent is not None \
+                        and self._current_node.parent.left is not self._current_node:
+                    self._current_node = self._current_node.parent
 
-            while self._current_node.parent is not None \
-                    and self._current_node.parent.left is not self._current_node:
                 self._current_node = self._current_node.parent
-
-            self._current_node = self._current_node.parent
 
             return ret_elem
 
@@ -98,13 +98,13 @@ class AVLTree:
             ret_elem = self._current_node.element
 
             if self._current_node.left is not None:
-                return self._current_node.left.maximum()
+                self._current_node = self._current_node.left.maximum()
+            else:
+                while self._current_node.parent is not None \
+                        and self._current_node.parent.right is not self._current_node:
+                    self._current_node = self._current_node.parent
 
-            while self._current_node.parent is not None \
-                    and self._current_node.parent.right is not self._current_node:
                 self._current_node = self._current_node.parent
-
-            self._current_node = self._current_node.parent
 
             return ret_elem
 
