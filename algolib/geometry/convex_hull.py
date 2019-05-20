@@ -18,13 +18,15 @@ def convex_hull(points):
 
     for point in reversed(points[:-1]):
         _add_point(point, hull, upper_size)
-
-    return hull[:-1]
+    
+    hull.pop()
+    
+    return hull
 
 
 def _add_point(point, hull, min_size):
     while len(hull) > min_size and _cross_product(hull[-2], hull[-1], point) <= 0:
-        del hull[-1]
+        hull.pop()
 
     hull.append(point)
 
