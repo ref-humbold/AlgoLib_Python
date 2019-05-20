@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Test: AVL tree structure"""
 import unittest
+
 from algolib.structures import AVLTree
 
 
@@ -85,23 +86,20 @@ class AVLTreeTest(unittest.TestCase):
 
     def test_add_when_new_element(self):
         for i in [111, 140, 187]:
-            result = self._test_object.add(i)
+            self._test_object.add(i)
 
-            self.assertTrue(result)
             self.assertIn(i, self._test_object)
 
     def test_add_when_present_element(self):
         for i in [14, 24, 30, 45]:
-            result = self._test_object.add(i)
+            self._test_object.add(i)
 
-            self.assertFalse(result)
             self.assertIn(i, self._test_object)
 
     def test_remove_when_present_element(self):
         for i in [14, 24, 30, 45]:
-            result = self._test_object.remove(i)
+            self._test_object.remove(i)
 
-            self.assertTrue(result)
             self.assertNotIn(i, self._test_object)
 
     def test_remove_root_when_two_elements1(self):
@@ -110,9 +108,8 @@ class AVLTreeTest(unittest.TestCase):
 
         self._test_object = AVLTree([root, elem])
 
-        result = self._test_object.remove(root)
+        self._test_object.remove(root)
 
-        self.assertTrue(result)
         self.assertNotIn(root, self._test_object)
         self.assertIn(elem, self._test_object)
 
@@ -121,9 +118,8 @@ class AVLTreeTest(unittest.TestCase):
         elem = 27
         self._test_object = AVLTree([root, elem])
 
-        result = self._test_object.remove(root)
+        self._test_object.remove(root)
 
-        self.assertTrue(result)
         self.assertNotIn(root, self._test_object)
         self.assertIn(elem, self._test_object)
 
@@ -131,25 +127,24 @@ class AVLTreeTest(unittest.TestCase):
         root = 0
         self._test_object = AVLTree([root])
 
-        result = self._test_object.remove(root)
+        self._test_object.remove(root)
 
-        self.assertTrue(result)
         self.assertNotIn(root, self._test_object)
         self.assertTrue(self._test_object.empty())
 
     def test_remove_when_empty(self):
         self._test_object = AVLTree()
 
-        result = self._test_object.remove(0)
+        with self.assertRaises(ValueError):
+            self._test_object.remove(0)
 
-        self.assertFalse(result)
         self.assertTrue(self._test_object.empty())
 
     def test_remove_when_outer_element(self):
         for i in [111, 140, 187]:
-            result = self._test_object.remove(i)
+            with self.assertRaises(ValueError):
+                self._test_object.remove(i)
 
-            self.assertFalse(result)
             self.assertNotIn(i, self._test_object)
 
     def test_clear(self):
