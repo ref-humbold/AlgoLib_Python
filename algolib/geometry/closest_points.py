@@ -23,7 +23,7 @@ def _search_closest(points_x, points_y, index_begin, index_end):
     :param index_end: koniec fragmentu listy punktów
     :returns: para najbliższych punktów"""
     if index_end - index_begin == 1:
-        return (points_x[index_begin], points_x[index_end])
+        return points_x[index_begin], points_x[index_end]
 
     if index_end - index_begin == 2:
         return _search_three(points_x[index_begin],
@@ -32,11 +32,9 @@ def _search_closest(points_x, points_y, index_begin, index_end):
 
     index_middle = (index_begin + index_end) // 2
     middle_x = (points_x[index_middle].x + points_x[index_middle + 1].x) // 2
-    closest_l = _search_closest(points_x,
-                                filter(lambda p: p.x <= middle_x, points_y),
+    closest_l = _search_closest(points_x, (p for p in points_y if p.x <= middle_x),
                                 index_begin, index_middle)
-    closest_r = _search_closest(points_x,
-                                filter(lambda p: p.x > middle_x, points_y),
+    closest_r = _search_closest(points_x, (p for p in points_y if p.x > middle_x),
                                 index_middle + 1, index_end)
 
     if _distance(closest_l.x, closest_l.y) <= _distance(closest_r.x, closest_r.y):
@@ -62,8 +60,7 @@ def _check_belt(points_y, middle_x, belt_width):
     :returns: najbliższa para punktów w pasku"""
     closest_points = None
     min_distance = belt_width
-    belt_points = list(filter(lambda p: middle_x - belt_width <= p.x <= middle_x + belt_width,
-                              points_y))
+    belt_points = [p for p in points_y if middle_x - belt_width <= p.x <= middle_x + belt_width]
 
     for i in range(1, len(belt_points)):
         for j in range(i + 1, len(belt_points)):
@@ -88,10 +85,10 @@ def _search_three(point1, point2, point3):
     distance23 = _distance(point2, point3)
     distance31 = _distance(point1, point3)
 
-    if distance12 <= distance23 and distance12 <= distance31:
+    if distance23 >= distance12 <= distance31:
         return point1, point2
 
-    if distance23 <= distance12 and distance23 <= distance31:
+    if distance12 >= distance23 <= distance31:
         return point2, point3
 
     return point1, point3

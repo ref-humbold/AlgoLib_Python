@@ -4,9 +4,9 @@ from .points_sorting import sorted_by_x
 
 
 def convex_hull(points):
-    """Wyznaczanie otoczki wypukłej.
-    :param points: lista punktów na płaszczyźnie
-    :returns: lista punktów otoczki"""
+    """Constructs convex hull of set of points.
+    :param points: generator of points
+    :returns: hull points list"""
 
     points = sorted_by_x(points)
     hull = points[:2]
@@ -18,9 +18,9 @@ def convex_hull(points):
 
     for point in reversed(points[:-1]):
         _add_point(point, hull, upper_size)
-    
+
     hull.pop()
-    
+
     return hull
 
 
