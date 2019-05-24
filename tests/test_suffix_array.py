@@ -34,7 +34,7 @@ class SuffixArrayTest(unittest.TestCase):
 
     def test_getitem_when_out_of_range(self):
         with self.assertRaises(IndexError):
-            self._test_object[20]
+            _ = self._test_object[20]
 
     def test_index_at(self):
         result0 = self._test_object.index_at(0)

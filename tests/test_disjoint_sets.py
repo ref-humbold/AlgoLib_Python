@@ -31,17 +31,31 @@ class DisjointSetsTest(unittest.TestCase):
 
         self.assertFalse(result)
 
-    def test_add_elem_when_new_element(self):
-        elem = 20
+    def test_add_when_new_elements(self):
+        elems = (20, 30, 40)
 
-        self._test_object.add_elem(elem)
+        self._test_object.add(elems)
 
-        self.assertIn(elem, self._test_object)
-        self.assertEqual(elem, self._test_object.find_set(elem))
+        for elem in elems:
+            self.assertIn(elem, self._test_object)
+            self.assertEqual(elem, self._test_object.find_set(elem))
 
-    def test_add_elem_when_present_element(self):
+    def test_add_when_present_element(self):
         with self.assertRaises(ValueError):
-            self._test_object.add_elem(7)
+            self._test_object.add((11, 7, 15))
+
+    def test_iadd_when_new_elements(self):
+        elems = [14, 18, 23]
+
+        self._test_object += elems
+
+        for elem in elems:
+            self.assertIn(elem, self._test_object)
+            self.assertEqual(elem, self._test_object.find_set(elem))
+
+    def test_iadd_when_present_element(self):
+        with self.assertRaises(ValueError):
+            self._test_object += [11, 7, 15]
 
     def test_find_set(self):
         elem = 4

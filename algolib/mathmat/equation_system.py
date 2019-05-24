@@ -13,13 +13,11 @@ class NoSolutionException(ValueError):
 class EquationSystem:
     def __init__(self, numeq, coeffs=None, frees=None):
         EquationSystem._validate(coeffs, frees, numeq)
+        self.__equations = numeq  # Number of equations.
 
-        # Number of equations.
-        self.__equations = numeq
-        # Coefficients matrix.
         self.__coeffs = coeffs if coeffs is not None else [[0.0] * numeq for _ in range(numeq)]
-        # Free values vector.
-        self.__frees = frees if frees is not None else [0.0] * numeq
+        # Coefficients matrix.
+        self.__frees = frees if frees is not None else [0.0] * numeq  # Free values vector.
 
     def __len__(self):
         return self.__equations
@@ -77,8 +75,8 @@ class EquationSystem:
 
     def swap(self, equ1, equ2):
         """Zamiana równań miejscami
-        :param eq1: numer pierwszego równania
-        :param eq2: numer drugiego równania"""
+        :param equ1: numer pierwszego równania
+        :param equ2: numer drugiego równania"""
         for i in range(self.__equations):
             self.__coeffs[equ1][i], self.__coeffs[equ2][i] = self.__coeffs[equ2][i], \
                                                              self.__coeffs[equ1][i]
@@ -87,8 +85,8 @@ class EquationSystem:
 
     def combine(self, equ1, equ2, constant):
         """Przekształcenie równania przez kombinację liniową z innym równaniem
-        :param eq1: numer równania przekształcanego
-        :param eq2: numer drugiego równania
+        :param equ1: numer równania przekształcanego
+        :param equ2: numer drugiego równania
         :param constant: stała kombinacji liniowej"""
         for i in range(self.__equations):
             self.__coeffs[equ1][i] += constant * self.__coeffs[equ2][i]
@@ -100,7 +98,7 @@ class EquationSystem:
         if coef is None and frees is None:
             return
 
-        if coef is not None and frees is None or coef is None and frees is not None:
+        if coef is None or frees is None:
             raise ValueError("Incorrect number of equations")
 
         if len(coef) != numeq or len(frees) != numeq:

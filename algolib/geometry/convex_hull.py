@@ -5,7 +5,7 @@ from .points_sorting import sorted_by_x
 
 def convex_hull(points):
     """Constructs convex hull of set of points.
-    :param points: generator of points
+    :param points: sequence of points
     :returns: hull points list"""
 
     points = sorted_by_x(points)

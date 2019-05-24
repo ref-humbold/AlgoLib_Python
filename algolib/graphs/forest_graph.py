@@ -11,10 +11,8 @@ class CycleException(ValueError):
 class ForestGraph(UndirectedGraph):
     def __init__(self, n, edges=None):
         super().__init__()
-        # Struktura grafu drzew.
-        self.__graph = UndirectedSimpleGraph(n)
-        # Struktura składowych drzew.
-        self.__components = DisjointSets(self.__graph.get_vertices())
+        self.__graph = UndirectedSimpleGraph(n)  # Struktura grafu drzew.
+        self.__components = DisjointSets(self.__graph.get_vertices())  # Struktura składowych drzew.
 
         if edges is not None:
             for e in edges:
@@ -33,7 +31,7 @@ class ForestGraph(UndirectedGraph):
 
     def add_vertex(self):
         vertex = self.__graph.add_vertex()
-        self.__components.add_elem(vertex)
+        self.__components += (vertex,)
 
         return vertex
 

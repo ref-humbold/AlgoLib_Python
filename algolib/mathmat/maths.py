@@ -26,7 +26,7 @@ def lcm(number1, number2):
     return max_number // gcd(number1, number2) * min_number
 
 
-def mult_mod(factor1, factor2, modulo):
+def mult_mod(factor1, factor2, modulo=0):
     """Szybkie mnożenie binarne modulowane
     :param factor1: pierwszy czynnik
     :param factor2: drugi czynnik
@@ -56,7 +56,7 @@ def mult_mod(factor1, factor2, modulo):
     return result
 
 
-def power_mod(base, exponent, modulo):
+def power_mod(base, exponent, modulo=0):
     """Szybkie potęgowanie binarne modulowane
     :param base: podstawa
     :param exponent: wykładnik
