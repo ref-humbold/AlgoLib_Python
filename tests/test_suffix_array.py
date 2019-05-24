@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Test: suffix array structure"""
+"""TEST : Suffix array structure."""
 import unittest
+
 from algolib.text import SuffixArray
 
 

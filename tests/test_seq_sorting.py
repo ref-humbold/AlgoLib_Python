@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Test: Sequence sorting algorithms."""
+"""TEST : Sequence sorting algorithms."""
 import unittest
+
 from algolib import heap_sorted, mergedown_sorted, mergeup_sorted, quick_sorted
 
 

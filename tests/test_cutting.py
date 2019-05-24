@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Test: graph cutting algorithms"""
+"""TEST : Graph cutting algorithms."""
 import unittest
-from algolib.graphs import find_edge_cut, find_vertex_cut, UndirectedSimpleGraph
+
+from algolib.graphs import UndirectedSimpleGraph, find_edge_cut, find_vertex_cut
 
 
 class CuttingTest(unittest.TestCase):

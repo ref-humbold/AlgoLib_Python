@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Test: shortest paths algorithms"""
+"""TEST : Shortest paths algorithms."""
 import unittest
-from algolib.graphs import bellman_ford, dijkstra, floyd_warshall, \
-    DirectedWeightedSimpleGraph, UndirectedWeightedSimpleGraph
+
+from algolib.graphs import DirectedWeightedSimpleGraph, UndirectedWeightedSimpleGraph, \
+    bellman_ford, dijkstra, floyd_warshall
 
 
 class PathsTest(unittest.TestCase):

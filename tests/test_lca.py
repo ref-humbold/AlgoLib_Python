@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Test: lowest common ancestor algorithm"""
+"""TEST : lowest common ancestor algorithm."""
 import unittest
-from algolib.graphs import find_lca, ForestGraph
+
+from algolib.graphs import ForestGraph, find_lca
 
 
 class LCATest(unittest.TestCase):

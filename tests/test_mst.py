@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Test: minimal spanning tree algorithms"""
+"""TEST : Minimal spanning tree algorithms."""
 import unittest
-from algolib.graphs import kruskal, prim, UndirectedWeightedSimpleGraph
+
+from algolib.graphs import UndirectedWeightedSimpleGraph, kruskal, prim
 
 
 class MSTTest(unittest.TestCase):

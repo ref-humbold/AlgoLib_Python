@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Test: undirected graphs structures"""
+"""TEST : Undirected graphs structures."""
 import unittest
+
 from algolib.graphs import DirectedSimpleGraph, UndirectedSimpleGraph
 
 

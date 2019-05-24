@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Test: basic mathematics algorithms"""
+"""TEST : Basic mathematics algorithms."""
 import unittest
 
 from math import isnan
