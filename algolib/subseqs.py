@@ -71,7 +71,7 @@ def maximum_subarray(sequence):
     return maximal[1]
 
 
-def maximal_sum(sequence):
+def maximal_subsum(sequence):
     """Counts maximal sum from all coherent subarrays using interval tree.
     :param sequence: sequence of numbers
     :returns: the sum of maximum subarray"""

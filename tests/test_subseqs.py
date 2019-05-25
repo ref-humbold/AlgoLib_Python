@@ -2,7 +2,7 @@
 """TEST : Algorithms for subsequences."""
 import unittest
 
-from algolib import maximal_sum, maximum_subarray
+from algolib import maximum_subarray, maximal_subsum
 
 
 class SubseqsTest(unittest.TestCase):
@@ -37,23 +37,23 @@ class SubseqsTest(unittest.TestCase):
 
         self.assertListEqual([], result)
 
-    def test_maximumal_sum1(self):
+    def test_maximal_subsum1(self):
         self._sequence = [3.5, 4.8, -1.6, 7.7, 2.1, -9.3, 0.8]
 
-        result = maximal_sum(self._sequence)
+        result = maximal_subsum(self._sequence)
 
         self.assertAlmostEqual(16.5, result, delta=0.000001)
 
-    def test_maximumal_sum2(self):
+    def test_maximal_subsum2(self):
         self._sequence = [-9.3, -1.2, 3.5, 4.8, -10.6, 7.7, 2.1, 0.8, 4.0]
 
-        result = maximal_sum(self._sequence)
+        result = maximal_subsum(self._sequence)
 
         self.assertAlmostEqual(14.6, result, delta=0.000001)
 
-    def test_maximumal_sum_when_all_elements_are_negative(self):
+    def test_maximal_subsum_when_all_elements_are_negative(self):
         self._sequence = [-9.0, -2.4, -3.07, -1.93, -12.67]
 
-        result = maximal_sum(self._sequence)
+        result = maximal_subsum(self._sequence)
 
         self.assertAlmostEqual(0.0, result, delta=0.0)
