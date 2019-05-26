@@ -27,7 +27,7 @@ class UndirectedSimpleGraphTest(unittest.TestCase):
         self.assertListEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], sorted(result))
 
     def test_add_vertex(self):
-        result = self._test_object.add_vertex()
+        result = self._test_object.add_vertex([])
 
         self.assertEqual(10, result)
         self.assertEqual(11, self._test_object.vertices_number)

@@ -28,7 +28,7 @@ class DirectedSimpleGraphTest(unittest.TestCase):
                              sorted(result))
 
     def test_add_vertex(self):
-        result = self._test_object.add_vertex()
+        result = self._test_object.add_vertex([])
 
         self.assertEqual(10, result)
         self.assertEqual(11, self._test_object.vertices_number)

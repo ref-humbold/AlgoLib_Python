@@ -8,7 +8,7 @@ def bellman_ford(diwgraph, source):
     :param diwgraph: skierowany graf ważony
     :param source: wierzchołek początkowy
     :return: lista odległości wierzchołków"""
-    distances = [diwgraph.inf] * diwgraph.vertices_number
+    distances = [diwgraph.INF] * diwgraph.vertices_number
     distances[source] = 0.0
 
     for _ in range(diwgraph.vertices_number - 1):
@@ -16,7 +16,7 @@ def bellman_ford(diwgraph, source):
             distances[u] = min(distances[u], distances[v] + wg)
 
     for v, u, wg in diwgraph.get_weighted_edges():
-        if distances[v] < diwgraph.inf and distances[v] + wg < distances[u]:
+        if distances[v] < diwgraph.INF and distances[v] + wg < distances[u]:
             raise ValueError("Graph contains a negative cycle.")
 
     return distances
@@ -33,7 +33,7 @@ def dijkstra(wgraph, source):
     vertex_queue = queue.PriorityQueue()
     vertex_queue.put((0.0, source))
     is_visited = [False] * wgraph.vertices_number
-    distances = [wgraph.inf] * wgraph.vertices_number
+    distances = [wgraph.INF] * wgraph.vertices_number
     distances[source] = 0.0
 
     while not vertex_queue.empty():
@@ -54,7 +54,7 @@ def floyd_warshall(diwgraph):
     """Algorytm Floyda-Warshalla.
     :param diwgraph: skierowany graf ważony
     :returns: macierz odległości wierzchołków"""
-    distances = [[0.0 if v == u else diwgraph.inf for u in diwgraph.get_vertices()]
+    distances = [[0.0 if v == u else diwgraph.INF for u in diwgraph.get_vertices()]
                  for v in diwgraph.get_vertices()]
 
     for v, u, wg in diwgraph.get_weighted_edges():

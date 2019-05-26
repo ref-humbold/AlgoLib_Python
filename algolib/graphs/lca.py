@@ -10,12 +10,6 @@ def find_lca(treegraph, vertex1, vertex2, root=0):
     :param vertex2: wierzchołek 2
     :param root: korzeń drzewa
     :returns: najniższy wspólny przodek"""
-    if not treegraph.is_same_tree(vertex1, vertex2):
-        raise ValueError("Vertices are not in the same tree.")
-
-    if not treegraph.is_same_tree(vertex1, root) or not treegraph.is_same_tree(vertex2, root):
-        raise ValueError("Root vertex does not belong to the tree.")
-
     return _LCAFinder(treegraph).search_lca(vertex1, vertex2, root)
 
 
@@ -24,7 +18,7 @@ class _LCAFinder:
         # Reprezentacja drzewa.
         self.__graph = treegraph
         # Skompresowane ścieżki do korzenia drzewa.
-        self.__paths = [[] for v in self.__graph.get_vertices()]
+        self.__paths = [[] for _ in self.__graph.get_vertices()]
         # Czas wejścia i wyjścia dla wierzchołka.
         self.__pre_post_times = [None] * self.__graph.vertices_number
 

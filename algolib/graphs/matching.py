@@ -42,7 +42,7 @@ class _MatchAugmenter:
     def augment_match(self):
         """Powiększanie skojarzenia przy pomocy ścieżek powiększających.
         :returns: czy powiększono skojarzenie"""
-        self.__distances = [self.__graph.inf] * self.__graph.vertices_number
+        self.__distances = [self.__graph.INF] * self.__graph.vertices_number
         self.__is_visited = [False] * self.__graph.vertices_number
         self.__bfs()
 
@@ -61,7 +61,7 @@ class _MatchAugmenter:
 
             for nb in self.__graph.get_neighbours(v):
                 if self.__matching[nb] is not None \
-                   and self.__distances[self.__matching[nb]] == self.__graph.inf:
+                        and self.__distances[self.__matching[nb]] == self.__graph.INF:
                     self.__distances[self.__matching[nb]] = self.__distances[v] + 1
                     vertex_queue.put(self.__matching[nb])
 
@@ -80,7 +80,7 @@ class _MatchAugmenter:
                 mtc = self.__matching[neighbour]
 
                 if self.__distances[mtc] == self.__distances[vertex] + 1 \
-                   and not self.__is_visited[mtc] and self.__dfs(mtc):
+                        and not self.__is_visited[mtc] and self.__dfs(mtc):
                     self.__matching[vertex] = neighbour
                     self.__matching[neighbour] = vertex
 

@@ -10,12 +10,10 @@ class NoSuchVertexException(IndexError):
 
 
 class Graph(metaclass=ABCMeta):
+    INF = math.inf
+
     def __init__(self):
         super().__init__()
-
-    @property
-    def inf(self):
-        return math.inf
 
     @property
     @abstractmethod
@@ -28,8 +26,9 @@ class Graph(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def add_vertex(self):
+    def add_vertex(self, neighbours=None):
         """Dodawanie nowego wierzchołka.
+        :param neighbours: sąsiedzi nowego wierzchołka
         :returns: oznaczenie wierzchołka"""
         pass
 
@@ -99,8 +98,7 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
 
     def __init__(self, n):
         super().__init__()
-        # Lista sąsiedztwa grafu.
-        self._graphrepr = [set() for i in range(n)]
+        self._graphrepr = [set() for _ in range(n)]  # Lista sąsiedztwa grafu.
 
     @property
     def vertices_number(self):
@@ -109,10 +107,19 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
     def get_vertices(self):
         return (v for v in range(self.vertices_number))
 
-    def add_vertex(self):
+    def add_vertex(self, neighbours=None):
         self._graphrepr.append(set())
+        v = len(self._graphrepr) - 1
 
-        return len(self._graphrepr) - 1
+        if neighbours is not None:
+            for nb in neighbours:
+                if not 0 <= nb < len(self._graphrepr):
+                    raise NoSuchVertexException(f"No vertex {nb}")
+
+            for nb in neighbours:
+                self.add_edge(v, nb)
+
+        return v
 
     @property
     @abstractmethod
@@ -129,13 +136,13 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
 
     def get_neighbours(self, vertex):
         if not 0 <= vertex < self.vertices_number:
-            raise NoSuchVertexException(str(vertex))
+            raise NoSuchVertexException(f"No vertex {vertex}")
 
         return (v for v in map(lambda wv: wv[0], self._graphrepr[vertex]))
 
     def get_outdegree(self, vertex):
         if not 0 <= vertex < self.vertices_number:
-            raise NoSuchVertexException(str(vertex))
+            raise NoSuchVertexException(f"No vertex {vertex}")
 
         return len(self._graphrepr[vertex])
 
