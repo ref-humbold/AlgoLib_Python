@@ -108,16 +108,18 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
         return (v for v in range(self.vertices_number))
 
     def add_vertex(self, neighbours=None):
+        if neighbours is None:
+            neighbours = []
+
+        for nb in neighbours:
+            if not 0 <= nb < self.vertices_number:
+                raise NoSuchVertexException(f"No vertex {nb}")
+
         self._graphrepr.append(set())
         v = len(self._graphrepr) - 1
 
-        if neighbours is not None:
-            for nb in neighbours:
-                if not 0 <= nb < len(self._graphrepr):
-                    raise NoSuchVertexException(f"No vertex {nb}")
-
-            for nb in neighbours:
-                self.add_edge(v, nb)
+        for nb in neighbours:
+            self.add_edge(v, nb)
 
         return v
 

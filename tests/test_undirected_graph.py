@@ -119,7 +119,7 @@ class UndirectedSimpleGraphTest(unittest.TestCase):
         self._test_object.add_edge(9, 3)
         self._test_object.add_edge(8, 0)
 
-        result = self._test_object.as_directed()
+        result = self._test_object.to_directed()
 
         self.assertIsInstance(result, DirectedSimpleGraph)
         self.assertListEqual(sorted(self._test_object.get_vertices()),

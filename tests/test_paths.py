@@ -36,7 +36,7 @@ class PathsTest(unittest.TestCase):
     def test_bellman_ford_when_undirected_graph(self):
         source = 1
 
-        result = bellman_ford(self.__uwgraph.as_directed(), source)
+        result = bellman_ford(self.__uwgraph.to_directed(), source)
         i = self.__diwgraph.INF
 
         self.assertListEqual([4, 0, i, 7, 7, 8, i, 10, 10, i], result)
@@ -88,7 +88,7 @@ class PathsTest(unittest.TestCase):
                               [i, i, i, i, i, 10, 3, i, 12, 0]], result)
 
     def test_floyd_warshall_when_undirected_graph(self):
-        result = floyd_warshall(self.__uwgraph.as_directed())
+        result = floyd_warshall(self.__uwgraph.to_directed())
         i = self.__diwgraph.INF
 
         self.assertListEqual([[0, 4, i, 3, 11, 10, i, 8, 12, i],
