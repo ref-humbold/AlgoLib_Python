@@ -146,7 +146,7 @@ class AVLTree:
         """Adds a new value to the tree.
         :param element: value to be added"""
         node_parent = self._find_node(element, lambda n, e: self._search(n, e) is None
-                                                            or self._search(n, e).element == e)
+                                      or self._search(n, e).element == e)
 
         if node_parent is None:
             new_node = self._AVLNode(element)
