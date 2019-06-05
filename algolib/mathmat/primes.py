@@ -44,11 +44,16 @@ def test_miller(number):
     if number < 2 or number % 2 == 0 or number % 3 == 0:
         return False
 
-    expon, multip = _distribute(number - 1)
+    expon = 0
+    multip = number - 1
 
-    return all(map(lambda rdv: power_mod(rdv, multip, number) == 1 or any(
-        power_mod(rdv, (1 << i) * multip, number) == number - 1 for i in range(expon)),
-                   [randint(1, number - 1) for _ in range(12)]))
+    while multip % 2 == 0:
+        expon += 1
+        multip >>= 1
+
+    return all(map(lambda rdv: power_mod(rdv, multip, number) == 1
+                   or any(power_mod(rdv, (1 << i) * multip, number) == number - 1
+                          for i in range(expon)), [randint(1, number - 1) for _ in range(12)]))
 
 
 def _find_primes_range(min_number, max_number):
@@ -57,12 +62,14 @@ def _find_primes_range(min_number, max_number):
     :param max_number: górna granica przedziału
     :returns: lista liczb pierwszych"""
     if max_number < min_number:
-        raise ValueError("Second argument must be grater or equal to the first argument.")
+        raise ValueError(
+            "Second argument must be grater or equal to the first argument.")
 
     if max_number < 2:
         return []
 
-    is_prime = [i == 2 or (i > 2 and i % 2 == 1) for i in range(min_number, max_number + 1)]
+    is_prime = [i == 2 or (i > 2 and i % 2 == 1)
+                for i in range(min_number, max_number + 1)]
     base_primes = [True] * int(sqrt(max_number) / 2)
 
     for i, prime in enumerate(base_primes):
@@ -77,20 +84,3 @@ def _find_primes_range(min_number, max_number):
                 is_prime[j] = False
 
     return (min_number + i for i, prime in enumerate(is_prime) if prime)
-
-
-def _distribute(number):
-    """Distribution for Miller-Rabin test.
-    Extracts from an even number the biggest power of 2 possible: ``n = 2 ^ d * s``.
-    :param number: number to distribute
-    :returns: exponent of 2 and multiplicand"""
-    power = 2
-    expon = 1
-
-    while number % power == 0:
-        expon += 1
-        power <<= 1
-
-    expon -= 1
-
-    return expon, number // (1 << expon)
