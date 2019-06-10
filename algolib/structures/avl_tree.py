@@ -5,11 +5,11 @@
 class AVLTree:
     class _AVLNode:
         def __init__(self, element):
-            self.element = element  # Value in the node
-            self._height = 1  # Height of the node
-            self._left = None  # Left child of the node
-            self._right = None  # Right child of the node
-            self._parent = None  # Parent of the node
+            self.element = element  # Value in the node.
+            self._height = 1  # Height of the node.
+            self._left = None  # Left child of the node.
+            self._right = None  # Right child of the node.
+            self._parent = None  # Parent of the node.
 
         @property
         def height(self):
@@ -109,8 +109,8 @@ class AVLTree:
             return ret_elem
 
     def __init__(self, elems=None):
-        self._tree = None  # Root of the tree
-        self._elems = 0  # Number of elements in the tree
+        self._tree = None  # Root of the tree.
+        self._elems = 0  # Number of elements in the tree.
 
         if elems is not None:
             for i in elems:
@@ -139,7 +139,7 @@ class AVLTree:
                                                     lambda n, e: n.element == e) is not None
 
     def empty(self):
-        """:returns: `true`` if the tree is empty, otherwise ``false``"""
+        """:returns: ``true`` if the tree is empty, otherwise ``false``"""
         return self._elems == 0
 
     def add(self, element):
@@ -189,7 +189,7 @@ class AVLTree:
 
     @_root.setter
     def _root(self, node):
-        """:param node: node that will become new root of the tree"""
+        """:param node: node that will become the new root of the tree"""
         self._tree = node
 
         if node is not None:

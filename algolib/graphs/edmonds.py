@@ -1,18 +1,20 @@
-# ALGORYTM EDMONDSA-KARPA: MAKSYMALNY PRZEP�YW
+# ALGORYTM EDMONDSA-KARPA: MAKSYMALNY PRZEPŁYW
 # -*- coding: utf-8 -*-
 import queue
 
+
 class FlowGraphEdmonds:
-    _INF = float(1<<30)    # oznaczenie nieskończoności
+    _INF = float(1 << 30)  # oznaczenie nieskończoności
 
     def __init__(self, n):
         """
         KONSTRUKTOR PUSTEGO GRAFU PRZEP�YWOWEGO
         :param n: liczba wierzchołków
         """
-        self.__num_vertex = n    # liczba wierzchołków grafu
-        self.__graphrepr = [[] for i in range(n+1)]    # lista sąsiedztwa grafu przep�ywowego
-        self.__capacities = [[self._INF]*(n+1) for i in range(n+1)]    # macierz przeputowo�ci kraw�dzi
+        self.__num_vertex = n  # liczba wierzchołków grafu
+        self.__graphrepr = [[] for i in range(n + 1)]  # lista sąsiedztwa grafu przepływowego
+        self.__capacities = [[self._INF] * (n + 1)
+                             for i in range(n + 1)]  # macierz przeputowości krawędzi
 
     def count_flow(self, source, target):
         """
@@ -21,8 +23,9 @@ class FlowGraphEdmonds:
         :param target: uj�cie
         :returns: maksymalny przep�yw sieci
         """
-        self.__augmenting_paths = []    # tablica poprzednik�w i minimalnych przepustowo�ci ze �r�d�a
-        max_flow = 0.0; is_flow_added = True
+        self.__augmenting_paths = []  # tablica poprzedników i minimalnych przepustowości ze źródła
+        max_flow = 0.0
+        is_flow_added = True
 
         while is_flow_added:
             self.__augmenting_paths = [(None, self._INF)]*(self.__num_vertex+1)
@@ -40,7 +43,8 @@ class FlowGraphEdmonds:
         :param target: uj�cie
         :return: czy uda si� powi�kszy� przep�yw
         """
-        vertex_queue = queue.Queue(); vertex_queue.put(source)
+        vertex_queue = queue.Queue()
+        vertex_queue.put(source)
         self.__augmenting_paths[source] = (0, self._INF)
 
         while not vertex_queue.empty():
@@ -73,4 +77,3 @@ class FlowGraphEdmonds:
             w = s
 
         return self.__augmenting_paths[target][1]
-

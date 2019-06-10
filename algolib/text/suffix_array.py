@@ -5,16 +5,11 @@ from queue import Queue
 
 class SuffixArray:
     def __init__(self, text):
-        # length of suffix array
-        self._length = len(text)
-        # text
-        self._text = text
-        # suffix array
-        self._suf_arr = self._init_array()
-        # inversed suffix array
-        self._inv_arr = self._init_inv()
-        # longest common prefices array
-        self._lcp_arr = self._init_lcp()
+        self._length = len(text)  # length of suffix array
+        self._text = text  # text
+        self._suf_arr = self._init_array()  # suffix array
+        self._inv_arr = self._init_inv()  # inversed suffix array
+        self._lcp_arr = self._init_lcp()  # longest common prefices array
 
     @property
     def text(self):

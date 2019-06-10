@@ -4,17 +4,17 @@ import queue
 
 
 class FlowGraphDinic:
-    _INF = float(1 << 30)    # oznaczenie nieskończoności
+    _INF = float(1 << 30)  # oznaczenie nieskończoności
 
     def __init__(self, n):
         """
-        KONSTRUKTOR PUSTEGO GRAFU PRZEP�YWOWEGO
+        KONSTRUKTOR PUSTEGO GRAFU PRZEPŁYWOWEGO
         :param n: liczba wierzchołków
         """
-        self.__num_vertex = n    # liczba wierzchołków grafu
-        self.__graphrepr = [[] for i in range(n + 1)]    # sąsiedztwa grafu przepływowego
-        # macierz przeputowości krawędzi
-        self.__capacities = [[self._INF] * (n + 1) for i in range(n + 1)]
+        self.__num_vertex = n  # liczba wierzchołków grafu
+        self.__graphrepr = [[] for i in range(n + 1)]  # sąsiedztwa grafu przepływowego
+        self.__capacities = [[self._INF] * (n + 1)
+                             for i in range(n + 1)]  # macierz przeputowości krawędzi
 
     def flow(self, source, target):
         """
@@ -23,7 +23,7 @@ class FlowGraphDinic:
         :param target: uj�cie
         :returns: maksymalny przep�yw sieci
         """
-        self.__layer_graph = []    # lista sąsiedztwa grafu warstwowego
+        self.__layer_graph = []  # lista sąsiedztwa grafu warstwowego
         max_flow = 0.0
         is_flow_added = True
 
