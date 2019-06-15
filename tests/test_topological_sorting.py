@@ -2,7 +2,7 @@
 """TEST : Topological sorting algorithms."""
 import unittest
 
-from refhumbold.algolib.graphs import DirectedCyclicGraphException, DirectedSimpleGraph, \
+from algolib.graphs import DirectedCyclicGraphException, DirectedSimpleGraph, \
     sort_topological1, sort_topological2
 
 

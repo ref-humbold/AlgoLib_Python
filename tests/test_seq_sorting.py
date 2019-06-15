@@ -2,7 +2,7 @@
 """TEST : Sequence sorting algorithms."""
 import unittest
 
-from refhumbold.algolib.sequences import heap_sorted, mergedown_sorted, mergeup_sorted, quick_sorted
+from algolib.sequences import heap_sorted, mergedown_sorted, mergeup_sorted, quick_sorted
 
 
 class SortingTest(unittest.TestCase):

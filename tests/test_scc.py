@@ -2,7 +2,7 @@
 """TEST : Strongly connected components algorithm."""
 import unittest
 
-from refhumbold.algolib.graphs import DirectedSimpleGraph, find_scc
+from algolib.graphs import DirectedSimpleGraph, find_scc
 
 
 class SCCTest(unittest.TestCase):

@@ -2,7 +2,7 @@
 """TEST : Prime numbers algorithms."""
 import unittest
 
-from refhumbold.algolib.mathmat import find_primes, test_fermat, test_miller
+from algolib.mathmat import find_primes, test_fermat, test_miller
 
 
 class PrimesTest(unittest.TestCase):

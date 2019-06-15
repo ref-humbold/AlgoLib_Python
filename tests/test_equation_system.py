@@ -2,7 +2,7 @@
 """TEST : Linear equations system structure."""
 import unittest
 
-from refhumbold.algolib.mathmat import EquationSystem, InfiniteSolutionsException, \
+from algolib.mathmat import EquationSystem, InfiniteSolutionsException, \
     NoSolutionException
 
 

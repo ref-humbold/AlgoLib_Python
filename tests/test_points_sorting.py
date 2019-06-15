@@ -2,7 +2,7 @@
 """TEST : Points sorting algorithms."""
 import unittest
 
-from refhumbold.algolib.geometry import angle_sorted, p2d, sorted_by_x, sorted_by_y
+from algolib.geometry import angle_sorted, p2d, sorted_by_x, sorted_by_y
 
 
 class SortingTest(unittest.TestCase):

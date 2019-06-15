@@ -2,7 +2,7 @@
 """TEST : lowest common ancestor algorithm."""
 import unittest
 
-from refhumbold.algolib.graphs import ForestGraph, find_lca
+from algolib.graphs import ForestGraph, find_lca
 
 
 class LCATest(unittest.TestCase):

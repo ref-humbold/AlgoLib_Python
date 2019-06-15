@@ -2,7 +2,7 @@
 """TEST : Tree graphs structure."""
 import unittest
 
-from refhumbold.algolib.graphs import CycleException, ForestGraph
+from algolib.graphs import CycleException, ForestGraph
 
 
 class ForestGraphTest(unittest.TestCase):

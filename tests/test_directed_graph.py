@@ -2,7 +2,7 @@
 """TEST : Directed graphs structures"""
 import unittest
 
-from refhumbold.algolib.graphs import DirectedSimpleGraph
+from algolib.graphs import DirectedSimpleGraph
 
 
 class DirectedSimpleGraphTest(unittest.TestCase):

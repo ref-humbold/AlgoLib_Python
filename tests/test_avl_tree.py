@@ -2,7 +2,7 @@
 """TEST : AVL tree structure."""
 import unittest
 
-from refhumbold.algolib.structures import AVLTree
+from algolib.structures import AVLTree
 
 
 class AVLTreeTest(unittest.TestCase):

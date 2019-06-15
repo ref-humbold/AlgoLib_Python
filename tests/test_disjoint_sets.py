@@ -2,7 +2,7 @@
 """TEST : Disjoint sets structure (union-find)."""
 import unittest
 
-from refhumbold.algolib.structures import DisjointSets
+from algolib.structures import DisjointSets
 
 
 class DisjointSetsTest(unittest.TestCase):

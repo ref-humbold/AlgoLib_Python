@@ -2,7 +2,7 @@
 """TEST : Suffix array structure."""
 import unittest
 
-from refhumbold.algolib.text import SuffixArray
+from algolib.text import SuffixArray
 
 
 class SuffixArrayTest(unittest.TestCase):
