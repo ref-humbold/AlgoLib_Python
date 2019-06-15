@@ -2,7 +2,7 @@
 """TEST : Algorithms for subsequences."""
 import unittest
 
-from algolib import maximum_subarray, maximal_subsum
+from refhumbold.algolib.sequences import maximal_subsum, maximum_subarray
 
 
 class SubseqsTest(unittest.TestCase):

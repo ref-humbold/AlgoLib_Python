@@ -2,7 +2,7 @@
 """TEST : Minimal spanning tree algorithms."""
 import unittest
 
-from algolib.graphs import UndirectedWeightedSimpleGraph, kruskal, prim
+from refhumbold.algolib.graphs import UndirectedWeightedSimpleGraph, kruskal, prim
 
 
 class MSTTest(unittest.TestCase):

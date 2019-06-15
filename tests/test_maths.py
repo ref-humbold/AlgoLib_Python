@@ -4,7 +4,7 @@ import unittest
 
 from math import isnan
 
-from algolib.mathmat import gcd, lcm, mult_mod, power_mod
+from refhumbold.algolib.mathmat import gcd, lcm, mult_mod, power_mod
 
 
 class MathsTest(unittest.TestCase):

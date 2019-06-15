@@ -2,7 +2,7 @@
 """TEST : Graph cutting algorithms."""
 import unittest
 
-from algolib.graphs import UndirectedSimpleGraph, find_edge_cut, find_vertex_cut
+from refhumbold.algolib.graphs import UndirectedSimpleGraph, find_edge_cut, find_vertex_cut
 
 
 class CuttingTest(unittest.TestCase):

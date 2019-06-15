@@ -2,7 +2,7 @@
 """TEST : Shortest paths algorithms."""
 import unittest
 
-from algolib.graphs import DirectedWeightedSimpleGraph, UndirectedWeightedSimpleGraph, \
+from refhumbold.algolib.graphs import DirectedWeightedSimpleGraph, UndirectedWeightedSimpleGraph, \
     bellman_ford, dijkstra, floyd_warshall
 
 

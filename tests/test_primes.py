@@ -2,7 +2,7 @@
 """TEST : Prime numbers algorithms."""
 import unittest
 
-from algolib.mathmat import find_primes, test_fermat, test_miller
+from refhumbold.algolib.mathmat import find_primes, test_fermat, test_miller
 
 
 class PrimesTest(unittest.TestCase):
@@ -15,7 +15,7 @@ class PrimesTest(unittest.TestCase):
     def tearDown(self):
         pass
 
-# region test_find_primes
+    # region test_find_primes
 
     def test_find_primes_when_zero_args(self):
         with self.assertRaises(TypeError):
@@ -86,8 +86,8 @@ class PrimesTest(unittest.TestCase):
 
         self.assertListEqual([], list(result))
 
-# endregion
-# region test_test_fermat
+    # endregion
+    # region test_test_fermat
 
     def test_test_fermat_when_zero(self):
         result = test_fermat(0)
@@ -119,8 +119,8 @@ class PrimesTest(unittest.TestCase):
 
         self.assertFalse(result)
 
-# endregion
-# region test_test_miller
+    # endregion
+    # region test_test_miller
 
     def test_test_miller_when_zero(self):
         result = test_miller(0)

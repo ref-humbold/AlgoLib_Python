@@ -2,7 +2,7 @@
 """TEST : Knuth-Morris-Pratt algorithm."""
 import unittest
 
-from algolib.text import kmp
+from refhumbold.algolib.text import kmp
 
 
 class KMPTest(unittest.TestCase):

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from .closest_points import find_closest_points
 from .convex_hull import convex_hull
 from .point2d import Point2D, p2d
