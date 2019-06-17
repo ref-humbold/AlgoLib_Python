@@ -1,8 +1,10 @@
-# Python, PyTest, Nose2
+# [ Python ]
+# Python output
 **/__pycache__
 **/*.pyc
+
+# PyTest, Nose2 output
 nose2-junit.xml
 
-# PyCharm
+# PyCharm files
 .idea
-*.iml
