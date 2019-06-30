@@ -77,8 +77,8 @@ class EquationSystem:
         :param equ1: numer pierwszego równania
         :param equ2: numer drugiego równania"""
         for i in range(self.__equations):
-            self.__coeffs[equ1][i], self.__coeffs[equ2][i] = self.__coeffs[equ2][i], \
-                self.__coeffs[equ1][i]
+            self.__coeffs[equ1][i], self.__coeffs[equ2][i] = \
+                self.__coeffs[equ2][i], self.__coeffs[equ1][i]
 
         self.__frees[equ1], self.__frees[equ2] = self.__frees[equ2], self.__frees[equ1]
 

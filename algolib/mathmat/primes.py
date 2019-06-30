@@ -24,6 +24,8 @@ def test_fermat(number):
     """Fermat's prime test.
     :param number: number to test
     :returns: ``true`` if the number is probably prime, otherwise ``false``"""
+    number = abs(number)
+
     if number in (2, 3):
         return True
 
@@ -38,6 +40,8 @@ def test_miller(number):
     """Miller-Rabin's prime test.
     :param number: number to test
     :returns: ``true`` if the number is probably prime, otherwise ``false``"""
+    number = abs(number)
+
     if number in (2, 3):
         return True
 
@@ -52,8 +56,9 @@ def test_miller(number):
         multip >>= 1
 
     return all(map(lambda rdv: power_mod(rdv, multip, number) == 1
-                   or any(power_mod(rdv, (1 << i) * multip, number) == number - 1
-                          for i in range(expon)), [randint(1, number - 1) for _ in range(12)]))
+                               or any(power_mod(rdv, (1 << i) * multip, number) == number - 1
+                                      for i in range(expon)),
+                   [randint(1, number - 1) for _ in range(12)]))
 
 
 def _find_primes_range(min_number, max_number):
@@ -63,7 +68,7 @@ def _find_primes_range(min_number, max_number):
     :returns: lista liczb pierwszych"""
     if max_number < min_number:
         raise ValueError(
-            "Second argument must be grater or equal to the first argument.")
+            "Second argument must be grater or equal to the first argument")
 
     if max_number < 2:
         return []
