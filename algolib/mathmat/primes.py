@@ -48,17 +48,28 @@ def test_miller(number):
     if number < 2 or number % 2 == 0 or number % 3 == 0:
         return False
 
-    expon = 0
     multip = number - 1
 
     while multip % 2 == 0:
-        expon += 1
         multip >>= 1
 
-    return all(map(lambda rdv: power_mod(rdv, multip, number) == 1
-                               or any(power_mod(rdv, (1 << i) * multip, number) == number - 1
-                                      for i in range(expon)),
-                   [randint(1, number - 1) for _ in range(12)]))
+    for i in range(0, 12):
+        rdv = randint(1, number - 1)
+
+        if power_mod(rdv, multip, number) != 1:
+            is_composite = True
+
+            d = multip
+
+            while d <= number / 2:
+                pwm = power_mod(rdv, d, number)
+                is_composite = is_composite and pwm != number - 1
+                d <<= 1
+
+            if is_composite:
+                return False
+
+    return True
 
 
 def _find_primes_range(min_number, max_number):
