@@ -7,7 +7,7 @@ class EmptyStrategy:
     def preprocess(self, vertex):
         pass
 
-    def before_neighbour(self, vertex, neighbour):
+    def for_neighbour(self, vertex, neighbour):
         pass
 
     def postprocess(self, vertex):
@@ -33,7 +33,7 @@ class TimerStrategy:
         self._pre_times[vertex] = self._timer
         self._timer += 1
 
-    def before_neighbour(self, vertex, neighbour):
+    def for_neighbour(self, vertex, neighbour):
         pass
 
     def postprocess(self, vertex):
