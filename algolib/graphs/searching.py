@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""GRAPH SEARCHING ALGORITHMS"""
+"""Graph searching algorithms."""
 import queue
 
 
@@ -54,15 +54,14 @@ def iter_dfs(graph, strategy, roots):
 
             while not vertex_stack.empty():
                 vertex = vertex_stack.get()
-                strategy.preprocess(vertex)
 
                 if reached[vertex] == 0:
                     reached[vertex] = iteration
+                    strategy.preprocess(vertex)
 
                     for neighbour in graph.get_neighbours(vertex):
                         if reached[neighbour] == 0:
                             strategy.for_neighbour(vertex, neighbour)
-                            reached[neighbour] = iteration
                             vertex_stack.put(neighbour)
                         elif reached[neighbour] == iteration:
                             strategy.on_cycle(vertex, neighbour)
