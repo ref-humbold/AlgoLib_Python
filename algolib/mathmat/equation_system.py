@@ -14,9 +14,8 @@ class EquationSystem:
     def __init__(self, numeq, coeffs=None, frees=None):
         EquationSystem._validate(coeffs, frees, numeq)
         self.__equations = numeq  # Number of equations.
-
-        self.__coeffs = coeffs if coeffs is not None else [[0.0] * numeq for _ in range(numeq)]
         # Coefficients matrix.
+        self.__coeffs = coeffs if coeffs is not None else [[0.0] * numeq for _ in range(numeq)]
         self.__frees = frees if frees is not None else [0.0] * numeq  # Free values vector.
 
     def __len__(self):
@@ -78,8 +77,8 @@ class EquationSystem:
         :param equ1: numer pierwszego równania
         :param equ2: numer drugiego równania"""
         for i in range(self.__equations):
-            self.__coeffs[equ1][i], self.__coeffs[equ2][i] = self.__coeffs[equ2][i], \
-                                                             self.__coeffs[equ1][i]
+            self.__coeffs[equ1][i], self.__coeffs[equ2][i] = \
+                self.__coeffs[equ2][i], self.__coeffs[equ1][i]
 
         self.__frees[equ1], self.__frees[equ2] = self.__frees[equ2], self.__frees[equ1]
 

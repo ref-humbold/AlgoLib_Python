@@ -4,8 +4,8 @@
 
 class DisjointSets:
     def __init__(self, universe=None):
-        self._represents = {} if universe is None else {e: e for e in universe}
         # Dict of represents.
+        self._represents = {} if universe is None else {e: e for e in universe}
         self._sets = len(self._represents)  # Number of sets.
 
     def __len__(self):

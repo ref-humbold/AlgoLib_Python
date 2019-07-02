@@ -18,16 +18,12 @@ def find_vertex_cut(ugraph):
 
 class _GraphCutting:
     def __init__(self, graph):
-        # Reprezentacja grafu nieskierowanego.
-        self.__graph = graph
-        # Ojciec w drzewie DFS.
-        self.__dfs_parents = [None] * graph.vertices_number
+        self.__graph = graph  # Reprezentacja grafu nieskierowanego.
+        self.__dfs_parents = [None] * graph.vertices_number  # Ojciec w drzewie DFS.
         # Lista synów w drzewie DFS.
         self.__dfs_children = [[] for _ in self.__graph.get_vertices()]
-        # Głębokość w drzewie DFS.
-        self.__dfs_depths = [None] * graph.vertices_number
-        # Wartości funkcji LOW.
-        self.__low_values = [None] * graph.vertices_number
+        self.__dfs_depths = [None] * graph.vertices_number  # Głębokość w drzewie DFS.
+        self.__low_values = [None] * graph.vertices_number  # Wartości funkcji LOW.
 
     def edge_cut(self):
         """Znajdowanie mostów.

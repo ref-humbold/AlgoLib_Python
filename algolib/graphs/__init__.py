@@ -4,13 +4,13 @@ from .dinic import FlowGraphDinic
 from .directed_graph import DirectedGraph, DirectedSimpleGraph, DirectedWeightedSimpleGraph
 from .edmonds import FlowGraphEdmonds
 from .graph import Graph, NoSuchVertexException, SimpleGraph, WeightedGraph
-from .lca import find_lca
+from .lowest_common_ancestor import find_lca
 from .matching import match
-from .mst import kruskal, prim
+from .minimal_spanning_tree import kruskal, prim
 from .multipartite_graph import GraphPartitionException, MultipartiteGraph
 from .paths import bellman_ford, dijkstra, floyd_warshall
-from .scc import find_scc
 from .searching import bfs, iter_dfs, rec_dfs
+from .strongly_connected_components import find_scc
 from .topological_sorting import DirectedCyclicGraphException, sort_topological1, sort_topological2
 from .tree_graph import CycleException, NotConnectedException, TreeGraph
 from .undirected_graph import UndirectedGraph, UndirectedSimpleGraph, UndirectedWeightedSimpleGraph

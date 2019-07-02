@@ -2,7 +2,7 @@
 """TEST : Prime numbers algorithms."""
 import unittest
 
-from algolib.mathmat import find_primes
+from algolib.mathmat import find_primes, test_fermat, test_miller
 
 
 class PrimesTest(unittest.TestCase):
@@ -14,6 +14,8 @@ class PrimesTest(unittest.TestCase):
 
     def tearDown(self):
         pass
+
+    # region test_find_primes
 
     def test_find_primes_when_zero_args(self):
         with self.assertRaises(TypeError):
@@ -83,3 +85,71 @@ class PrimesTest(unittest.TestCase):
         result = find_primes(91, 91)
 
         self.assertListEqual([], list(result))
+
+    # endregion
+    # region test_test_fermat
+
+    def test_test_fermat_when_zero(self):
+        result = test_fermat(0)
+
+        self.assertFalse(result)
+
+    def test_test_fermat_when_one(self):
+        result = test_fermat(1)
+
+        self.assertFalse(result)
+
+    def test_test_fermat_when_two(self):
+        result = test_fermat(2)
+
+        self.assertTrue(result)
+
+    def test_test_fermat_when_prime(self):
+        result = test_fermat(1013)
+
+        self.assertTrue(result)
+
+    def test_test_fermat_when_composite(self):
+        result = test_fermat(1001)
+
+        self.assertFalse(result)
+
+    def test_test_fermat_when_carmichael_number(self):
+        result = test_fermat(1105)  # 1105 = 5 * 13 * 17 is a Carmichael number
+
+        self.assertFalse(result)
+
+    # endregion
+    # region test_test_miller
+
+    def test_test_miller_when_zero(self):
+        result = test_miller(0)
+
+        self.assertFalse(result)
+
+    def test_test_miller_when_one(self):
+        result = test_miller(1)
+
+        self.assertFalse(result)
+
+    def test_test_miller_when_two(self):
+        result = test_miller(2)
+
+        self.assertTrue(result)
+
+    def test_test_miller_when_prime(self):
+        result = test_miller(1013)
+
+        self.assertTrue(result)
+
+    def test_test_miller_when_composite1(self):
+        result = test_miller(1001)
+
+        self.assertFalse(result)
+
+    def test_test_miller_when_composite2(self):
+        result = test_miller(1105)
+
+        self.assertFalse(result)
+
+# endregion

@@ -2,7 +2,8 @@
 """TEST : Linear equations system structure."""
 import unittest
 
-from algolib.mathmat import EquationSystem, InfiniteSolutionsException, NoSolutionException
+from algolib.mathmat import EquationSystem, InfiniteSolutionsException, \
+    NoSolutionException
 
 
 class EquationSystemTest(unittest.TestCase):

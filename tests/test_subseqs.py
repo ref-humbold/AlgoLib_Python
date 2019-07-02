@@ -2,7 +2,7 @@
 """TEST : Algorithms for subsequences."""
 import unittest
 
-from algolib import maximum_subarray, maximal_subsum
+from algolib.sequences import maximal_subsum, maximum_subarray
 
 
 class SubseqsTest(unittest.TestCase):

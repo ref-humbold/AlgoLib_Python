@@ -2,8 +2,8 @@
 """TEST : Topological sorting algorithms."""
 import unittest
 
-from algolib.graphs import DirectedCyclicGraphException, DirectedSimpleGraph, sort_topological1, \
-    sort_topological2
+from algolib.graphs import DirectedCyclicGraphException, DirectedSimpleGraph, \
+    sort_topological1, sort_topological2
 
 
 class TopologicalSortingTest(unittest.TestCase):

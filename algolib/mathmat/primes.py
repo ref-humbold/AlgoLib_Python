@@ -24,6 +24,8 @@ def test_fermat(number):
     """Fermat's prime test.
     :param number: number to test
     :returns: ``true`` if the number is probably prime, otherwise ``false``"""
+    number = abs(number)
+
     if number in (2, 3):
         return True
 
@@ -38,17 +40,36 @@ def test_miller(number):
     """Miller-Rabin's prime test.
     :param number: number to test
     :returns: ``true`` if the number is probably prime, otherwise ``false``"""
+    number = abs(number)
+
     if number in (2, 3):
         return True
 
     if number < 2 or number % 2 == 0 or number % 3 == 0:
         return False
 
-    expon, multip = _distribute(number - 1)
+    multip = number - 1
 
-    return all(map(lambda rdv: power_mod(rdv, multip, number) == 1 or any(
-        power_mod(rdv, (1 << i) * multip, number) == number - 1 for i in range(expon)),
-                   [randint(1, number - 1) for _ in range(12)]))
+    while multip % 2 == 0:
+        multip >>= 1
+
+    for i in range(0, 12):
+        rdv = randint(1, number - 1)
+
+        if power_mod(rdv, multip, number) != 1:
+            is_composite = True
+
+            d = multip
+
+            while d <= number / 2:
+                pwm = power_mod(rdv, d, number)
+                is_composite = is_composite and pwm != number - 1
+                d <<= 1
+
+            if is_composite:
+                return False
+
+    return True
 
 
 def _find_primes_range(min_number, max_number):
@@ -57,12 +78,14 @@ def _find_primes_range(min_number, max_number):
     :param max_number: górna granica przedziału
     :returns: lista liczb pierwszych"""
     if max_number < min_number:
-        raise ValueError("Second argument must be grater or equal to the first argument.")
+        raise ValueError(
+            "Second argument must be grater or equal to the first argument")
 
     if max_number < 2:
         return []
 
-    is_prime = [i == 2 or (i > 2 and i % 2 == 1) for i in range(min_number, max_number + 1)]
+    is_prime = [i == 2 or (i > 2 and i % 2 == 1)
+                for i in range(min_number, max_number + 1)]
     base_primes = [True] * int(sqrt(max_number) / 2)
 
     for i, prime in enumerate(base_primes):
@@ -77,20 +100,3 @@ def _find_primes_range(min_number, max_number):
                 is_prime[j] = False
 
     return (min_number + i for i, prime in enumerate(is_prime) if prime)
-
-
-def _distribute(number):
-    """Distribution for Miller-Rabin test.
-    Extracts from an even number the biggest power of 2 possible: ``n = 2 ^ d * s``.
-    :param number: number to distribute
-    :returns: exponent of 2 and multiplicand"""
-    power = 2
-    expon = 1
-
-    while number % power == 0:
-        expon += 1
-        power <<= 1
-
-    expon -= 1
-
-    return expon, number // (1 << expon)

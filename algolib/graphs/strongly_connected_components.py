@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """STRONGLY CONNECTED COMPONENTS ALGORITHM"""
-from .directed_graph import DirectedGraph
 
 
 def find_scc(digraph):
