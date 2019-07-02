@@ -31,13 +31,13 @@ class PathsTest(unittest.TestCase):
 
         result = bellman_ford(self.__diwgraph, source)
 
-        self.assertListEqual([20, 0, self.__diwgraph.inf, 17, 7, 8, 12, 12, 10, 20], result)
+        self.assertListEqual([20, 0, self.__diwgraph.INF, 17, 7, 8, 12, 12, 10, 20], result)
 
     def test_bellman_ford_when_undirected_graph(self):
         source = 1
 
-        result = bellman_ford(self.__uwgraph.as_directed(), source)
-        i = self.__diwgraph.inf
+        result = bellman_ford(self.__uwgraph.to_directed(), source)
+        i = self.__diwgraph.INF
 
         self.assertListEqual([4, 0, i, 7, 7, 8, i, 10, 10, i], result)
 
@@ -53,13 +53,13 @@ class PathsTest(unittest.TestCase):
 
         result = dijkstra(self.__diwgraph, source)
 
-        self.assertListEqual([20, 0, self.__diwgraph.inf, 17, 7, 8, 12, 12, 10, 20], result)
+        self.assertListEqual([20, 0, self.__diwgraph.INF, 17, 7, 8, 12, 12, 10, 20], result)
 
     def test_dijkstra_when_undirected_graph(self):
         source = 1
 
         result = dijkstra(self.__uwgraph, source)
-        i = self.__diwgraph.inf
+        i = self.__diwgraph.INF
 
         self.assertListEqual([4, 0, i, 7, 7, 8, i, 10, 10, i], result)
 
@@ -74,7 +74,7 @@ class PathsTest(unittest.TestCase):
         self.__diwgraph.add_weighted_edge(2, 1, -2)
 
         result = floyd_warshall(self.__diwgraph)
-        i = self.__diwgraph.inf
+        i = self.__diwgraph.INF
 
         self.assertListEqual([[0, 4, i, 21, 11, 12, 16, 16, 14, 24],
                               [20, 0, i, 17, 7, 8, 12, 12, 10, 20],
@@ -88,8 +88,8 @@ class PathsTest(unittest.TestCase):
                               [i, i, i, i, i, 10, 3, i, 12, 0]], result)
 
     def test_floyd_warshall_when_undirected_graph(self):
-        result = floyd_warshall(self.__uwgraph.as_directed())
-        i = self.__diwgraph.inf
+        result = floyd_warshall(self.__uwgraph.to_directed())
+        i = self.__diwgraph.INF
 
         self.assertListEqual([[0, 4, i, 3, 11, 10, i, 8, 12, i],
                               [4, 0, i, 7, 7, 8, i, 10, 10, i],

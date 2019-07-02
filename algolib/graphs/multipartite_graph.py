@@ -8,14 +8,17 @@ class GraphPartitionException(ValueError):
 
 
 class MultipartiteGraph(UndirectedGraph):
-    def __init__(self, n, gr):
+    def __init__(self, g, n, groups):
         super().__init__()
-        # Struktura grafu wielodzielnego.
-        self.__graph = UndirectedSimpleGraph(n)
-        # Maksymalna liczba grup wierzchołków.
-        self.__groups_number = gr
-        # Numery grup wierzchołków.
-        self.__groups = [0] * self.__graph.vertices_number
+        if len(groups) != n:
+            raise ValueError("Groups mapping is not consistent with vertices number")
+
+        if not all(0 <= grp < g for grp in groups):
+            raise ValueError("Groups mapping is not consistent with maximal groups number")
+
+        self.__graph = UndirectedSimpleGraph(n)  # Struktura grafu wielodzielnego.
+        self.__groups_number = g  # Maksymalna liczba grup wierzchołków.
+        self.__groups = list(groups)  # Numery grup wierzchołków.
 
     @property
     def groups_number(self):
@@ -25,7 +28,7 @@ class MultipartiteGraph(UndirectedGraph):
     def vertices_number(self):
         return self.__graph.vertices_number
 
-    def get_vertices(self, *, group=None):
+    def get_vertices(self, group=None):
         """:param group: numer grupy wierzchołków
         :returns: generator wierzchołków z zadanej grupy"""
         if group is None:
@@ -33,13 +36,14 @@ class MultipartiteGraph(UndirectedGraph):
 
         return (v for v in self.__graph.get_vertices() if self.__groups[v] == group)
 
-    def add_vertex(self, *, group=0):
+    def add_vertex(self, neighbours=None, group=0):
         """Dodawanie nowego wierzchołka do zadanej grupy.
         :param group: numer grupy
         :returns: oznaczenie wierzchołka"""
+        v = self.__graph.add_vertex(neighbours)
         self.__groups.append(group)
 
-        return self.__graph.add_vertex()
+        return v
 
     @property
     def edges_number(self):
@@ -54,7 +58,7 @@ class MultipartiteGraph(UndirectedGraph):
 
         self.__graph.add_edge(vertex1, vertex2)
 
-    def get_neighbours(self, vertex, *, group=None):
+    def get_neighbours(self, vertex, group=None):
         """:param vertex: numer wierzchołka
         :param group: numer grupy sąsiadów
         :returns: generator sąsiadów wierzchołka z zadanej grupy"""
@@ -69,8 +73,8 @@ class MultipartiteGraph(UndirectedGraph):
     def get_indegree(self, vertex):
         return self.__graph.get_indegree(vertex)
 
-    def as_directed(self):
-        return self.__graph.as_directed()
+    def to_directed(self):
+        return self.__graph.to_directed()
 
     def is_in_group(self, vertex, group):
         """Sprawdzanie, czy wierzchołek nalezy do zadanej grupy.
