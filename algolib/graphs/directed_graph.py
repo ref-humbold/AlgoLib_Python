@@ -37,16 +37,16 @@ class DirectedSimpleGraph(SimpleGraph, DirectedGraph):
 
     def add_edge(self, vertex1, vertex2):
         if not 0 <= vertex1 < self.vertices_number:
-            raise NoSuchVertexException(str(vertex1))
+            raise NoSuchVertexException(f"No vertex {vertex1}")
 
         if not 0 <= vertex2 < self.vertices_number:
-            raise NoSuchVertexException(str(vertex2))
+            raise NoSuchVertexException(f"No vertex {vertex2}")
 
         self._graphrepr[vertex1].add((vertex2, self._DEFAULT_WEIGHT))
 
     def get_indegree(self, vertex):
         if not 0 <= vertex < self.vertices_number:
-            raise NoSuchVertexException(str(vertex))
+            raise NoSuchVertexException(f"No vertex {vertex}")
 
         return sum(1 for _, v in self.get_edges() if v == vertex)
 
