@@ -25,7 +25,7 @@ class SearchingTest(unittest.TestCase):
         self._ugraph = None
 
     def test_bfs_when_undirected_graph_and_single_root_then_not_all_visited(self):
-        result = list(bfs(self._ugraph, self._strategy, [0]))
+        result = list(bfs(self._ugraph, self._strategy, 0))
         visited = sorted(self._strategy.visited)
 
         self.assertListEqual([True, True, False, True, True, True, False, True, True, False],
@@ -33,7 +33,7 @@ class SearchingTest(unittest.TestCase):
         self.assertListEqual([0, 1, 3, 4, 5, 7, 8], visited)
 
     def test_bfs_when_undirected_graph_and_many_roots_then_all_visited(self):
-        result = list(bfs(self._ugraph, self._strategy, [0, 6]))
+        result = list(bfs(self._ugraph, self._strategy, 0, 6))
         visited = sorted(self._strategy.visited)
 
         self.assertListEqual([True, True, True, True, True, True, True, True, True, True],
@@ -41,7 +41,7 @@ class SearchingTest(unittest.TestCase):
         self.assertListEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], visited)
 
     def test_bfs_when_directed_graph_and_single_root_then_not_all_visited(self):
-        result = list(bfs(self._digraph, self._strategy, [1]))
+        result = list(bfs(self._digraph, self._strategy, 1))
         visited = sorted(self._strategy.visited)
 
         self.assertListEqual([True, True, False, True, True, True, True, True, True, True],
@@ -49,7 +49,7 @@ class SearchingTest(unittest.TestCase):
         self.assertListEqual([0, 1, 3, 4, 5, 6, 7, 8, 9], visited)
 
     def test_bfs_when_directed_graph_and_many_roots_then_all_visited(self):
-        result = list(bfs(self._digraph, self._strategy, [2, 1]))
+        result = list(bfs(self._digraph, self._strategy, 2, 1))
         visited = sorted(self._strategy.visited)
 
         self.assertListEqual([True, True, True, True, True, True, True, True, True, True],
@@ -57,7 +57,7 @@ class SearchingTest(unittest.TestCase):
         self.assertListEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], visited)
 
     def test_iter_dfs_when_undirected_graph_and_single_root_then_not_all_visited(self):
-        result = list(iter_dfs(self._ugraph, self._strategy, [0]))
+        result = list(iter_dfs(self._ugraph, self._strategy, 0))
         visited = sorted(self._strategy.visited)
 
         self.assertListEqual([True, True, False, True, True, True, False, True, True, False],
@@ -65,7 +65,7 @@ class SearchingTest(unittest.TestCase):
         self.assertListEqual([0, 1, 3, 4, 5, 7, 8], visited)
 
     def test_iter_dfs_when_undirected_graph_and_many_roots_then_all_visited(self):
-        result = list(iter_dfs(self._ugraph, self._strategy, [0, 6]))
+        result = list(iter_dfs(self._ugraph, self._strategy, 0, 6))
         visited = sorted(self._strategy.visited)
 
         self.assertListEqual([True, True, True, True, True, True, True, True, True, True],
@@ -73,7 +73,7 @@ class SearchingTest(unittest.TestCase):
         self.assertListEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], visited)
 
     def test_iter_dfs_when_directed_graph_and_single_root_then_not_all_visited(self):
-        result = list(iter_dfs(self._digraph, self._strategy, [1]))
+        result = list(iter_dfs(self._digraph, self._strategy, 1))
         visited = sorted(self._strategy.visited)
 
         self.assertListEqual([True, True, False, True, True, True, True, True, True, True],
@@ -81,7 +81,7 @@ class SearchingTest(unittest.TestCase):
         self.assertListEqual([0, 1, 3, 4, 5, 6, 7, 8, 9], visited)
 
     def test_iter_dfs_when_directed_graph_and_many_roots_then_all_visited(self):
-        result = list(iter_dfs(self._digraph, self._strategy, [2, 1]))
+        result = list(iter_dfs(self._digraph, self._strategy, 2, 1))
         visited = sorted(self._strategy.visited)
 
         self.assertListEqual([True, True, True, True, True, True, True, True, True, True],
@@ -89,7 +89,7 @@ class SearchingTest(unittest.TestCase):
         self.assertListEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], visited)
 
     def test_rec_dfs_when_undirected_graph_and_single_root_then_not_all_visited(self):
-        result = list(rec_dfs(self._ugraph, self._strategy, [0]))
+        result = list(rec_dfs(self._ugraph, self._strategy, 0))
         visited = sorted(self._strategy.visited)
 
         self.assertListEqual([True, True, False, True, True, True, False, True, True, False],
@@ -97,7 +97,7 @@ class SearchingTest(unittest.TestCase):
         self.assertListEqual([0, 1, 3, 4, 5, 7, 8], visited)
 
     def test_rec_dfs_when_undirected_graph_and_many_roots_then_all_visited(self):
-        result = list(rec_dfs(self._ugraph, self._strategy, [0, 6]))
+        result = list(rec_dfs(self._ugraph, self._strategy, 0, 6))
         visited = sorted(self._strategy.visited)
 
         self.assertListEqual([True, True, True, True, True, True, True, True, True, True],
@@ -105,7 +105,7 @@ class SearchingTest(unittest.TestCase):
         self.assertListEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], visited)
 
     def test_rec_dfs_when_directed_graph_and_single_root_then_not_all_visited(self):
-        result = list(rec_dfs(self._digraph, self._strategy, [1]))
+        result = list(rec_dfs(self._digraph, self._strategy, 1))
         visited = sorted(self._strategy.visited)
 
         self.assertListEqual([True, True, False, True, True, True, True, True, True, True],
@@ -113,7 +113,7 @@ class SearchingTest(unittest.TestCase):
         self.assertListEqual([0, 1, 3, 4, 5, 6, 7, 8, 9], visited)
 
     def test_rec_dfs_when_directed_graph_and_many_roots_then_all_visited(self):
-        result = list(rec_dfs(self._digraph, self._strategy, [2, 1]))
+        result = list(rec_dfs(self._digraph, self._strategy, 2, 1))
         visited = sorted(self._strategy.visited)
 
         self.assertListEqual([True, True, True, True, True, True, True, True, True, True],

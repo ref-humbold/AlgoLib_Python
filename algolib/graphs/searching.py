@@ -3,7 +3,7 @@
 import queue
 
 
-def bfs(graph, strategy, roots):
+def bfs(graph, strategy, *roots):
     """Algorytm BFS.
     :param graph: graf
     :param strategy: strategia dla wierzchołków
@@ -38,7 +38,7 @@ def bfs(graph, strategy, roots):
     return map(lambda i: i != 0, reached)
 
 
-def iter_dfs(graph, strategy, roots):
+def iter_dfs(graph, strategy, *roots):
     """Iteracyjny algorytm DFS.
     :param graph: graf
     :param strategy: strategia dla wierzchołków
@@ -74,7 +74,7 @@ def iter_dfs(graph, strategy, roots):
     return map(lambda i: i != 0, reached)
 
 
-def rec_dfs(graph, strategy, roots):
+def rec_dfs(graph, strategy, *roots):
     """Rekurencyjny algorytm DFS.
     :param graph: graf
     :param strategy: strategia dla wierzchołków
