@@ -2,7 +2,7 @@
 
 TEST_DIR="tests"
 RED="\033[1;31m"
-BLUE="\033[1;34m"
+CYAN="\033[1;36m"
 NORMAL="\033[0m"
 
 cd $(dirname "$0")
@@ -14,6 +14,6 @@ then
     exit 1
 fi
 
-echo "${BLUE}Running PyUnit tests with Nose2:${NORMAL}"
+echo "${CYAN}Running PyUnit tests with Nose2:${NORMAL}"
 nose2 $TEST_DIR
-echo "${BLUE}Generating XML report...${NORMAL}"
+echo "${CYAN}Generating XML report...${NORMAL}"
