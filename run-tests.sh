@@ -10,10 +10,10 @@ echo
 
 if [ ! -d "$TEST_DIR" ]
 then
-    echo -e "${RED}Test directory not found.${NORMAL}"
+    echo "${RED}Test directory not found.${NORMAL}"
     exit 1
 fi
 
-echo -e "${BLUE}Running PyUnit tests with Nose2:${NORMAL}"
+echo "${BLUE}Running PyUnit tests with Nose2:${NORMAL}"
 nose2 $TEST_DIR
-echo -e "${BLUE}Generating XML report...${NORMAL}"
+echo "${BLUE}Generating XML report...${NORMAL}"
