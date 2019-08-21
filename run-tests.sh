@@ -1,15 +1,19 @@
 #! /bin/sh
 
 TEST_DIR="tests"
-NORMAL="\033[00m"
-BOLD_BLUE="\033[01;34m"
-BOLD_RED="\033[01;31m"
+RED="\033[1;31m"
+CYAN="\033[1;36m"
+NORMAL="\033[0m"
 
-cd $(dirname $0)
-echo ""
+cd $(dirname "$0")
+echo
 
-[ ! -d $TEST_DIR ] && echo -e "${BOLD_RED}Test directory not found.${NORMAL}" && exit 1
+if [ ! -d "$TEST_DIR" ]
+then
+    echo "${RED}Test directory not found.${NORMAL}"
+    exit 1
+fi
 
-echo -e "${BOLD_BLUE}Running PyUnit tests with Nose2:${NORMAL}"
+echo "${CYAN}Running PyUnit tests with Nose2:${NORMAL}"
 nose2 $TEST_DIR
-echo -e"${BOLD_BLUE}Generating XML report...${NORMAL}\n"
+echo "${CYAN}Generating XML report...${NORMAL}"

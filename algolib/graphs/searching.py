@@ -1,72 +1,122 @@
 # -*- coding: utf-8 -*-
-"""GRAPH SEARCHING ALGORITHMS"""
+"""Graph searching algorithms."""
 import queue
 
 
-def bfs(graph, root):
+def bfs(graph, strategy, *roots):
     """Algorytm BFS.
     :param graph: graf
-    :param root: wierzchołek początkowy
-    :returns: lista odwiedzonych wierzchołków"""
-    is_visited = [False] * graph.vertices_number
+    :param strategy: strategia dla wierzchołków
+    :param roots: wierzchołki początkowe
+    :returns: generator odwiedzonych wierzchołków"""
+    reached = [0] * graph.vertices_number
     vertex_queue = queue.Queue()
-    vertex_queue.put(root)
+    iteration = 1
 
-    is_visited[root] = True
+    for root in roots:
+        if reached[root] == 0:
+            vertex_queue.put(root)
+            reached[root] = iteration
 
-    while not vertex_queue.empty():
-        v = vertex_queue.get()
+            while not vertex_queue.empty():
+                vertex = vertex_queue.get()
+                strategy.preprocess(vertex)
 
-        for nb in graph.get_neighbours(v):
-            if not is_visited[nb]:
-                is_visited[nb] = True
-                vertex_queue.put(nb)
+                for neighbour in graph.get_neighbours(vertex):
+                    if reached[neighbour] == 0:
+                        strategy.for_neighbour(vertex, neighbour)
+                        reached[neighbour] = iteration
+                        vertex_queue.put(neighbour)
+                    elif reached[neighbour] == iteration:
+                        strategy.on_cycle(vertex, neighbour)
 
-    return is_visited
+                strategy.postprocess(vertex)
+                reached[vertex] = -iteration
+
+            iteration += 1
+
+    return map(lambda i: i != 0, reached)
 
 
-def iter_dfs(graph, root):
+def iter_dfs(graph, strategy, *roots):
     """Iteracyjny algorytm DFS.
     :param graph: graf
-    :param root: wierzchołek początkowy
-    :returns: lista odwiedzonych wierzchołków"""
-    is_visited = [False] * graph.vertices_number
+    :param strategy: strategia dla wierzchołków
+    :param roots: wierzchołki początkowe
+    :returns: generator odwiedzonych wierzchołków"""
+    reached = [0] * graph.vertices_number
     vertex_stack = queue.LifoQueue()
-    vertex_stack.put(root)
+    iteration = 1
 
-    is_visited[root] = True
+    for root in roots:
+        if reached[root] == 0:
+            vertex_stack.put(root)
 
-    while not vertex_stack.empty():
-        v = vertex_stack.get()
+            while not vertex_stack.empty():
+                vertex = vertex_stack.get()
 
-        if not is_visited[v]:
-            is_visited[v] = True
+                if reached[vertex] == 0:
+                    reached[vertex] = iteration
+                    strategy.preprocess(vertex)
 
-            for nb in graph.get_neighbours(v):
-                if not is_visited[nb]:
-                    vertex_stack.put(nb)
+                    for neighbour in graph.get_neighbours(vertex):
+                        if reached[neighbour] == 0:
+                            strategy.for_neighbour(vertex, neighbour)
+                            vertex_stack.put(neighbour)
+                        elif reached[neighbour] == iteration:
+                            strategy.on_cycle(vertex, neighbour)
 
-    return is_visited
+                    strategy.postprocess(vertex)
+                    reached[vertex] = -iteration
+
+            iteration += 1
+
+    return map(lambda i: i != 0, reached)
 
 
-def rec_dfs(graph, root):
+def rec_dfs(graph, strategy, *roots):
     """Rekurencyjny algorytm DFS.
     :param graph: graf
-    :param root: wierzchołek początkowy
-    :returns: lista odwiedzonych wierzchołków"""
-    is_visited = [False] * graph.vertices_number
-    _dfs_step(root, graph, is_visited)
+    :param strategy: strategia dla wierzchołków
+    :param roots: wierzchołki początkowe
+    :returns: generator odwiedzonych wierzchołków"""
+    state = _DfsrState(graph.vertices_number)
 
-    return is_visited
+    for root in roots:
+        if state.reached[root] == 0:
+            _dfs_step(graph, strategy, root, state)
+            state.iteration += 1
+
+    return map(lambda i: i != 0, state.reached)
 
 
-def _dfs_step(vertex, graph, is_visited):
+def _dfs_step(graph, strategy, vertex, state):
     """Krok rekurencyjnego DFS.
-    :param vertex: aktualny wierzchołek
     :param graph: graf
-    :param is_visited: lista odwiedzonych wierzchołków"""
-    is_visited[vertex] = True
+    :param vertex: aktualny wierzchołek
+    :param strategy: strategia dla wierzchołków
+    :param state: aktualny stan rekurencji"""
+    state.on_entry(vertex)
+    strategy.preprocess(vertex)
 
     for neighbour in graph.get_neighbours(vertex):
-        if not is_visited[neighbour]:
-            _dfs_step(neighbour, graph, is_visited)
+        if state.reached[neighbour] == 0:
+            strategy.for_neighbour(vertex, neighbour)
+            _dfs_step(graph, strategy, neighbour, state)
+        elif state.reached[neighbour] == state.iteration:
+            strategy.on_cycle(vertex, neighbour)
+
+    strategy.postprocess(vertex)
+    state.on_exit(vertex)
+
+
+class _DfsrState:
+    def __init__(self, vertices_number):
+        self.iteration = 1
+        self.reached = [0] * vertices_number
+
+    def on_entry(self, vertex):
+        self.reached[vertex] = self.iteration
+
+    def on_exit(self, vertex):
+        self.reached[vertex] = -self.iteration
