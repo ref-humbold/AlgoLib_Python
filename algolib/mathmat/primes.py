@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """Prime numbers algorithms."""
-from math import sqrt
 from random import randint
 
-from algolib.mathmat import gcd, power_mod
+from math import sqrt
+
+from .maths import gcd, power_mod
 
 
 def find_primes(*numbers):

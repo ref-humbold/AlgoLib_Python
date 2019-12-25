@@ -2,7 +2,7 @@
 """MINIMAL SPANNING TREE ALGORITHMS"""
 import queue
 
-from algolib.structures import DisjointSets
+from ..structures.disjoint_sets import DisjointSets
 
 
 def kruskal(uwgraph):
