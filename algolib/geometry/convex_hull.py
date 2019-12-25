@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Graham's algorithm for convex hull on a plane."""
-from .points_sorting import sorted_by_x
+from algolib.geometry import sorted_by_x
 
 
 def convex_hull(points):

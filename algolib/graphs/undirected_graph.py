@@ -2,8 +2,8 @@
 """UNDIRECTED GRAPHS STRUCTURES"""
 from abc import ABCMeta, abstractmethod
 
-from .directed_graph import DirectedSimpleGraph, DirectedWeightedSimpleGraph
-from .graph import Graph, NoSuchVertexException, SimpleGraph, WeightedGraph
+from algolib.graphs import DirectedSimpleGraph, DirectedWeightedSimpleGraph, Graph, \
+    NoSuchVertexException, SimpleGraph, WeightedGraph
 
 
 class UndirectedGraph(Graph, metaclass=ABCMeta):

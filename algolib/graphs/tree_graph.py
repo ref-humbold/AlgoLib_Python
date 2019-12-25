@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """TREE GRAPHS STRUCTURE"""
-from .undirected_graph import UndirectedGraph, UndirectedSimpleGraph
-from ..structures.disjoint_sets import DisjointSets
+from algolib.graphs import UndirectedGraph, UndirectedSimpleGraph
+from algolib.structures import DisjointSets
 
 
 class CycleException(ValueError):
