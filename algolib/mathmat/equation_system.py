@@ -2,11 +2,11 @@
 """Structure of linear equation sysytem with Gauss elimination algorithm."""
 
 
-class InfiniteSolutionsException(ValueError):
+class InfiniteSolutionsError(ValueError):
     pass
 
 
-class NoSolutionException(ValueError):
+class NoSolutionError(ValueError):
     pass
 
 
@@ -27,10 +27,10 @@ class EquationSystem:
         self.gaussian_reduce()
 
         if self.__coeffs[-1][-1] == 0 and self.__frees[-1] == 0:
-            raise InfiniteSolutionsException()
+            raise InfiniteSolutionsError()
 
         if self.__coeffs[-1][-1] == 0 and self.__frees[-1] != 0:
-            raise NoSolutionException()
+            raise NoSolutionError()
 
         solution = [None] * self.__equations
         solution[-1] = self.__frees[-1] / self.__coeffs[-1][-1]

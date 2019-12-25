@@ -3,7 +3,7 @@
 import queue
 
 
-class DirectedCyclicGraphException(ValueError):
+class DirectedCyclicGraphError(ValueError):
     pass
 
 
@@ -31,7 +31,7 @@ def sort_topological1(digraph):
                 vertex_queue.put(nb)
 
     if len(order) != digraph.vertices_number:
-        raise DirectedCyclicGraphException()
+        raise DirectedCyclicGraphError()
 
     return iter(order)
 
@@ -63,7 +63,7 @@ def _dfs(vertex, index, digraph, order, indices):
         if indices[neighbour] is None:
             _dfs(neighbour, index, digraph, order, indices)
         elif indices[neighbour] == (index, True):
-            raise DirectedCyclicGraphException()
+            raise DirectedCyclicGraphError()
 
     order.append(vertex)
     indices[vertex] = (index, False)

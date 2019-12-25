@@ -3,7 +3,7 @@
 from .undirected_graph import UndirectedGraph, UndirectedSimpleGraph
 
 
-class GraphPartitionException(ValueError):
+class GraphPartitionError(ValueError):
     pass
 
 
@@ -54,7 +54,7 @@ class MultipartiteGraph(UndirectedGraph):
 
     def add_edge(self, vertex1, vertex2):
         if self.is_same_group(vertex1, vertex2):
-            raise GraphPartitionException()
+            raise GraphPartitionError()
 
         self.__graph.add_edge(vertex1, vertex2)
 

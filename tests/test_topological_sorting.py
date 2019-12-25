@@ -2,7 +2,7 @@
 """Tests: Topological sorting algorithms."""
 import unittest
 
-from algolib.graphs import DirectedCyclicGraphException, DirectedSimpleGraph, \
+from algolib.graphs import DirectedCyclicGraphError, DirectedSimpleGraph, \
     sort_topological1, sort_topological2
 
 
@@ -28,7 +28,7 @@ class TopologicalSortingTest(unittest.TestCase):
         graph = DirectedSimpleGraph(6, [(0, 2), (0, 4), (1, 0), (1, 4), (2, 1), (3, 1),
                                         (3, 0), (3, 2), (5, 1), (5, 2), (5, 4)])
 
-        with self.assertRaises(DirectedCyclicGraphException):
+        with self.assertRaises(DirectedCyclicGraphError):
             sort_topological1(graph)
 
     def test__sort_topological1__when_empty_graph(self):
@@ -51,7 +51,7 @@ class TopologicalSortingTest(unittest.TestCase):
         graph = DirectedSimpleGraph(6, [(0, 2), (0, 4), (1, 0), (1, 4), (2, 1), (3, 1),
                                         (3, 0), (3, 2), (5, 1), (5, 2), (5, 4)])
 
-        with self.assertRaises(DirectedCyclicGraphException):
+        with self.assertRaises(DirectedCyclicGraphError):
             sort_topological2(graph)
 
     def test__sort_topological2__when_empty_graph(self):

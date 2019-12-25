@@ -5,7 +5,7 @@ from abc import ABCMeta, abstractmethod
 import math
 
 
-class NoSuchVertexException(IndexError):
+class NoSuchVertexError(IndexError):
     pass
 
 
@@ -113,7 +113,7 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
 
         for nb in neighbours:
             if not 0 <= nb < self.vertices_number:
-                raise NoSuchVertexException(f"No vertex {nb}")
+                raise NoSuchVertexError(f"No vertex {nb}")
 
         self._graphrepr.append(set())
         v = len(self._graphrepr) - 1
@@ -138,13 +138,13 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
 
     def get_neighbours(self, vertex):
         if not 0 <= vertex < self.vertices_number:
-            raise NoSuchVertexException(f"No vertex {vertex}")
+            raise NoSuchVertexError(f"No vertex {vertex}")
 
         return (v for v in map(lambda wv: wv[0], self._graphrepr[vertex]))
 
     def get_outdegree(self, vertex):
         if not 0 <= vertex < self.vertices_number:
-            raise NoSuchVertexException(f"No vertex {vertex}")
+            raise NoSuchVertexError(f"No vertex {vertex}")
 
         return len(self._graphrepr[vertex])
 

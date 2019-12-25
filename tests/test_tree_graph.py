@@ -2,7 +2,7 @@
 """Tests: Tree graphs structure."""
 import unittest
 
-from algolib.graphs import CycleException, NotConnectedException, TreeGraph
+from algolib.graphs import CycleError, NotConnectedError, TreeGraph
 
 
 class TreeGraphTest(unittest.TestCase):
@@ -24,16 +24,16 @@ class TreeGraphTest(unittest.TestCase):
         self.assertListEqual([2], list(self._test_object.get_neighbours(result)))
 
     def test__add_vertex__when_no_neighbours(self):
-        with self.assertRaises(NotConnectedException):
+        with self.assertRaises(NotConnectedError):
             self._test_object.add_vertex([])
 
     def test__add_vertex__when_many_neighbours(self):
-        with self.assertRaises(CycleException):
+        with self.assertRaises(CycleError):
             self._test_object.add_vertex([2, 9, 5])
 
     def test__add_edge(self):
         vertex1 = 1
         vertex2 = 5
 
-        with self.assertRaises(CycleException):
+        with self.assertRaises(CycleError):
             self._test_object.add_edge(vertex2, vertex1)
