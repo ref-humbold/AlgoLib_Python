@@ -88,7 +88,7 @@ class AVLTreeTest(unittest.TestCase):
         for i, e in enumerate([111, 140, 187], start=1):
             self._test_object.add(e)
 
-            self.assertIn(i, self._test_object)
+            self.assertIn(e, self._test_object)
             self.assertEqual(len(self._numbers) + i, len(self._test_object))
 
     def test__add__when_present_element__then_same_length(self):
