@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TEST : Minimal spanning tree algorithms."""
+"""Tests: Minimal spanning tree algorithms."""
 import unittest
 
 from algolib.graphs import UndirectedWeightedSimpleGraph, kruskal, prim
@@ -17,17 +17,17 @@ class MSTTest(unittest.TestCase):
     def tearDown(self):
         self.__graph = None
 
-    def test_kruskal(self):
+    def test__kruskal(self):
         result = kruskal(self.__graph)
 
         self.assertEqual(12, result)
 
-    def test_prim(self):
+    def test__prim(self):
         result = prim(self.__graph, 0)
 
         self.assertEqual(12, result)
 
-    def test_prim_when_diffrent_sources(self):
+    def test__prim__when_diffrent_sources(self):
         result1 = prim(self.__graph, 1)
         result4 = prim(self.__graph, 4)
 

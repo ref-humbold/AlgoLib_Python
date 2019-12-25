@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TEST : Tree graphs structure."""
+"""Tests: Tree graphs structure."""
 import unittest
 
 from algolib.graphs import CycleException, NotConnectedException, TreeGraph
@@ -17,21 +17,21 @@ class TreeGraphTest(unittest.TestCase):
     def tearDown(self):
         self._test_object = None
 
-    def test_add_vertex_when_one_neighbour(self):
+    def test__add_vertex__when_one_neighbour(self):
         result = self._test_object.add_vertex([2])
 
         self.assertEqual(10, result)
         self.assertListEqual([2], list(self._test_object.get_neighbours(result)))
 
-    def test_add_vertex_when_no_neighbours(self):
+    def test__add_vertex__when_no_neighbours(self):
         with self.assertRaises(NotConnectedException):
             self._test_object.add_vertex([])
 
-    def test_add_vertex_when_many_neighbours(self):
+    def test__add_vertex__when_many_neighbours(self):
         with self.assertRaises(CycleException):
             self._test_object.add_vertex([2, 9, 5])
 
-    def test_add_edge(self):
+    def test__add_edge(self):
         vertex1 = 1
         vertex2 = 5
 

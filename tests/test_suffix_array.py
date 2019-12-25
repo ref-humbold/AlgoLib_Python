@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TEST : Suffix array structure."""
+"""Tests: Suffix array structure."""
 import unittest
 
 from algolib.text import SuffixArray
@@ -16,12 +16,12 @@ class SuffixArrayTest(unittest.TestCase):
     def tearDown(self):
         self._test_object = None
 
-    def test_len(self):
+    def test__len(self):
         result = len(self._test_object)
 
         self.assertEqual(11, result)
 
-    def test_getitem(self):
+    def test__getitem(self):
         result0 = self._test_object[0]
         result1 = self._test_object[3]
         result2 = self._test_object[6]
@@ -32,11 +32,11 @@ class SuffixArrayTest(unittest.TestCase):
         self.assertEqual("ppi", result2)
         self.assertEqual("ssippi", result3)
 
-    def test_getitem_when_out_of_range(self):
+    def test__getitem__when_out_of_range(self):
         with self.assertRaises(IndexError):
             _ = self._test_object[20]
 
-    def test_index_at(self):
+    def test__index_at(self):
         result0 = self._test_object.index_at(0)
         result1 = self._test_object.index_at(3)
         result2 = self._test_object.index_at(6)
@@ -47,11 +47,11 @@ class SuffixArrayTest(unittest.TestCase):
         self.assertEqual(8, result2)
         self.assertEqual(5, result3)
 
-    def test_index_at_when_out_of_range(self):
+    def test__index_at__when_out_of_range(self):
         with self.assertRaises(IndexError):
             self._test_object.index_at(20)
 
-    def test_index_of(self):
+    def test__index_of(self):
         result0 = self._test_object.index_of(0)
         result1 = self._test_object.index_of(3)
         result2 = self._test_object.index_of(6)
@@ -62,26 +62,26 @@ class SuffixArrayTest(unittest.TestCase):
         self.assertEqual(7, result2)
         self.assertEqual(5, result3)
 
-    def test_index_of_when_out_of_range(self):
+    def test__index_of__when_out_of_range(self):
         with self.assertRaises(IndexError):
             self._test_object.index_of(20)
 
-    def test_lcp_when_same_suffix(self):
+    def test__lcp__when_same_suffix(self):
         result = self._test_object.lcp(4, 4)
 
         self.assertEqual(7, result)
 
-    def test_lcp_when_different_suffix1(self):
+    def test__lcp__when_different_suffix1(self):
         result = self._test_object.lcp(1, 10)
 
         self.assertEqual(1, result)
 
-    def test_lcp_when_different_suffix2(self):
+    def test__lcp__when_different_suffix2(self):
         result = self._test_object.lcp(9, 6)
 
         self.assertEqual(0, result)
 
-    def test_lcp_when_swap_suffix(self):
+    def test__lcp__when_swap_suffix(self):
         result0 = self._test_object.lcp(2, 5)
         result1 = self._test_object.lcp(5, 2)
 

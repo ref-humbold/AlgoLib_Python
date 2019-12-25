@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TEST : Shortest paths algorithms."""
+"""Tests: Shortest paths algorithms."""
 import unittest
 
 from algolib.graphs import DirectedWeightedSimpleGraph, UndirectedWeightedSimpleGraph, \
@@ -25,7 +25,7 @@ class PathsTest(unittest.TestCase):
         self.__diwgraph = None
         self.__uwgraph = None
 
-    def test_bellman_ford_when_directed_graph(self):
+    def test__bellman_ford__when_directed_graph(self):
         source = 1
         self.__diwgraph.add_weighted_edge(2, 1, -2)
 
@@ -33,7 +33,7 @@ class PathsTest(unittest.TestCase):
 
         self.assertListEqual([20, 0, self.__diwgraph.INF, 17, 7, 8, 12, 12, 10, 20], result)
 
-    def test_bellman_ford_when_undirected_graph(self):
+    def test__bellman_ford__when_undirected_graph(self):
         source = 1
 
         result = bellman_ford(self.__uwgraph.to_directed(), source)
@@ -41,21 +41,21 @@ class PathsTest(unittest.TestCase):
 
         self.assertListEqual([4, 0, i, 7, 7, 8, i, 10, 10, i], result)
 
-    def test_bellman_ford_when_negative_cycle(self):
+    def test__bellman_ford__when_negative_cycle(self):
         source = 1
         self.__diwgraph.add_weighted_edge(8, 3, -20.0)
 
         with self.assertRaises(ValueError):
             bellman_ford(self.__diwgraph, source)
 
-    def test_dijkstra_when_directed_graph(self):
+    def test__dijkstra__when_directed_graph(self):
         source = 1
 
         result = dijkstra(self.__diwgraph, source)
 
         self.assertListEqual([20, 0, self.__diwgraph.INF, 17, 7, 8, 12, 12, 10, 20], result)
 
-    def test_dijkstra_when_undirected_graph(self):
+    def test__dijkstra__when_undirected_graph(self):
         source = 1
 
         result = dijkstra(self.__uwgraph, source)
@@ -63,14 +63,14 @@ class PathsTest(unittest.TestCase):
 
         self.assertListEqual([4, 0, i, 7, 7, 8, i, 10, 10, i], result)
 
-    def test_dijkstra_when_negative_edge(self):
+    def test__dijkstra__when_negative_edge(self):
         source = 1
         self.__diwgraph.add_weighted_edge(2, 1, -2)
 
         with self.assertRaises(ValueError):
             dijkstra(self.__diwgraph, source)
 
-    def test_floyd_warshall_when_directed_graph(self):
+    def test__floyd_warshall__when_directed_graph(self):
         self.__diwgraph.add_weighted_edge(2, 1, -2)
 
         result = floyd_warshall(self.__diwgraph)
@@ -87,7 +87,7 @@ class PathsTest(unittest.TestCase):
                               [i, i, i, i, i, 20, 13, i, 0, 10],
                               [i, i, i, i, i, 10, 3, i, 12, 0]], result)
 
-    def test_floyd_warshall_when_undirected_graph(self):
+    def test__floyd_warshall__when_undirected_graph(self):
         result = floyd_warshall(self.__uwgraph.to_directed())
         i = self.__diwgraph.INF
 

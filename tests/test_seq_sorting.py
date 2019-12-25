@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TEST : Sequence sorting algorithms."""
+"""Tests: Sequence sorting algorithms."""
 import unittest
 
 from algolib.sequences import heap_sorted, mergedown_sorted, mergeup_sorted, quick_sorted
@@ -15,7 +15,7 @@ class SortingTest(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_heap_sorted(self):
+    def test__heap_sorted(self):
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
         sequence_copy = sequence[:]
 
@@ -25,7 +25,7 @@ class SortingTest(unittest.TestCase):
         self.assertListEqual(sorted(sequence_copy), result)
         self.assertListEqual(sequence_copy, sequence)
 
-    def test_heap_sorted_when_argument_is_not_list(self):
+    def test__heap_sorted__when_argument_is_not_list(self):
         sequence = {3, 17, -6, 0, 9, -12, 7, 4, 2}
 
         result = heap_sorted(sequence)
@@ -33,14 +33,14 @@ class SortingTest(unittest.TestCase):
         self.assertIsInstance(result, list)
         self.assertListEqual(sorted(sequence), result)
 
-    def test_heap_sorted_when_all_equal(self):
+    def test__heap_sorted__when_all_equal(self):
         sequence = [10, 10, 10, 10, 10, 10, 10, 10, 10]
 
         result = heap_sorted(sequence)
 
         self.assertListEqual([10, 10, 10, 10, 10, 10, 10, 10, 10], result)
 
-    def test_heap_sorted_when_indices(self):
+    def test__heap_sorted__when_indices(self):
         index1 = 3
         index2 = -2
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
@@ -50,7 +50,7 @@ class SortingTest(unittest.TestCase):
 
         self.assertListEqual(sequence_sorted, result)
 
-    def test_heap_sorted_when_left_index_out_of_range(self):
+    def test__heap_sorted__when_left_index_out_of_range(self):
         index1 = -13
         index2 = -2
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
@@ -58,7 +58,7 @@ class SortingTest(unittest.TestCase):
         with self.assertRaises(IndexError):
             heap_sorted(sequence, index1, index2)
 
-    def test_heap_sorted_when_right_index_out_of_range(self):
+    def test__heap_sorted__when_right_index_out_of_range(self):
         index1 = 3
         index2 = 17
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
@@ -66,7 +66,7 @@ class SortingTest(unittest.TestCase):
         with self.assertRaises(IndexError):
             heap_sorted(sequence, index1, index2)
 
-    def test_heap_sorted_when_indices_reversed(self):
+    def test__heap_sorted__when_indices_reversed(self):
         index1 = 7
         index2 = 3
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
@@ -75,14 +75,14 @@ class SortingTest(unittest.TestCase):
 
         self.assertListEqual(sequence, result)
 
-    def test_heap_sorted_when_empty_list(self):
+    def test__heap_sorted__when_empty_list(self):
         sequence = []
 
         result = heap_sorted(sequence)
 
         self.assertListEqual([], result)
 
-    def test_mergedown_sorted(self):
+    def test__mergedown_sorted(self):
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
         sequence_copy = sequence[:]
 
@@ -92,7 +92,7 @@ class SortingTest(unittest.TestCase):
         self.assertListEqual(sorted(sequence), result)
         self.assertListEqual(sequence_copy, sequence)
 
-    def test_mergedown_sorted_when_argument_is_not_list(self):
+    def test__mergedown_sorted__when_argument_is_not_list(self):
         sequence = {3, 17, -6, 0, 9, -12, 7, 4, 2}
 
         result = mergedown_sorted(sequence)
@@ -100,14 +100,14 @@ class SortingTest(unittest.TestCase):
         self.assertIsInstance(result, list)
         self.assertListEqual(sorted(sequence), result)
 
-    def test_mergedown_sorted_when_all_equal(self):
+    def test__mergedown_sorted__when_all_equal(self):
         sequence = [10, 10, 10, 10, 10, 10, 10, 10, 10]
 
         result = mergedown_sorted(sequence)
 
         self.assertListEqual([10, 10, 10, 10, 10, 10, 10, 10, 10], result)
 
-    def test_mergedown_sorted_when_indices(self):
+    def test__mergedown_sorted__when_indices(self):
         index1 = 3
         index2 = -2
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
@@ -117,7 +117,7 @@ class SortingTest(unittest.TestCase):
 
         self.assertListEqual(sequence_sorted, result)
 
-    def test_mergedown_sorted_when_left_index_out_of_range(self):
+    def test__mergedown_sorted__when_left_index_out_of_range(self):
         index1 = -13
         index2 = -2
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
@@ -125,7 +125,7 @@ class SortingTest(unittest.TestCase):
         with self.assertRaises(IndexError):
             mergedown_sorted(sequence, index1, index2)
 
-    def test_mergedown_sorted_when_right_index_out_of_range(self):
+    def test__mergedown_sorted__when_right_index_out_of_range(self):
         index1 = 3
         index2 = 17
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
@@ -133,7 +133,7 @@ class SortingTest(unittest.TestCase):
         with self.assertRaises(IndexError):
             mergedown_sorted(sequence, index1, index2)
 
-    def test_mergedown_sorted_when_indices_reversed(self):
+    def test__mergedown_sorted__when_indices_reversed(self):
         index1 = 7
         index2 = 3
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
@@ -142,14 +142,14 @@ class SortingTest(unittest.TestCase):
 
         self.assertListEqual(sequence, result)
 
-    def test_mergedown_sorted_when_empty_list(self):
+    def test__mergedown_sorted__when_empty_list(self):
         sequence = []
 
         result = mergedown_sorted(sequence)
 
         self.assertListEqual([], result)
 
-    def test_mergeup_sorted(self):
+    def test__mergeup_sorted(self):
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
         sequence_copy = sequence[:]
 
@@ -159,7 +159,7 @@ class SortingTest(unittest.TestCase):
         self.assertListEqual(sorted(sequence_copy), result)
         self.assertListEqual(sequence_copy, sequence)
 
-    def test_mergeup_sorted_when_argument_is_not_list(self):
+    def test__mergeup_sorted__when_argument_is_not_list(self):
         sequence = {3, 17, -6, 0, 9, -12, 7, 4, 2}
 
         result = mergeup_sorted(sequence)
@@ -167,14 +167,14 @@ class SortingTest(unittest.TestCase):
         self.assertIsInstance(result, list)
         self.assertListEqual(sorted(sequence), result)
 
-    def test_mergeup_sorted_when_all_equal(self):
+    def test__mergeup_sorted__when_all_equal(self):
         sequence = [10, 10, 10, 10, 10, 10, 10, 10, 10]
 
         result = mergeup_sorted(sequence)
 
         self.assertListEqual([10, 10, 10, 10, 10, 10, 10, 10, 10], result)
 
-    def test_mergeup_sorted_when_indices(self):
+    def test__mergeup_sorted__when_indices(self):
         index1 = 3
         index2 = -2
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
@@ -184,7 +184,7 @@ class SortingTest(unittest.TestCase):
 
         self.assertListEqual(sequence_sorted, result)
 
-    def test_mergeup_sorted_when_left_index_out_of_range(self):
+    def test__mergeup_sorted__when_left_index_out_of_range(self):
         index1 = -13
         index2 = -2
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
@@ -192,7 +192,7 @@ class SortingTest(unittest.TestCase):
         with self.assertRaises(IndexError):
             mergeup_sorted(sequence, index1, index2)
 
-    def test_mergeup_sorted_when_right_index_out_of_range(self):
+    def test__mergeup_sorted__when_right_index_out_of_range(self):
         index1 = 3
         index2 = 17
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
@@ -200,7 +200,7 @@ class SortingTest(unittest.TestCase):
         with self.assertRaises(IndexError):
             mergeup_sorted(sequence, index1, index2)
 
-    def test_mergeup_sorted_when_indices_reversed(self):
+    def test__mergeup_sorted__when_indices_reversed(self):
         index1 = 7
         index2 = 3
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
@@ -209,14 +209,14 @@ class SortingTest(unittest.TestCase):
 
         self.assertListEqual(sequence, result)
 
-    def test_mergeup_sorted_when_empty_list(self):
+    def test__mergeup_sorted__when_empty_list(self):
         sequence = []
 
         result = mergeup_sorted(sequence)
 
         self.assertListEqual([], result)
 
-    def test_quick_sorted(self):
+    def test__quick_sorted(self):
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
         sequence_copy = sequence[:]
 
@@ -226,7 +226,7 @@ class SortingTest(unittest.TestCase):
         self.assertListEqual(sorted(sequence_copy), result)
         self.assertListEqual(sequence_copy, sequence)
 
-    def test_quick_sorted_when_argument_is_not_list(self):
+    def test__quick_sorted__when_argument_is_not_list(self):
         sequence = {3, 17, -6, 0, 9, -12, 7, 4, 2}
 
         result = quick_sorted(sequence)
@@ -234,14 +234,14 @@ class SortingTest(unittest.TestCase):
         self.assertIsInstance(result, list)
         self.assertListEqual(sorted(sequence), result)
 
-    def test_quick_sorted_when_all_equal(self):
+    def test__quick_sorted__when_all_equal(self):
         sequence = [10, 10, 10, 10, 10, 10, 10, 10, 10]
 
         result = quick_sorted(sequence)
 
         self.assertListEqual([10, 10, 10, 10, 10, 10, 10, 10, 10], result)
 
-    def test_quick_sorted_when_indices(self):
+    def test__quick_sorted__when_indices(self):
         index1 = 3
         index2 = -2
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
@@ -251,7 +251,7 @@ class SortingTest(unittest.TestCase):
 
         self.assertListEqual(sequence_sorted, result)
 
-    def test_quick_sorted_when_left_index_out_of_range(self):
+    def test__quick_sorted__when_left_index_out_of_range(self):
         index1 = -13
         index2 = -2
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
@@ -259,7 +259,7 @@ class SortingTest(unittest.TestCase):
         with self.assertRaises(IndexError):
             quick_sorted(sequence, index1, index2)
 
-    def test_quick_sorted_when_right_index_out_of_range(self):
+    def test__quick_sorted__when_right_index_out_of_range(self):
         index1 = 3
         index2 = 17
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
@@ -267,7 +267,7 @@ class SortingTest(unittest.TestCase):
         with self.assertRaises(IndexError):
             quick_sorted(sequence, index1, index2)
 
-    def test_quick_sorted_when_indices_reversed(self):
+    def test__quick_sorted__when_indices_reversed(self):
         index1 = 7
         index2 = 3
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
@@ -277,7 +277,7 @@ class SortingTest(unittest.TestCase):
 
         self.assertListEqual(sequence_copy, result)
 
-    def test_quick_sorted_when_empty_list(self):
+    def test__quick_sorted__when_empty_list(self):
         sequence = []
 
         result = quick_sorted(sequence)

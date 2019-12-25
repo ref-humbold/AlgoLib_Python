@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TEST : Knuth-Morris-Pratt algorithm."""
+"""Tests: Knuth-Morris-Pratt algorithm."""
 import unittest
 
 from algolib.text import kmp
@@ -15,7 +15,7 @@ class KMPTest(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_kmp_when_pattern_found_once(self):
+    def test__kmp__when_pattern_found_once__then_single_occurrence(self):
         text = "abcde"
         pattern = "a"
 
@@ -23,7 +23,7 @@ class KMPTest(unittest.TestCase):
 
         self.assertListEqual([0], list(result))
 
-    def test_kmp_when_pattern_found_twice(self):
+    def test__kmp__when_pattern_found_twice__then_two_occurrences(self):
         text = "abcdae"
         pattern = "a"
 
@@ -31,7 +31,7 @@ class KMPTest(unittest.TestCase):
 
         self.assertListEqual([0, 4], list(result))
 
-    def test_kmp_when_pattern_found_twice_and_intersects(self):
+    def test__kmp__when_pattern_found_twice_and_intersects__then_two_occurrences(self):
         text = "aaabcde"
         pattern = "aa"
 
@@ -39,7 +39,7 @@ class KMPTest(unittest.TestCase):
 
         self.assertListEqual([0, 1], list(result))
 
-    def test_kmp_when_pattern_not_found(self):
+    def test__kmp__when_pattern_not_found__then_empty_occurrences(self):
         text = "abcde"
         pattern = "x"
 
@@ -47,7 +47,7 @@ class KMPTest(unittest.TestCase):
 
         self.assertListEqual([], list(result))
 
-    def test_kmp_when_pattern_is_empty_string(self):
+    def test__kmp__when_pattern_is_empty_string__then_empty_occurrences(self):
         text = "abcde"
         pattern = ""
 
@@ -55,7 +55,7 @@ class KMPTest(unittest.TestCase):
 
         self.assertListEqual([], list(result))
 
-    def test_kmp_when_text_is_empty_string(self):
+    def test__kmp__when_text_is_empty_string__then_empty_occurrences(self):
         text = ""
         pattern = "a"
 

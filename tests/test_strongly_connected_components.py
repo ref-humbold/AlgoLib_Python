@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TEST : Strongly connected components algorithm."""
+"""Tests: Strongly connected components algorithm."""
 import unittest
 
 from algolib.graphs import DirectedSimpleGraph, find_scc
@@ -15,7 +15,7 @@ class SCCTest(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_find_scc(self):
+    def test__find_scc(self):
         digraph = DirectedSimpleGraph(10, [(0, 4), (0, 5), (1, 0), (2, 3),
                                            (3, 1), (4, 1), (4, 3), (6, 5), (6, 9),
                                            (7, 4), (7, 6), (8, 3), (8, 7), (9, 8)])
