@@ -8,28 +8,28 @@ from algolib.graphs import UndirectedWeightedSimpleGraph, kruskal, prim
 class MSTTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.__graph = None
+        self._graph = None
 
     def setUp(self):
-        self.__graph = UndirectedWeightedSimpleGraph(
+        self._graph = UndirectedWeightedSimpleGraph(
             5, [(0, 1, -1), (0, 2, 4), (1, 2, 9), (1, 3, 7), (1, 4, 12), (2, 4, 6), (3, 4, 3)])
 
     def tearDown(self):
-        self.__graph = None
+        self._graph = None
 
     def test__kruskal(self):
-        result = kruskal(self.__graph)
+        result = kruskal(self._graph)
 
         self.assertEqual(12, result)
 
     def test__prim(self):
-        result = prim(self.__graph, 0)
+        result = prim(self._graph, 0)
 
         self.assertEqual(12, result)
 
     def test__prim__when_diffrent_sources(self):
-        result1 = prim(self.__graph, 1)
-        result4 = prim(self.__graph, 4)
+        result1 = prim(self._graph, 1)
+        result4 = prim(self._graph, 4)
 
         self.assertEqual(12, result1)
         self.assertEqual(12, result4)
