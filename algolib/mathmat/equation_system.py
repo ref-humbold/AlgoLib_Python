@@ -13,10 +13,10 @@ class NoSolutionError(ValueError):
 class EquationSystem:
     def __init__(self, numeq, coeffs=None, frees=None):
         EquationSystem._validate(coeffs, frees, numeq)
-        self.__equations = numeq  # Number of equations.
-        # Coefficients matrix.
+        self.__equations = numeq  # Number of equations
+        # Coefficients matrix
         self.__coeffs = coeffs if coeffs is not None else [[0.0] * numeq for _ in range(numeq)]
-        self.__frees = frees if frees is not None else [0.0] * numeq  # Free values vector.
+        self.__frees = frees if frees is not None else [0.0] * numeq  # Free values vector
 
     def __len__(self):
         return self.__equations

@@ -42,7 +42,6 @@ class MultipartiteGraph(UndirectedGraph):
         :returns: oznaczenie wierzchołka"""
         v = self.__graph.add_vertex(neighbours)
         self.__groups.append(group)
-
         return v
 
     @property

@@ -45,7 +45,6 @@ class SuffixArray:
 
         ix1 = min(self._inv_arr[suf1], self._inv_arr[suf2])
         ix2 = max(self._inv_arr[suf1], self._inv_arr[suf2])
-
         return min(self._lcp_arr[i] for i in range(ix1 + 1, ix2 + 1))
 
     def _init_array(self):
@@ -93,11 +92,14 @@ class SuffixArray:
         txt_n12 = [0] * lng02
 
         for i in txt12:
-            if last != (self._get_elem(txt, i), self._get_elem(txt, i + 1),
-                        self._get_elem(txt, i + 2)):
+            if last != (
+                    self._get_elem(txt, i), self._get_elem(txt, i + 1), self._get_elem(txt, i + 2)
+            ):
                 index += 1
-                last = (self._get_elem(txt, i), self._get_elem(txt, i + 1),
-                        self._get_elem(txt, i + 2))
+                last = (
+                    self._get_elem(txt, i), self._get_elem(txt,
+                                                           i + 1), self._get_elem(txt, i + 2)
+                )
 
             if i % 3 == 1:
                 txt_n12[i // 3] = index
@@ -117,7 +119,6 @@ class SuffixArray:
 
         sa0 = [3 * i for i in sa12 if i < lngs[2]]
         SuffixArray._sort_by_keys(sa0, txt, 0, k)
-
         return self._merge(txt, sa0, txt_n12, sa12)
 
     def _merge(self, txt0, sa0, txt12, sa12):
@@ -130,7 +131,7 @@ class SuffixArray:
             pos12 = sa12[ix12] * 3 + 1 if sa12[ix12] < lngs[2] else (sa12[ix12] - lngs[2]) * 3 + 2
             pos0 = sa0[ix0]
             cond = (self._get_elem(txt0, pos12), self._get_elem(txt12, sa12[ix12] + lngs[2])) \
-                <= (self._get_elem(txt0, pos0), self._get_elem(txt12, pos0 // 3)) \
+                   <= (self._get_elem(txt0, pos0), self._get_elem(txt12, pos0 // 3)) \
                 if sa12[ix12] < lngs[2] else \
                 (self._get_elem(txt0, pos12), self._get_elem(txt0, pos12 + 1),
                  self._get_elem(txt12, sa12[ix12] - lngs[2] + 1)) \
@@ -145,8 +146,9 @@ class SuffixArray:
                 ix0 += 1
 
         while ix12 < len(sa12):
-            sa_res.append(sa12[ix12] * 3 + 1 if sa12[ix12] < lngs[2]
-                          else (sa12[ix12] - lngs[2]) * 3 + 2)
+            sa_res.append(
+                sa12[ix12] * 3 + 1 if sa12[ix12] < lngs[2] else (sa12[ix12] - lngs[2]) * 3 + 2
+            )
             ix12 += 1
 
         while ix0 < len(sa0):

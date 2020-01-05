@@ -13,7 +13,6 @@ def match(partgraph):
         pass
 
     matching = augmenter.matching
-
     return [(v, matching[v]) for v in partgraph.get_group(1) if matching[v] is not None]
 
 
@@ -45,7 +44,6 @@ class _MatchAugmenter:
         self.__distances = [self.__graph.INF] * self.__graph.vertices_number
         self.__is_visited = [False] * self.__graph.vertices_number
         self.__bfs()
-
         return any([self.__dfs(v) for v in self.__graph.get_group(1)])
 
     def __bfs(self):
@@ -74,7 +72,6 @@ class _MatchAugmenter:
             if self.__matching[neighbour] is None:
                 self.__matching[vertex] = neighbour
                 self.__matching[neighbour] = vertex
-
                 return True
             else:
                 mtc = self.__matching[neighbour]
@@ -83,7 +80,6 @@ class _MatchAugmenter:
                         and not self.__is_visited[mtc] and self.__dfs(mtc):
                     self.__matching[vertex] = neighbour
                     self.__matching[neighbour] = vertex
-
                     return True
 
         return False

@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """Prime numbers algorithms."""
-from random import randint
-
 from math import sqrt
+from random import randint
 
 from .maths import gcd, power_mod
 
@@ -78,14 +77,12 @@ def _find_primes_range(min_number, max_number):
     :param max_number: górna granica przedziału
     :returns: lista liczb pierwszych"""
     if max_number < min_number:
-        raise ValueError(
-            "Second argument must be grater or equal to the first argument")
+        raise ValueError("Second argument must be grater or equal to the first argument")
 
     if max_number < 2:
         return []
 
-    is_prime = [i == 2 or (i > 2 and i % 2 == 1)
-                for i in range(min_number, max_number + 1)]
+    is_prime = [i == 2 or (i > 2 and i % 2 == 1) for i in range(min_number, max_number + 1)]
     base_primes = [True] * int(sqrt(max_number) / 2)
 
     for i, prime in enumerate(base_primes):

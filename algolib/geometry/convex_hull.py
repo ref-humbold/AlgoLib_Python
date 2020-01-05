@@ -20,7 +20,6 @@ def convex_hull(points):
         _add_point(point, hull, upper_size)
 
     hull.pop()
-
     return hull
 
 

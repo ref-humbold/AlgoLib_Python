@@ -28,7 +28,7 @@ class FlowGraphEdmonds:
         is_flow_added = True
 
         while is_flow_added:
-            self.__augmenting_paths = [(None, self._INF)]*(self.__num_vertex+1)
+            self.__augmenting_paths = [(None, self._INF)] * (self.__num_vertex + 1)
             is_flow_added = self.__bfs(source, target)
 
             if is_flow_added:

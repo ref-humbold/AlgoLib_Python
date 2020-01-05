@@ -27,7 +27,6 @@ def longest_ordered(sequence, order):
         j = previous_elem[j]
 
     longest_subseq.reverse()
-
     return longest_subseq
 
 

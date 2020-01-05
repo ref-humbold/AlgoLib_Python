@@ -55,7 +55,6 @@ class _GraphComponents:
                 timer = self.__dfs_order(neighbour, timer)
 
         self.__postorder[vertex] = (timer, vertex)
-
         return timer + 1
 
     def __dfs_scc(self, vertex, component):

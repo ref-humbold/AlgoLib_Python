@@ -53,7 +53,6 @@ class AVLTree:
             """Recounts the height of the node."""
             left_height = 0 if self._left is None else self._left.height
             right_height = 0 if self._right is None else self._right.height
-
             self._height = max(left_height, right_height) + 1
 
         def minimum(self):
@@ -135,8 +134,8 @@ class AVLTree:
     def __contains__(self, element):
         """:param element: value to be found
         :returns: ``true`` if value is present in the tree, otherwise ``false``"""
-        return not self.empty() and self._find_node(element,
-                                                    lambda n, e: n.element == e) is not None
+        return not self.empty() \
+               and self._find_node(element, lambda n, e: n.element == e) is not None
 
     def empty(self):
         """:returns: ``true`` if the tree is empty, otherwise ``false``"""
@@ -145,8 +144,9 @@ class AVLTree:
     def add(self, element):
         """Adds a new value to the tree.
         :param element: value to be added"""
-        node_parent = self._find_node(element, lambda n, e: self._search(n, e) is None
-                                      or self._search(n, e).element == e)
+        node_parent = self._find_node(
+            element, lambda n, e: self._search(n, e) is None or self._search(n, e).element == e
+        )
 
         if node_parent is None:
             new_node = self._AVLNode(element)
@@ -301,5 +301,4 @@ class AVLTree:
         :returns: value of balance"""
         left_height = 0 if node.left is None else node.left.height
         right_height = 0 if node.right is None else node.right.height
-
         return left_height - right_height

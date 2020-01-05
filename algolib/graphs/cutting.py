@@ -49,7 +49,7 @@ class _GraphCutting:
         :param vertex: wierzchołek
         :returns: czy wierzchołek incydentny z mostem"""
         return self.__low_values[vertex] == self.__dfs_depths[vertex] \
-            and not self.__is_dfs_root(vertex)
+               and not self.__is_dfs_root(vertex)
 
     def __is_separator(self, vertex):
         """Sprawdzanie, czy wierzchołek jest punktem artykulacji.
@@ -79,8 +79,10 @@ class _GraphCutting:
             if self.__dfs_depths[neighbour] is None:
                 self.__dfs_children[vertex].append(neighbour)
                 self.__dfs(neighbour, vertex, depth + 1)
-                self.__low_values[vertex] = min(self.__low_values[vertex],
-                                                self.__low_values[neighbour])
+                self.__low_values[vertex] = min(
+                    self.__low_values[vertex], self.__low_values[neighbour]
+                )
             elif neighbour != parent:
-                self.__low_values[vertex] = min(self.__low_values[vertex],
-                                                self.__dfs_depths[neighbour])
+                self.__low_values[vertex] = min(
+                    self.__low_values[vertex], self.__dfs_depths[neighbour]
+                )

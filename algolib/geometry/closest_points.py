@@ -11,7 +11,6 @@ def find_closest_points(points):
     :returns: para najbliższych punktów"""
     points_x = sorted_by_x(points)
     points_y = sorted_by_y(points)
-
     return _search_closest(points_x, points_y, 0, len(points))
 
 
@@ -26,16 +25,18 @@ def _search_closest(points_x, points_y, index_begin, index_end):
         return points_x[index_begin], points_x[index_end]
 
     if index_end - index_begin == 2:
-        return _search_three(points_x[index_begin],
-                             points_x[index_begin + 1],
-                             points_x[index_end])
+        return _search_three(points_x[index_begin], points_x[index_begin + 1], points_x[index_end])
 
     index_middle = (index_begin + index_end) // 2
     middle_x = (points_x[index_middle].x + points_x[index_middle + 1].x) // 2
-    closest_l = _search_closest(points_x, (p for p in points_y if p.x <= middle_x),
-                                index_begin, index_middle)
-    closest_r = _search_closest(points_x, (p for p in points_y if p.x > middle_x),
-                                index_middle + 1, index_end)
+    closest_l = _search_closest(points_x,
+                                (p for p in points_y if p.x <= middle_x),
+                                index_begin,
+                                index_middle)
+    closest_r = _search_closest(points_x,
+                                (p for p in points_y if p.x > middle_x),
+                                index_middle + 1,
+                                index_end)
 
     if _distance(closest_l.x, closest_l.y) <= _distance(closest_r.x, closest_r.y):
         closest_points = closest_l
@@ -45,11 +46,7 @@ def _search_closest(points_x, points_y, index_begin, index_end):
         belt_width = _distance(closest_r.x, closest_r.y)
 
     belt_points = _check_belt(points_y, middle_x, belt_width)
-
-    if belt_points is not None:
-        return belt_points
-
-    return closest_points
+    return belt_points if belt_points is not None else closest_points
 
 
 def _check_belt(points_y, middle_x, belt_width):

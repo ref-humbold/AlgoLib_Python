@@ -22,7 +22,6 @@ def lcm(number1, number2):
     :returns: najmniejsza wspólna wielokrotność"""
     min_number = min(number1, number2)
     max_number = max(number1, number2)
-
     return max_number // gcd(number1, number2) * min_number
 
 

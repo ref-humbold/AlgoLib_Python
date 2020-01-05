@@ -24,7 +24,6 @@ class AVLTreeTest(unittest.TestCase):
 
     def test__empty__when_empty__then_true(self):
         self._test_object = AVLTree()
-
         result = self._test_object.empty()
 
         self.assertTrue(result)
@@ -36,7 +35,6 @@ class AVLTreeTest(unittest.TestCase):
 
     def test__len__when_empty__then_zero(self):
         self._test_object = AVLTree()
-
         result = len(self._test_object)
 
         self.assertEqual(0, result)
@@ -60,7 +58,6 @@ class AVLTreeTest(unittest.TestCase):
 
     def test__iterator__then_ordered_elements(self):
         result = []
-
         iterator = iter(self._test_object)
 
         while True:
@@ -73,7 +70,6 @@ class AVLTreeTest(unittest.TestCase):
 
     def test__reversed__then_reverse_ordered_elements(self):
         result = []
-
         iterator = reversed(self._test_object)
 
         while True:
@@ -107,9 +103,7 @@ class AVLTreeTest(unittest.TestCase):
     def test__remove_root__when_two_elements__then_root_not_in__1(self):
         root = 27
         elem = 11
-
         self._test_object = AVLTree([root, elem])
-
         self._test_object.remove(root)
 
         self.assertNotIn(root, self._test_object)
@@ -119,7 +113,6 @@ class AVLTreeTest(unittest.TestCase):
         root = 11
         elem = 27
         self._test_object = AVLTree([root, elem])
-
         self._test_object.remove(root)
 
         self.assertNotIn(root, self._test_object)
@@ -128,7 +121,6 @@ class AVLTreeTest(unittest.TestCase):
     def test__remove_root__when_one_element__then_empty(self):
         root = 0
         self._test_object = AVLTree([root])
-
         self._test_object.remove(root)
 
         self.assertNotIn(root, self._test_object)
@@ -149,7 +141,7 @@ class AVLTreeTest(unittest.TestCase):
 
             self.assertNotIn(e, self._test_object)
 
-    def test__clear__then_empty(self):
+    def test__clear__when_not_empty__then_empty(self):
         self._test_object.clear()
 
         self.assertTrue(self._test_object.empty())

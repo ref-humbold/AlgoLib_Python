@@ -32,10 +32,11 @@ class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
 
     @property
     def edges_number(self):
-        return sum(self.get_outdegree(v) + 1
-                   if v in self.get_neighbours(v)
-                   else self.get_outdegree(v)
-                   for v in self.get_vertices()) / 2
+        return sum(
+            self.get_outdegree(v) +
+            1 if v in self.get_neighbours(v) else self.get_outdegree(v)
+            for v in self.get_vertices()
+        ) / 2
 
     def get_edges(self):
         return ((v, u) for v in self.get_vertices() for u in self.get_neighbours(v) if u >= v)
@@ -58,7 +59,6 @@ class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
 
     def to_directed(self):
         diedges = list(self.get_edges()) + [(u, v) for v, u in self.get_edges()]
-
         return DirectedSimpleGraph(self.vertices_number, edges=diedges)
 
 
@@ -71,8 +71,8 @@ class UndirectedWeightedSimpleGraph(UndirectedSimpleGraph, UndirectedWeightedGra
                 self.add_weighted_edge(e[0], e[1], e[2])
 
     def get_weighted_edges(self):
-        return ((v, u, wg) for v in self.get_vertices() for u, wg in self.get_weighted_neighbours(v)
-                if u > v)
+        return ((v, u, wg) for v in self.get_vertices()
+                for u, wg in self.get_weighted_neighbours(v) if u > v)
 
     def add_weighted_edge(self, vertex1, vertex2, weight):
         if not 0 <= vertex1 < self.vertices_number:
@@ -93,5 +93,4 @@ class UndirectedWeightedSimpleGraph(UndirectedSimpleGraph, UndirectedWeightedGra
     def to_directed(self):
         diwedges = list(self.get_weighted_edges()) \
                    + [(u, v, wg) for v, u, wg in self.get_weighted_edges()]
-
         return DirectedWeightedSimpleGraph(self.vertices_number, edges=diwedges)

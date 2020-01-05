@@ -34,8 +34,8 @@ def heap_sorted(sequence, index_begin=0, index_end=None):
 
     while heap_size > 1:
         index_heap = index_begin + heap_size - 1
-        sequence_list[index_heap], sequence_list[index_begin] = sequence_list[index_begin], \
-            sequence_list[index_heap]
+        sequence_list[index_heap], sequence_list[index_begin] = \
+            sequence_list[index_begin], sequence_list[index_heap]
         _move_down(sequence_list, index_begin, index_begin, index_heap)
         heap_size -= 1
 
@@ -91,9 +91,7 @@ def mergedown_sorted(sequence, index_begin=0, index_end=None):
         index_end %= len(sequence_list)
 
     index_begin %= len(sequence_list)
-
     _merge_sort(sequence_list, index_begin, index_end)
-
     return sequence_list
 
 
@@ -194,9 +192,7 @@ def quick_sorted(sequence, index_begin=0, index_end=None):
         index_end %= len(sequence_list)
 
     index_begin %= len(sequence_list)
-
     _quick_sort(sequence_list, index_begin, index_end)
-
     return sequence_list
 
 
@@ -211,19 +207,20 @@ def _quick_sort(sequence, index_begin, index_end):
     index_pivot = index_begin
     index_front = index_begin + 1
     index_back = index_end - 1
-    rdpv = sorted([randint(index_begin, index_end - 1), randint(index_begin, index_end - 1),
+    rdpv = sorted([randint(index_begin, index_end - 1),
+                   randint(index_begin, index_end - 1),
                    randint(index_begin, index_end - 1)])[1]
     sequence[index_pivot], sequence[rdpv] = sequence[rdpv], sequence[index_pivot]
 
     while index_pivot < index_back:
         if sequence[index_front] < sequence[index_pivot]:
-            sequence[index_pivot], sequence[index_front] = sequence[index_front], sequence[
-                index_pivot]
+            sequence[index_pivot], sequence[index_front] = \
+                sequence[index_front], sequence[index_pivot]
             index_pivot = index_front
             index_front += 1
         else:
-            sequence[index_front], sequence[index_back] = sequence[index_back], sequence[
-                index_front]
+            sequence[index_front], sequence[index_back] = \
+                sequence[index_back], sequence[index_front]
             index_back -= 1
 
     _quick_sort(sequence, index_begin, index_pivot)

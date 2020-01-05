@@ -79,8 +79,9 @@ class FlowGraphDinic:
         new_blocking_flow = 0.0
 
         for neighbour in self.__layer_graph[vertex]:
-            flow_add = self.__dfs(neighbour, target, min(
-                self.__capacities[vertex][neighbour], blocking_flow))
+            flow_add = self.__dfs(
+                neighbour, target, min(self.__capacities[vertex][neighbour], blocking_flow)
+            )
             blocking_flow -= flow_add
             new_blocking_flow += flow_add
             self.__capacities[vertex][neighbour] -= flow_add

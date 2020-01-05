@@ -42,7 +42,6 @@ class _LCAFinder:
         :param vertex1: wierzchołek 1
         :param vertex2: wierzchołek 2
         :returns: najniższy wspólny przodek"""
-
         def is_offspring(vt1, vt2):
             return self.__pre_post_times[vt1][0] >= self.__pre_post_times[vt2][0] and \
                    self.__pre_post_times[vt1][1] <= self.__pre_post_times[vt2][1]
@@ -75,5 +74,4 @@ class _LCAFinder:
                 timer = self.__dfs(neighbour, vertex, timer)
 
         self.__pre_post_times[vertex] = (pre_time, timer)
-
         return timer + 1
