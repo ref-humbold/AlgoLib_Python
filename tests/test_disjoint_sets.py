@@ -31,19 +31,6 @@ class DisjointSetsTest(unittest.TestCase):
 
         self.assertFalse(result)
 
-    def test__add__when_new_elements__then_singleton_sets(self):
-        elems = (20, 30, 40)
-
-        self._test_object.add(elems)
-
-        for elem in elems:
-            self.assertIn(elem, self._test_object)
-            self.assertEqual(elem, self._test_object.find_set(elem))
-
-    def test__add__when_present_element__then_value_error(self):
-        with self.assertRaises(ValueError):
-            self._test_object.add((11, 7, 15))
-
     def test__iadd__when_new_elements__then_singleton_sets(self):
         elems = [14, 18, 23]
 
@@ -57,12 +44,18 @@ class DisjointSetsTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self._test_object += [11, 7, 15]
 
-    def test__find_set__then_represent(self):
+    def test__getitem__when_present_element__then_represent(self):
         elem = 4
 
-        result = self._test_object.find_set(elem)
+        result = self._test_object[elem]
 
         self.assertEqual(elem, result)
+
+    def test__getitem__when_absent_element__then_key_error(self):
+        elem = 18
+
+        with self.assertRaises(KeyError):
+            result = self._test_object[elem]
 
     def test__union_set__when_different_sets__then_same_represent(self):
         elem1 = 4
@@ -84,8 +77,8 @@ class DisjointSetsTest(unittest.TestCase):
     def test__union_set__when_different_elements__then_same_represent(self):
         elem1 = 3
         elem2 = 8
-
         self._test_object.union_set(elem1, elem2)
+
         self._test_object.union_set(elem2, elem1)
 
         self.assertTrue(self._test_object.is_same_set(elem1, elem2))
@@ -109,8 +102,8 @@ class DisjointSetsTest(unittest.TestCase):
     def test__is_same_set__when_different_elements__then_true(self):
         elem1 = 3
         elem2 = 8
-
         self._test_object.union_set(elem1, elem2)
+
         result = self._test_object.is_same_set(elem1, elem2)
 
         self.assertTrue(result)

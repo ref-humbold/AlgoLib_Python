@@ -14,8 +14,14 @@ class DisjointSets:
 
     def __contains__(self, element):
         """:param element: element
-        :returns: `true` if the element is included in one of sets, otherwise `false`"""
+        :returns: ``true`` if the element is included in one of sets, otherwise ``false``"""
         return element in self._represents
+
+    def __getitem__(self, element):
+        """Finds a represent of the element.
+        :param element: element
+        :returns: represent of the element"""
+        return self.find_set(element)
 
     def __iadd__(self, elements):
         """Adds elements as singleton sets.
@@ -57,5 +63,5 @@ class DisjointSets:
         """Check whether two elements belong to the same set.
         :param element1: element from the former set
         :param element2: element from the second set
-        :returns: `true` if both elements are in the same set, otherwise `false`"""
+        :returns: ``true`` if both elements are in the same set, otherwise ``false``"""
         return self.find_set(element1) == self.find_set(element2)

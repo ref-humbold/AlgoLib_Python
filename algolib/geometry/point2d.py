@@ -50,4 +50,4 @@ class Point2D:
         return hash((self._x, self._y))
 
     def __str__(self):
-        return "({}, {})".format(self._x, self._y)
+        return f"({self._x}, {self._y})"

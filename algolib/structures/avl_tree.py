@@ -117,7 +117,7 @@ class AVLTree:
 
     def __str__(self):
         """:returns: string representation of the tree"""
-        return "{|" + ", ".join([str(x) for x in self]) + "|}"
+        return f"{{|{', '.join([str(x) for x in self])}|}}"
 
     def __iter__(self):
         """:returns: forward iterator object"""

@@ -32,7 +32,7 @@ def test_fermat(number):
         return False
 
     return all(map(lambda rdv: gcd(rdv, number) == 1 and power_mod(rdv, number - 1, number) == 1,
-                   [randint(1, number - 1) for _ in range(12)]))
+                   [randint(1, number - 1) for _ in range(15)]))
 
 
 def test_miller(number):
@@ -52,7 +52,7 @@ def test_miller(number):
     while multip % 2 == 0:
         multip >>= 1
 
-    for i in range(0, 12):
+    for i in range(15):
         rdv = randint(1, number - 1)
 
         if power_mod(rdv, multip, number) != 1:
