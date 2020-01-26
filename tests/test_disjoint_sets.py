@@ -57,6 +57,14 @@ class DisjointSetsTest(unittest.TestCase):
         with self.assertRaises(KeyError):
             result = self._test_object[elem]
 
+    def test__find_set__when_absent_element__then_default(self):
+        elem = 18
+        default = 0
+
+        result = self._test_object.find_set(elem, default)
+
+        self.assertEqual(default, result)
+
     def test__union_set__when_different_sets__then_same_represent(self):
         elem1 = 4
         elem2 = 6
@@ -74,7 +82,7 @@ class DisjointSetsTest(unittest.TestCase):
         self.assertTrue(self._test_object.is_same_set(elem, elem))
         self.assertEqual(self._test_object.find_set(elem), self._test_object.find_set(elem))
 
-    def test__union_set__when_different_elements__then_same_represent(self):
+    def test__union_set__when_elements_in_one_set__then_same_represent(self):
         elem1 = 3
         elem2 = 8
         self._test_object.union_set(elem1, elem2)
@@ -83,6 +91,13 @@ class DisjointSetsTest(unittest.TestCase):
 
         self.assertTrue(self._test_object.is_same_set(elem1, elem2))
         self.assertEqual(self._test_object.find_set(elem1), self._test_object.find_set(elem2))
+
+    def test__union_set__when_absent_element__then_key_error(self):
+        elem1 = 15
+        elem2 = 6
+
+        with self.assertRaises(KeyError):
+            self._test_object.union_set(elem1, elem2)
 
     def test__is_same_set__when_different_sets__then_false(self):
         elem1 = 4
@@ -99,7 +114,7 @@ class DisjointSetsTest(unittest.TestCase):
 
         self.assertTrue(result)
 
-    def test__is_same_set__when_different_elements__then_true(self):
+    def test__is_same_set__when_elements_in_one_set__then_true(self):
         elem1 = 3
         elem2 = 8
         self._test_object.union_set(elem1, elem2)
@@ -107,3 +122,10 @@ class DisjointSetsTest(unittest.TestCase):
         result = self._test_object.is_same_set(elem1, elem2)
 
         self.assertTrue(result)
+
+    def test__is_same_set__when_absent_element__then_key_error(self):
+        elem1 = 15
+        elem2 = 6
+
+        with self.assertRaises(KeyError):
+            self._test_object.is_same_set(elem1, elem2)
