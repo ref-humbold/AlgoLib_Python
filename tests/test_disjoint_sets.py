@@ -79,6 +79,16 @@ class DisjointSetsTest(unittest.TestCase):
         # then
         self.assertEqual(default, result)
 
+    def test__setitem__when_different_sets__then_same_represent(self):
+        # given
+        elem1 = 4
+        elem2 = 6
+        # when
+        self._test_object[elem1] = elem2
+        # then
+        self.assertTrue(self._test_object.is_same_set(elem1, elem2))
+        self.assertEqual(self._test_object[elem1], self._test_object[elem2])
+
     def test__setitem__when_same_element__then_same_represent(self):
         # given
         elem = 4
@@ -107,15 +117,17 @@ class DisjointSetsTest(unittest.TestCase):
         with self.assertRaises(KeyError):
             self._test_object[elem1] = elem2
 
-    def test__union_set__when_different_sets__then_same_represent(self):
+    def test__union_set__when_new_elements_in_chain__then_same_represent(self):
         # given
-        elem1 = 4
-        elem2 = 6
+        elems = [20, 17, 35]
         # when
-        self._test_object.union_set(elem1, elem2)
+        self._test_object \
+            .add(elems) \
+            .union_set(elems[0], elems[1]) \
+            .union_set(elems[1], elems[2])
         # then
-        self.assertTrue(self._test_object.is_same_set(elem1, elem2))
-        self.assertEqual(self._test_object[elem1], self._test_object[elem2])
+        self.assertTrue(self._test_object.is_same_set(elems[0], elems[2]))
+        self.assertEqual(self._test_object[elems[0]], self._test_object[elems[2]])
 
     def test__is_same_set__when_different_sets__then_false(self):
         # given
@@ -134,7 +146,7 @@ class DisjointSetsTest(unittest.TestCase):
         # then
         self.assertTrue(result)
 
-    def test__is_same_set__when_elements_in_one_set__then_true(self):
+    def test__is_same_set__when_same_set__then_true(self):
         # given
         elem1 = 3
         elem2 = 8

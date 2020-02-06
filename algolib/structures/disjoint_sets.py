@@ -31,6 +31,7 @@ class DisjointSets:
         """Joins two sets together
         :param element1: element from the first set
         :param element2: element from the second set
+        :returns: set represent
         :raises KeyError: if either element is not in the structure"""
         if not self.is_same_set(element1, element2):
             self._represents[self.__getitem__(element2)] = self.__getitem__(element1)
@@ -41,6 +42,7 @@ class DisjointSets:
     def __iadd__(self, elements):
         """Adds elements as singleton sets
         :param elements: sequence of elements
+        :returns: ``self``
         :raises ValueError: if any of the elements is in the structure"""
         elems = tuple(elements)
 
@@ -57,8 +59,10 @@ class DisjointSets:
     def add(self, elements):
         """Adds elements as singleton sets
         :param elements: sequence of elements
-        :raises ValueError: if any of the elements is in the structure"""
+        :raises ValueError: if any of the elements is in the structure
+        :returns: ``self`` for method chaining"""
         self.__iadd__(elements)
+        return self
 
     def find_set(self, element, default=None):
         """Finds a represent of the element
@@ -74,8 +78,10 @@ class DisjointSets:
         """Joins two sets together
         :param element1: element from the first set
         :param element2: element from the second set
+        :returns: ``self`` for method chaining
         :raises KeyError: if either element is not in the structure"""
         self.__setitem__(element1, element2)
+        return self
 
     def is_same_set(self, element1, element2):
         """Check whether two elements belong to the same set
