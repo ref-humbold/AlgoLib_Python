@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
-"""AVL tree structure."""
+"""AVL tree structure"""
 
 
 class AVLTree:
     class _AVLNode:
         def __init__(self, element):
-            self.element = element  # Value in the node.
-            self._height = 1  # Height of the node.
-            self._left = None  # Left child of the node.
-            self._right = None  # Right child of the node.
-            self._parent = None  # Parent of the node.
+            self.element = element  # Value in the node
+            self._height = 1  # Height of the node
+            self._left = None  # Left child of the node
+            self._right = None  # Right child of the node
+            self._parent = None  # Parent of the node
 
         @property
         def height(self):
@@ -50,18 +50,18 @@ class AVLTree:
             self._parent = parent
 
         def count_height(self):
-            """Recounts the height of the node."""
+            """Recounts the height of the node"""
             left_height = 0 if self._left is None else self._left.height
             right_height = 0 if self._right is None else self._right.height
             self._height = max(left_height, right_height) + 1
 
         def minimum(self):
-            """Searches in its subtree for the node with minimal value.
+            """Searches in its subtree for the node with minimal value
             :returns: the node with minimal value"""
             return self if self._left is None else self._left.minimum()
 
         def maximum(self):
-            """Searches in its subtree for the node with maximal value.
+            """Searches in its subtree for the node with maximal value
             :returns: the node with maximal value"""
             return self if self._right is None else self._right.maximum()
 
@@ -108,8 +108,8 @@ class AVLTree:
             return ret_elem
 
     def __init__(self, elems=None):
-        self._tree = None  # Root of the tree.
-        self._elems = 0  # Number of elements in the tree.
+        self._tree = None  # Root of the tree
+        self._elems = 0  # Number of elements in the tree
 
         if elems is not None:
             for i in elems:
