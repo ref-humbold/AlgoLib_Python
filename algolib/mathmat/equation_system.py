@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structure of linear equation sysytem with Gauss elimination algorithm."""
+"""Structure of linear equation sysytem with Gauss elimination algorithm"""
 
 
 class InfiniteSolutionsError(ValueError):
@@ -42,7 +42,7 @@ class EquationSystem:
         return solution
 
     def gaussian_reduce(self):
-        """Gauss elimination algorithm."""
+        """Gauss elimination algorithm"""
         for equ in range(self.__equations - 1):
             index_min = equ
 

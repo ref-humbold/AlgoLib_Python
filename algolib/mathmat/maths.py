@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Basic mathematics algorithms."""
+"""Basic mathematics algorithms"""
 
 
 def gcd(number1, number2):

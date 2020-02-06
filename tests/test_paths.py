@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Shortest paths algorithms."""
+"""Tests: Shortest paths algorithms"""
 import unittest
 
 from algolib.graphs import DirectedWeightedSimpleGraph, UndirectedWeightedSimpleGraph, \

@@ -27,7 +27,7 @@ class Graph(metaclass=ABCMeta):
 
     @abstractmethod
     def add_vertex(self, neighbours=None):
-        """Dodawanie nowego wierzchołka.
+        """Dodawanie nowego wierzchołka
         :param neighbours: sąsiedzi nowego wierzchołka
         :returns: oznaczenie wierzchołka"""
         pass
@@ -44,7 +44,7 @@ class Graph(metaclass=ABCMeta):
 
     @abstractmethod
     def add_edge(self, vertex1, vertex2):
-        """Dodawanie nowej krawędzi.
+        """Dodawanie nowej krawędzi
         :param vertex1: początkowy wierzchołek
         :param vertex2: końcowy wierzchołek"""
         pass
@@ -79,7 +79,7 @@ class WeightedGraph(Graph, metaclass=ABCMeta):
 
     @abstractmethod
     def add_weighted_edge(self, vertex1, vertex2, weight):
-        """Dodawanie nowej krawędzi z jej wagą.
+        """Dodawanie nowej krawędzi z jej wagą
         :param vertex1: początkowy wierzchołek
         :param vertex2: końcowy wierzchołek
         :param weight: waga krawędzi"""
@@ -93,12 +93,12 @@ class WeightedGraph(Graph, metaclass=ABCMeta):
 
 
 class SimpleGraph(Graph, metaclass=ABCMeta):
-    # Domyślna waga krawędzi.
+    # Domyślna waga krawędzi
     _DEFAULT_WEIGHT = 1.0
 
     def __init__(self, n):
         super().__init__()
-        self._graphrepr = [set() for _ in range(n)]  # Lista sąsiedztwa grafu.
+        self._graphrepr = [set() for _ in range(n)]  # Lista sąsiedztwa grafu
 
     @property
     def vertices_number(self):

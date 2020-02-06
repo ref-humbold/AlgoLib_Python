@@ -16,9 +16,9 @@ class MultipartiteGraph(UndirectedGraph):
         if not all(0 <= grp < g for grp in groups):
             raise ValueError("Groups mapping is not consistent with maximal groups number")
 
-        self.__graph = UndirectedSimpleGraph(n)  # Struktura grafu wielodzielnego.
-        self.__groups_number = g  # Maksymalna liczba grup wierzchołków.
-        self.__groups = list(groups)  # Numery grup wierzchołków.
+        self.__graph = UndirectedSimpleGraph(n)  # Struktura grafu wielodzielnego
+        self.__groups_number = g  # Maksymalna liczba grup wierzchołków
+        self.__groups = list(groups)  # Numery grup wierzchołków
 
     @property
     def groups_number(self):
@@ -37,7 +37,7 @@ class MultipartiteGraph(UndirectedGraph):
         return (v for v in self.__graph.get_vertices() if self.__groups[v] == group)
 
     def add_vertex(self, neighbours=None, group=0):
-        """Dodawanie nowego wierzchołka do zadanej grupy.
+        """Dodawanie nowego wierzchołka do zadanej grupy
         :param group: numer grupy
         :returns: oznaczenie wierzchołka"""
         v = self.__graph.add_vertex(neighbours)
@@ -76,14 +76,14 @@ class MultipartiteGraph(UndirectedGraph):
         return self.__graph.to_directed()
 
     def is_in_group(self, vertex, group):
-        """Sprawdzanie, czy wierzchołek nalezy do zadanej grupy.
+        """Sprawdzanie, czy wierzchołek nalezy do zadanej grupy
         :param vertex: wierzchołek
         :param group: numer grupy
         :returns: czy wierzchołek jest w grupie"""
         return self.__groups[vertex] == group
 
     def is_same_group(self, vertex1, vertex2):
-        """Sprawdzanie, czy wierzchołki należą do tej samej grupy.
+        """Sprawdzanie, czy wierzchołki należą do tej samej grupy
         :param vertex1: pierwszy wierzchołek
         :param vertex2: drugi wierzchołek
         :returns: czy wierzchołki są w jednej grupie"""

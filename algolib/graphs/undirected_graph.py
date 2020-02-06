@@ -12,7 +12,7 @@ class UndirectedGraph(Graph, metaclass=ABCMeta):
 
     @abstractmethod
     def to_directed(self):
-        """Zamiana krawędzi nieskierowanych na skierowane.
+        """Zamiana krawędzi nieskierowanych na skierowane
         :returns: graf ze skierowanymi krawędziami"""
         pass
 

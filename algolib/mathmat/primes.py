@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Prime numbers algorithms."""
+"""Prime numbers algorithms"""
 from math import sqrt
 from random import randint
 
@@ -20,7 +20,7 @@ def find_primes(*numbers):
 
 
 def test_fermat(number):
-    """Fermat's prime test.
+    """Fermat's prime test
     :param number: number to test
     :returns: ``true`` if the number is probably prime, otherwise ``false``"""
     number = abs(number)
@@ -36,7 +36,7 @@ def test_fermat(number):
 
 
 def test_miller(number):
-    """Miller-Rabin's prime test.
+    """Miller-Rabin's prime test
     :param number: number to test
     :returns: ``true`` if the number is probably prime, otherwise ``false``"""
     number = abs(number)

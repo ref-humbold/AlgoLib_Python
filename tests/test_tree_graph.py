@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Tree graphs structure."""
+"""Tests: Tree graphs structure"""
 import unittest
 
 from algolib.graphs import CycleError, NotConnectedError, TreeGraph

@@ -8,7 +8,7 @@ class DirectedCyclicGraphError(ValueError):
 
 
 def sort_topological1(digraph):
-    """Sortowanie topologiczne przez liczenie poprzedników.
+    """Sortowanie topologiczne przez liczenie poprzedników
     :param digraph: graf skierowany
     :returns: porządek topologiczny wierzchołków"""
     vertex_queue = queue.PriorityQueue()
@@ -37,7 +37,7 @@ def sort_topological1(digraph):
 
 
 def sort_topological2(digraph):
-    """Sortowanie topologiczne z użyciem DFS.
+    """Sortowanie topologiczne z użyciem DFS
     :param digraph: graf skierowany
     :returns: porządek topologiczny wierzchołków"""
     indices = [None] * (digraph.vertices_number)
@@ -51,7 +51,7 @@ def sort_topological2(digraph):
 
 
 def _dfs(vertex, index, digraph, order, indices):
-    """Algorytm DFS wyznaczający kolejność wierzchołków.
+    """Algorytm DFS wyznaczający kolejność wierzchołków
     :param vertex: aktualny wierzchołek
     :param index: numer iteracji
     :param digraph: graf skierowany

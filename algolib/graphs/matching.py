@@ -4,7 +4,7 @@ import queue
 
 
 def match(partgraph):
-    """Wyznaczanie maksymalnego skojarzenia.
+    """Wyznaczanie maksymalnego skojarzenia
     :param partgraph: graf wielodzielny
     :returns: pary skojarzonych wierzchołków"""
     augmenter = _MatchAugmenter(partgraph)
@@ -21,13 +21,13 @@ class _MatchAugmenter:
         if partgraph.groups_number != 2:
             raise ValueError("Graph is not bipartite.")
 
-        # Reprezentacja grafu dwudzielnego.
+        # Reprezentacja grafu dwudzielnego
         self.__graph = partgraph
-        # Skojarzenia wierzchołków.
+        # Skojarzenia wierzchołków
         self.__matching = matching
-        # Odległości wierzchołków.
+        # Odległości wierzchołków
         self.__distances = None
-        # Lista odwiedzonych wierzchołków.
+        # Lista odwiedzonych wierzchołków
         self.__is_visited = None
 
         if matching is None:
@@ -39,7 +39,7 @@ class _MatchAugmenter:
         return self.__matching
 
     def augment_match(self):
-        """Powiększanie skojarzenia przy pomocy ścieżek powiększających.
+        """Powiększanie skojarzenia przy pomocy ścieżek powiększających
         :returns: czy powiększono skojarzenie"""
         self.__distances = [self.__graph.INF] * self.__graph.vertices_number
         self.__is_visited = [False] * self.__graph.vertices_number
@@ -47,7 +47,7 @@ class _MatchAugmenter:
         return any([self.__dfs(v) for v in self.__graph.get_group(1)])
 
     def __bfs(self):
-        """Algorytm BFS wyliczający odległości wierzchołków."""
+        """Algorytm BFS wyliczający odległości wierzchołków"""
         vertex_queue = queue.Queue()
 
         for v in self.__graph.get_group(1):
@@ -64,7 +64,7 @@ class _MatchAugmenter:
                     vertex_queue.put(self.__matching[nb])
 
     def __dfs(self, vertex):
-        """Algorytm DFS powiększający skojarzenie za pomocą ścieżek powiekszających.
+        """Algorytm DFS powiększający skojarzenie za pomocą ścieżek powiekszających
         :returns: czy powiększono skojarzenie"""
         self.__is_visited[vertex] = True
 

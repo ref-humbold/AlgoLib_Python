@@ -11,7 +11,7 @@ class DirectedGraph(Graph, metaclass=ABCMeta):
 
     @abstractmethod
     def reverse(self):
-        """Odwracanie skierowania grafu."""
+        """Odwracanie skierowania grafu"""
         pass
 
 

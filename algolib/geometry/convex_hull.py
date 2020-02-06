@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-"""Graham's algorithm for convex hull on a plane."""
+"""Graham's algorithm for convex hull on a plane"""
 from .points_sorting import sorted_by_x
 
 
 def convex_hull(points):
-    """Constructs convex hull of set of points.
+    """Constructs convex hull of set of points
     :param points: sequence of points
     :returns: hull points list"""
 

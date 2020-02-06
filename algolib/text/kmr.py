@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Karp-Miller-Rosenberg algorithm."""
+"""Karp-Miller-Rosenberg algorithm"""
 
 
 def kmr(text):

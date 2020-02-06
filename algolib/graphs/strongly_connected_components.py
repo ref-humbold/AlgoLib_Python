@@ -3,7 +3,7 @@
 
 
 def find_scc(digraph):
-    """Algorytm wyznaczania silnie spójnych składowych grafu.
+    """Algorytm wyznaczania silnie spójnych składowych grafu
     :param digraph: graf skierowany
     :returns: numery silnie spójnych składowych dla wierzchołków"""
     comps = _GraphComponents(digraph).find_scc()
@@ -22,7 +22,7 @@ class _GraphComponents:
         self.__postorder = [None] * digraph.vertices_number
 
     def find_scc(self):
-        """Algorytm wyznaczania silnie spójnych składowych grafu.
+        """Algorytm wyznaczania silnie spójnych składowych grafu
         :returns: numery silnie spójnych składowych dla wierzchołków"""
         timer = 0
         component = 0
@@ -43,7 +43,7 @@ class _GraphComponents:
         return self.__components
 
     def __dfs_order(self, vertex, timer):
-        """Algorytm DFS z licznikiem czasu wyznaczający porządek post-order wierzchołków.
+        """Algorytm DFS z licznikiem czasu wyznaczający porządek post-order wierzchołków
         :param vertex: aktualny wierzchołek
         :param timer: aktualny czas
         :returns: nowy czas po przetworzeniu wierzchołka"""
@@ -58,7 +58,7 @@ class _GraphComponents:
         return timer + 1
 
     def __dfs_scc(self, vertex, component):
-        """Algorytm DFS wyznaczający silnie spójne składowe.
+        """Algorytm DFS wyznaczający silnie spójne składowe
         :param vertex: aktualny wierzchołek
         :param component: numer składowej"""
         self.__components[vertex] = component

@@ -15,7 +15,7 @@ class NotConnectedError(ValueError):
 class TreeGraph(UndirectedGraph):
     def __init__(self, n, edges):
         super().__init__()
-        self._graph = UndirectedSimpleGraph(n)  # Struktura grafu drzewa.
+        self._graph = UndirectedSimpleGraph(n)  # Struktura grafu drzewa
 
         components = DisjointSets(self._graph.get_vertices())
 

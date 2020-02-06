@@ -4,7 +4,7 @@ from math import log
 
 
 def find_lca(treegraph, vertex1, vertex2, root=0):
-    """Wyznaczanie najniższego wspólnego przodka.
+    """Wyznaczanie najniższego wspólnego przodka
     :param treegraph: graf drzewo
     :param vertex1: wierzchołek 1
     :param vertex2: wierzchołek 2
@@ -15,15 +15,15 @@ def find_lca(treegraph, vertex1, vertex2, root=0):
 
 class _LCAFinder:
     def __init__(self, treegraph):
-        # Reprezentacja drzewa.
+        # Reprezentacja drzewa
         self.__graph = treegraph
-        # Skompresowane ścieżki do korzenia drzewa.
+        # Skompresowane ścieżki do korzenia drzewa
         self.__paths = [[] for _ in self.__graph.get_vertices()]
-        # Czas wejścia i wyjścia dla wierzchołka.
+        # Czas wejścia i wyjścia dla wierzchołka
         self.__pre_post_times = [None] * self.__graph.vertices_number
 
     def search_lca(self, vertex1, vertex2, root):
-        """Wyszukiwanie najniższego wspólnego przodka.
+        """Wyszukiwanie najniższego wspólnego przodka
         :param vertex1: wierzchołek 1
         :param vertex2: wierzchołek 2
         :param root: korzeń drzewa
@@ -38,10 +38,11 @@ class _LCAFinder:
         return self.__search(vertex1, vertex2)
 
     def __search(self, vertex1, vertex2):
-        """Wyszukiwanie najniższego wspólnego przodka.
+        """Wyszukiwanie najniższego wspólnego przodka
         :param vertex1: wierzchołek 1
         :param vertex2: wierzchołek 2
         :returns: najniższy wspólny przodek"""
+
         def is_offspring(vt1, vt2):
             return self.__pre_post_times[vt1][0] >= self.__pre_post_times[vt2][0] and \
                    self.__pre_post_times[vt1][1] <= self.__pre_post_times[vt2][1]
@@ -59,7 +60,7 @@ class _LCAFinder:
         return self.__search(self.__paths[vertex1][0], vertex2)
 
     def __dfs(self, vertex, parent, timer):
-        """Algorytm DFS z licznikiem czasu wyznaczający kolejne wierzchołki na ścieżce do korzenia.
+        """Algorytm DFS z licznikiem czasu wyznaczający kolejne wierzchołki na ścieżce do korzenia
         :param vertex: aktualny wierzchołek
         :param parent: ojciec wierzchołka
         :param timer: aktualny czas

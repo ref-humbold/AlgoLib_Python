@@ -142,7 +142,7 @@ class AVLTree:
         return self._elems == 0
 
     def add(self, element):
-        """Adds a new value to the tree.
+        """Adds a new value to the tree
         :param element: value to be added"""
         node_parent = self._find_node(
             element, lambda n, e: self._search(n, e) is None or self._search(n, e).element == e
@@ -167,7 +167,7 @@ class AVLTree:
                 self._elems += 1
 
     def remove(self, element):
-        """Removes given element from the tree if present.
+        """Removes given element from the tree if present
         :param element: value to be removed
         :raises ValueError: if given value is not present"""
         the_node = self._find_node(element, lambda n, e: n.element == e)
@@ -178,7 +178,7 @@ class AVLTree:
         self._delete_node(the_node)
 
     def clear(self):
-        """Removes all elements from the tree."""
+        """Removes all elements from the tree"""
         self._root = None
         self._elems = 0
 
@@ -207,7 +207,7 @@ class AVLTree:
 
     @staticmethod
     def _search(node, element):
-        """Determines the subtree where given value might be present.
+        """Determines the subtree where given value might be present
         :param node: node
         :param element: value to find
         :returns: the node if it hold given value, otherwise left child if the value is less or
@@ -216,7 +216,7 @@ class AVLTree:
             node.right if element > node.element else node
 
     def _find_node(self, element, predicate):
-        """Searches for node that satisfies given predicate with given value.
+        """Searches for node that satisfies given predicate with given value
         :param element: value for predicate
         :param predicate: predicate for node and argument value
         :returns: node that satisfies the predicate if any, otherwise ``None``"""
@@ -228,7 +228,7 @@ class AVLTree:
         return node
 
     def _delete_node(self, node):
-        """Deletes inner node from the tree.
+        """Deletes inner node from the tree
         :param node: node to be removed"""
         if node.left is not None and node.right is not None:
             succ = node.right.minimum()
@@ -247,7 +247,7 @@ class AVLTree:
             self._elems -= 1
 
     def _replace_node(self, node1, node2):
-        """Replaces the subtree rootted in one node with subtree of another node.
+        """Replaces the subtree rootted in one node with subtree of another node
         :param node1: root of the subtree to be replaced
         :param node2: root of the new subtree"""
         if self._is_left_child(node1):
@@ -260,7 +260,7 @@ class AVLTree:
         node1.parent = None
 
     def _rotate(self, node):
-        """Rotates the node along the edge to its parent.
+        """Rotates the node along the edge to its parent
         :param node: node to be rotated"""
         if self._is_right_child(node):
             upper_node = node.parent
@@ -274,7 +274,7 @@ class AVLTree:
             node.right = upper_node
 
     def _balance(self, node):
-        """Restores balancing on a path from given node to the root.
+        """Restores balancing on a path from given node to the root
         :param node: node to start balancing from"""
         while node is not None:
             node.count_height()
@@ -296,7 +296,7 @@ class AVLTree:
 
     @staticmethod
     def _count_balance(node):
-        """Counts balance of the node.
+        """Counts balance of the node
         :param node: node
         :returns: value of balance"""
         left_height = 0 if node.left is None else node.left.height

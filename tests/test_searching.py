@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TEST: Graph searching algorithms."""
+"""Tests: Graph searching algorithms"""
 import unittest
 
 from algolib.graphs import DirectedSimpleGraph, UndirectedSimpleGraph, bfs, iter_dfs, rec_dfs

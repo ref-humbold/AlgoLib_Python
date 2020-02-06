@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Algorithms for subsequences."""
+"""Tests: Algorithms for subsequences"""
 import unittest
 
 from algolib.sequences import maximal_subsum, maximum_subarray
