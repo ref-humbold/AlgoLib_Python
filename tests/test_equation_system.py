@@ -17,7 +17,7 @@ class EquationSystemTest(unittest.TestCase):
     def tearDown(self):
         self._test_object = None
 
-    def test__mult__when_constant_is_zero__then_value_error(self):
+    def test__mult__when_constant_is_zero__then_raise_value_error(self):
         constant = 0
 
         with self.assertRaises(ValueError):
@@ -28,14 +28,14 @@ class EquationSystemTest(unittest.TestCase):
 
         self.assertListEqual([1, 3, -2], result)
 
-    def test__solve__when_no_solution__then_no_solution_error(self):
+    def test__solve__when_no_solution__then_raise_no_solution_error(self):
         self._test_object = EquationSystem(
             3, [[2, 3, -2], [7, -1, 0], [-1, -1.5, 1]], [15, 4, -1])
 
         with self.assertRaises(NoSolutionError):
             self._test_object.solve()
 
-    def test__solve__when_infinite_solutions__then_infinite_solutions_error(self):
+    def test__solve__when_infinite_solutions__then_raise_infinite_solutions_error(self):
         self._test_object = EquationSystem(3, [[2, 3, -2], [7, -1, 0], [4, 6, -4]], [15, 4, 30])
 
         with self.assertRaises(InfiniteSolutionsError):
