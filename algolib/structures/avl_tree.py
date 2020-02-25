@@ -117,32 +117,32 @@ class AVLTree:
 
     def __str__(self):
         """:returns: string representation of the tree"""
-        return f"{{|{', '.join([str(x) for x in self])}|}}"
+        return f"{{|{', '.join(str(x) for x in self)}|}}"
 
     def __iter__(self):
-        """:returns: forward iterator object"""
+        """:returns: a forward iterator object"""
         return self._AVLSuccIterator(self._root.minimum())
 
     def __reversed__(self):
-        """:returns: reversed iterator object"""
+        """:returns: a reversed iterator object"""
         return self._AVLPredIterator(self._root.maximum())
 
     def __len__(self):
-        """:returns: number of elements in the tree"""
+        """:returns: number of elements in this tree"""
         return self._elems
 
     def __contains__(self, element):
-        """:param element: value to be found
-        :returns: ``true`` if value is present in the tree, otherwise ``false``"""
+        """:param element: element to be found
+        :returns: ``true`` if value is present in this tree, otherwise ``false``"""
         return not self.empty() \
                and self._find_node(element, lambda n, e: n.element == e) is not None
 
     def empty(self):
-        """:returns: ``true`` if the tree is empty, otherwise ``false``"""
+        """:returns: ``true`` if this tree is empty, otherwise ``false``"""
         return self._elems == 0
 
     def add(self, element):
-        """Adds a new value to the tree
+        """Adds a new value to this tree
         :param element: value to be added"""
         node_parent = self._find_node(
             element, lambda n, e: self._search(n, e) is None or self._search(n, e).element == e
@@ -167,9 +167,9 @@ class AVLTree:
                 self._elems += 1
 
     def remove(self, element):
-        """Removes given element from the tree if present
-        :param element: value to be removed
-        :raises ValueError: if given value is not present"""
+        """Removes specified element from this tree if present
+        :param element: element to be removed
+        :raises ValueError: if the element is not present"""
         the_node = self._find_node(element, lambda n, e: n.element == e)
 
         if the_node is None:
@@ -178,18 +178,16 @@ class AVLTree:
         self._delete_node(the_node)
 
     def clear(self):
-        """Removes all elements from the tree"""
+        """Removes all elements from this tree"""
         self._root = None
         self._elems = 0
 
     @property
     def _root(self):
-        """:returns: the root of the tree"""
         return self._tree
 
     @_root.setter
     def _root(self, node):
-        """:param node: node that will become the new root of the tree"""
         self._tree = node
 
         if node is not None:
@@ -197,29 +195,27 @@ class AVLTree:
 
     @staticmethod
     def _is_left_child(node):
-        """:returns: ``true`` if the node is left child, otherwise ``false``"""
         return node.parent is not None and node.parent.left is node
 
     @staticmethod
     def _is_right_child(node):
-        """:returns: ``true`` if the node is right child, otherwise ``false``"""
         return node.parent is not None and node.parent.right is node
 
     @staticmethod
     def _search(node, element):
-        """Determines the subtree where given value might be present
-        :param node: node
+        """Determines a subtree where specified value might be present
+        :param node: a node
         :param element: value to find
-        :returns: the node if it hold given value, otherwise left child if the value is less or
+        :returns: the node if it holds specified value, otherwise left child if the value is less or
         right child if the value is greater"""
         return node.left if element < node.element else \
             node.right if element > node.element else node
 
     def _find_node(self, element, predicate):
-        """Searches for node that satisfies given predicate with given value
+        """Searches for a node that satisfies specified predicate with specified value
         :param element: value for predicate
         :param predicate: predicate for node and argument value
-        :returns: node that satisfies the predicate if any, otherwise ``None``"""
+        :returns: the node that satisfies the predicate if any, otherwise ``None``"""
         node = self._root
 
         while node is not None and not predicate(node, element):
@@ -247,7 +243,7 @@ class AVLTree:
             self._elems -= 1
 
     def _replace_node(self, node1, node2):
-        """Replaces the subtree rootted in one node with subtree of another node
+        """Replaces the subtree rooted in one node with subtree of another node
         :param node1: root of the subtree to be replaced
         :param node2: root of the new subtree"""
         if self._is_left_child(node1):
@@ -274,7 +270,7 @@ class AVLTree:
             node.right = upper_node
 
     def _balance(self, node):
-        """Restores balancing on a path from given node to the root
+        """Restores balancing on a path from specified node to the root
         :param node: node to start balancing from"""
         while node is not None:
             node.count_height()
@@ -296,9 +292,6 @@ class AVLTree:
 
     @staticmethod
     def _count_balance(node):
-        """Counts balance of the node
-        :param node: node
-        :returns: value of balance"""
         left_height = 0 if node.left is None else node.left.height
         right_height = 0 if node.right is None else node.right.height
         return left_height - right_height

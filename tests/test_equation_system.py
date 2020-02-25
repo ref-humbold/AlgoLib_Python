@@ -21,7 +21,7 @@ class EquationSystemTest(unittest.TestCase):
         constant = 0
 
         with self.assertRaises(ValueError):
-            self._test_object.mult(0, constant)
+            self._test_object.multiply(0, constant)
 
     def test__solve__when_single_solution__then_solution(self):
         result = self._test_object.solve()

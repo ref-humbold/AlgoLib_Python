@@ -14,16 +14,19 @@ class EquationSystem:
     def __init__(self, numeq, coeffs=None, frees=None):
         EquationSystem._validate(coeffs, frees, numeq)
         self.__equations = numeq  # Number of equations
-        # Coefficients matrix
-        self.__coeffs = coeffs if coeffs is not None else [[0.0] * numeq for _ in range(numeq)]
+        self.__coeffs = coeffs if coeffs is not None \
+            else [[0.0] * numeq for _ in range(numeq)]  # Coefficients matrix
         self.__frees = frees if frees is not None else [0.0] * numeq  # Free values vector
 
     def __len__(self):
+        """:returns: number of equations"""
         return self.__equations
 
     def solve(self):
-        """Wyliczanie rozwiązań układu równań liniowych
-        :returns: wektor wyniku równania"""
+        """Counts the solution of this equation system
+        :returns: solution vector
+        :raises NoSolutionError: if there is no solution
+        :raises InfiniteSolutionsError: if there is infinitely many solutions"""
         self.gaussian_reduce()
 
         if self.__coeffs[-1][-1] == 0 and self.__frees[-1] == 0:
@@ -60,10 +63,11 @@ class EquationSystem:
                     param = self.__coeffs[i][equ] / self.__coeffs[equ][equ]
                     self.combine(i, equ, -param)
 
-    def mult(self, equ, constant):
-        """Pomnożenie równania przez niezerową stałą
-        :param equ: numer równania
-        :param constant: stała"""
+    def multiply(self, equ, constant):
+        """Multiplies an equation by a constant
+        :param equ: index of equation
+        :param constant: constant
+        :raises ValueError: if the constant is zero"""
         if constant == 0:
             raise ValueError("Constant cannot be zero")
 
@@ -73,20 +77,17 @@ class EquationSystem:
         self.__frees[equ] *= constant
 
     def swap(self, equ1, equ2):
-        """Zamiana równań miejscami
-        :param equ1: numer pierwszego równania
-        :param equ2: numer drugiego równania"""
-        for i in range(self.__equations):
-            self.__coeffs[equ1][i], self.__coeffs[equ2][i] = \
-                self.__coeffs[equ2][i], self.__coeffs[equ1][i]
-
+        """Swaps two equations
+        :param equ1: index of first equation
+        :param equ2: index of second equation"""
+        self.__coeffs[equ1], self.__coeffs[equ2] = self.__coeffs[equ2], self.__coeffs[equ1]
         self.__frees[equ1], self.__frees[equ2] = self.__frees[equ2], self.__frees[equ1]
 
     def combine(self, equ1, equ2, constant):
-        """Przekształcenie równania przez kombinację liniową z innym równaniem
-        :param equ1: numer równania przekształcanego
-        :param equ2: numer drugiego równania
-        :param constant: stała kombinacji liniowej"""
+        """Transforms a equation through a linear combination with another equation
+        :param equ1: index of equation to be transformed
+        :param equ2: index of second equation
+        :param constant: linear combination constant"""
         for i in range(self.__equations):
             self.__coeffs[equ1][i] += constant * self.__coeffs[equ2][i]
 
