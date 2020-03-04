@@ -2,7 +2,7 @@
 """Tests: Linear equations system structure"""
 import unittest
 
-from mathmat.equation import Equation
+from algolib.mathmat import Equation
 
 
 class EquationTest(unittest.TestCase):
