@@ -19,12 +19,12 @@ class EquationSystem:
         self.__frees = frees if frees is not None else [0.0] * numeq  # Free values vector
 
     def __len__(self):
-        """:returns: number of equations"""
+        """:return: number of equations"""
         return self.__equations
 
     def solve(self):
         """Counts the solution of this equation system
-        :returns: solution vector
+        :return: solution vector
         :raises NoSolutionError: if there is no solution
         :raises InfiniteSolutionsError: if there is infinitely many solutions"""
         self.gaussian_reduce()
@@ -39,8 +39,9 @@ class EquationSystem:
         solution[-1] = self.__frees[-1] / self.__coeffs[-1][-1]
 
         for equ in range(-2, -self.__equations - 1, -1):
-            solution[equ] = sum((-self.__coeffs[equ][i] * solution[i] for i in range(-1, equ, -1)),
-                                self.__frees[equ]) / self.__coeffs[equ][equ]
+            solution[equ] = sum(
+                    (-self.__coeffs[equ][i] * solution[i]
+                     for i in range(-1, equ, -1)), self.__frees[equ]) / self.__coeffs[equ][equ]
 
         return solution
 

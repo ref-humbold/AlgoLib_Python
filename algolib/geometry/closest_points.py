@@ -8,7 +8,7 @@ from .points_sorting import sorted_by_x, sorted_by_y
 def find_closest_points(points):
     """FUNKCJA OBSŁUGUJĄCA DO WYSZUKIWANIA PUNKTÓW
     :param points: lista punktów
-    :returns: para najbliższych punktów"""
+    :return: para najbliższych punktów"""
     points_x = sorted_by_x(points)
     points_y = sorted_by_y(points)
     return _search_closest(points_x, points_y, 0, len(points))
@@ -20,7 +20,7 @@ def _search_closest(points_x, points_y, index_begin, index_end):
     :param points_y: generator punktów posortowanych po współrzędnej Y
     :param index_begin: początek fragmentu listy punktów
     :param index_end: koniec fragmentu listy punktów
-    :returns: para najbliższych punktów"""
+    :return: para najbliższych punktów"""
     if index_end - index_begin == 1:
         return points_x[index_begin], points_x[index_end]
 
@@ -29,13 +29,9 @@ def _search_closest(points_x, points_y, index_begin, index_end):
 
     index_middle = (index_begin + index_end) // 2
     middle_x = (points_x[index_middle].x + points_x[index_middle + 1].x) // 2
-    closest_l = _search_closest(points_x,
-                                (p for p in points_y if p.x <= middle_x),
-                                index_begin,
+    closest_l = _search_closest(points_x, (p for p in points_y if p.x <= middle_x), index_begin,
                                 index_middle)
-    closest_r = _search_closest(points_x,
-                                (p for p in points_y if p.x > middle_x),
-                                index_middle + 1,
+    closest_r = _search_closest(points_x, (p for p in points_y if p.x > middle_x), index_middle + 1,
                                 index_end)
 
     if _distance(closest_l.x, closest_l.y) <= _distance(closest_r.x, closest_r.y):
@@ -54,7 +50,7 @@ def _check_belt(points_y, middle_x, belt_width):
     :param points_y: generator punktów posortowanych po współrzędnej Y
     :param middle_x: współrzędna podziału połówek
     :param belt_width: szerokość paska przy połączeniu
-    :returns: najbliższa para punktów w pasku"""
+    :return: najbliższa para punktów w pasku"""
     closest_points = None
     min_distance = belt_width
     belt_points = [p for p in points_y if middle_x - belt_width <= p.x <= middle_x + belt_width]

@@ -9,7 +9,7 @@ def find_lca(treegraph, vertex1, vertex2, root=0):
     :param vertex1: wierzchołek 1
     :param vertex2: wierzchołek 2
     :param root: korzeń drzewa
-    :returns: najniższy wspólny przodek"""
+    :return: najniższy wspólny przodek"""
     return _LCAFinder(treegraph).search_lca(vertex1, vertex2, root)
 
 
@@ -27,7 +27,7 @@ class _LCAFinder:
         :param vertex1: wierzchołek 1
         :param vertex2: wierzchołek 2
         :param root: korzeń drzewa
-        :returns: najniższy wspólny przodek"""
+        :return: najniższy wspólny przodek"""
         self.__dfs(root, root, 0)
 
         for i in range(0, int(log(self.__graph.vertices_number, 2)) + 3):
@@ -41,8 +41,7 @@ class _LCAFinder:
         """Wyszukiwanie najniższego wspólnego przodka
         :param vertex1: wierzchołek 1
         :param vertex2: wierzchołek 2
-        :returns: najniższy wspólny przodek"""
-
+        :return: najniższy wspólny przodek"""
         def is_offspring(vt1, vt2):
             return self.__pre_post_times[vt1][0] >= self.__pre_post_times[vt2][0] and \
                    self.__pre_post_times[vt1][1] <= self.__pre_post_times[vt2][1]
@@ -64,7 +63,7 @@ class _LCAFinder:
         :param vertex: aktualny wierzchołek
         :param parent: ojciec wierzchołka
         :param timer: aktualny czas
-        :returns: nowy czas po przetworzeniu wierzchołka"""
+        :return: nowy czas po przetworzeniu wierzchołka"""
         self.__pre_post_times[vertex] = ()
         self.__paths[vertex].append(parent)
         pre_time = timer

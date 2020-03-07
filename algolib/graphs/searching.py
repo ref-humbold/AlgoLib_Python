@@ -8,7 +8,7 @@ def bfs(graph, strategy, *roots):
     :param graph: graf
     :param strategy: strategia dla wierzchołków
     :param roots: wierzchołki początkowe
-    :returns: generator odwiedzonych wierzchołków"""
+    :return: generator odwiedzonych wierzchołków"""
     reached = [0] * graph.vertices_number
     vertex_queue = queue.Queue()
     iteration = 1
@@ -43,7 +43,7 @@ def iter_dfs(graph, strategy, *roots):
     :param graph: graf
     :param strategy: strategia dla wierzchołków
     :param roots: wierzchołki początkowe
-    :returns: generator odwiedzonych wierzchołków"""
+    :return: generator odwiedzonych wierzchołków"""
     reached = [0] * graph.vertices_number
     vertex_stack = queue.LifoQueue()
     iteration = 1
@@ -79,7 +79,7 @@ def rec_dfs(graph, strategy, *roots):
     :param graph: graf
     :param strategy: strategia dla wierzchołków
     :param roots: wierzchołki początkowe
-    :returns: generator odwiedzonych wierzchołków"""
+    :return: generator odwiedzonych wierzchołków"""
     state = _DfsrState(graph.vertices_number)
 
     for root in roots:

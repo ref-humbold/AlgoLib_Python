@@ -6,7 +6,7 @@ def longest_ordered(sequence, order):
     """Constructs longest ordered subsequence
     :param sequence: sequence of elements
     :param order: order function of elements in subsequence
-    :returns: least lexicographically longest ordered subsequence"""
+    :return: least lexicographically longest ordered subsequence"""
     previous_elem = [None]
     subseq_last = [0]
 
@@ -38,7 +38,7 @@ def _search_ord(order, sequence, subseq_last, index_begin, index_end, index_elem
     :param index_begin: index of beginning
     :param index_end: index of end
     :param index_elem: index of current element
-    :returns: index in list of subsequences"""
+    :return: index in list of subsequences"""
     if index_begin == index_end:
         return index_begin
 
@@ -53,7 +53,7 @@ def _search_ord(order, sequence, subseq_last, index_begin, index_end, index_elem
 def maximum_subarray(sequence):
     """Dynamically constructs coherent subarray with maximal sum
     :param sequence: sequence of numbers
-    :returns: maximum subarray"""
+    :return: maximum subarray"""
     actual = [0, []]
     maximal = (0, [])
 
@@ -73,7 +73,7 @@ def maximum_subarray(sequence):
 def maximal_subsum(sequence):
     """Counts maximal sum from all coherent subarrays using interval tree
     :param sequence: sequence of numbers
-    :returns: the sum of maximum subarray"""
+    :return: the sum of maximum subarray"""
     size = 1
 
     while size < 2 * len(sequence):

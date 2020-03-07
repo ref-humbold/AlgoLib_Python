@@ -21,7 +21,7 @@ class FlowGraphEdmonds:
         WYLICZANIE CA�O�CIOWEGO PRZEP�YWU W GRAFIE
         :param source: �r�d�o
         :param target: uj�cie
-        :returns: maksymalny przep�yw sieci
+        :return: maksymalny przep�yw sieci
         """
         self.__augmenting_paths = []  # tablica poprzedników i minimalnych przepustowości ze źródła
         max_flow = 0.0
@@ -66,7 +66,7 @@ class FlowGraphEdmonds:
         WYLICZANIE PRZEP�YWU NA �CIE�CE POWI�KSZAJ�CEJ
         :param source: �r�d�o
         :param target: uj�cie
-        :returns: przep�yw na �cie�ce
+        :return: przep�yw na �cie�ce
         """
         w = target
 

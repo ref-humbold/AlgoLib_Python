@@ -9,6 +9,8 @@ nose2-junit.xml
 # Sphinx output
 docs/_build
 docs/build
+docs/source/*.rst
+!docs/source/index.rst
 
 # PyCharm
 .idea

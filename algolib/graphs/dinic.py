@@ -21,7 +21,7 @@ class FlowGraphDinic:
         WYLICZANIE CA�O�CIOWEGO PRZEP�YWU W GRAFIE
         :param source: �r�d�o
         :param target: uj�cie
-        :returns: maksymalny przep�yw sieci
+        :return: maksymalny przep�yw sieci
         """
         self.__layer_graph = []  # lista sąsiedztwa grafu warstwowego
         max_flow = 0.0
@@ -41,7 +41,7 @@ class FlowGraphDinic:
         ALGORYTM BFS TWORZ�CY GRAF WARSTWOWY
         :param source: �r�d�o
         :param target: uj�cie
-        :returns: czy uda si� powi�kszy� przep�yw
+        :return: czy uda si� powi�kszy� przep�yw
         """
         vertex_layer = [None] * (self.__num_vertex + 1)
         vertex_layer[source] = 0
@@ -71,7 +71,7 @@ class FlowGraphDinic:
         :param vertex: aktualny wierzchołek
         :param target: uj�cie
         :param blocking_flow: stary przep�yw blokuj�cy
-        :returns: nowy przep�yw blokuj�cy
+        :return: nowy przep�yw blokuj�cy
         """
         if vertex == target or blocking_flow == 0.0:
             return blocking_flow
@@ -79,9 +79,8 @@ class FlowGraphDinic:
         new_blocking_flow = 0.0
 
         for neighbour in self.__layer_graph[vertex]:
-            flow_add = self.__dfs(
-                neighbour, target, min(self.__capacities[vertex][neighbour], blocking_flow)
-            )
+            flow_add = self.__dfs(neighbour, target,
+                                  min(self.__capacities[vertex][neighbour], blocking_flow))
             blocking_flow -= flow_add
             new_blocking_flow += flow_add
             self.__capacities[vertex][neighbour] -= flow_add

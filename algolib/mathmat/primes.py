@@ -9,7 +9,7 @@ from .maths import gcd, power_mod
 def find_primes(*numbers):
     """Wyznaczanie liczb pierwszych
     :param numbers: granice przedziału
-    :returns: lista liczb pierwszych"""
+    :return: lista liczb pierwszych"""
     if len(numbers) == 1:
         return _find_primes_range(0, numbers[0])
 
@@ -22,7 +22,7 @@ def find_primes(*numbers):
 def test_fermat(number):
     """Fermat's prime test
     :param number: number to test
-    :returns: ``true`` if the number is probably prime, otherwise ``false``"""
+    :return: ``true`` if the number is probably prime, otherwise ``false``"""
     number = abs(number)
 
     if number in (2, 3):
@@ -31,14 +31,15 @@ def test_fermat(number):
     if number < 2 or number % 2 == 0 or number % 3 == 0:
         return False
 
-    return all(map(lambda rdv: gcd(rdv, number) == 1 and power_mod(rdv, number - 1, number) == 1,
-                   [randint(1, number - 1) for _ in range(15)]))
+    return all(
+            map(lambda rdv: gcd(rdv, number) == 1 and power_mod(rdv, number - 1, number) == 1,
+                [randint(1, number - 1) for _ in range(15)]))
 
 
 def test_miller(number):
     """Miller-Rabin's prime test
     :param number: number to test
-    :returns: ``true`` if the number is probably prime, otherwise ``false``"""
+    :return: ``true`` if the number is probably prime, otherwise ``false``"""
     number = abs(number)
 
     if number in (2, 3):
@@ -75,7 +76,7 @@ def _find_primes_range(min_number, max_number):
     """Wyznaczanie liczb pierwszych na przedziale domknietym
     :param min_number: dolna granica przedziału
     :param max_number: górna granica przedziału
-    :returns: lista liczb pierwszych"""
+    :return: lista liczb pierwszych"""
     if max_number < min_number:
         raise ValueError("Second argument must be grater or equal to the first argument")
 

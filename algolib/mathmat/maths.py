@@ -6,7 +6,7 @@ def gcd(number1, number2):
     """Największy wspólny dzielnik dwóch liczb
     :param number1: pierwsza liczba
     :param number2: druga liczba
-    :returns: największy wspólny dzielnik"""
+    :return: największy wspólny dzielnik"""
     number_pair = (min(number1, number2), max(number1, number2))
 
     while number_pair[0] > 0:
@@ -19,7 +19,7 @@ def lcm(number1, number2):
     """Najmniejsza wspólna wielokrotność dwóch liczb
     :param number1: pierwsza liczba
     :param number2: druga liczba
-    :returns: najmniejsza wspólna wielokrotność"""
+    :return: najmniejsza wspólna wielokrotność"""
     min_number = min(number1, number2)
     max_number = max(number1, number2)
     return max_number // gcd(number1, number2) * min_number
@@ -30,7 +30,7 @@ def mult_mod(factor1, factor2, modulo=0):
     :param factor1: pierwszy czynnik
     :param factor2: drugi czynnik
     :param modulo: modulo
-    :returns: wynik mnożenia wzięty modulo"""
+    :return: wynik mnożenia wzięty modulo"""
     result = 0
 
     if modulo < 0:
@@ -60,7 +60,7 @@ def power_mod(base, exponent, modulo=0):
     :param base: podstawa
     :param exponent: wykładnik
     :param modulo: modulo
-    :returns: wynik potęgowania"""
+    :return: wynik potęgowania"""
     result = 1
 
     if modulo < 0:

@@ -30,7 +30,7 @@ class MultipartiteGraph(UndirectedGraph):
 
     def get_vertices(self, group=None):
         """:param group: numer grupy wierzchołków
-        :returns: generator wierzchołków z zadanej grupy"""
+        :return: generator wierzchołków z zadanej grupy"""
         if group is None:
             return self.__graph.get_vertices()
 
@@ -39,7 +39,7 @@ class MultipartiteGraph(UndirectedGraph):
     def add_vertex(self, neighbours=None, group=0):
         """Dodawanie nowego wierzchołka do zadanej grupy
         :param group: numer grupy
-        :returns: oznaczenie wierzchołka"""
+        :return: oznaczenie wierzchołka"""
         v = self.__graph.add_vertex(neighbours)
         self.__groups.append(group)
         return v
@@ -60,7 +60,7 @@ class MultipartiteGraph(UndirectedGraph):
     def get_neighbours(self, vertex, group=None):
         """:param vertex: numer wierzchołka
         :param group: numer grupy sąsiadów
-        :returns: generator sąsiadów wierzchołka z zadanej grupy"""
+        :return: generator sąsiadów wierzchołka z zadanej grupy"""
         if group is None:
             return self.__graph.get_neighbours(vertex)
 
@@ -79,12 +79,12 @@ class MultipartiteGraph(UndirectedGraph):
         """Sprawdzanie, czy wierzchołek nalezy do zadanej grupy
         :param vertex: wierzchołek
         :param group: numer grupy
-        :returns: czy wierzchołek jest w grupie"""
+        :return: czy wierzchołek jest w grupie"""
         return self.__groups[vertex] == group
 
     def is_same_group(self, vertex1, vertex2):
         """Sprawdzanie, czy wierzchołki należą do tej samej grupy
         :param vertex1: pierwszy wierzchołek
         :param vertex2: drugi wierzchołek
-        :returns: czy wierzchołki są w jednej grupie"""
+        :return: czy wierzchołki są w jednej grupie"""
         return self.__groups[vertex1] == self.__groups[vertex2]

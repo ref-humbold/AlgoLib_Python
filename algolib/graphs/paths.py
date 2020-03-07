@@ -53,7 +53,7 @@ def dijkstra(wgraph, source):
 def floyd_warshall(diwgraph):
     """Algorytm Floyda-Warshalla
     :param diwgraph: skierowany graf ważony
-    :returns: macierz odległości wierzchołków"""
+    :return: macierz odległości wierzchołków"""
     distances = [[0.0 if v == u else diwgraph.INF for u in diwgraph.get_vertices()]
                  for v in diwgraph.get_vertices()]
 
