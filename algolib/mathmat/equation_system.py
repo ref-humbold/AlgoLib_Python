@@ -18,17 +18,17 @@ class EquationSystem:
             raise ValueError("Incorrect number of variables in one of equations")
 
     def __len__(self):
-        """:returns: number of equations"""
+        """:return: number of equations"""
         return len(self._equations)
 
     def __getitem__(self, i):
         """:param i: index of equation
-        :returns: equation object"""
+        :return: equation object"""
         return self._equations[i]
 
     def solve(self):
         """Counts the solution of this equation system
-        :returns: solution vector
+        :return: solution vector
         :raises NoSolutionError: if there is no solution
         :raises InfiniteSolutionsError: if there is infinitely many solutions"""
         self.gaussian_reduce()
@@ -43,8 +43,8 @@ class EquationSystem:
         solution[-1] = self[-1].free / self[-1][-1]
 
         for i in range(-2, -self.__len__() - 1, -1):
-            solution[i] = sum((-self[i][j] * solution[j] for j in range(-1, i, -1)),
-                              self[i].free) / self[i][i]
+            solution[i] = sum((-self[i][j] * solution[j]
+                               for j in range(-1, i, -1)), self[i].free) / self[i][i]
 
         return solution
 

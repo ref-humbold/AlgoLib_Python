@@ -13,16 +13,16 @@ class SuffixArray:
 
     @property
     def text(self):
-        """:returns: text for suffix array"""
+        """:return: text for suffix array"""
         return self._text
 
     def __len__(self):
-        """:returns: length of suffix array"""
+        """:return: length of suffix array"""
         return self._length
 
     def __getitem__(self, i):
         """:param i: index in suffix array
-        :returns: suffix"""
+        :return: suffix"""
         if i < 0 or i >= self._length:
             raise IndexError("Suffix array index out of range")
 
@@ -30,7 +30,7 @@ class SuffixArray:
 
     def index_at(self, i):
         """:param i: index in suffix array
-        :returns: index in text where the suffix begins"""
+        :return: index in text where the suffix begins"""
         if i < 0 or i >= self._length:
             raise IndexError("Suffix array index out of range")
 
@@ -38,7 +38,7 @@ class SuffixArray:
 
     def index_of(self, suf):
         """:param suf: index in text denoting suffix
-        :returns: index of suffix in this array"""
+        :return: index of suffix in this array"""
         if suf < 0 or suf >= self._length:
             raise IndexError("Text index out of range")
 
@@ -48,7 +48,7 @@ class SuffixArray:
         """Counts longest common prefix of two suffixes
         :param suf1: index in text denoting first suffix
         :param suf2: index in text denoting second suffix
-        :returns: length of longest common prefix"""
+        :return: length of longest common prefix"""
         if suf1 < 0 or suf1 >= self._length or suf2 < 0 or suf2 >= self._length:
             raise IndexError("Text index out of range")
 
@@ -104,14 +104,11 @@ class SuffixArray:
         txt_n12 = [0] * lng02
 
         for i in txt12:
-            if last != (
-                    self._get_elem(txt, i), self._get_elem(txt, i + 1), self._get_elem(txt, i + 2)
-            ):
+            if last != (self._get_elem(txt, i), self._get_elem(txt,
+                                                               i + 1), self._get_elem(txt, i + 2)):
                 index += 1
-                last = (
-                    self._get_elem(txt, i), self._get_elem(txt,
-                                                           i + 1), self._get_elem(txt, i + 2)
-                )
+                last = (self._get_elem(txt, i), self._get_elem(txt,
+                                                               i + 1), self._get_elem(txt, i + 2))
 
             if i % 3 == 1:
                 txt_n12[i // 3] = index
@@ -158,9 +155,8 @@ class SuffixArray:
                 ix0 += 1
 
         while ix12 < len(sa12):
-            sa_res.append(
-                sa12[ix12] * 3 + 1 if sa12[ix12] < lngs[2] else (sa12[ix12] - lngs[2]) * 3 + 2
-            )
+            sa_res.append(sa12[ix12] * 3 +
+                          1 if sa12[ix12] < lngs[2] else (sa12[ix12] - lngs[2]) * 3 + 2)
             ix12 += 1
 
         while ix0 < len(sa0):

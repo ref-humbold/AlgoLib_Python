@@ -22,14 +22,14 @@ class Graph(metaclass=ABCMeta):
 
     @abstractmethod
     def get_vertices(self):
-        """:returns: generator wierzchołków"""
+        """:return: generator wierzchołków"""
         pass
 
     @abstractmethod
     def add_vertex(self, neighbours=None):
         """Dodawanie nowego wierzchołka
         :param neighbours: sąsiedzi nowego wierzchołka
-        :returns: oznaczenie wierzchołka"""
+        :return: oznaczenie wierzchołka"""
         pass
 
     @property
@@ -39,7 +39,7 @@ class Graph(metaclass=ABCMeta):
 
     @abstractmethod
     def get_edges(self):
-        """:returns: generator krawędzi"""
+        """:return: generator krawędzi"""
         pass
 
     @abstractmethod
@@ -52,19 +52,19 @@ class Graph(metaclass=ABCMeta):
     @abstractmethod
     def get_neighbours(self, vertex):
         """:param vertex: numer wierzchołka
-        :returns: generator sąsiadów wierzchołka"""
+        :return: generator sąsiadów wierzchołka"""
         pass
 
     @abstractmethod
     def get_outdegree(self, vertex):
         """:param vertex: numer wierzchołka
-        :returns: stopień wyjściowy wierzchołka"""
+        :return: stopień wyjściowy wierzchołka"""
         pass
 
     @abstractmethod
     def get_indegree(self, vertex):
         """:param vertex: numer wierzchołka
-        :returns: stopień wejściowy wierzchołka"""
+        :return: stopień wejściowy wierzchołka"""
         pass
 
 
@@ -74,7 +74,7 @@ class WeightedGraph(Graph, metaclass=ABCMeta):
 
     @abstractmethod
     def get_weighted_edges(self):
-        """:returns: generator krawędzi z wagami"""
+        """:return: generator krawędzi z wagami"""
         pass
 
     @abstractmethod
@@ -88,7 +88,7 @@ class WeightedGraph(Graph, metaclass=ABCMeta):
     @abstractmethod
     def get_weighted_neighbours(self, vertex):
         """:param vertex: numer wierzchołka
-        :returns: lista sąsiadów wierzchołka wraz z wagami krawędzi"""
+        :return: lista sąsiadów wierzchołka wraz z wagami krawędzi"""
         pass
 
 

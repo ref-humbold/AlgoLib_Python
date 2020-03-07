@@ -8,7 +8,7 @@ def heap_sorted(sequence, index_begin=0, index_end=None):
     :param sequence: ciąg
     :param index_begin: początkowy indeks ciągu
     :param index_end: końcowy indeks ciągu
-    :returns: lista posortowanych elementów"""
+    :return: lista posortowanych elementów"""
     sequence_list = list(sequence)
 
     if sequence_list == []:
@@ -72,7 +72,7 @@ def mergedown_sorted(sequence, index_begin=0, index_end=None):
     :param sequence: ciąg
     :param index_begin: początkowy indeks ciągu
     :param index_end: końcowy indeks ciągu
-    :returns: lista posortowanych elementów"""
+    :return: lista posortowanych elementów"""
     sequence_list = list(sequence)
 
     if sequence_list == []:
@@ -114,7 +114,7 @@ def mergeup_sorted(sequence, index_begin=0, index_end=None):
     :param seq: ciąg
     :param index_begin: początkowy indeks listy
     :param index_end: końcowy indeks listy
-    :returns: lista posortowanych elementów"""
+    :return: lista posortowanych elementów"""
     sequence_list = list(sequence)
 
     if sequence_list == []:
@@ -173,7 +173,7 @@ def quick_sorted(sequence, index_begin=0, index_end=None):
     :param sequence: ciąg
     :param index_begin: początkowy indeks ciągu
     :param index_end: końcowy indeks ciągu
-    :returns: lista posortowanych elementów"""
+    :return: lista posortowanych elementów"""
     sequence_list = list(sequence)
 
     if sequence_list == []:
@@ -207,9 +207,11 @@ def _quick_sort(sequence, index_begin, index_end):
     index_pivot = index_begin
     index_front = index_begin + 1
     index_back = index_end - 1
-    rdpv = sorted([randint(index_begin, index_end - 1),
-                   randint(index_begin, index_end - 1),
-                   randint(index_begin, index_end - 1)])[1]
+    rdpv = sorted([
+            randint(index_begin, index_end - 1),
+            randint(index_begin, index_end - 1),
+            randint(index_begin, index_end - 1)
+    ])[1]
     sequence[index_pivot], sequence[rdpv] = sequence[rdpv], sequence[index_pivot]
 
     while index_pivot < index_back:

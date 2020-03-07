@@ -57,12 +57,12 @@ class AVLTree:
 
         def minimum(self):
             """Searches in its subtree for the node with minimal value
-            :returns: the node with minimal value"""
+            :return: the node with minimal value"""
             return self if self._left is None else self._left.minimum()
 
         def maximum(self):
             """Searches in its subtree for the node with maximal value
-            :returns: the node with maximal value"""
+            :return: the node with maximal value"""
             return self if self._right is None else self._right.maximum()
 
     class _AVLSuccIterator:
@@ -116,37 +116,36 @@ class AVLTree:
                 self.add(i)
 
     def __str__(self):
-        """:returns: string representation of the tree"""
+        """:return: string representation of the tree"""
         return f"{{|{', '.join(str(x) for x in self)}|}}"
 
     def __iter__(self):
-        """:returns: a forward iterator object"""
+        """:return: a forward iterator object"""
         return self._AVLSuccIterator(self._root.minimum())
 
     def __reversed__(self):
-        """:returns: a reversed iterator object"""
+        """:return: a reversed iterator object"""
         return self._AVLPredIterator(self._root.maximum())
 
     def __len__(self):
-        """:returns: number of elements in this tree"""
+        """:return: number of elements in this tree"""
         return self._elems
 
     def __contains__(self, element):
         """:param element: element to be found
-        :returns: ``true`` if value is present in this tree, otherwise ``false``"""
+        :return: ``true`` if value is present in this tree, otherwise ``false``"""
         return not self.empty() \
                and self._find_node(element, lambda n, e: n.element == e) is not None
 
     def empty(self):
-        """:returns: ``true`` if this tree is empty, otherwise ``false``"""
+        """:return: ``true`` if this tree is empty, otherwise ``false``"""
         return self._elems == 0
 
     def add(self, element):
         """Adds a new value to this tree
         :param element: value to be added"""
         node_parent = self._find_node(
-            element, lambda n, e: self._search(n, e) is None or self._search(n, e).element == e
-        )
+                element, lambda n, e: self._search(n, e) is None or self._search(n, e).element == e)
 
         if node_parent is None:
             new_node = self._AVLNode(element)
@@ -206,7 +205,7 @@ class AVLTree:
         """Determines a subtree where specified value might be present
         :param node: a node
         :param element: value to find
-        :returns: the node if it holds specified value, otherwise left child if the value is less or
+        :return: the node if it holds specified value, otherwise left child if the value is less or
         right child if the value is greater"""
         return node.left if element < node.element else \
             node.right if element > node.element else node
@@ -215,7 +214,7 @@ class AVLTree:
         """Searches for a node that satisfies specified predicate with specified value
         :param element: value for predicate
         :param predicate: predicate for node and argument value
-        :returns: the node that satisfies the predicate if any, otherwise ``None``"""
+        :return: the node that satisfies the predicate if any, otherwise ``None``"""
         node = self._root
 
         while node is not None and not predicate(node, element):

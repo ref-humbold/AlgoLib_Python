@@ -6,7 +6,7 @@ import queue
 def match(partgraph):
     """Wyznaczanie maksymalnego skojarzenia
     :param partgraph: graf wielodzielny
-    :returns: pary skojarzonych wierzchołków"""
+    :return: pary skojarzonych wierzchołków"""
     augmenter = _MatchAugmenter(partgraph)
 
     while augmenter.augment_match():
@@ -35,12 +35,12 @@ class _MatchAugmenter:
 
     @property
     def matching(self):
-        """:returns: skojarzenia wierzchołków"""
+        """:return: skojarzenia wierzchołków"""
         return self.__matching
 
     def augment_match(self):
         """Powiększanie skojarzenia przy pomocy ścieżek powiększających
-        :returns: czy powiększono skojarzenie"""
+        :return: czy powiększono skojarzenie"""
         self.__distances = [self.__graph.INF] * self.__graph.vertices_number
         self.__is_visited = [False] * self.__graph.vertices_number
         self.__bfs()
@@ -65,7 +65,7 @@ class _MatchAugmenter:
 
     def __dfs(self, vertex):
         """Algorytm DFS powiększający skojarzenie za pomocą ścieżek powiekszających
-        :returns: czy powiększono skojarzenie"""
+        :return: czy powiększono skojarzenie"""
         self.__is_visited[vertex] = True
 
         for neighbour in self.__graph.get_neighbours(vertex):

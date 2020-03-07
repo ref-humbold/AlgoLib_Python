@@ -8,7 +8,7 @@ from ..structures.disjoint_sets import DisjointSets
 def kruskal(uwgraph):
     """Algorytm Kruskala wyliczjący długość MST
     :param uwgraph: graf nieskierowany ważony
-    :returns: długość minimalnego drzewa spinającego"""
+    :return: długość minimalnego drzewa spinającego"""
     size_mst = 0.0
     components = uwgraph.vertices_number
     edge_queue = queue.PriorityQueue()
@@ -32,7 +32,7 @@ def prim(uwgraph, source):
     """Algorytm Prima wyliczjący długość MST
     :param uwgraph: graf nieskierowany ważony
     :param source: początkowy wierzchołek
-    :returns: długość minimalnego drzewa spinającego"""
+    :return: długość minimalnego drzewa spinającego"""
     size_mst = 0.0
     is_visited = [False] * (uwgraph.vertices_number + 1)
     vertex_queue = queue.PriorityQueue()
