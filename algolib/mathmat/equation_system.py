@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structure of linear equation sysytem with Gauss elimination algorithm"""
+"""Structure of linear equation system with Gauss elimination algorithm"""
 
 
 class InfiniteSolutionsError(ValueError):
