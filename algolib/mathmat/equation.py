@@ -12,8 +12,8 @@ class Equation:
         return self.coefficients, self.free
 
     def __str__(self):
-        vars = [f'{c} x_{i}' for i, c in enumerate(self.coefficients) if c != 0]
-        return f"{' + '.join(vars)} = {self.free}"
+        terms = [f'{c} x_{i}' for i, c in enumerate(self.coefficients) if c != 0]
+        return f"{' + '.join(terms)} = {self.free}"
 
     def __len__(self):
         """:returns: number of variables"""
