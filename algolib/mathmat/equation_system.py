@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structure of linear equation sysytem with Gauss elimination algorithm"""
+"""Structure of linear equation system with Gauss elimination algorithm"""
 
 
 class InfiniteSolutionsError(ValueError):
@@ -11,99 +11,78 @@ class NoSolutionError(ValueError):
 
 
 class EquationSystem:
-    def __init__(self, numeq, coeffs=None, frees=None):
-        EquationSystem._validate(coeffs, frees, numeq)
-        self.__equations = numeq  # Number of equations
-        self.__coeffs = coeffs if coeffs is not None \
-            else [[0.0] * numeq for _ in range(numeq)]  # Coefficients matrix
-        self.__frees = frees if frees is not None else [0.0] * numeq  # Free values vector
+    def __init__(self, equations):
+        self._equations = list(equations)
+
+        if any(len(eq) != len(self._equations) for eq in self._equations):
+            raise ValueError("Incorrect number of variables in one of equations")
 
     def __len__(self):
         """:return: number of equations"""
-        return self.__equations
+        return len(self._equations)
+
+    def __getitem__(self, i):
+        """:param i: index of equation
+        :return: equation object"""
+        return self._equations[i]
+
+    def __iter__(self):
+        return iter(self._equations)
+
+    def __reversed__(self):
+        return reversed(self._equations)
 
     def solve(self):
-        """Counts the solution of this equation system
+        """Computes the solution of this equation system
         :return: solution vector
         :raises NoSolutionError: if there is no solution
         :raises InfiniteSolutionsError: if there is infinitely many solutions"""
         self.gaussian_reduce()
 
-        if self.__coeffs[-1][-1] == 0 and self.__frees[-1] == 0:
+        if self[-1][-1] == 0 and self[-1].free == 0:
             raise InfiniteSolutionsError()
 
-        if self.__coeffs[-1][-1] == 0 and self.__frees[-1] != 0:
+        if self[-1][-1] == 0 and self[-1].free != 0:
             raise NoSolutionError()
 
-        solution = [None] * self.__equations
-        solution[-1] = self.__frees[-1] / self.__coeffs[-1][-1]
+        solution = [None] * self.__len__()
+        solution[-1] = self[-1].free / self[-1][-1]
 
-        for equ in range(-2, -self.__equations - 1, -1):
-            solution[equ] = sum(
-                    (-self.__coeffs[equ][i] * solution[i]
-                     for i in range(-1, equ, -1)), self.__frees[equ]) / self.__coeffs[equ][equ]
+        for i in range(-2, -self.__len__() - 1, -1):
+            solution[i] = sum((-self[i][j] * solution[j]
+                               for j in range(-1, i, -1)), self[i].free) / self[i][i]
 
         return solution
 
     def gaussian_reduce(self):
         """Gauss elimination algorithm"""
-        for equ in range(self.__equations - 1):
-            index_min = equ
+        for i in range(self.__len__() - 1):
+            index_min = i
 
-            for i in range(equ + 1, self.__equations):
-                min_coef = self.__coeffs[index_min][equ]
-                act_coef = self.__coeffs[i][equ]
+            for j in range(i + 1, self.__len__()):
+                min_coef = self[index_min][i]
+                act_coef = self[j][i]
 
                 if act_coef != 0 and (min_coef == 0 or abs(act_coef) < abs(min_coef)):
-                    index_min = i
+                    index_min = j
 
-            if self.__coeffs[index_min][equ] != 0:
-                self.swap(index_min, equ)
+            if self[index_min][i] != 0:
+                self.swap(index_min, i)
 
-                for i in range(equ + 1, self.__equations):
-                    param = self.__coeffs[i][equ] / self.__coeffs[equ][equ]
-                    self.combine(i, equ, -param)
+                for j in range(i + 1, self.__len__()):
+                    param = self[j][i] / self[i][i]
 
-    def multiply(self, equ, constant):
-        """Multiplies an equation by a constant
-        :param equ: index of equation
-        :param constant: constant
-        :raises ValueError: if the constant is zero"""
-        if constant == 0:
-            raise ValueError("Constant cannot be zero")
+                    if param != 0:
+                        self[j].combine(self[i], -param)
 
-        for i in range(self.__equations):
-            self.__coeffs[equ][i] *= constant
-
-        self.__frees[equ] *= constant
-
-    def swap(self, equ1, equ2):
+    def swap(self, i, j):
         """Swaps two equations
-        :param equ1: index of first equation
-        :param equ2: index of second equation"""
-        self.__coeffs[equ1], self.__coeffs[equ2] = self.__coeffs[equ2], self.__coeffs[equ1]
-        self.__frees[equ1], self.__frees[equ2] = self.__frees[equ2], self.__frees[equ1]
+        :param i: index of first equation
+        :param j: index of second equation"""
+        self._equations[i], self._equations[j] = self._equations[j], self._equations[i]
 
-    def combine(self, equ1, equ2, constant):
-        """Transforms a equation through a linear combination with another equation
-        :param equ1: index of equation to be transformed
-        :param equ2: index of second equation
-        :param constant: linear combination constant"""
-        for i in range(self.__equations):
-            self.__coeffs[equ1][i] += constant * self.__coeffs[equ2][i]
-
-        self.__frees[equ1] += constant * self.__frees[equ2]
-
-    @staticmethod
-    def _validate(coef, frees, numeq):
-        if coef is None and frees is None:
-            return
-
-        if coef is None or frees is None:
-            raise ValueError("Incorrect number of equations")
-
-        if len(coef) != numeq or len(frees) != numeq:
-            raise ValueError("Incorrect number of equations")
-
-        if any(map(lambda e: len(e) != numeq, coef)):
-            raise ValueError("Coefficient matrix is not a square matrix")
+    def is_solution(self, solution):
+        """Checks whether given values solve this equation system
+        :param solution: values to check
+        :return: ``true`` if solution is correct, otherwise ``false``"""
+        return all(eq.is_solution(solution) for eq in self._equations)

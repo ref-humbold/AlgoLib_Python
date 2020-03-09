@@ -65,18 +65,16 @@ class DisjointSetsTest(unittest.TestCase):
     def test__find_set__when_present_element__then_represent(self):
         # given
         elem = 4
-        default = 0
         # when
-        result = self._test_object.find_set(elem, default)
+        result = self._test_object.find_set(elem, 10)
         # then
         self.assertEqual(elem, result)
 
     def test__find_set__when_absent_element__then_default(self):
         # given
-        elem = 18
         default = 0
         # when
-        result = self._test_object.find_set(elem, default)
+        result = self._test_object.find_set(22, default)
         # then
         self.assertEqual(default, result)
 
