@@ -49,3 +49,10 @@ class Equation:
             self.coefficients[i] += constant * equation[i]
 
         self.free += constant * equation.free
+
+    def is_solution(self, solution):
+        """Checks whether given values solve this equation
+        :param solutions: values to check
+        :return: ``true`` if solution is correct, otherwise ``false``"""
+        return len(solution) == len(self) and \
+               sum(coef * sol for coef, sol in zip(self.coefficients, solution)) == self.free
