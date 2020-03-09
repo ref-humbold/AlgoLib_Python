@@ -83,6 +83,6 @@ class EquationSystem:
 
     def is_solution(self, solution):
         """Checks whether given values solve this equation system
-        :param solutions: values to check
+        :param solution: values to check
         :return: ``true`` if solution is correct, otherwise ``false``"""
         return all(eq.is_solution(solution) for eq in self._equations)

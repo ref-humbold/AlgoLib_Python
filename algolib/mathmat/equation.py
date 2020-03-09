@@ -52,7 +52,7 @@ class Equation:
 
     def is_solution(self, solution):
         """Checks whether given values solve this equation
-        :param solutions: values to check
+        :param solution: values to check
         :return: ``true`` if solution is correct, otherwise ``false``"""
         return len(solution) == len(self) and \
                sum(coef * sol for coef, sol in zip(self.coefficients, solution)) == self.free
