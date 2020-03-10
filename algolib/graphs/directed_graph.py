@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""DIRECTED GRAPHS STRUCTURES"""
+"""Directed graphs structures"""
 from abc import ABCMeta, abstractmethod
 
 from .graph import Graph, NoSuchVertexError, SimpleGraph, WeightedGraph
@@ -11,7 +11,7 @@ class DirectedGraph(Graph, metaclass=ABCMeta):
 
     @abstractmethod
     def reverse(self):
-        """Odwracanie skierowania grafu"""
+        """Odwracanie skierowania grafu."""
         pass
 
 

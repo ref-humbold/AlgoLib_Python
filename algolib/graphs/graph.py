@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""BASIC GRAPHS STRUCTURES"""
+"""Basic graphs structures"""
 from abc import ABCMeta, abstractmethod
 
 import math
@@ -27,7 +27,8 @@ class Graph(metaclass=ABCMeta):
 
     @abstractmethod
     def add_vertex(self, neighbours=None):
-        """Dodawanie nowego wierzchołka
+        """Dodawanie nowego wierzchołka.
+
         :param neighbours: sąsiedzi nowego wierzchołka
         :return: oznaczenie wierzchołka"""
         pass
@@ -44,7 +45,8 @@ class Graph(metaclass=ABCMeta):
 
     @abstractmethod
     def add_edge(self, vertex1, vertex2):
-        """Dodawanie nowej krawędzi
+        """Dodawanie nowej krawędzi.
+
         :param vertex1: początkowy wierzchołek
         :param vertex2: końcowy wierzchołek"""
         pass
@@ -79,7 +81,8 @@ class WeightedGraph(Graph, metaclass=ABCMeta):
 
     @abstractmethod
     def add_weighted_edge(self, vertex1, vertex2, weight):
-        """Dodawanie nowej krawędzi z jej wagą
+        """Dodawanie nowej krawędzi z jej wagą.
+
         :param vertex1: początkowy wierzchołek
         :param vertex2: końcowy wierzchołek
         :param weight: waga krawędzi"""
@@ -87,7 +90,8 @@ class WeightedGraph(Graph, metaclass=ABCMeta):
 
     @abstractmethod
     def get_weighted_neighbours(self, vertex):
-        """:param vertex: numer wierzchołka
+        """:param vertex: numer wierzchołka.
+
         :return: lista sąsiadów wierzchołka wraz z wagami krawędzi"""
         pass
 

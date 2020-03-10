@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""UNDIRECTED GRAPHS STRUCTURES"""
+"""Undirected graphs structures"""
 from abc import ABCMeta, abstractmethod
 
 from .directed_graph import DirectedSimpleGraph, DirectedWeightedSimpleGraph
@@ -12,7 +12,8 @@ class UndirectedGraph(Graph, metaclass=ABCMeta):
 
     @abstractmethod
     def to_directed(self):
-        """Zamiana krawędzi nieskierowanych na skierowane
+        """Zamiana krawędzi nieskierowanych na skierowane.
+
         :return: graf ze skierowanymi krawędziami"""
         pass
 
@@ -65,8 +66,9 @@ class UndirectedWeightedSimpleGraph(UndirectedSimpleGraph, UndirectedWeightedGra
         super().__init__(n)
 
         if edges is not None:
-            for e in map(lambda e: e if len(e) > 2 else (e[0], e[1], self._DEFAULT_WEIGHT), edges):
-                self.add_weighted_edge(e[0], e[1], e[2])
+            for edge in map(lambda e: e
+                            if len(e) > 2 else (e[0], e[1], self._DEFAULT_WEIGHT), edges):
+                self.add_weighted_edge(edge[0], edge[1], edge[2])
 
     def get_weighted_edges(self):
         return ((v, u, wg) for v in self.get_vertices() for u, wg in self.get_weighted_neighbours(v)

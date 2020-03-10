@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-"""LOWEST COMMON ANCESTOR ALGORITHM"""
+"""Lowest common ancestor algorithm"""
 from math import log
 
 
 def find_lca(treegraph, vertex1, vertex2, root=0):
-    """Wyznaczanie najniższego wspólnego przodka
+    """Wyznaczanie najniższego wspólnego przodka.
+
     :param treegraph: graf drzewo
     :param vertex1: wierzchołek 1
     :param vertex2: wierzchołek 2
@@ -15,36 +16,26 @@ def find_lca(treegraph, vertex1, vertex2, root=0):
 
 class _LCAFinder:
     def __init__(self, treegraph):
-        # Reprezentacja drzewa
-        self.__graph = treegraph
-        # Skompresowane ścieżki do korzenia drzewa
-        self.__paths = [[] for _ in self.__graph.get_vertices()]
-        # Czas wejścia i wyjścia dla wierzchołka
-        self.__pre_post_times = [None] * self.__graph.vertices_number
+        self._graph = treegraph  # Reprezentacja drzewa
+        self._paths = \
+            [[] for _ in self._graph.get_vertices()]  # Skompresowane ścieżki do korzenia drzewa
+        self._pre_post_times = \
+            [None] * self._graph.vertices_number  # Czas wejścia i wyjścia dla wierzchołka
 
     def search_lca(self, vertex1, vertex2, root):
-        """Wyszukiwanie najniższego wspólnego przodka
-        :param vertex1: wierzchołek 1
-        :param vertex2: wierzchołek 2
-        :param root: korzeń drzewa
-        :return: najniższy wspólny przodek"""
-        self.__dfs(root, root, 0)
+        self._dfs(root, root, 0)
 
-        for i in range(0, int(log(self.__graph.vertices_number, 2)) + 3):
-            for v in self.__graph.get_vertices():
-                if len(self.__paths[v]) > 0:
-                    self.__paths[v].append(self.__paths[self.__paths[v][i]][i])
+        for i in range(0, int(log(self._graph.vertices_number, 2)) + 3):
+            for v in self._graph.get_vertices():
+                if len(self._paths[v]) > 0:
+                    self._paths[v].append(self._paths[self._paths[v][i]][i])
 
-        return self.__search(vertex1, vertex2)
+        return self._search(vertex1, vertex2)
 
-    def __search(self, vertex1, vertex2):
-        """Wyszukiwanie najniższego wspólnego przodka
-        :param vertex1: wierzchołek 1
-        :param vertex2: wierzchołek 2
-        :return: najniższy wspólny przodek"""
+    def _search(self, vertex1, vertex2):
         def is_offspring(vt1, vt2):
-            return self.__pre_post_times[vt1][0] >= self.__pre_post_times[vt2][0] and \
-                   self.__pre_post_times[vt1][1] <= self.__pre_post_times[vt2][1]
+            return self._pre_post_times[vt1][0] >= self._pre_post_times[vt2][0] and \
+                   self._pre_post_times[vt1][1] <= self._pre_post_times[vt2][1]
 
         if is_offspring(vertex1, vertex2):
             return vertex2
@@ -52,26 +43,21 @@ class _LCAFinder:
         if is_offspring(vertex2, vertex1):
             return vertex1
 
-        for candidate in reversed(self.__paths[vertex1]):
+        for candidate in reversed(self._paths[vertex1]):
             if not is_offspring(vertex2, candidate):
-                return self.__search(candidate, vertex2)
+                return self._search(candidate, vertex2)
 
-        return self.__search(self.__paths[vertex1][0], vertex2)
+        return self._search(self._paths[vertex1][0], vertex2)
 
-    def __dfs(self, vertex, parent, timer):
-        """Algorytm DFS z licznikiem czasu wyznaczający kolejne wierzchołki na ścieżce do korzenia
-        :param vertex: aktualny wierzchołek
-        :param parent: ojciec wierzchołka
-        :param timer: aktualny czas
-        :return: nowy czas po przetworzeniu wierzchołka"""
-        self.__pre_post_times[vertex] = ()
-        self.__paths[vertex].append(parent)
+    def _dfs(self, vertex, parent, timer):
+        self._pre_post_times[vertex] = ()
+        self._paths[vertex].append(parent)
         pre_time = timer
         timer += 1
 
-        for neighbour in self.__graph.get_neighbours(vertex):
-            if self.__pre_post_times[neighbour] is None:
-                timer = self.__dfs(neighbour, vertex, timer)
+        for neighbour in self._graph.get_neighbours(vertex):
+            if self._pre_post_times[neighbour] is None:
+                timer = self._dfs(neighbour, vertex, timer)
 
-        self.__pre_post_times[vertex] = (pre_time, timer)
+        self._pre_post_times[vertex] = (pre_time, timer)
         return timer + 1

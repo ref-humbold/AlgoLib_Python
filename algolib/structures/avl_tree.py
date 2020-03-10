@@ -50,19 +50,14 @@ class AVLTree:
             self._parent = parent
 
         def count_height(self):
-            """Recounts the height of the node"""
             left_height = 0 if self._left is None else self._left.height
             right_height = 0 if self._right is None else self._right.height
             self._height = max(left_height, right_height) + 1
 
         def minimum(self):
-            """Searches in its subtree for the node with minimal value
-            :return: the node with minimal value"""
             return self if self._left is None else self._left.minimum()
 
         def maximum(self):
-            """Searches in its subtree for the node with maximal value
-            :return: the node with maximal value"""
             return self if self._right is None else self._right.maximum()
 
     class _AVLSuccIterator:
@@ -142,7 +137,8 @@ class AVLTree:
         return self._elems == 0
 
     def add(self, element):
-        """Adds a new value to this tree
+        """Adds a new value to this tree.
+
         :param element: value to be added"""
         node_parent = self._find_node(
                 element, lambda n, e: self._search(n, e) is None or self._search(n, e).element == e)
@@ -166,7 +162,8 @@ class AVLTree:
                 self._elems += 1
 
     def remove(self, element):
-        """Removes specified element from this tree if present
+        """Removes specified element from this tree if present.
+
         :param element: element to be removed
         :raises ValueError: if the element is not present"""
         the_node = self._find_node(element, lambda n, e: n.element == e)
@@ -177,7 +174,7 @@ class AVLTree:
         self._delete_node(the_node)
 
     def clear(self):
-        """Removes all elements from this tree"""
+        """Removes all elements from this tree."""
         self._root = None
         self._elems = 0
 
@@ -202,19 +199,10 @@ class AVLTree:
 
     @staticmethod
     def _search(node, element):
-        """Determines a subtree where specified value might be present
-        :param node: a node
-        :param element: value to find
-        :return: the node if it holds specified value, otherwise left child if the value is less or
-        right child if the value is greater"""
         return node.left if element < node.element else \
             node.right if element > node.element else node
 
     def _find_node(self, element, predicate):
-        """Searches for a node that satisfies specified predicate with specified value
-        :param element: value for predicate
-        :param predicate: predicate for node and argument value
-        :return: the node that satisfies the predicate if any, otherwise ``None``"""
         node = self._root
 
         while node is not None and not predicate(node, element):
@@ -223,8 +211,6 @@ class AVLTree:
         return node
 
     def _delete_node(self, node):
-        """Deletes inner node from the tree
-        :param node: node to be removed"""
         if node.left is not None and node.right is not None:
             succ = node.right.minimum()
             succ.element, node.element = node.element, succ.element
@@ -242,9 +228,6 @@ class AVLTree:
             self._elems -= 1
 
     def _replace_node(self, node1, node2):
-        """Replaces the subtree rooted in one node with subtree of another node
-        :param node1: root of the subtree to be replaced
-        :param node2: root of the new subtree"""
         if self._is_left_child(node1):
             node1.parent.left = node2
         elif self._is_right_child(node1):
@@ -255,8 +238,6 @@ class AVLTree:
         node1.parent = None
 
     def _rotate(self, node):
-        """Rotates the node along the edge to its parent
-        :param node: node to be rotated"""
         if self._is_right_child(node):
             upper_node = node.parent
             upper_node.right = node.left
@@ -269,8 +250,6 @@ class AVLTree:
             node.right = upper_node
 
     def _balance(self, node):
-        """Restores balancing on a path from specified node to the root
-        :param node: node to start balancing from"""
         while node is not None:
             node.count_height()
 

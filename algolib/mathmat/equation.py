@@ -7,11 +7,8 @@ class Equation:
         self.coefficients = list(coefficients)
         self.free = free
 
-    @property
-    def values(self):
-        return self.coefficients, self.free
-
     def __str__(self):
+        """:return: string representation of this equation"""
         terms = [f'{c} x_{i}' for i, c in enumerate(self.coefficients) if c != 0]
         return f"{' + '.join(terms)} = {self.free}"
 
@@ -25,7 +22,8 @@ class Equation:
         return self.coefficients[i]
 
     def __imul__(self, constant):
-        """Multiplies equation by a constant
+        """Multiplies equation by a constant.
+
         :param constant: constant
         :raises ValueError: if the constant is zero"""
         if constant == 0:
@@ -38,7 +36,8 @@ class Equation:
         return self
 
     def combine(self, equation, constant=1):
-        """Transforms equation through a linear combination with another equation
+        """Transforms equation through a linear combination with another equation.
+
         :param equation: equation
         :param constant: linear combination constant
         :raises ValueError: if the constant is zero"""
@@ -51,7 +50,8 @@ class Equation:
         self.free += constant * equation.free
 
     def is_solution(self, solution):
-        """Checks whether given values solve this equation
+        """Checks whether given values solve this equation.
+
         :param solution: values to check
         :return: ``true`` if solution is correct, otherwise ``false``"""
         return len(solution) == len(self) and \

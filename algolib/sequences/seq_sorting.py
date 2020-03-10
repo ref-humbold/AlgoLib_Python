@@ -4,7 +4,8 @@ from random import randint
 
 
 def heap_sorted(sequence, index_begin=0, index_end=None):
-    """Niemutowalne sortowanie ciągu przez kopcowanie
+    """Niemutowalne sortowanie ciągu przez kopcowanie.
+
     :param sequence: ciąg
     :param index_begin: początkowy indeks ciągu
     :param index_end: końcowy indeks ciągu
@@ -43,11 +44,6 @@ def heap_sorted(sequence, index_begin=0, index_end=None):
 
 
 def _move_down(heap, vertex, index_begin, index_end):
-    """Przywracanie własności kopca
-    :param heap: kopiec
-    :param vertex: wierzchołek kopca
-    :param index_begin: początkowy indeks kopca
-    :param index_end: końcowy indeks kopca"""
     next_vertex = None
     left_vertex = vertex + vertex - index_begin + 1
     right_vertex = vertex + vertex - index_begin + 2
@@ -68,7 +64,8 @@ def _move_down(heap, vertex, index_begin, index_end):
 
 
 def mergedown_sorted(sequence, index_begin=0, index_end=None):
-    """Niemutowalne sortowanie ciągu przez scalanie top-down
+    """Niemutowalne sortowanie ciągu przez scalanie top-down.
+
     :param sequence: ciąg
     :param index_begin: początkowy indeks ciągu
     :param index_end: końcowy indeks ciągu
@@ -96,10 +93,6 @@ def mergedown_sorted(sequence, index_begin=0, index_end=None):
 
 
 def _merge_sort(sequence, index_begin, index_end):
-    """Mutowalne sortowanie listy przez scalanie top-down
-    :param sequence: lista
-    :param index_begin: początkowy indeks listy
-    :param index_end: końcowy indeks listy"""
     if index_end - index_begin <= 1:
         return
 
@@ -110,8 +103,9 @@ def _merge_sort(sequence, index_begin, index_end):
 
 
 def mergeup_sorted(sequence, index_begin=0, index_end=None):
-    """Niemutowalne sortowanie listy przez scalanie bottom-up
-    :param seq: ciąg
+    """Niemutowalne sortowanie listy przez scalanie bottom-up.
+
+    :param sequence: ciąg
     :param index_begin: początkowy indeks listy
     :param index_end: końcowy indeks listy
     :return: lista posortowanych elementów"""
@@ -146,7 +140,8 @@ def mergeup_sorted(sequence, index_begin=0, index_end=None):
 
 
 def _merge(sequence, index_begin, index_middle, index_end):
-    """Scalanie dwóch uporządkowanych fragmentów listy
+    """Scalanie dwóch uporządkowanych fragmentów listy.
+
     :param sequence: lista
     :param index_begin: początek fragmentu
     :param index_middle: środek fragmentu
@@ -169,7 +164,8 @@ def _merge(sequence, index_begin, index_middle, index_end):
 
 
 def quick_sorted(sequence, index_begin=0, index_end=None):
-    """Niemutowalne szybkie sortowanie ciągu
+    """Niemutowalne szybkie sortowanie ciągu.
+
     :param sequence: ciąg
     :param index_begin: początkowy indeks ciągu
     :param index_end: końcowy indeks ciągu
@@ -197,7 +193,8 @@ def quick_sorted(sequence, index_begin=0, index_end=None):
 
 
 def _quick_sort(sequence, index_begin, index_end):
-    """Mutowalne szybkie sortowanie listy
+    """Mutowalne szybkie sortowanie listy.
+
     :param sequence: lista
     :param index_begin: początkowy indeks listy
     :param index_end: końcowy indeks listy"""

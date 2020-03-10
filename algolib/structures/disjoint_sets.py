@@ -18,7 +18,8 @@ class DisjointSets:
         return element in self._represents
 
     def __getitem__(self, element):
-        """Finds a represent of an element
+        """Finds a represent of an element.
+
         :param element: an element
         :return: the represent of the element
         :raises KeyError: if element is not in this structure"""
@@ -28,7 +29,8 @@ class DisjointSets:
         return self._represents[element]
 
     def __setitem__(self, element1, element2):
-        """Joins two sets together
+        """Joins two sets together.
+
         :param element1: element from the first set
         :param element2: element from the second set
         :return: a joined set represent
@@ -40,24 +42,26 @@ class DisjointSets:
         return self.__getitem__(element1)
 
     def __iadd__(self, elements):
-        """Adds elements as singleton sets
+        """Adds elements as singleton sets.
+
         :param elements: a sequence of elements
         :return: ``self``
         :raises ValueError: if any of the elements is already in this structure"""
-        elems = tuple(elements)
+        elements = tuple(elements)
 
-        for elem in elems:
+        for elem in elements:
             if elem in self:
                 raise ValueError(f"Value {elem} already present.")
 
-        for elem in elems:
+        for elem in elements:
             self._represents[elem] = elem
             self._sets += 1
 
         return self
 
     def add(self, elements):
-        """Adds elements as singleton sets
+        """Adds elements as singleton sets.
+
         :param elements: a sequence of elements
         :raises ValueError: if any of the elements is already in this structure
         :return: ``self`` for method chaining"""
@@ -65,7 +69,8 @@ class DisjointSets:
         return self
 
     def find_set(self, element, default=None):
-        """Finds a represent of the element
+        """Finds a represent of the element.
+
         :param element: an element
         :param default: a value to return if the element not inside
         :return: the represent of the element"""
@@ -75,7 +80,8 @@ class DisjointSets:
             return default
 
     def union_set(self, element1, element2):
-        """Joins two sets together
+        """Joins two sets together.
+
         :param element1: element from the first set
         :param element2: element from the second set
         :return: ``self`` for method chaining
@@ -84,7 +90,8 @@ class DisjointSets:
         return self
 
     def is_same_set(self, element1, element2):
-        """Checks whether two elements belong to the same set
+        """Checks whether two elements belong to the same set.
+
         :param element1: a first element
         :param element2: a second element
         :return: ``true`` if both elements are in the same set, otherwise ``false``

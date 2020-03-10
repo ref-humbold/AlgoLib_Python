@@ -46,11 +46,6 @@ def _search_closest(points_x, points_y, index_begin, index_end):
 
 
 def _check_belt(points_y, middle_x, belt_width):
-    """SPRAWDZANIE PUNKTÓW PRZY POŁĄCZENIU POŁÓWEK
-    :param points_y: generator punktów posortowanych po współrzędnej Y
-    :param middle_x: współrzędna podziału połówek
-    :param belt_width: szerokość paska przy połączeniu
-    :return: najbliższa para punktów w pasku"""
     closest_points = None
     min_distance = belt_width
     belt_points = [p for p in points_y if middle_x - belt_width <= p.x <= middle_x + belt_width]

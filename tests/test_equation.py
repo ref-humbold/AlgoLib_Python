@@ -44,4 +44,4 @@ class EquationTest(unittest.TestCase):
     def test__combine__when_constant_is_zero__then_raise_value_error(self):
         # when - then
         with self.assertRaises(ValueError):
-            self._test_object.combine(Equation([1, -1, 10], 5), 0)
+            self._test_object.combine(Equation([1, -1, 10, 7], 5), 0)

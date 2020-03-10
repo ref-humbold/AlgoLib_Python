@@ -27,7 +27,7 @@ class TreeGraph(UndirectedGraph):
             components.union_set(e[0], e[1])
 
         if len(components) > 1:
-            raise NotConnectedError(f"Tree is not a connected graph")
+            raise NotConnectedError("Tree is not a connected graph")
 
     @property
     def vertices_number(self):

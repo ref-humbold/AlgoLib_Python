@@ -4,7 +4,8 @@ import queue
 
 
 def match(partgraph):
-    """Wyznaczanie maksymalnego skojarzenia
+    """Wyznaczanie maksymalnego skojarzenia.
+
     :param partgraph: graf wielodzielny
     :return: pary skojarzonych wierzchołków"""
     augmenter = _MatchAugmenter(partgraph)
@@ -21,65 +22,55 @@ class _MatchAugmenter:
         if partgraph.groups_number != 2:
             raise ValueError("Graph is not bipartite.")
 
-        # Reprezentacja grafu dwudzielnego
-        self.__graph = partgraph
-        # Skojarzenia wierzchołków
-        self.__matching = matching
-        # Odległości wierzchołków
-        self.__distances = None
-        # Lista odwiedzonych wierzchołków
-        self.__is_visited = None
+        self._graph = partgraph  # Reprezentacja grafu dwudzielnego
+        self._matching = matching  # Skojarzenia wierzchołków
+        self._distances = None  # Odległości wierzchołków
+        self._is_visited = None  # Lista odwiedzonych wierzchołków
 
         if matching is None:
-            self.__matching = [None] * partgraph.vertices_number
+            self._matching = [None] * partgraph.vertices_number
 
     @property
     def matching(self):
-        """:return: skojarzenia wierzchołków"""
-        return self.__matching
+        return self._matching
 
     def augment_match(self):
-        """Powiększanie skojarzenia przy pomocy ścieżek powiększających
-        :return: czy powiększono skojarzenie"""
-        self.__distances = [self.__graph.INF] * self.__graph.vertices_number
-        self.__is_visited = [False] * self.__graph.vertices_number
-        self.__bfs()
-        return any([self.__dfs(v) for v in self.__graph.get_group(1)])
+        self._distances = [self._graph.INF] * self._graph.vertices_number
+        self._is_visited = [False] * self._graph.vertices_number
+        self._bfs()
+        return any([self._dfs(v) for v in self._graph.get_group(1)])
 
-    def __bfs(self):
-        """Algorytm BFS wyliczający odległości wierzchołków"""
+    def _bfs(self):
         vertex_queue = queue.Queue()
 
-        for v in self.__graph.get_group(1):
-            self.__distances[v] = 0
+        for v in self._graph.get_group(1):
+            self._distances[v] = 0
             vertex_queue.put(v)
 
         while not vertex_queue.empty():
             v = vertex_queue.get()
 
-            for nb in self.__graph.get_neighbours(v):
-                if self.__matching[nb] is not None \
-                        and self.__distances[self.__matching[nb]] == self.__graph.INF:
-                    self.__distances[self.__matching[nb]] = self.__distances[v] + 1
-                    vertex_queue.put(self.__matching[nb])
+            for nb in self._graph.get_neighbours(v):
+                if self._matching[nb] is not None \
+                        and self._distances[self._matching[nb]] == self._graph.INF:
+                    self._distances[self._matching[nb]] = self._distances[v] + 1
+                    vertex_queue.put(self._matching[nb])
 
-    def __dfs(self, vertex):
-        """Algorytm DFS powiększający skojarzenie za pomocą ścieżek powiekszających
-        :return: czy powiększono skojarzenie"""
-        self.__is_visited[vertex] = True
+    def _dfs(self, vertex):
+        self._is_visited[vertex] = True
 
-        for neighbour in self.__graph.get_neighbours(vertex):
-            if self.__matching[neighbour] is None:
-                self.__matching[vertex] = neighbour
-                self.__matching[neighbour] = vertex
+        for neighbour in self._graph.get_neighbours(vertex):
+            if self._matching[neighbour] is None:
+                self._matching[vertex] = neighbour
+                self._matching[neighbour] = vertex
                 return True
             else:
-                mtc = self.__matching[neighbour]
+                mtc = self._matching[neighbour]
 
-                if self.__distances[mtc] == self.__distances[vertex] + 1 \
-                        and not self.__is_visited[mtc] and self.__dfs(mtc):
-                    self.__matching[vertex] = neighbour
-                    self.__matching[neighbour] = vertex
+                if self._distances[mtc] == self._distances[vertex] + 1 \
+                        and not self._is_visited[mtc] and self._dfs(mtc):
+                    self._matching[vertex] = neighbour
+                    self._matching[neighbour] = vertex
                     return True
 
         return False

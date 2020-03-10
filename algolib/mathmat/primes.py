@@ -7,20 +7,23 @@ from .maths import gcd, power_mod
 
 
 def find_primes(*numbers):
-    """Wyznaczanie liczb pierwszych
-    :param numbers: granice przedziału
-    :return: lista liczb pierwszych"""
+    """Finds prime numbers inside a range of integers.
+
+    :param numbers: range borders; beginning inclusive, ending exclusive; beginning can be
+    omitted, then defaults to 0
+    :return: generator of prime numbers"""
     if len(numbers) == 1:
         return _find_primes_range(0, numbers[0])
 
     if len(numbers) == 2:
         return _find_primes_range(numbers[0], numbers[1])
 
-    raise TypeError("Expected 1 or 2 arguments, got {0}".format(len(numbers)))
+    raise TypeError(f"Expected 1 or 2 arguments, got {len(numbers)}")
 
 
 def test_fermat(number):
-    """Fermat's prime test
+    """Fermat's prime test.
+
     :param number: number to test
     :return: ``true`` if the number is probably prime, otherwise ``false``"""
     number = abs(number)
@@ -37,7 +40,8 @@ def test_fermat(number):
 
 
 def test_miller(number):
-    """Miller-Rabin's prime test
+    """Miller-Rabin's prime test.
+
     :param number: number to test
     :return: ``true`` if the number is probably prime, otherwise ``false``"""
     number = abs(number)
@@ -73,17 +77,13 @@ def test_miller(number):
 
 
 def _find_primes_range(min_number, max_number):
-    """Wyznaczanie liczb pierwszych na przedziale domknietym
-    :param min_number: dolna granica przedziału
-    :param max_number: górna granica przedziału
-    :return: lista liczb pierwszych"""
     if max_number < min_number:
         raise ValueError("Second argument must be grater or equal to the first argument")
 
     if max_number < 2:
         return []
 
-    is_prime = [i == 2 or (i > 2 and i % 2 == 1) for i in range(min_number, max_number + 1)]
+    is_prime = [i == 2 or (i > 2 and i % 2 == 1) for i in range(min_number, max_number)]
     base_primes = [True] * int(sqrt(max_number) / 2)
 
     for i, prime in enumerate(base_primes):

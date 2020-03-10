@@ -4,7 +4,8 @@ import queue
 
 
 def bfs(graph, strategy, *roots):
-    """Algorytm BFS
+    """Algorytm BFS.
+
     :param graph: graf
     :param strategy: strategia dla wierzchołków
     :param roots: wierzchołki początkowe
@@ -39,7 +40,8 @@ def bfs(graph, strategy, *roots):
 
 
 def iter_dfs(graph, strategy, *roots):
-    """Iteracyjny algorytm DFS
+    """Iteracyjny algorytm DFS.
+
     :param graph: graf
     :param strategy: strategia dla wierzchołków
     :param roots: wierzchołki początkowe
@@ -75,7 +77,8 @@ def iter_dfs(graph, strategy, *roots):
 
 
 def rec_dfs(graph, strategy, *roots):
-    """Rekurencyjny algorytm DFS
+    """Rekurencyjny algorytm DFS.
+
     :param graph: graf
     :param strategy: strategia dla wierzchołków
     :param roots: wierzchołki początkowe
@@ -91,11 +94,6 @@ def rec_dfs(graph, strategy, *roots):
 
 
 def _dfs_step(graph, strategy, vertex, state):
-    """Krok rekurencyjnego DFS
-    :param graph: graf
-    :param vertex: aktualny wierzchołek
-    :param strategy: strategia dla wierzchołków
-    :param state: aktualny stan rekurencji"""
     state.on_entry(vertex)
     strategy.preprocess(vertex)
 

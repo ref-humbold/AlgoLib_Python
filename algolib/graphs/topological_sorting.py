@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TOPOLOGICAL SORTING ALGORITHMS"""
+"""Topological sorting algorithms"""
 import queue
 
 
@@ -8,7 +8,8 @@ class DirectedCyclicGraphError(ValueError):
 
 
 def sort_topological1(digraph):
-    """Sortowanie topologiczne przez liczenie poprzedników
+    """Sortowanie topologiczne przez liczenie poprzedników.
+    
     :param digraph: graf skierowany
     :return: porządek topologiczny wierzchołków"""
     vertex_queue = queue.PriorityQueue()
@@ -37,10 +38,11 @@ def sort_topological1(digraph):
 
 
 def sort_topological2(digraph):
-    """Sortowanie topologiczne z użyciem DFS
+    """Sortowanie topologiczne z użyciem DFS.
+    
     :param digraph: graf skierowany
     :return: porządek topologiczny wierzchołków"""
-    indices = [None] * (digraph.vertices_number)
+    indices = [None] * digraph.vertices_number
     order = []
 
     for v in reversed(sorted(digraph.get_vertices())):
@@ -51,12 +53,6 @@ def sort_topological2(digraph):
 
 
 def _dfs(vertex, index, digraph, order, indices):
-    """Algorytm DFS wyznaczający kolejność wierzchołków
-    :param vertex: aktualny wierzchołek
-    :param index: numer iteracji
-    :param digraph: graf skierowany
-    :param order: aktualny porządek topologiczny
-    :param indices: indeksy iteracji i przetwarzania wierzchołków"""
     indices[vertex] = (index, True)
 
     for neighbour in digraph.get_neighbours(vertex):

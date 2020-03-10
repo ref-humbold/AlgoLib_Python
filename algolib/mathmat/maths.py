@@ -3,7 +3,8 @@
 
 
 def gcd(number1, number2):
-    """Największy wspólny dzielnik dwóch liczb
+    """Największy wspólny dzielnik dwóch liczb.
+
     :param number1: pierwsza liczba
     :param number2: druga liczba
     :return: największy wspólny dzielnik"""
@@ -16,7 +17,8 @@ def gcd(number1, number2):
 
 
 def lcm(number1, number2):
-    """Najmniejsza wspólna wielokrotność dwóch liczb
+    """Najmniejsza wspólna wielokrotność dwóch liczb.
+
     :param number1: pierwsza liczba
     :param number2: druga liczba
     :return: najmniejsza wspólna wielokrotność"""
@@ -26,7 +28,8 @@ def lcm(number1, number2):
 
 
 def mult_mod(factor1, factor2, modulo=0):
-    """Szybkie mnożenie binarne modulowane
+    """Szybkie mnożenie binarne modulowane.
+
     :param factor1: pierwszy czynnik
     :param factor2: drugi czynnik
     :param modulo: modulo
@@ -56,7 +59,8 @@ def mult_mod(factor1, factor2, modulo=0):
 
 
 def power_mod(base, exponent, modulo=0):
-    """Szybkie potęgowanie binarne modulowane
+    """Szybkie potęgowanie binarne modulowane.
+
     :param base: podstawa
     :param exponent: wykładnik
     :param modulo: modulo

@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-"""SHORTEST PATHS ALGORITHMS"""
+"""Shortest paths algorithms"""
 import queue
 
 
 def bellman_ford(diwgraph, source):
-    """Algorytm Bellmana-Forda
+    """Algorytm Bellmana-Forda.
+
     :param diwgraph: skierowany graf ważony
     :param source: wierzchołek początkowy
     :return: lista odległości wierzchołków"""
@@ -23,7 +24,8 @@ def bellman_ford(diwgraph, source):
 
 
 def dijkstra(wgraph, source):
-    """Algorytm Dijkstry
+    """Algorytm Dijkstry.
+
     :param wgraph: graf ważony z wagami nieujemnymi
     :param source: wierzchołek początkowy
     :return: lista odległości wierzchołków"""
@@ -51,7 +53,8 @@ def dijkstra(wgraph, source):
 
 
 def floyd_warshall(diwgraph):
-    """Algorytm Floyda-Warshalla
+    """Algorytm Floyda-Warshalla.
+
     :param diwgraph: skierowany graf ważony
     :return: macierz odległości wierzchołków"""
     distances = [[0.0 if v == u else diwgraph.INF for u in diwgraph.get_vertices()]

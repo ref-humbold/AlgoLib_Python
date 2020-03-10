@@ -45,7 +45,8 @@ class SuffixArray:
         return self._inv_arr[suf]
 
     def lcp(self, suf1, suf2):
-        """Counts longest common prefix of two suffixes
+        """Counts longest common prefix of two suffixes.
+
         :param suf1: index in text denoting first suffix
         :param suf2: index in text denoting second suffix
         :return: length of longest common prefix"""
@@ -72,18 +73,18 @@ class SuffixArray:
 
     def _init_lcp(self):
         arr = [0] * self._length
-        lng = 0
+        length = 0
 
         for i in range(0, self._length):
             if self._inv_arr[i] >= 1:
                 j = self._suf_arr[self._inv_arr[i] - 1]
 
-                while i + lng < self._length and j + lng < self._length \
-                        and self._text[i + lng] == self._text[j + lng]:
-                    lng += 1
+                while i + length < self._length and j + length < self._length \
+                        and self._text[i + length] == self._text[j + length]:
+                    length += 1
 
-                arr[self._inv_arr[i]] = lng
-                lng = 0 if lng == 0 else lng - 1
+                arr[self._inv_arr[i]] = length
+                length = 0 if length == 0 else length - 1
 
         return arr
 
@@ -91,61 +92,60 @@ class SuffixArray:
         if len(txt) < 2:
             return [0]
 
-        lngs = (len(txt) // 3, (len(txt) + 1) // 3, (len(txt) + 2) // 3)
-        lng02 = lngs[0] + lngs[2]
-        txt12 = [i for i in range(0, len(txt) + lngs[2] - lngs[1]) if i % 3 != 0]
-
+        lengths = (len(txt) // 3, (len(txt) + 1) // 3, (len(txt) + 2) // 3)
+        lengths02 = lengths[0] + lengths[2]
+        txt12 = [i for i in range(0, len(txt) + lengths[2] - lengths[1]) if i % 3 != 0]
         SuffixArray._sort_by_keys(txt12, txt, 2, k)
         SuffixArray._sort_by_keys(txt12, txt, 1, k)
         SuffixArray._sort_by_keys(txt12, txt, 0, k)
-
         index = 0
         last = (k, k, k)
-        txt_n12 = [0] * lng02
+        txt_n12 = [0] * lengths02
 
         for i in txt12:
-            if last != (self._get_elem(txt, i), self._get_elem(txt,
-                                                               i + 1), self._get_elem(txt, i + 2)):
+            if last != (self._get(txt, i), self._get(txt, i + 1), self._get(txt, i + 2)):
                 index += 1
-                last = (self._get_elem(txt, i), self._get_elem(txt,
-                                                               i + 1), self._get_elem(txt, i + 2))
+                last = (self._get(txt, i), self._get(txt, i + 1), self._get(txt, i + 2))
 
             if i % 3 == 1:
                 txt_n12[i // 3] = index
             else:
-                txt_n12[i // 3 + lngs[2]] = index
+                txt_n12[i // 3 + lengths[2]] = index
 
-        if index < lng02:
+        if index < lengths02:
             sa12 = self._create_array(txt_n12, index + 1)
 
             for i, suf in enumerate(sa12):
                 txt_n12[suf] = i + 1
         else:
-            sa12 = [0] * lng02
+            sa12 = [0] * lengths02
 
             for i, ltr in enumerate(txt_n12):
                 sa12[ltr - 1] = i
 
-        sa0 = [3 * i for i in sa12 if i < lngs[2]]
+        sa0 = [3 * i for i in sa12 if i < lengths[2]]
         SuffixArray._sort_by_keys(sa0, txt, 0, k)
         return self._merge(txt, sa0, txt_n12, sa12)
 
     def _merge(self, txt0, sa0, txt12, sa12):
         sa_res = []
-        lngs = (len(txt0) // 3, (len(txt0) + 1) // 3, (len(txt0) + 2) // 3)
+        lengths = (len(txt0) // 3, (len(txt0) + 1) // 3, (len(txt0) + 2) // 3)
         ix0 = 0
-        ix12 = lngs[2] - lngs[1]
+        ix12 = lengths[2] - lengths[1]
 
         while ix0 < len(sa0) and ix12 < len(sa12):
-            pos12 = sa12[ix12] * 3 + 1 if sa12[ix12] < lngs[2] else (sa12[ix12] - lngs[2]) * 3 + 2
+            pos12 = sa12[ix12] * 3 + 1 if sa12[ix12] < lengths[2] else \
+                (sa12[ix12] - lengths[2]) * 3 + 2
             pos0 = sa0[ix0]
-            cond = (self._get_elem(txt0, pos12), self._get_elem(txt12, sa12[ix12] + lngs[2])) \
-                   <= (self._get_elem(txt0, pos0), self._get_elem(txt12, pos0 // 3)) \
-                if sa12[ix12] < lngs[2] else \
-                (self._get_elem(txt0, pos12), self._get_elem(txt0, pos12 + 1),
-                 self._get_elem(txt12, sa12[ix12] - lngs[2] + 1)) \
-                <= (self._get_elem(txt0, pos0), self._get_elem(txt0, pos0 + 1),
-                    self._get_elem(txt12, pos0 // 3 + lngs[2]))
+
+            if sa12[ix12] < lengths[2]:
+                cond = (self._get(txt0, pos12), self._get(txt12, sa12[ix12] + lengths[2])) \
+                       <= (self._get(txt0, pos0), self._get(txt12, pos0 // 3))
+            else:
+                cond = (self._get(txt0, pos12), self._get(txt0, pos12 + 1),
+                        self._get(txt12, sa12[ix12] - lengths[2] + 1)) \
+                       <= (self._get(txt0, pos0), self._get(txt0, pos0 + 1),
+                           self._get(txt12, pos0 // 3 + lengths[2]))
 
             if cond:
                 sa_res.append(pos12)
@@ -155,8 +155,11 @@ class SuffixArray:
                 ix0 += 1
 
         while ix12 < len(sa12):
-            sa_res.append(sa12[ix12] * 3 +
-                          1 if sa12[ix12] < lngs[2] else (sa12[ix12] - lngs[2]) * 3 + 2)
+            if sa12[ix12] < lengths[2]:
+                sa_res.append(sa12[ix12] * 3 + 1)
+            else:
+                sa_res.append((sa12[ix12] - lengths[2]) * 3 + 2)
+
             ix12 += 1
 
         while ix0 < len(sa0):
@@ -171,7 +174,7 @@ class SuffixArray:
         j = 0
 
         for i in array:
-            buckets[SuffixArray._get_elem(keys, i + shift)].put(i)
+            buckets[SuffixArray._get(keys, i + shift)].put(i)
 
         for elem in buckets:
             while not elem.empty():
@@ -179,5 +182,5 @@ class SuffixArray:
                 j += 1
 
     @staticmethod
-    def _get_elem(array, i):
+    def _get(array, i):
         return array[i] if i < len(array) else 0

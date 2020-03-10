@@ -33,7 +33,8 @@ class EquationSystem:
         return reversed(self._equations)
 
     def solve(self):
-        """Computes the solution of this equation system
+        """Computes the solution of this equation system.
+
         :return: solution vector
         :raises NoSolutionError: if there is no solution
         :raises InfiniteSolutionsError: if there is infinitely many solutions"""
@@ -55,7 +56,7 @@ class EquationSystem:
         return solution
 
     def gaussian_reduce(self):
-        """Gauss elimination algorithm"""
+        """Runs the Gauss elimination algorithm."""
         for i in range(self.__len__() - 1):
             index_min = i
 
@@ -76,13 +77,15 @@ class EquationSystem:
                         self[j].combine(self[i], -param)
 
     def swap(self, i, j):
-        """Swaps two equations
+        """Swaps two equations.
+
         :param i: index of first equation
         :param j: index of second equation"""
         self._equations[i], self._equations[j] = self._equations[j], self._equations[i]
 
     def is_solution(self, solution):
-        """Checks whether given values solve this equation system
+        """Checks whether given values solve this equation system.
+
         :param solution: values to check
         :return: ``true`` if solution is correct, otherwise ``false``"""
         return all(eq.is_solution(solution) for eq in self._equations)

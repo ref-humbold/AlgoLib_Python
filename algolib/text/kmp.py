@@ -3,7 +3,8 @@
 
 
 def kmp(text, pattern):
-    """Knuth-Morris-Pratt algorithm
+    """Knuth-Morris-Pratt algorithm.
+
     :param text: text
     :param pattern: pattern to search for
     :return: generator of pattern occurrence positions"""
@@ -13,11 +14,11 @@ def kmp(text, pattern):
     pi_values = _prefix(pattern)
     pos = 0
 
-    for i, ltr in enumerate(text):
-        while pos > 0 and pattern[pos] != ltr:
+    for i, c in enumerate(text):
+        while pos > 0 and pattern[pos] != c:
             pos = pi_values[pos - 1]
 
-        if pattern[pos] == ltr:
+        if pattern[pos] == c:
             pos += 1
 
         if pos == len(pattern):
@@ -26,17 +27,14 @@ def kmp(text, pattern):
 
 
 def _prefix(pattern):
-    """Knuth's pi prefix function
-    :param pattern: pattern to count the function for
-    :return: list of prefix function values"""
     pi_values = [0]
     pos = 0
 
-    for ltr in pattern[1:]:
-        while pos > 0 and pattern[pos] != ltr:
+    for c in pattern[1:]:
+        while pos > 0 and pattern[pos] != c:
             pos = pi_values[pos - 1]
 
-        if pattern[pos] == ltr:
+        if pattern[pos] == c:
             pos += 1
 
         pi_values.append(pos)

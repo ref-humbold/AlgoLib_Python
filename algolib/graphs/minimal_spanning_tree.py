@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-"""MINIMAL SPANNING TREE ALGORITHMS"""
+"""Minimal spanning tree algorithms"""
 import queue
 
 from ..structures.disjoint_sets import DisjointSets
 
 
 def kruskal(uwgraph):
-    """Algorytm Kruskala wyliczjący długość MST
+    """Algorytm Kruskala wyliczający długość MST.
+
     :param uwgraph: graf nieskierowany ważony
     :return: długość minimalnego drzewa spinającego"""
     size_mst = 0.0
@@ -29,7 +30,8 @@ def kruskal(uwgraph):
 
 
 def prim(uwgraph, source):
-    """Algorytm Prima wyliczjący długość MST
+    """Algorytm Prima wyliczający długość MST.
+
     :param uwgraph: graf nieskierowany ważony
     :param source: początkowy wierzchołek
     :return: długość minimalnego drzewa spinającego"""

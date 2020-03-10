@@ -3,9 +3,10 @@
 
 
 def kmr(text):
-    """Budowa słownika podsłów bazowych
-    :param text: słowo
-    :return: słownik podsłów bazowych"""
+    """Builds a base words dictionary for specified text.
+
+    :param text: text to build the dictionary for
+    :return: base words dictionary"""
     factors = _sign_letters(text)
     length = 2
 
@@ -17,27 +18,20 @@ def kmr(text):
 
 
 def _sign_letters(text):
-    """Budowa podsłów złożonych z pojedynczych znaków
-    :param text: słowo
-    :return: słownik dla pojedynczych znaków"""
     factors = {}
     code_value = 0
     letters = sorted(text)
     factors[letters[0]] = code_value
 
-    for i, ltr in enumerate(letters[1:], start=1):
-        if ltr != letters[i - 1]:
+    for i, c in enumerate(letters[1:], start=1):
+        if c != letters[i - 1]:
             code_value += 1
-            factors[ltr] = code_value
+            factors[c] = code_value
 
     return factors
 
 
 def _double_length(new_length, text, factors):
-    """Budowa nowych podsłów o podwojonej długości
-    :param new_length: nowa długość podsłów
-    :param text: słowo
-    :param factors: słownik podsłów bazowych"""
     code_value = 0
     codes = sorted([(factors[text[i:i + new_length // 2]],
                      factors[text[i + new_length // 2:i + new_length]], i)
