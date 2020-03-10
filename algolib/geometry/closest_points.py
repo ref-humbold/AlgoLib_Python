@@ -7,6 +7,7 @@ from .points_sorting import sorted_by_x, sorted_by_y
 
 def find_closest_points(points):
     """FUNKCJA OBSŁUGUJĄCA DO WYSZUKIWANIA PUNKTÓW
+
     :param points: lista punktów
     :return: para najbliższych punktów"""
     points_x = sorted_by_x(points)
@@ -15,12 +16,6 @@ def find_closest_points(points):
 
 
 def _search_closest(points_x, points_y, index_begin, index_end):
-    """ZNAJDOWANIE NAJBLIŻSZEJ PARY PUNKTÓW
-    :param points_x: lista punktów posortowana po współrzędnej X
-    :param points_y: generator punktów posortowanych po współrzędnej Y
-    :param index_begin: początek fragmentu listy punktów
-    :param index_end: koniec fragmentu listy punktów
-    :return: para najbliższych punktów"""
     if index_end - index_begin == 1:
         return points_x[index_begin], points_x[index_end]
 

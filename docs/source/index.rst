@@ -2,8 +2,7 @@ Welcome to AlgoLib's documentation!
 ===================================
 
 .. toctree::
-   :glob:
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
 
    modules
