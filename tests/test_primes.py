@@ -38,15 +38,16 @@ class PrimesTest(unittest.TestCase):
     def test__find_primes__when_one_arg__then_primes_less_than_arg(self):
         result = find_primes(100)
 
-        self.assertListEqual(
-            [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83,
-             89, 97], list(result))
+        self.assertListEqual([
+                2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79,
+                83, 89, 97
+        ], list(result))
 
-    def test__find_primes__when_max_is_prime__then_primes_less_or_equal_to_arg(self):
+    def test__find_primes__when_max_is_prime__then_primes_less_than_arg(self):
         result = find_primes(67)
 
-        self.assertListEqual(
-            [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67], list(result))
+        self.assertListEqual([2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61],
+                             list(result))
 
     def test__find_primes__when_less_than_two(self):
         result = find_primes(1)
@@ -56,30 +57,32 @@ class PrimesTest(unittest.TestCase):
     def test__find_primes__when_two_args__then_primes_between(self):
         result = find_primes(30, 200)
 
-        self.assertListEqual(
-            [31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113,
-             127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199],
-            list(result))
+        self.assertListEqual([
+                31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113,
+                127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199
+        ], list(result))
 
     def test__find_primes__when_min_less_than_sqrt_of_max__then_primes_between(self):
         result = find_primes(5, 150)
 
-        self.assertListEqual(
-            [5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89,
-             97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149], list(result))
+        self.assertListEqual([
+                5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83,
+                89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149
+        ], list(result))
 
-    def test__find_primes__when_min_and_max_are_primes__then_primes_between_inclusive(self):
+    def test__find_primes__when_min_and_max_are_primes__then_primes_between_with_min_inclusive(
+            self):
         result = find_primes(137, 317)
 
-        self.assertListEqual(
-            [137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227,
-             229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317],
-            list(result))
+        self.assertListEqual([
+                137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227,
+                229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313
+        ], list(result))
 
-    def test__find_primes__when_min_equals_max_and_prime__then_singleton(self):
+    def test__find_primes__when_min_equals_max_and_prime__then_empty_list(self):
         result = find_primes(41, 41)
 
-        self.assertListEqual([41], list(result))
+        self.assertListEqual([], list(result))
 
     def test__find_primes__when_min_equals_max_and_composite__then_empty(self):
         result = find_primes(91, 91)
@@ -152,4 +155,4 @@ class PrimesTest(unittest.TestCase):
 
         self.assertFalse(result)
 
-# endregion
+    # endregion
