@@ -84,43 +84,40 @@ class DisjointSetsTest(unittest.TestCase):
         # then
         self.assertEqual(None, result)
 
-    def test__setitem__when_different_sets__then_same_represent(self):
+    def test__union_set__when_different_sets__then_same_represent(self):
         # given
         elem1 = 4
         elem2 = 6
         # when
-        self._test_object[elem1] = elem2
+        self._test_object.union_set(elem1, elem2)
         # then
         self.assertTrue(self._test_object.is_same_set(elem1, elem2))
         self.assertEqual(self._test_object[elem1], self._test_object[elem2])
 
-    def test__setitem__when_same_element__then_same_represent(self):
+    def test__union_set__when_same_element__then_same_represent(self):
         # given
         elem = 4
         # when
-        self._test_object[elem] = elem
+        self._test_object.union_set(elem, elem)
         # then
         self.assertTrue(self._test_object.is_same_set(elem, elem))
         self.assertEqual(self._test_object[elem], self._test_object[elem])
 
-    def test__setitem__when_elements_in_one_set__then_same_represent(self):
+    def test__union_set__when_elements_in_one_set__then_same_represent(self):
         # given
         elem1 = 3
         elem2 = 8
-        self._test_object[elem1] = elem2
+        self._test_object.union_set(elem1, elem2)
         # when
-        self._test_object[elem2] = elem1
+        self._test_object.union_set(elem2, elem1)
         # then
         self.assertTrue(self._test_object.is_same_set(elem1, elem2))
         self.assertEqual(self._test_object[elem1], self._test_object[elem2])
 
-    def test__setitem__when_absent_element__then_raise_key_error(self):
-        # given
-        elem1 = 15
-        elem2 = 6
+    def test__union_set__when_absent_element__then_raise_key_error(self):
         # when - then
         with self.assertRaises(KeyError):
-            self._test_object[elem1] = elem2
+            self._test_object.union_set(15, 6)
 
     def test__union_set__when_new_elements_in_chain__then_same_represent(self):
         # given

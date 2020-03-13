@@ -28,19 +28,6 @@ class DisjointSets:
 
         return self._represents[element]
 
-    def __setitem__(self, element1, element2):
-        """Joins two sets together.
-
-        :param element1: element from the first set
-        :param element2: element from the second set
-        :return: a joined set represent
-        :raises KeyError: if either element is not in this structure"""
-        if not self.is_same_set(element1, element2):
-            self._represents[self.__getitem__(element2)] = self.__getitem__(element1)
-            self._sets -= 1
-
-        return self.__getitem__(element1)
-
     def __iadd__(self, elements):
         """Adds elements as singleton sets.
 
@@ -86,7 +73,10 @@ class DisjointSets:
         :param element2: element from the second set
         :return: ``self`` for method chaining
         :raises KeyError: if either element is not in this structure"""
-        self.__setitem__(element1, element2)
+        if not self.is_same_set(element1, element2):
+            self._represents[self.__getitem__(element2)] = self.__getitem__(element1)
+            self._sets -= 1
+
         return self
 
     def is_same_set(self, element1, element2):
