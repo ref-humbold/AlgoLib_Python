@@ -40,7 +40,10 @@ class Equation:
 
         :param equation: equation
         :param constant: linear combination constant
-        :raises ValueError: if the constant is zero"""
+        :raises ValueError: if the constant is zero or equations sizes differ"""
+        if len(equation) != self.__len__():
+            raise ValueError("Equation has different number of variables")
+
         if constant == 0:
             raise ValueError("Constant cannot be zero")
 

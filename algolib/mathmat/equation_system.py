@@ -12,10 +12,14 @@ class NoSolutionError(ValueError):
 
 class EquationSystem:
     def __init__(self, equations):
+        if any(len(eq) != len(equations) for eq in equations):
+            raise ValueError("Incorrect number of variables in one of equations")
+
         self._equations = list(equations)
 
-        if any(len(eq) != len(self._equations) for eq in self._equations):
-            raise ValueError("Incorrect number of variables in one of equations")
+    def __str__(self):
+        """:return: string representation"""
+        return f"{{ {' ; '.join(map(str, self._equations))} }}"
 
     def __len__(self):
         """:return: number of equations"""
@@ -37,7 +41,7 @@ class EquationSystem:
 
         :return: solution vector
         :raises NoSolutionError: if there is no solution
-        :raises InfiniteSolutionsError: if there is infinitely many solutions"""
+        :raises InfiniteSolutionsError: if there are infinitely many solutions"""
         self.gaussian_reduce()
 
         if self[-1][-1] == 0 and self[-1].free == 0:
