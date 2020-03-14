@@ -25,7 +25,7 @@ class Equation:
         """Multiplies equation by a constant.
 
         :param constant: constant
-        :raises ValueError: if the constant is zero"""
+        :raises ValueError: if the constant is equal to zero"""
         if constant == 0:
             raise ValueError("Constant cannot be zero")
 
@@ -40,7 +40,7 @@ class Equation:
 
         :param equation: equation
         :param constant: linear combination constant
-        :raises ValueError: if the constant is zero or equations sizes differ"""
+        :raises ValueError: if the constant is equal to zero or equations sizes differ"""
         if len(equation) != self.__len__():
             raise ValueError("Equation has different number of variables")
 
