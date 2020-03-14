@@ -27,7 +27,7 @@ class EquationSystem:
 
     def __getitem__(self, i):
         """:param i: index of equation
-        :return: equation object"""
+        :return: i-th equation of this system"""
         return self._equations[i]
 
     def __iter__(self):
@@ -40,8 +40,8 @@ class EquationSystem:
         """Computes the solution of this equation system.
 
         :return: solution vector
-        :raises NoSolutionError: if there is no solution
-        :raises InfiniteSolutionsError: if there are infinitely many solutions"""
+        :raises InfiniteSolutionsError: if there are infinitely many solutions
+        :raises NoSolutionError: if there is no solution"""
         self.gaussian_reduce()
 
         if self[-1][-1] == 0 and self[-1].free == 0:
@@ -60,7 +60,7 @@ class EquationSystem:
         return solution
 
     def gaussian_reduce(self):
-        """Runs the Gauss elimination algorithm."""
+        """Runs the Gauss elimination algorithm on this equation system."""
         for i in range(self.__len__() - 1):
             index_min = i
 
@@ -81,7 +81,7 @@ class EquationSystem:
                         self[j].combine(self[i], -param)
 
     def swap(self, i, j):
-        """Swaps two equations.
+        """Swaps two equations in this system.
 
         :param i: index of first equation
         :param j: index of second equation"""
