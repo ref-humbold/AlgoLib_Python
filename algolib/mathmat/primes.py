@@ -21,9 +21,9 @@ def find_primes(*numbers):
 
 
 def test_fermat(number):
-    """Fermat's prime test.
+    """Checks whether specified number is prime running Fermat's prime test.
 
-    :param number: number to test
+    :param number: number to check
     :return: ``true`` if the number is probably prime, otherwise ``false``"""
     number = abs(number)
 
@@ -39,9 +39,9 @@ def test_fermat(number):
 
 
 def test_miller(number):
-    """Miller-Rabin's prime test.
+    """Checks whether specified number is prime running Miller-Rabin's prime test.
 
-    :param number: number to test
+    :param number: number to check
     :return: ``true`` if the number is probably prime, otherwise ``false``"""
     number = abs(number)
 
@@ -76,6 +76,7 @@ def test_miller(number):
 
 
 def _find_primes_range(min_number, max_number):
+    # Finds prime numbers inside a specified range (minimum inclusive, maximum exclusive)
     if max_number < min_number:
         raise ValueError("Second argument must be grater or equal to the first argument")
 

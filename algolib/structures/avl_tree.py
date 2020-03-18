@@ -6,10 +6,10 @@ class AVLTree:
     class _AVLNode:
         def __init__(self, element):
             self.element = element  # Value in the node
-            self._height = 1  # Height of the node
-            self._left = None  # Left child of the node
-            self._right = None  # Right child of the node
-            self._parent = None  # Parent of the node
+            self._height = 1
+            self._left = None
+            self._right = None
+            self._parent = None
 
         @property
         def height(self):
@@ -111,7 +111,7 @@ class AVLTree:
                 self.add(i)
 
     def __str__(self):
-        """:return: string representation of the tree"""
+        """:return: string representation of this tree"""
         return f"{{|{', '.join(str(x) for x in self)}|}}"
 
     def __iter__(self):
@@ -199,18 +199,24 @@ class AVLTree:
 
     @staticmethod
     def _search(node, element):
+        # Determines the subtree where given value might be present:
+        # - node if element is in it
+        # - left child if element is less than node's element
+        # - right child if element is greater than node's element
         return node.left if element < node.element else \
             node.right if element > node.element else node
 
-    def _find_node(self, element, predicate):
+    def _find_node(self, value, predicate):
+        # Searches for node that satisfies specified predicate with specified value.
         node = self._root
 
-        while node is not None and not predicate(node, element):
-            node = AVLTree._search(node, element)
+        while node is not None and not predicate(node, value):
+            node = AVLTree._search(node, value)
 
         return node
 
     def _delete_node(self, node):
+        # Removes inner node from the tree.
         if node.left is not None and node.right is not None:
             succ = node.right.minimum()
             succ.element, node.element = node.element, succ.element
@@ -228,6 +234,7 @@ class AVLTree:
             self._elems -= 1
 
     def _replace_node(self, node1, node2):
+        # Replaces the first node as a child of its parent with the second node.
         if self._is_left_child(node1):
             node1.parent.left = node2
         elif self._is_right_child(node1):
@@ -238,6 +245,7 @@ class AVLTree:
         node1.parent = None
 
     def _rotate(self, node):
+        # Rotates the node along the edge to its parent.
         if self._is_right_child(node):
             upper_node = node.parent
             upper_node.right = node.left
@@ -250,16 +258,17 @@ class AVLTree:
             node.right = upper_node
 
     def _balance(self, node):
+        # Restores balancing on a path from given node to the root.
         while node is not None:
             node.count_height()
 
-            if self._count_balance(node) >= 2:
+            if self._count_balance(node) > 1:
                 if self._count_balance(node.left) > 0:
                     self._rotate(node.left)
                 elif self._count_balance(node.left) < 0:
                     self._rotate(node.left.right)
                     self._rotate(node.left)
-            elif self._count_balance(node) <= -2:
+            elif self._count_balance(node) < -1:
                 if self._count_balance(node.right) < 0:
                     self._rotate(node.right)
                 elif self._count_balance(node.right) > 0:

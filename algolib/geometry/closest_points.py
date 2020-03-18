@@ -1,21 +1,24 @@
 # -*- coding: utf-8 -*-
-"""Closest pair of points on a plane"""
+"""Algorithm for pair of closest points on a plane"""
 from math import hypot
 
 from .points_sorting import sorted_by_x, sorted_by_y
 
 
 def find_closest_points(points):
-    """FUNKCJA OBSŁUGUJĄCA DO WYSZUKIWANIA PUNKTÓW
+    """Searches for a pair closest of points among specified points.
 
-    :param points: lista punktów
-    :return: para najbliższych punktów"""
+    :param points: an iterable of points
+    :return: pair of closest points"""
+    points = list(points)
     points_x = sorted_by_x(points)
     points_y = sorted_by_y(points)
     return _search_closest(points_x, points_y, 0, len(points))
 
 
 def _search_closest(points_x, points_y, index_begin, index_end):
+    # Searches for a pair of closest points in specified sublist of points.
+    # Points are specified sorted by X coordinate and by Y coordinate.
     if index_end - index_begin == 1:
         return points_x[index_begin], points_x[index_end]
 
@@ -24,23 +27,25 @@ def _search_closest(points_x, points_y, index_begin, index_end):
 
     index_middle = (index_begin + index_end) // 2
     middle_x = (points_x[index_middle].x + points_x[index_middle + 1].x) // 2
-    closest_l = _search_closest(points_x, (p for p in points_y if p.x <= middle_x), index_begin,
-                                index_middle)
-    closest_r = _search_closest(points_x, (p for p in points_y if p.x > middle_x), index_middle + 1,
-                                index_end)
+    closest_left = _search_closest(points_x, (p for p in points_y if p.x <= middle_x), index_begin,
+                                   index_middle)
+    closest_right = _search_closest(points_x, (p for p in points_y if p.x > middle_x),
+                                    index_middle + 1, index_end)
 
-    if _distance(closest_l.x, closest_l.y) <= _distance(closest_r.x, closest_r.y):
-        closest_points = closest_l
-        belt_width = _distance(closest_l.x, closest_l.y)
+    if _distance(closest_left[0], closest_left[1]) <= _distance(closest_right[0], closest_right[1]):
+        closest_points = closest_left
+        belt_width = _distance(closest_left[0], closest_left[1])
     else:
-        closest_points = closest_r
-        belt_width = _distance(closest_r.x, closest_r.y)
+        closest_points = closest_right
+        belt_width = _distance(closest_right[0], closest_right[1])
 
     belt_points = _check_belt(points_y, middle_x, belt_width)
     return belt_points if belt_points is not None else closest_points
 
 
 def _check_belt(points_y, middle_x, belt_width):
+    # Finds closest pair inside a belt of specified width.
+    # The resulting distance should not be less than belt width.
     closest_points = None
     min_distance = belt_width
     belt_points = [p for p in points_y if middle_x - belt_width <= p.x <= middle_x + belt_width]
@@ -64,6 +69,7 @@ def _check_belt(points_y, middle_x, belt_width):
 
 
 def _search_three(point1, point2, point3):
+    # Finds closest pair of points among three of them.
     distance12 = _distance(point1, point2)
     distance23 = _distance(point2, point3)
     distance31 = _distance(point1, point3)

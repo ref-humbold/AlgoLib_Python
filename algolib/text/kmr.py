@@ -3,7 +3,7 @@
 
 
 def kmr(text):
-    """Builds a base words dictionary for specified text.
+    """Builds a base words dictionary for specified text using Karp-Miller-Rosenberg algorithm.
 
     :param text: text to build the dictionary for
     :return: base words dictionary"""
@@ -11,13 +11,14 @@ def kmr(text):
     length = 2
 
     while length <= len(text):
-        _double_length(length, text, factors)
-        length <<= 1
+        _sign_new_length(length, text, factors)
+        length *= 2
 
     return factors
 
 
 def _sign_letters(text):
+    # Encodes single letters of specified text
     factors = {}
     code_value = 0
     letters = sorted(text)
@@ -31,7 +32,8 @@ def _sign_letters(text):
     return factors
 
 
-def _double_length(new_length, text, factors):
+def _sign_new_length(new_length, text, factors):
+    # Encodes substring of specified length using already counted factors
     code_value = 0
     codes = sorted([(factors[text[i:i + new_length // 2]],
                      factors[text[i + new_length // 2:i + new_length]], i)
@@ -40,6 +42,6 @@ def _double_length(new_length, text, factors):
 
     for i, code in enumerate(codes[1:], start=1):
         if code != codes[i - 1]:
-            substr = text[code[2]:code[2] + new_length]
+            substring = text[code[2]:code[2] + new_length]
             code_value += 1
-            factors[substr] = code_value
+            factors[substring] = code_value

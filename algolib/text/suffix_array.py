@@ -7,9 +7,9 @@ class SuffixArray:
     def __init__(self, text):
         self._length = len(text)  # length of suffix array
         self._text = text  # text
-        self._suf_arr = self._init_array()  # suffix array
-        self._inv_arr = self._init_inv()  # inverted suffix array
-        self._lcp_arr = self._init_lcp()  # longest common prefixes array
+        self._suf_array = self._init_array()  # suffix array
+        self._inv_array = self._init_inv()  # inverted suffix array
+        self._lcp_array = self._init_lcp()  # longest common prefixes array
 
     @property
     def text(self):
@@ -26,7 +26,7 @@ class SuffixArray:
         if i < 0 or i >= self._length:
             raise IndexError("Suffix array index out of range")
 
-        return self._text[self._suf_arr[i]:]
+        return self._text[self._suf_array[i]:]
 
     def index_at(self, i):
         """:param i: index in suffix array
@@ -34,7 +34,7 @@ class SuffixArray:
         if i < 0 or i >= self._length:
             raise IndexError("Suffix array index out of range")
 
-        return self._suf_arr[i]
+        return self._suf_array[i]
 
     def index_of(self, suf):
         """:param suf: index in text denoting suffix
@@ -42,7 +42,7 @@ class SuffixArray:
         if suf < 0 or suf >= self._length:
             raise IndexError("Text index out of range")
 
-        return self._inv_arr[suf]
+        return self._inv_array[suf]
 
     def lcp(self, suf1, suf2):
         """Counts longest common prefix of two suffixes.
@@ -56,80 +56,87 @@ class SuffixArray:
         if suf1 == suf2:
             return self._length - suf1
 
-        ix1 = min(self._inv_arr[suf1], self._inv_arr[suf2])
-        ix2 = max(self._inv_arr[suf1], self._inv_arr[suf2])
-        return min(self._lcp_arr[i] for i in range(ix1 + 1, ix2 + 1))
+        ix1 = min(self._inv_array[suf1], self._inv_array[suf2])
+        ix2 = max(self._inv_array[suf1], self._inv_array[suf2])
+        return min(self._lcp_array[i] for i in range(ix1 + 1, ix2 + 1))
 
     def _init_array(self):
+        # Builds a suffix array.
         return self._create_array(list(map(ord, self._text)), 128)
 
     def _init_inv(self):
+        # Builds an inverted suffix array.
         arr = [0] * self._length
 
         for i in range(0, self._length):
-            arr[self._suf_arr[i]] = i
+            arr[self._suf_array[i]] = i
 
         return arr
 
     def _init_lcp(self):
+        # Builds the LCP array.
         arr = [0] * self._length
         length = 0
 
         for i in range(0, self._length):
-            if self._inv_arr[i] >= 1:
-                j = self._suf_arr[self._inv_arr[i] - 1]
+            if self._inv_array[i] >= 1:
+                j = self._suf_array[self._inv_array[i] - 1]
 
                 while i + length < self._length and j + length < self._length \
                         and self._text[i + length] == self._text[j + length]:
                     length += 1
 
-                arr[self._inv_arr[i]] = length
+                arr[self._inv_array[i]] = length
                 length = 0 if length == 0 else length - 1
 
         return arr
 
-    def _create_array(self, txt, k):
-        if len(txt) < 2:
+    def _create_array(self, text, alphabet_size):
+        # Creates a suffix array assuming a sized alphabet.
+        if len(text) < 2:
             return [0]
 
-        lengths = (len(txt) // 3, (len(txt) + 1) // 3, (len(txt) + 2) // 3)
+        lengths = (len(text) // 3, (len(text) + 1) // 3, (len(text) + 2) // 3)
         lengths02 = lengths[0] + lengths[2]
-        txt12 = [i for i in range(0, len(txt) + lengths[2] - lengths[1]) if i % 3 != 0]
-        SuffixArray._sort_by_keys(txt12, txt, 2, k)
-        SuffixArray._sort_by_keys(txt12, txt, 1, k)
-        SuffixArray._sort_by_keys(txt12, txt, 0, k)
+        text12 = [i for i in range(0, len(text) + lengths[2] - lengths[1]) if i % 3 != 0]
+        SuffixArray._sort_by_keys(text12, text, 2, alphabet_size)
+        SuffixArray._sort_by_keys(text12, text, 1, alphabet_size)
+        SuffixArray._sort_by_keys(text12, text, 0, alphabet_size)
         index = 0
-        last = (k, k, k)
-        txt_n12 = [0] * lengths02
+        last = (alphabet_size, alphabet_size, alphabet_size)
+        text_new12 = [0] * lengths02
 
-        for i in txt12:
-            if last != (self._get(txt, i), self._get(txt, i + 1), self._get(txt, i + 2)):
+        for i in text12:
+            if last != (self._get(text, i), self._get(text, i + 1), self._get(text, i + 2)):
                 index += 1
-                last = (self._get(txt, i), self._get(txt, i + 1), self._get(txt, i + 2))
+                last = (self._get(text, i), self._get(text, i + 1), self._get(text, i + 2))
 
             if i % 3 == 1:
-                txt_n12[i // 3] = index
+                text_new12[i // 3] = index
             else:
-                txt_n12[i // 3 + lengths[2]] = index
+                text_new12[i // 3 + lengths[2]] = index
 
         if index < lengths02:
-            sa12 = self._create_array(txt_n12, index + 1)
+            sa12 = self._create_array(text_new12, index + 1)
 
             for i, suf in enumerate(sa12):
-                txt_n12[suf] = i + 1
+                text_new12[suf] = i + 1
         else:
             sa12 = [0] * lengths02
 
-            for i, ltr in enumerate(txt_n12):
+            for i, ltr in enumerate(text_new12):
                 sa12[ltr - 1] = i
 
         sa0 = [3 * i for i in sa12 if i < lengths[2]]
-        SuffixArray._sort_by_keys(sa0, txt, 0, k)
-        return self._merge(txt, sa0, txt_n12, sa12)
+        SuffixArray._sort_by_keys(sa0, text, 0, alphabet_size)
+        return self._merge(text, sa0, text_new12, sa12)
 
-    def _merge(self, txt0, sa0, txt12, sa12):
-        sa_res = []
-        lengths = (len(txt0) // 3, (len(txt0) + 1) // 3, (len(txt0) + 2) // 3)
+    def _merge(self, text0, sa0, text12, sa12):
+        # Merges suffix arrays for two texts:
+        # - text of thirds from indices giving 0 modulo 3
+        # - text of thirds from indices giving 1 or 2 modulo 3
+        sa_merged = []
+        lengths = (len(text0) // 3, (len(text0) + 1) // 3, (len(text0) + 2) // 3)
         ix0 = 0
         ix12 = lengths[2] - lengths[1]
 
@@ -139,48 +146,50 @@ class SuffixArray:
             pos0 = sa0[ix0]
 
             if sa12[ix12] < lengths[2]:
-                cond = (self._get(txt0, pos12), self._get(txt12, sa12[ix12] + lengths[2])) \
-                       <= (self._get(txt0, pos0), self._get(txt12, pos0 // 3))
+                cond = (self._get(text0, pos12), self._get(text12, sa12[ix12] + lengths[2])) \
+                       <= (self._get(text0, pos0), self._get(text12, pos0 // 3))
             else:
-                cond = (self._get(txt0, pos12), self._get(txt0, pos12 + 1),
-                        self._get(txt12, sa12[ix12] - lengths[2] + 1)) \
-                       <= (self._get(txt0, pos0), self._get(txt0, pos0 + 1),
-                           self._get(txt12, pos0 // 3 + lengths[2]))
+                cond = (self._get(text0, pos12), self._get(text0, pos12 + 1),
+                        self._get(text12, sa12[ix12] - lengths[2] + 1)) \
+                       <= (self._get(text0, pos0), self._get(text0, pos0 + 1),
+                           self._get(text12, pos0 // 3 + lengths[2]))
 
             if cond:
-                sa_res.append(pos12)
+                sa_merged.append(pos12)
                 ix12 += 1
             else:
-                sa_res.append(pos0)
+                sa_merged.append(pos0)
                 ix0 += 1
 
         while ix12 < len(sa12):
             if sa12[ix12] < lengths[2]:
-                sa_res.append(sa12[ix12] * 3 + 1)
+                sa_merged.append(sa12[ix12] * 3 + 1)
             else:
-                sa_res.append((sa12[ix12] - lengths[2]) * 3 + 2)
+                sa_merged.append((sa12[ix12] - lengths[2]) * 3 + 2)
 
             ix12 += 1
 
         while ix0 < len(sa0):
-            sa_res.append(sa0[ix0])
+            sa_merged.append(sa0[ix0])
             ix0 += 1
 
-        return sa_res
+        return sa_merged
 
     @staticmethod
-    def _sort_by_keys(array, keys, shift, k):
-        buckets = [Queue() for i in range(k)]
+    def _sort_by_keys(indices, keys, shift, alphabet_size):
+        # Sorts specified array of shifted indices of specified keys from a sized alphabet.
+        buckets = [Queue() for _ in range(alphabet_size)]
         j = 0
 
-        for i in array:
+        for i in indices:
             buckets[SuffixArray._get(keys, i + shift)].put(i)
 
-        for elem in buckets:
-            while not elem.empty():
-                array[j] = elem.get()
+        for bucket in buckets:
+            while not bucket.empty():
+                indices[j] = bucket.get()
                 j += 1
 
     @staticmethod
     def _get(array, i):
+        # Retrieves element from specified index or returns zero if index is out of range.
         return array[i] if i < len(array) else 0

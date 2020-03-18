@@ -3,10 +3,10 @@
 
 
 def kmp(text, pattern):
-    """Knuth-Morris-Pratt algorithm.
+    """Searches for pattern occurrences in specified text using Knuth-Morris-Pratt algorithm.
 
-    :param text: text
-    :param pattern: pattern to search for
+    :param text: a text
+    :param pattern: a pattern to search for
     :return: generator of pattern occurrence positions"""
     if pattern == "":
         return
@@ -27,6 +27,7 @@ def kmp(text, pattern):
 
 
 def _prefix(pattern):
+    # Counts values of Knuth's PI prefix function for specified pattern.
     pi_values = [0]
     pos = 0
 

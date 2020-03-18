@@ -1,34 +1,37 @@
 # -*- coding: utf-8 -*-
-"""Graham's algorithm for convex hull on a plane"""
+"""Algorithm for convex hull on a plane (monotone chain)"""
 from .points_sorting import sorted_by_x
 
 
 def convex_hull(points):
-    """Constructs convex hull of set of points.
-    
+    """Constructs a convex hull of specified set of points.
+
     :param points: sequence of points
     :return: hull points list"""
+    if len(points) < 3:
+        return []
 
     points = sorted_by_x(points)
-    hull = points[:2]
+    upper_hull = _create_half_hull(points)
+    lower_hull = _create_half_hull(reversed(points))
 
-    for point in points[2:]:
-        _add_point(point, hull, 1)
+    upper_hull.pop()
+    lower_hull.pop()
 
-    upper_size = len(hull)
+    return upper_hull + lower_hull
 
-    for point in reversed(points[:-1]):
-        _add_point(point, hull, upper_size)
 
-    hull.pop()
+def _create_half_hull(points):
+    # Creates a half of a convex hull for specified points
+    hull = []
+
+    for pt in points:
+        while len(hull) > 1 and _cross_product(hull[-2], hull[-1], pt) <= 0:
+            hull.pop()
+
+        hull.append(pt)
+
     return hull
-
-
-def _add_point(point, hull, min_size):
-    while len(hull) > min_size and _cross_product(hull[-2], hull[-1], point) <= 0:
-        hull.pop()
-
-    hull.append(point)
 
 
 def _cross_product(pt1, pt2, pt3):

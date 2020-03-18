@@ -3,10 +3,6 @@
 from math import atan2, pi
 
 
-def p2d(x, y):
-    return Point2D(x, y)
-
-
 class Point2D:
     def __init__(self, x, y):
         self._x = x
@@ -28,6 +24,12 @@ class Point2D:
     def radius(self):
         return self._x**2 + self._y**2
 
+    def __hash__(self):
+        return hash(self._x) ^ hash(self._y)
+
+    def __str__(self):
+        return f"({self._x}, {self._y})"
+
     def __eq__(self, pt):
         return (self._x, self._y) == (pt.x, pt.y)
 
@@ -45,9 +47,3 @@ class Point2D:
 
     def __ge__(self, pt):
         return (self._x, self._y) >= (pt.x, pt.y)
-
-    def __hash__(self):
-        return hash(self._x) ^ hash(self._y)
-
-    def __str__(self):
-        return f"({self._x}, {self._y})"

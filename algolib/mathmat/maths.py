@@ -3,11 +3,11 @@
 
 
 def gcd(number1, number2):
-    """Największy wspólny dzielnik dwóch liczb.
+    """Counts a greatest common divisor of two numbers.
 
-    :param number1: pierwsza liczba
-    :param number2: druga liczba
-    :return: największy wspólny dzielnik"""
+    :param number1: a first number
+    :param number2: a second number
+    :return: greatest common divisor"""
     number_pair = (min(number1, number2), max(number1, number2))
 
     while number_pair[0] > 0:
@@ -17,23 +17,23 @@ def gcd(number1, number2):
 
 
 def lcm(number1, number2):
-    """Najmniejsza wspólna wielokrotność dwóch liczb.
+    """Counts a lowest common multiple of two numbers.
 
-    :param number1: pierwsza liczba
-    :param number2: druga liczba
-    :return: najmniejsza wspólna wielokrotność"""
+    :param number1: a first number
+    :param number2: a second number
+    :return: lowest common multiple"""
     min_number = min(number1, number2)
     max_number = max(number1, number2)
     return max_number // gcd(number1, number2) * min_number
 
 
 def mult_mod(factor1, factor2, modulo=0):
-    """Szybkie mnożenie binarne modulowane.
+    """Performs a fast multiplication of two numbers with modulo taken.
 
-    :param factor1: pierwszy czynnik
-    :param factor2: drugi czynnik
-    :param modulo: modulo
-    :return: wynik mnożenia wzięty modulo"""
+    :param factor1: a first factor
+    :param factor2: a second factor
+    :param modulo: a modulo value
+    :return: multiplication result with modulo taken"""
     result = 0
 
     if modulo < 0:
@@ -59,12 +59,12 @@ def mult_mod(factor1, factor2, modulo=0):
 
 
 def power_mod(base, exponent, modulo=0):
-    """Szybkie potęgowanie binarne modulowane.
+    """Performs a fast exponentiation of two numbers with modulo taken.
 
-    :param base: podstawa
-    :param exponent: wykładnik
-    :param modulo: modulo
-    :return: wynik potęgowania"""
+    :param base: a base value
+    :param exponent: an exponent value
+    :param modulo: a modulo value
+    :return: exponentiation result with modulo taken"""
     result = 1
 
     if modulo < 0:
