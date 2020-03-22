@@ -4,10 +4,10 @@ from .points_sorting import sorted_by_x
 
 
 def convex_hull(points):
-    """Constructs a convex hull of specified set of points.
+    """Constructs a convex hull of specified points.
 
     :param points: sequence of points
-    :return: hull points list"""
+    :return: list of hull points"""
     if len(points) < 3:
         return []
 
@@ -22,7 +22,7 @@ def convex_hull(points):
 
 
 def _create_half_hull(points):
-    # Creates a half of a convex hull for specified points
+    # Creates a half of a convex hull for specified points.
     hull = []
 
     for pt in points:

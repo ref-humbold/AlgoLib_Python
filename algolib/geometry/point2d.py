@@ -34,7 +34,7 @@ class Point2D:
         return (self._x, self._y) == (pt.x, pt.y)
 
     def __ne__(self, pt):
-        return (self._x, self._y) != (pt.x, pt.y)
+        return not (self == pt)
 
     def __lt__(self, pt):
         return (self._x, self._y) < (pt.x, pt.y)
@@ -43,7 +43,7 @@ class Point2D:
         return (self._x, self._y) <= (pt.x, pt.y)
 
     def __gt__(self, pt):
-        return (self._x, self._y) > (pt.x, pt.y)
+        return not (self <= pt)
 
     def __ge__(self, pt):
-        return (self._x, self._y) >= (pt.x, pt.y)
+        return not (self < pt)

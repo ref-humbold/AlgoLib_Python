@@ -31,15 +31,9 @@ def _search_closest(points_x, points_y, index_begin, index_end):
                                    index_middle)
     closest_right = _search_closest(points_x, (p for p in points_y if p.x > middle_x),
                                     index_middle + 1, index_end)
-
-    if _distance(closest_left[0], closest_left[1]) <= _distance(closest_right[0], closest_right[1]):
-        closest_points = closest_left
-        belt_width = _distance(closest_left[0], closest_left[1])
-    else:
-        closest_points = closest_right
-        belt_width = _distance(closest_right[0], closest_right[1])
-
-    belt_points = _check_belt(points_y, middle_x, belt_width)
+    closest_points = \
+        closest_left if _distance(*closest_left) <= _distance(*closest_right) else closest_right
+    belt_points = _check_belt(points_y, middle_x, _distance(closest_points[0], closest_points[1]))
     return belt_points if belt_points is not None else closest_points
 
 
