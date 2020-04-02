@@ -17,11 +17,11 @@ class AVLTree:
 
     def __iter__(self):
         """:return: a forward iterator object"""
-        return self._AVLIterator(self._root.minimum())
+        return self._AVLIterator(self._tree.minimum())
 
     def __reversed__(self):
         """:return: a reversed iterator object"""
-        return self._AVLReverseIterator(self._root.maximum())
+        return self._AVLReverseIterator(self._tree.maximum())
 
     def __len__(self):
         """:return: number of elements in this tree"""
@@ -46,7 +46,7 @@ class AVLTree:
 
         if node_parent is None:
             new_node = self._AVLNode(element)
-            self._root = new_node
+            self._set_root(new_node)
             self._count += 1
         else:
             the_node = self._search(node_parent, element)
@@ -76,15 +76,10 @@ class AVLTree:
 
     def clear(self):
         """Removes all elements from this tree."""
-        self._root = None
+        self._set_root(None)
         self._count = 0
 
-    @property
-    def _root(self):
-        return self._tree
-
-    @_root.setter
-    def _root(self, node):
+    def _set_root(self, node):
         self._tree = node
 
         if node is not None:
@@ -109,7 +104,7 @@ class AVLTree:
 
     def _find_node(self, value, predicate):
         # Searches for node that satisfies specified predicate with specified value.
-        node = self._root
+        node = self._tree
 
         while node is not None and not predicate(node, value):
             node = AVLTree._search(node, value)
@@ -130,7 +125,7 @@ class AVLTree:
                 self._replace_node(node, child)
                 self._balance(node_parent)
             else:
-                self._root = child
+                self._set_root(child)
 
             self._count -= 1
 
@@ -141,7 +136,7 @@ class AVLTree:
         elif self._is_right_child(node1):
             node1.parent.right = node2
         else:
-            self._root = node2
+            self._set_root(node2)
 
         node1.parent = None
 
