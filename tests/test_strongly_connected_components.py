@@ -2,7 +2,8 @@
 """Tests: Strongly connected components algorithm"""
 import unittest
 
-from algolib.graphs import DirectedSimpleGraph, find_scc
+from algolib.graphs import DirectedSimpleGraph
+from algolib.graphs.algorithms import find_scc
 
 
 class SCCTest(unittest.TestCase):
@@ -16,9 +17,8 @@ class SCCTest(unittest.TestCase):
         pass
 
     def test__find_scc(self):
-        digraph = DirectedSimpleGraph(10, [(0, 4), (0, 5), (1, 0), (2, 3),
-                                           (3, 1), (4, 1), (4, 3), (6, 5), (6, 9),
-                                           (7, 4), (7, 6), (8, 3), (8, 7), (9, 8)])
+        digraph = DirectedSimpleGraph(10, [(0, 4), (0, 5), (1, 0), (2, 3), (3, 1), (4, 1), (4, 3),
+                                           (6, 5), (6, 9), (7, 4), (7, 6), (8, 3), (8, 7), (9, 8)])
 
         result = find_scc(digraph)
 

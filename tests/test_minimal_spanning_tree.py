@@ -2,7 +2,8 @@
 """Tests: Minimal spanning tree algorithms"""
 import unittest
 
-from algolib.graphs import UndirectedWeightedSimpleGraph, kruskal, prim
+from algolib.graphs import UndirectedWeightedSimpleGraph
+from algolib.graphs.algorithms import kruskal, prim
 
 
 class MSTTest(unittest.TestCase):
@@ -11,8 +12,8 @@ class MSTTest(unittest.TestCase):
         self._graph = None
 
     def setUp(self):
-        self._graph = UndirectedWeightedSimpleGraph(
-            5, [(0, 1, -1), (0, 2, 4), (1, 2, 9), (1, 3, 7), (1, 4, 12), (2, 4, 6), (3, 4, 3)])
+        self._graph = UndirectedWeightedSimpleGraph(5, [(0, 1, -1), (0, 2, 4), (1, 2, 9), (1, 3, 7),
+                                                        (1, 4, 12), (2, 4, 6), (3, 4, 3)])
 
     def tearDown(self):
         self._graph = None

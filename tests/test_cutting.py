@@ -2,7 +2,8 @@
 """Tests: Graph cutting algorithms"""
 import unittest
 
-from algolib.graphs import UndirectedSimpleGraph, find_edge_cut, find_vertex_cut
+from algolib.graphs import UndirectedSimpleGraph
+from algolib.graphs.algorithms import find_edge_cut, find_vertex_cut
 
 
 class CuttingTest(unittest.TestCase):
@@ -25,8 +26,7 @@ class CuttingTest(unittest.TestCase):
         self.assertListEqual([(0, 7), (5, 6)], sorted(result))
 
     def test__find_edge_cut__when_no_bridges(self):
-        graph = UndirectedSimpleGraph(6, [(0, 1), (0, 2), (1, 2),
-                                          (1, 3), (1, 4), (3, 5), (4, 5)])
+        graph = UndirectedSimpleGraph(6, [(0, 1), (0, 2), (1, 2), (1, 3), (1, 4), (3, 5), (4, 5)])
 
         result = find_edge_cut(graph)
 
@@ -42,8 +42,8 @@ class CuttingTest(unittest.TestCase):
         self.assertListEqual([0, 1, 5, 7], sorted(result))
 
     def test__find_vertex_cut__when_no_separators(self):
-        graph = UndirectedSimpleGraph(6, [(0, 1), (0, 2), (1, 2), (1, 3),
-                                          (1, 4), (2, 3), (3, 5), (4, 5)])
+        graph = UndirectedSimpleGraph(6, [(0, 1), (0, 2), (1, 2), (1, 3), (1, 4), (2, 3), (3, 5),
+                                          (4, 5)])
 
         result = find_vertex_cut(graph)
 

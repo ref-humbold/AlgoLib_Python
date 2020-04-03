@@ -2,7 +2,8 @@
 """Tests: lowest common ancestor algorithm"""
 import unittest
 
-from algolib.graphs import TreeGraph, find_lca
+from algolib.graphs import TreeGraph
+from algolib.graphs.algorithms import find_lca
 
 
 class LCATest(unittest.TestCase):
@@ -11,8 +12,8 @@ class LCATest(unittest.TestCase):
         self._trees = None
 
     def setUp(self):
-        self._trees = TreeGraph(
-            10, [(0, 1), (0, 2), (1, 3), (1, 4), (1, 5), (2, 6), (4, 7), (6, 8), (6, 9)])
+        self._trees = TreeGraph(10, [(0, 1), (0, 2), (1, 3), (1, 4), (1, 5), (2, 6), (4, 7), (6, 8),
+                                     (6, 9)])
 
     def tearDown(self):
         self._trees = None
