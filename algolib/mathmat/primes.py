@@ -3,7 +3,7 @@
 from math import sqrt
 from random import randint
 
-from .maths import gcd, power_mod
+from algolib.mathmat.maths import gcd, power_mod
 
 
 def find_primes(*numbers):

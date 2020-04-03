@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Multipartite graphs structure"""
-from .undirected_graph import UndirectedGraph, UndirectedSimpleGraph
+from algolib.graphs.undirected_graph import UndirectedGraph, UndirectedSimpleGraph
 
 
 class GraphPartitionError(ValueError):

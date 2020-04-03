@@ -2,7 +2,7 @@
 """Minimal spanning tree algorithms"""
 import queue
 
-from structures.disjoint_sets import DisjointSets
+from algolib.structures.disjoint_sets import DisjointSets
 
 
 def kruskal(uwgraph):

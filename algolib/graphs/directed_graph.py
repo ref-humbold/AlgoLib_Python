@@ -2,7 +2,7 @@
 """Directed graphs structures"""
 from abc import ABCMeta, abstractmethod
 
-from .graph import Graph, NoSuchVertexError, SimpleGraph, WeightedGraph
+from algolib.graphs.graph import Graph, NoSuchVertexError, SimpleGraph, WeightedGraph
 
 
 class DirectedGraph(Graph, metaclass=ABCMeta):
