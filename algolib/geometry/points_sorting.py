@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Points sorting algorithms"""
+"""Algorithms for points sorting"""
 
 
 def sorted_by_x(points):

@@ -6,7 +6,7 @@ from algolib.geometry.points_sorting import sorted_by_x, sorted_by_y
 
 
 def find_closest_points(points):
-    """Searches for a pair closest of points among specified points.
+    """Searches for closest points among specified points.
 
     :param points: an iterable of points
     :return: pair of closest points"""

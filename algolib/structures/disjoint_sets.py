@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Disjoint sets structure (union-find)"""
+"""Structure of disjoint sets (union-find)"""
 
 
 class DisjointSets:
@@ -21,7 +21,7 @@ class DisjointSets:
         """Finds a represent of an element.
 
         :param element: an element
-        :return: the represent of the element
+        :return: represent of the element
         :raises KeyError: if element is not in this structure"""
         if self._represents[element] != element:
             self._represents[element] = self.__getitem__(self._represents[element])
@@ -60,7 +60,7 @@ class DisjointSets:
 
         :param element: an element
         :param default: a value to return if the element not inside
-        :return: the represent of the element"""
+        :return: represent of the element"""
         try:
             return self.__getitem__(element)
         except KeyError:

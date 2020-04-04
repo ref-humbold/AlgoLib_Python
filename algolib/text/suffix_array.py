@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Suffix array structure"""
+"""Structure of suffix array"""
 from queue import Queue
 
 
@@ -21,7 +21,7 @@ class SuffixArray:
         return self._length
 
     def __getitem__(self, i):
-        """:param i: index in suffix array
+        """:param i: an index in suffix array
         :return: suffix"""
         if i < 0 or i >= self._length:
             raise IndexError("Suffix array index out of range")
@@ -29,7 +29,7 @@ class SuffixArray:
         return self._text[self._suf_array[i]:]
 
     def index_at(self, i):
-        """:param i: index in suffix array
+        """:param i: an index in suffix array
         :return: index in text where the suffix begins"""
         if i < 0 or i >= self._length:
             raise IndexError("Suffix array index out of range")
@@ -37,7 +37,7 @@ class SuffixArray:
         return self._suf_array[i]
 
     def index_of(self, suf):
-        """:param suf: index in text denoting suffix
+        """:param suf: an index in text denoting suffix
         :return: index of suffix in this array"""
         if suf < 0 or suf >= self._length:
             raise IndexError("Text index out of range")
@@ -47,8 +47,8 @@ class SuffixArray:
     def lcp(self, suf1, suf2):
         """Counts longest common prefix of two suffixes.
 
-        :param suf1: index in text denoting first suffix
-        :param suf2: index in text denoting second suffix
+        :param suf1: an index in text denoting first suffix
+        :param suf2: an index in text denoting second suffix
         :return: length of longest common prefix"""
         if suf1 < 0 or suf1 >= self._length or suf2 < 0 or suf2 >= self._length:
             raise IndexError("Text index out of range")

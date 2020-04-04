@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Points on a plane"""
+"""Structure of points on a plane"""
 from math import atan2, pi
 
 

@@ -6,7 +6,7 @@ from algolib.geometry.points_sorting import sorted_by_x
 def convex_hull(points):
     """Constructs a convex hull of specified points.
 
-    :param points: sequence of points
+    :param points: a sequence of points
     :return: list of hull points"""
     if len(points) < 3:
         return []
