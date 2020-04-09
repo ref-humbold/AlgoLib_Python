@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Structure of suffix array"""
+from math import inf
 from queue import Queue
 
 
@@ -62,7 +63,7 @@ class SuffixArray:
 
     def _init_array(self):
         # Builds a suffix array.
-        return self._create_array(list(map(ord, self._text)), 128)
+        return self._create_array(list(map(ord, self._text)))
 
     def _init_inv(self):
         # Builds an inverted suffix array.
@@ -91,7 +92,7 @@ class SuffixArray:
 
         return arr
 
-    def _create_array(self, text, alphabet_size):
+    def _create_array(self, text):
         # Creates a suffix array assuming a sized alphabet.
         if len(text) < 2:
             return [0]
@@ -99,11 +100,11 @@ class SuffixArray:
         lengths = (len(text) // 3, (len(text) + 1) // 3, (len(text) + 2) // 3)
         lengths02 = lengths[0] + lengths[2]
         text12 = [i for i in range(0, len(text) + lengths[2] - lengths[1]) if i % 3 != 0]
-        SuffixArray._sort_by_keys(text12, text, 2, alphabet_size)
-        SuffixArray._sort_by_keys(text12, text, 1, alphabet_size)
-        SuffixArray._sort_by_keys(text12, text, 0, alphabet_size)
+        SuffixArray._sort_by_keys(text12, text, 2)
+        SuffixArray._sort_by_keys(text12, text, 1)
+        SuffixArray._sort_by_keys(text12, text, 0)
         index = 0
-        last = (alphabet_size, alphabet_size, alphabet_size)
+        last = (inf, inf, inf)
         text_new12 = [0] * lengths02
 
         for i in text12:
@@ -117,7 +118,7 @@ class SuffixArray:
                 text_new12[i // 3 + lengths[2]] = index
 
         if index < lengths02:
-            sa12 = self._create_array(text_new12, index + 1)
+            sa12 = self._create_array(text_new12)
 
             for i, suf in enumerate(sa12):
                 text_new12[suf] = i + 1
@@ -128,7 +129,7 @@ class SuffixArray:
                 sa12[ltr - 1] = i
 
         sa0 = [3 * i for i in sa12 if i < lengths[2]]
-        SuffixArray._sort_by_keys(sa0, text, 0, alphabet_size)
+        SuffixArray._sort_by_keys(sa0, text, 0)
         return self._merge(text, sa0, text_new12, sa12)
 
     def _merge(self, text0, sa0, text12, sa12):
@@ -176,15 +177,20 @@ class SuffixArray:
         return sa_merged
 
     @staticmethod
-    def _sort_by_keys(indices, keys, shift, alphabet_size):
+    def _sort_by_keys(indices, keys, shift):
         # Sorts specified array of shifted indices of specified keys from a sized alphabet.
-        buckets = [Queue() for _ in range(alphabet_size)]
+        buckets = {}
         j = 0
 
         for i in indices:
-            buckets[SuffixArray._get(keys, i + shift)].put(i)
+            k = SuffixArray._get(keys, i + shift)
 
-        for bucket in buckets:
+            if k not in buckets:
+                buckets[k] = Queue()
+
+            buckets[k].put(i)
+
+        for bucket in map(lambda p: p[1], sorted(buckets.items(), key=lambda p: p[0])):
             while not bucket.empty():
                 indices[j] = bucket.get()
                 j += 1

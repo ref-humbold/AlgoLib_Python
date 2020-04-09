@@ -226,14 +226,17 @@ class AVLTree:
             self._parent = parent
 
         def count_height(self):
+            # Recounts the height of the node.
             left_height = 0 if self._left is None else self._left.height
             right_height = 0 if self._right is None else self._right.height
             self._height = max(left_height, right_height) + 1
 
         def minimum(self):
+            # Searches in its subtree for the node with minimal value.
             return self if self._left is None else self._left.minimum()
 
         def maximum(self):
+            # Searches in its subtree for the node with maximal value.
             return self if self._right is None else self._right.maximum()
 
     class _AVLIterator:

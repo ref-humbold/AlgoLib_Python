@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Basic mathematics algorithms"""
+"""Algorithms for basic mathematical computations"""
 
 
 def gcd(number1, number2):
@@ -8,7 +8,7 @@ def gcd(number1, number2):
     :param number1: a first number
     :param number2: a second number
     :return: greatest common divisor"""
-    number_pair = (min(number1, number2), max(number1, number2))
+    number_pair = (min(abs(number1), abs(number2)), max(abs(number1), abs(number2)))
 
     while number_pair[0] > 0:
         number_pair = (number_pair[1] % number_pair[0], number_pair[0])
@@ -22,8 +22,8 @@ def lcm(number1, number2):
     :param number1: a first number
     :param number2: a second number
     :return: lowest common multiple"""
-    min_number = min(number1, number2)
-    max_number = max(number1, number2)
+    min_number = min(abs(number1), abs(number2))
+    max_number = max(abs(number1), abs(number2))
     return max_number // gcd(number1, number2) * min_number
 
 
