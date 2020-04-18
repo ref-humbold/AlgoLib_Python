@@ -3,12 +3,12 @@
 
 
 class AVLTree:
-    def __init__(self, elems=None):
+    def __init__(self, elements=None):
         self._tree = None
         self._count = 0
 
-        if elems is not None:
-            for i in elems:
+        if elements is not None:
+            for i in elements:
                 self.add(i)
 
     def __str__(self):
