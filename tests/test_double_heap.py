@@ -147,3 +147,9 @@ class DoubleHeapTest(unittest.TestCase):
         # then
         self.assertEqual(len(self._numbers) - 1, len(self._test_object))
         self.assertEqual(max(self._numbers), result)
+
+    def test_clear_when_not_empty_then_empty(self):
+        # when
+        self._test_object.clear()
+        # then
+        self.assertEqual(0, len(self._test_object))

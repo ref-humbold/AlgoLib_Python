@@ -97,6 +97,9 @@ class DoubleHeap:
 
         return element
 
+    def clear(self):
+        self._heap = []
+
     def _move_to_front(self, index):
         if index == self._INDEX_FRONT:
             return
