@@ -69,7 +69,7 @@ class DoubleHeap:
         :return: removed minimal element
         :raise KeyError: if this double heap is empty
         """
-        element = self.front
+        minimal = self.front
 
         if len(self) == 1:
             del self._heap[-1]
@@ -78,7 +78,7 @@ class DoubleHeap:
             del self._heap[-1]
             self._move_to_back(self._INDEX_FRONT)
 
-        return element
+        return minimal
 
     def pop_back(self):
         """Retrieves and removes maximal element from this heap.
@@ -86,7 +86,7 @@ class DoubleHeap:
         :return: removed maximal element
         :raise KeyError: if this double heap is empty
         """
-        element = self.back
+        maximal = self.back
 
         if len(self) <= 2:
             del self._heap[-1]
@@ -95,7 +95,7 @@ class DoubleHeap:
             del self._heap[-1]
             self._move_to_front(self._INDEX_BACK)
 
-        return element
+        return maximal
 
     def clear(self):
         self._heap = []
