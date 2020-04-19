@@ -30,12 +30,7 @@ class AVLTree:
     def __contains__(self, element):
         """:param element: element to be found
         :return: ``true`` if value is present in this tree, otherwise ``false``"""
-        return not self.empty() and self._find_node(element,
-                                                    lambda n, e: n.element == e) is not None
-
-    def empty(self):
-        """:return: ``true`` if this tree is empty, otherwise ``false``"""
-        return self._count == 0
+        return len(self) > 0 and self._find_node(element, lambda n, e: n.element == e) is not None
 
     def add(self, element):
         """Adds a new value to this tree.
