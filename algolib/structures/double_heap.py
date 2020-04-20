@@ -19,8 +19,10 @@ class DoubleHeap:
 
     @property
     def front(self):
-        """:return: minimal element from this double heap
-        :raise KeyError: if this double heap is empty"""
+        """Retrieves minimal element from this double heap.
+
+        :return: minimal element
+        :raise KeyError: if double heap is empty"""
         if len(self._heap) == 0:
             raise KeyError("Double heap is empty")
 
@@ -28,8 +30,10 @@ class DoubleHeap:
 
     @property
     def back(self):
-        """:return: maximal element from this double heap
-        :raise KeyError: if this double heap is empty"""
+        """Retrieves maximal element from this double heap.
+
+        :return: maximal element
+        :raise KeyError: if double heap is empty"""
         if len(self._heap) == 0:
             raise KeyError("Double heap is empty")
 
@@ -64,36 +68,32 @@ class DoubleHeap:
                 self._move_to_front(index)
 
     def pop_front(self):
-        """Retrieves and removes minimal element from this heap.
+        """Retrieves and removes minimal element from this double heap.
 
         :return: removed minimal element
-        :raise KeyError: if this double heap is empty
+        :raise KeyError: if double heap is empty
         """
         minimal = self.front
 
-        if len(self) == 1:
-            del self._heap[-1]
-        else:
-            self._heap[self._INDEX_FRONT] = self._heap[-1]
-            del self._heap[-1]
-            self._move_to_back(self._INDEX_FRONT)
+        self._heap[self._INDEX_FRONT] = self._heap[-1]
+        del self._heap[-1]
+        self._move_to_back(self._INDEX_FRONT)
 
         return minimal
 
     def pop_back(self):
-        """Retrieves and removes maximal element from this heap.
+        """Retrieves and removes maximal element from this double heap.
 
         :return: removed maximal element
-        :raise KeyError: if this double heap is empty
+        :raise KeyError: if double heap is empty
         """
-        maximal = self.back
+        if len(self) == 1:
+            return self.pop_front()
 
-        if len(self) <= 2:
-            del self._heap[-1]
-        else:
-            self._heap[self._INDEX_BACK] = self._heap[-1]
-            del self._heap[-1]
-            self._move_to_front(self._INDEX_BACK)
+        maximal = self.back
+        self._heap[self._INDEX_BACK] = self._heap[-1]
+        del self._heap[-1]
+        self._move_to_front(self._INDEX_BACK)
 
         return maximal
 
@@ -115,7 +115,7 @@ class DoubleHeap:
                     self._key(self._heap[left_index]) > self._key(self._heap[right_index]) else \
                     right_index
 
-                self._step_to_back(index, child_index)
+                self._step_to_front(index, child_index)
             elif left_index < len(self):
                 self._step_to_front(index, left_index)
             else:
@@ -123,8 +123,7 @@ class DoubleHeap:
 
     def _step_to_front(self, index, next_index):
         if self._key(self._heap[index]) < self._key(self._heap[next_index]):
-            self._heap[index], self._heap[next_index] = \
-                self._heap[next_index], self._heap[index]
+            self._heap[index], self._heap[next_index] = self._heap[next_index], self._heap[index]
             self._move_to_front(next_index)
 
     def _move_to_back(self, index):
@@ -150,6 +149,5 @@ class DoubleHeap:
 
     def _step_to_back(self, index, next_index):
         if self._key(self._heap[index]) > self._key(self._heap[next_index]):
-            self._heap[index], self._heap[next_index] = \
-                self._heap[next_index], self._heap[index]
+            self._heap[index], self._heap[next_index] = self._heap[next_index], self._heap[index]
             self._move_to_back(next_index)
