@@ -96,15 +96,21 @@ class DoubleHeapTest(unittest.TestCase):
         self.assertEqual(len(self._numbers) + 1, len(self._test_object))
         self.assertEqual(element, self._test_object.back)
 
-    def test_push_when_new_element__then_added(self):
-        # given
-        element = 46
+    def test_push__when_new_element__then_added(self):
         # when
-        self._test_object.push(element)
+        self._test_object.push(46)
         # then
         self.assertEqual(len(self._numbers) + 1, len(self._test_object))
         self.assertEqual(min(self._numbers), self._test_object.front)
         self.assertEqual(max(self._numbers), self._test_object.back)
+
+    def test_pop_front__when_empty__then_key_error(self):
+        # given
+        self._test_object = DoubleHeap()
+        # then
+        with self.assertRaises(KeyError):
+            # when
+            _ = self._test_object.pop_front()
 
     def test_pop_front__when_not_empty__then_minimal_element_removed(self):
         # when
