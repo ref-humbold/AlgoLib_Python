@@ -26,4 +26,4 @@ def angle_sorted(points):
 
     :param points: a sequence of points
     :return: sorted list of points"""
-    return list(sorted(points, key=lambda pt: (pt.angle, pt.radius)))
+    return list(sorted(points, key=lambda pt: (pt.angle_deg, pt.radius)))
