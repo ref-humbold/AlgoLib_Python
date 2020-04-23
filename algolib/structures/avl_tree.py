@@ -3,12 +3,12 @@
 
 
 class AVLTree:
-    def __init__(self, elems=None):
+    def __init__(self, elements=None):
         self._tree = None
         self._count = 0
 
-        if elems is not None:
-            for i in elems:
+        if elements is not None:
+            for i in elements:
                 self.add(i)
 
     def __str__(self):
@@ -30,12 +30,7 @@ class AVLTree:
     def __contains__(self, element):
         """:param element: element to be found
         :return: ``true`` if value is present in this tree, otherwise ``false``"""
-        return not self.empty() and self._find_node(element,
-                                                    lambda n, e: n.element == e) is not None
-
-    def empty(self):
-        """:return: ``true`` if this tree is empty, otherwise ``false``"""
-        return self._count == 0
+        return len(self) > 0 and self._find_node(element, lambda n, e: n.element == e) is not None
 
     def add(self, element):
         """Adds a new value to this tree.

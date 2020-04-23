@@ -8,8 +8,8 @@ from algolib.structures import AVLTree
 class AVLTreeTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._test_object = None
         self._numbers = [10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26]
+        self._test_object = None
 
     def setUp(self):
         self._test_object = AVLTree(self._numbers)
@@ -21,17 +21,6 @@ class AVLTreeTest(unittest.TestCase):
         result = str(self._test_object)
 
         self.assertEqual("{|2, 6, 10, 14, 18, 24, 26, 30, 37, 45, 51, 68, 71, 97|}", result)
-
-    def test__empty__when_empty__then_true(self):
-        self._test_object = AVLTree()
-        result = self._test_object.empty()
-
-        self.assertTrue(result)
-
-    def test__empty__when_not_empty__then_false(self):
-        result = self._test_object.empty()
-
-        self.assertFalse(result)
 
     def test__len__when_empty__then_zero(self):
         self._test_object = AVLTree()
@@ -124,7 +113,8 @@ class AVLTreeTest(unittest.TestCase):
         self._test_object.remove(root)
 
         self.assertNotIn(root, self._test_object)
-        self.assertTrue(self._test_object.empty())
+        avl_tree = self._test_object
+        self.assertTrue(avl_tree._count == 0)
 
     def test__remove__when_empty__then_raise_value_error(self):
         self._test_object = AVLTree()
@@ -132,7 +122,8 @@ class AVLTreeTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self._test_object.remove(0)
 
-        self.assertTrue(self._test_object.empty())
+        avl_tree = self._test_object
+        self.assertTrue(avl_tree._count == 0)
 
     def test__remove__when_outer_element__then_raise_value_error(self):
         for e in [111, 140, 187]:
@@ -144,4 +135,4 @@ class AVLTreeTest(unittest.TestCase):
     def test__clear__when_not_empty__then_empty(self):
         self._test_object.clear()
 
-        self.assertTrue(self._test_object.empty())
+        self.assertEqual(0, len(self._test_object))
