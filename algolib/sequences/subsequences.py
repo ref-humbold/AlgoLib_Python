@@ -5,7 +5,7 @@
 def longest_ordered(sequence, order):
     """Constructs longest ordered subsequence.
     
-    :param sequence: sequence of elements
+    :param sequence: a sequence of elements
     :param order: order function of elements in subsequence
     :return: least lexicographically longest ordered subsequence"""
     previous_elem = [None]

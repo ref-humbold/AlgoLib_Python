@@ -3,31 +3,18 @@
 from random import randint
 
 
-def heap_sorted(sequence, index_begin=0, index_end=None):
-    """Niemutowalne sortowanie ciągu przez kopcowanie.
+def heap_sorted(sequence):
+    """Immutably sorts specified sequence using a heap.
 
-    :param sequence: ciąg
-    :param index_begin: początkowy indeks ciągu
-    :param index_end: końcowy indeks ciągu
-    :return: lista posortowanych elementów"""
+    :param sequence: a sequence of elements
+    :return: list of sorted elements"""
     sequence_list = list(sequence)
 
     if sequence_list == []:
         return []
 
-    if index_end is None:
-        index_end = len(sequence_list)
-
-    if abs(index_begin) > len(sequence_list):
-        raise IndexError("List beginning index out of range.")
-
-    if abs(index_end) > len(sequence_list):
-        raise IndexError("List ending index out of range.")
-
-    if index_end < len(sequence_list):
-        index_end %= len(sequence_list)
-
-    index_begin %= len(sequence_list)
+    index_begin = 0
+    index_end = len(sequence_list)
     heap_size = index_end - index_begin
 
     for i in range(index_begin + heap_size // 2, index_begin - 1, -1):
@@ -63,36 +50,22 @@ def _move_down(heap, vertex, index_begin, index_end):
     _move_down(heap, next_vertex, index_begin, index_end)
 
 
-def mergedown_sorted(sequence, index_begin=0, index_end=None):
-    """Niemutowalne sortowanie ciągu przez scalanie top-down.
+def mergedown_sorted(sequence):
+    """Immutably sorts specified sequence using a top-down merge-sort algorithm.
 
-    :param sequence: ciąg
-    :param index_begin: początkowy indeks ciągu
-    :param index_end: końcowy indeks ciągu
-    :return: lista posortowanych elementów"""
+    :param sequence: a sequence of elements
+    :return: list of sorted elements"""
     sequence_list = list(sequence)
 
     if sequence_list == []:
         return []
 
-    if index_end is None:
-        index_end = len(sequence_list)
-
-    if abs(index_begin) > len(sequence_list):
-        raise IndexError("Sequence beginning index out of range.")
-
-    if abs(index_end) > len(sequence_list):
-        raise IndexError("Sequence ending index out of range.")
-
-    if index_end < len(sequence_list):
-        index_end %= len(sequence_list)
-
-    index_begin %= len(sequence_list)
-    _merge_sort(sequence_list, index_begin, index_end)
+    _merge_sort(sequence_list, 0, len(sequence_list))
     return sequence_list
 
 
 def _merge_sort(sequence, index_begin, index_end):
+    # Mutably sorts specified sequence using a recursive merge-sort algorithm.
     if index_end - index_begin <= 1:
         return
 
@@ -102,50 +75,31 @@ def _merge_sort(sequence, index_begin, index_end):
     _merge(sequence, index_begin, index_middle, index_end)
 
 
-def mergeup_sorted(sequence, index_begin=0, index_end=None):
-    """Niemutowalne sortowanie listy przez scalanie bottom-up.
+def mergeup_sorted(sequence):
+    """Immutably sorts specified sequence using a bottom-up merge-sort algorithm.
 
-    :param sequence: ciąg
-    :param index_begin: początkowy indeks listy
-    :param index_end: końcowy indeks listy
-    :return: lista posortowanych elementów"""
+    :param sequence: a sequence of elements
+    :return: list of sorted elements"""
     sequence_list = list(sequence)
 
     if sequence_list == []:
         return []
 
-    if index_end is None:
-        index_end = len(sequence_list)
+    half_step = 1
 
-    if abs(index_begin) > len(sequence_list):
-        raise IndexError("Sequence beginning index out of range.")
+    while half_step < len(sequence_list):
+        for i in range(0, len(sequence_list), half_step + half_step):
+            index_middle = min(i + half_step, len(sequence_list))
+            index_end = min(i + half_step + half_step, len(sequence_list))
+            _merge(sequence_list, i, index_middle, index_end)
 
-    if abs(index_end) > len(sequence_list):
-        raise IndexError("Sequence ending index out of range.")
-
-    if index_end < len(sequence_list):
-        index_end %= len(sequence_list)
-
-    index_begin %= len(sequence_list)
-
-    i = 2
-
-    while i < 2 * (index_end - index_begin):
-        for j in range(index_begin, index_end, i):
-            _merge(sequence_list, j, min(j + i // 2, index_end), min(j + i, index_end))
-
-        i *= 2
+        half_step *= 2
 
     return sequence_list
 
 
 def _merge(sequence, index_begin, index_middle, index_end):
-    """Scalanie dwóch uporządkowanych fragmentów listy.
-
-    :param sequence: lista
-    :param index_begin: początek fragmentu
-    :param index_middle: środek fragmentu
-    :param index_end: koniec fragmentu"""
+    # Merges two sorted fragments of a sequence.
     ordered = []
     iter1 = index_begin
     iter2 = index_middle
@@ -163,53 +117,34 @@ def _merge(sequence, index_begin, index_middle, index_end):
     sequence[index_begin:index_begin + len(ordered)] = ordered
 
 
-def quick_sorted(sequence, index_begin=0, index_end=None):
-    """Niemutowalne szybkie sortowanie ciągu.
+def quick_sorted(sequence):
+    """Immutably sorts specified sequence using a quick-sort algorithm.
 
-    :param sequence: ciąg
-    :param index_begin: początkowy indeks ciągu
-    :param index_end: końcowy indeks ciągu
-    :return: lista posortowanych elementów"""
+    :param sequence: a sequence of elements
+    :return: list of sorted elements"""
     sequence_list = list(sequence)
 
     if sequence_list == []:
         return []
 
-    if index_end is None:
-        index_end = len(sequence_list)
-
-    if abs(index_begin) > len(sequence_list):
-        raise IndexError("List beginning index out of range.")
-
-    if abs(index_end) > len(sequence_list):
-        raise IndexError("List ending index out of range.")
-
-    if index_end < len(sequence_list):
-        index_end %= len(sequence_list)
-
-    index_begin %= len(sequence_list)
-    _quick_sort(sequence_list, index_begin, index_end)
+    _quick_sort(sequence_list, 0, len(sequence_list))
     return sequence_list
 
 
 def _quick_sort(sequence, index_begin, index_end):
-    """Mutowalne szybkie sortowanie listy.
-
-    :param sequence: lista
-    :param index_begin: początkowy indeks listy
-    :param index_end: końcowy indeks listy"""
+    # Mutably sorts specified sequence using a quick-sort algorithm.
     if index_end - index_begin <= 1:
         return
 
-    index_pivot = index_begin
-    index_front = index_begin + 1
-    index_back = index_end - 1
-    rdpv = sorted([
+    index_pivot = sorted([
             randint(index_begin, index_end - 1),
             randint(index_begin, index_end - 1),
             randint(index_begin, index_end - 1)
     ])[1]
-    sequence[index_pivot], sequence[rdpv] = sequence[rdpv], sequence[index_pivot]
+    sequence[index_pivot], sequence[index_begin] = sequence[index_begin], sequence[index_pivot]
+    index_pivot = index_begin
+    index_front = index_begin + 1
+    index_back = index_end - 1
 
     while index_pivot < index_back:
         if sequence[index_front] < sequence[index_pivot]:

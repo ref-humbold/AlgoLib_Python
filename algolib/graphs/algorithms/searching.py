@@ -51,27 +51,26 @@ def iter_dfs(graph, strategy, *roots):
     iteration = 1
 
     for root in roots:
-        if reached[root] == 0:
-            vertex_stack.put(root)
+        vertex_stack.put(root)
 
-            while not vertex_stack.empty():
-                vertex = vertex_stack.get()
+        while not vertex_stack.empty():
+            vertex = vertex_stack.get()
 
-                if reached[vertex] == 0:
-                    reached[vertex] = iteration
-                    strategy.preprocess(vertex)
+            if reached[vertex] == 0:
+                reached[vertex] = iteration
+                strategy.preprocess(vertex)
 
-                    for neighbour in graph.get_neighbours(vertex):
-                        if reached[neighbour] == 0:
-                            strategy.for_neighbour(vertex, neighbour)
-                            vertex_stack.put(neighbour)
-                        elif reached[neighbour] == iteration:
-                            strategy.on_cycle(vertex, neighbour)
+                for neighbour in graph.get_neighbours(vertex):
+                    if reached[neighbour] == 0:
+                        strategy.for_neighbour(vertex, neighbour)
+                        vertex_stack.put(neighbour)
+                    elif reached[neighbour] == iteration:
+                        strategy.on_cycle(vertex, neighbour)
 
-                    strategy.postprocess(vertex)
-                    reached[vertex] = -iteration
+                strategy.postprocess(vertex)
+                reached[vertex] = -iteration
 
-            iteration += 1
+        iteration += 1
 
     return map(lambda i: i != 0, reached)
 
