@@ -6,15 +6,6 @@ from algolib.text import kmp
 
 
 class KMPTest(unittest.TestCase):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
-
     def test__kmp__when_pattern_found_once__then_single_occurrence(self):
         text = "abcde"
         pattern = "a"

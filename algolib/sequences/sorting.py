@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Sequence sorting algorithms"""
+"""Algorithms for sequence sorting"""
 from random import randint
 
 
@@ -60,18 +60,18 @@ def mergedown_sorted(sequence):
     if sequence_list == []:
         return []
 
-    _merge_sort(sequence_list, 0, len(sequence_list))
+    _do_merge_sort(sequence_list, 0, len(sequence_list))
     return sequence_list
 
 
-def _merge_sort(sequence, index_begin, index_end):
+def _do_merge_sort(sequence, index_begin, index_end):
     # Mutably sorts specified sequence using a recursive merge-sort algorithm.
     if index_end - index_begin <= 1:
         return
 
     index_middle = (index_begin + index_end) // 2
-    _merge_sort(sequence, index_begin, index_middle)
-    _merge_sort(sequence, index_middle, index_end)
+    _do_merge_sort(sequence, index_begin, index_middle)
+    _do_merge_sort(sequence, index_middle, index_end)
     _merge(sequence, index_begin, index_middle, index_end)
 
 
@@ -127,11 +127,11 @@ def quick_sorted(sequence):
     if sequence_list == []:
         return []
 
-    _quick_sort(sequence_list, 0, len(sequence_list))
+    _do_quick_sort(sequence_list, 0, len(sequence_list))
     return sequence_list
 
 
-def _quick_sort(sequence, index_begin, index_end):
+def _do_quick_sort(sequence, index_begin, index_end):
     # Mutably sorts specified sequence using a quick-sort algorithm.
     if index_end - index_begin <= 1:
         return
@@ -157,5 +157,5 @@ def _quick_sort(sequence, index_begin, index_end):
                 sequence[index_back], sequence[index_front]
             index_back -= 1
 
-    _quick_sort(sequence, index_begin, index_pivot)
-    _quick_sort(sequence, index_pivot + 1, index_end)
+    _do_quick_sort(sequence, index_begin, index_pivot)
+    _do_quick_sort(sequence, index_pivot + 1, index_end)

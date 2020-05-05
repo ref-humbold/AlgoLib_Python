@@ -1,20 +1,11 @@
 # -*- coding: utf-8 -*-
-"""Tests: Sequence sorting algorithms"""
+"""Tests: Algorithms for sequence sorting"""
 import unittest
 
 from algolib.sequences import heap_sorted, mergedown_sorted, mergeup_sorted, quick_sorted
 
 
 class SortingTest(unittest.TestCase):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
-
     def test__heap_sorted(self):
         sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2]
         sequence_copy = sequence[:]
