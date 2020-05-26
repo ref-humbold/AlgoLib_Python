@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Graph cutting algorithms (edge cut and vertex cut)"""
+"""Algorithms for graph cutting (edge cut and vertex cut)"""
 
 
 def find_edge_cut(ugraph):

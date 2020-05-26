@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Strategies for graph searching algorithms"""
+"""Algorithms for strategies for graph searching"""
 
 
 class EmptyStrategy:

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Graph searching algorithms"""
+"""Algorithms for graph searching"""
 import queue
 
 

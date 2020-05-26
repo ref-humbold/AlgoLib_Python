@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TREE GRAPHS STRUCTURE"""
+"""Structure of tree graph"""
 from algolib.graphs.undirected_graph import UndirectedGraph, UndirectedSimpleGraph
 from algolib.structures.disjoint_sets import DisjointSets
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Graph cutting algorithms"""
+"""Tests: Algorithms for graph cutting"""
 import unittest
 
 from algolib.graphs import UndirectedSimpleGraph

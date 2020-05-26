@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Multipartite graphs structure"""
+"""Structure of multipartite graphs"""
 from algolib.graphs.undirected_graph import UndirectedGraph, UndirectedSimpleGraph
 
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Points sorting algorithms"""
+"""Tests: Algorithms for points sorting"""
 import unittest
 
 from algolib.geometry import Point2D, angle_sorted, sorted_by_x, sorted_by_y

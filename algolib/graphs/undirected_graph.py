@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Undirected graphs structures"""
+"""Structure of undirected graphs"""
 from abc import ABCMeta, abstractmethod
 
 from algolib.graphs.directed_graph import DirectedSimpleGraph, DirectedWeightedSimpleGraph

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Minimal spanning tree algorithms"""
+"""Tests: Algorithms for minimal spanning tree"""
 import unittest
 
 from algolib.graphs import UndirectedWeightedSimpleGraph

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Minimal spanning tree algorithms"""
+"""Algorithms for minimal spanning tree"""
 import queue
 
 from algolib.structures.disjoint_sets import DisjointSets

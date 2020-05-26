@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""AVL tree structure"""
+"""Structure of AVL tree"""
 
 
 class AVLTree:

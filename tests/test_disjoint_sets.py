@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Disjoint sets structure (union-find)"""
+"""Tests: Structure of disjoint sets  (union-find)"""
 import unittest
 
 from algolib.structures import DisjointSets

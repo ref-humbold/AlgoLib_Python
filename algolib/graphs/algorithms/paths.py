@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Shortest paths algorithms"""
+"""Algorithms for shortest paths"""
 import queue
 
 

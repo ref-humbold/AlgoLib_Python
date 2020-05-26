@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Prime numbers algorithms"""
+"""Algorithms for prime numbers"""
 from math import sqrt
 from random import randint
 

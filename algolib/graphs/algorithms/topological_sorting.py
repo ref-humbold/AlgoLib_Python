@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Topological sorting algorithms"""
+"""Algorithms for topological sorting"""
 import queue
 
 

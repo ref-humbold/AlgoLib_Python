@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Directed graphs structures"""
+"""Tests: Structure of directed graphs"""
 import unittest
 
 from algolib.graphs import DirectedSimpleGraph
@@ -24,8 +24,7 @@ class DirectedSimpleGraphTest(unittest.TestCase):
     def test__get_vertices(self):
         result = self._test_object.get_vertices()
 
-        self.assertListEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-                             sorted(result))
+        self.assertListEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], sorted(result))
 
     def test__add_vertex(self):
         result = self._test_object.add_vertex([])
@@ -124,5 +123,5 @@ class DirectedSimpleGraphTest(unittest.TestCase):
 
         self._test_object.reverse()
 
-        self.assertListEqual([(1, 9), (2, 1), (2, 6), (4, 5), (5, 3), (6, 6), (6, 9),
-                              (7, 5), (8, 7), (9, 4)], sorted(self._test_object.get_edges()))
+        self.assertListEqual([(1, 9), (2, 1), (2, 6), (4, 5), (5, 3), (6, 6), (6, 9), (7, 5),
+                              (8, 7), (9, 4)], sorted(self._test_object.get_edges()))
