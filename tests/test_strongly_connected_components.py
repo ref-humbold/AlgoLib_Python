@@ -2,8 +2,8 @@
 """Tests: Strongly connected components algorithm"""
 import unittest
 
-from algolib.graphs import DirectedSimpleGraph
-from algolib.graphs.algorithms import find_scc
+from algolib.old_graphs import DirectedSimpleGraph
+from algolib.old_graphs.algorithms import find_scc
 
 
 class SCCTest(unittest.TestCase):

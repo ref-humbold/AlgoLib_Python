@@ -2,8 +2,8 @@
 """Tests: Algorithms for graph cutting"""
 import unittest
 
-from algolib.graphs import UndirectedSimpleGraph
-from algolib.graphs.algorithms import find_edge_cut, find_vertex_cut
+from algolib.old_graphs import UndirectedSimpleGraph
+from algolib.old_graphs.algorithms import find_edge_cut, find_vertex_cut
 
 
 class CuttingTest(unittest.TestCase):

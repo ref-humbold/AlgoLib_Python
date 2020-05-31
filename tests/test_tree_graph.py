@@ -2,7 +2,7 @@
 """Tests: Structure of tree graphs """
 import unittest
 
-from algolib.graphs import CycleError, NotConnectedError, TreeGraph
+from algolib.old_graphs import CycleError, NotConnectedError, TreeGraph
 
 
 class TreeGraphTest(unittest.TestCase):

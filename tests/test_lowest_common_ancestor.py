@@ -2,8 +2,8 @@
 """Tests: lowest common ancestor algorithm"""
 import unittest
 
-from algolib.graphs import TreeGraph
-from algolib.graphs.algorithms import find_lca
+from algolib.old_graphs import TreeGraph
+from algolib.old_graphs.algorithms import find_lca
 
 
 class LCATest(unittest.TestCase):

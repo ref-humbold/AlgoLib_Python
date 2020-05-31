@@ -2,8 +2,8 @@
 """Tests: Algorithms for minimal spanning tree"""
 import unittest
 
-from algolib.graphs import UndirectedWeightedSimpleGraph
-from algolib.graphs.algorithms import kruskal, prim
+from algolib.old_graphs import UndirectedWeightedSimpleGraph
+from algolib.old_graphs.algorithms import kruskal, prim
 
 
 class MSTTest(unittest.TestCase):

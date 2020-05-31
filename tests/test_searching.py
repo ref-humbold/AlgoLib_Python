@@ -2,8 +2,8 @@
 """Tests: Algorithms for graph searching"""
 import unittest
 
-from algolib.graphs import DirectedSimpleGraph, UndirectedSimpleGraph
-from algolib.graphs.algorithms import bfs, iter_dfs, rec_dfs
+from algolib.old_graphs import DirectedSimpleGraph, UndirectedSimpleGraph
+from algolib.old_graphs.algorithms import bfs, iter_dfs, rec_dfs
 
 
 class SearchingTest(unittest.TestCase):

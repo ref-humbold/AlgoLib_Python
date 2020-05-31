@@ -2,7 +2,7 @@
 """Tests: Structure of directed graphs"""
 import unittest
 
-from algolib.graphs import DirectedSimpleGraph
+from algolib.old_graphs import DirectedSimpleGraph
 
 
 class DirectedSimpleGraphTest(unittest.TestCase):

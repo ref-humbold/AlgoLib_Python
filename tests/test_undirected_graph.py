@@ -2,7 +2,7 @@
 """Tests: Structure of undirected graphs"""
 import unittest
 
-from algolib.graphs import DirectedSimpleGraph, UndirectedSimpleGraph
+from algolib.old_graphs import DirectedSimpleGraph, UndirectedSimpleGraph
 
 
 class UndirectedSimpleGraphTest(unittest.TestCase):

@@ -2,8 +2,8 @@
 """Tests: Algorithms for shortest paths"""
 import unittest
 
-from algolib.graphs import DirectedWeightedSimpleGraph, UndirectedWeightedSimpleGraph
-from algolib.graphs.algorithms import bellman_ford, dijkstra, floyd_warshall
+from algolib.old_graphs import DirectedWeightedSimpleGraph, UndirectedWeightedSimpleGraph
+from algolib.old_graphs.algorithms import bellman_ford, dijkstra, floyd_warshall
 
 
 class PathsTest(unittest.TestCase):
