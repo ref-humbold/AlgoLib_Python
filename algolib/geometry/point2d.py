@@ -32,10 +32,7 @@ class Point2D:
         return sqrt(self._x**2 + self._y**2)
 
     def __hash__(self):
-        return hash(self._x) ^ hash(self._y)
-
-    def __str__(self):
-        return f"({self._x}, {self._y})"
+        return hash((self._x, self._y))
 
     def __eq__(self, pt):
         return (self._x, self._y) == (pt.x, pt.y)
@@ -54,3 +51,6 @@ class Point2D:
 
     def __ge__(self, pt):
         return not self < pt
+
+    def __str__(self):
+        return f"({self._x}, {self._y})"
