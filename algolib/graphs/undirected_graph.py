@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Structure of undirected graphs"""
 from abc import ABCMeta
 
 from .graph import Edge, Graph

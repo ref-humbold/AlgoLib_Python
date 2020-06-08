@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Structure of simple graphs"""
 from abc import ABCMeta, abstractmethod
 
 from .graph import Graph
@@ -22,24 +23,25 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
 
     @property
     def vertices(self):
-        return self._representation.vertices
+        return sorted(self._representation.vertices)
 
     def get_vertex(self, index):
         try:
-            return [v.index == index for v in self._representation.vertices][0]
+            return [v for v in self._representation.vertices if v.index == index][0]
         except IndexError:
             raise IndexError(f"No vertex with index {index} in this graph")
 
     def get_neighbours(self, vertex):
-        set(edge.get_neighbour(vertex) for edge in self._representation.get_adjacent_edges(vertex))
+        return set(edge.get_neighbour(vertex)
+                   for edge in self._representation.get_adjacent_edges(vertex))
 
     def get_adjacent_edges(self, vertex):
         self._representation.get_adjacent_edges(vertex)
 
     def get_edge(self, source, destination):
         try:
-            return [edge.get_neighbour(source) is destination for edge in
-                    self._representation.get_adjacent_edges(source)][0]
+            return [edge for edge in self._representation.get_adjacent_edges(source)
+                    if edge.get_neighbour(source) is destination][0]
         except IndexError:
             return None
 

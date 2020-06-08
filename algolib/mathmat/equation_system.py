@@ -21,6 +21,9 @@ class EquationSystem:
         """:return: string representation"""
         return f"{{ {' ; '.join(map(str, self._equations))} }}"
 
+    def __len__(self):
+        return len(self._equations)
+
     def __getitem__(self, i):
         """:param i: index of equation
         :return: i-th equation of this system"""

@@ -2,7 +2,7 @@
 """Tests: Structure of directed graphs"""
 import unittest
 
-from algolib.old_graphs import DirectedSimpleGraph
+from algolib.graphs import DirectedSimpleGraph
 
 
 class DirectedSimpleGraphTest(unittest.TestCase):
@@ -11,117 +11,239 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         self._test_object = None
 
     def setUp(self):
-        self._test_object = DirectedSimpleGraph(10)
+        self._test_object = DirectedSimpleGraph([None] * 10)
 
     def tearDown(self):
         self._test_object = None
 
-    def test__vertices_number(self):
-        result = self._test_object.vertices_number
-
+    def test__vertices_count(self):
+        # when
+        result = self._test_object.vertices_count
+        # then
         self.assertEqual(10, result)
 
-    def test__get_vertices(self):
-        result = self._test_object.get_vertices()
-
-        self.assertListEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], sorted(result))
+    def test__vertices(self):
+        # when
+        result = self._test_object.vertices
+        # then
+        self.assertListEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [v.index for v in result])
 
     def test__add_vertex(self):
-        result = self._test_object.add_vertex([])
+        # when
+        result = self._test_object.add_vertex(None)
+        # then
+        self.assertEqual(10, result.index)
+        self.assertIsNone(result.property)
+        self.assertEqual(11, self._test_object.vertices_count)
 
-        self.assertEqual(10, result)
-        self.assertEqual(11, self._test_object.vertices_number)
-
-    def test__edges_number(self):
-        self._test_object.add_edge(7, 7)
-        self._test_object.add_edge(1, 5)
-        self._test_object.add_edge(2, 4)
-        self._test_object.add_edge(8, 0)
-        self._test_object.add_edge(6, 3)
-        self._test_object.add_edge(3, 6)
-        self._test_object.add_edge(9, 3)
-        self._test_object.add_edge(8, 0)
-
-        result = self._test_object.edges_number
-
+    def test__edges_count(self):
+        # given
+        self._test_object.add_edge(self._test_object.get_vertex(7), self._test_object.get_vertex(7),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(1), self._test_object.get_vertex(5),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(2), self._test_object.get_vertex(4),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(8), self._test_object.get_vertex(0),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(6), self._test_object.get_vertex(3),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(3), self._test_object.get_vertex(6),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(9), self._test_object.get_vertex(3),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(8), self._test_object.get_vertex(0),
+                                   None)
+        # when
+        result = self._test_object.edges_count
+        # then
         self.assertEqual(7, result)
 
-    def test__get_edges(self):
-        self._test_object.add_edge(7, 7)
-        self._test_object.add_edge(1, 5)
-        self._test_object.add_edge(2, 4)
-        self._test_object.add_edge(8, 0)
-        self._test_object.add_edge(6, 3)
-        self._test_object.add_edge(3, 6)
-        self._test_object.add_edge(9, 3)
-        self._test_object.add_edge(8, 0)
-
-        result = self._test_object.get_edges()
-
-        self.assertListEqual([(1, 5), (2, 4), (3, 6), (6, 3), (7, 7), (8, 0), (9, 3)],
-                             sorted(result))
+    def test__edges(self):
+        # given
+        self._test_object.add_edge(self._test_object.get_vertex(7), self._test_object.get_vertex(7),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(1), self._test_object.get_vertex(5),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(2), self._test_object.get_vertex(4),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(8), self._test_object.get_vertex(0),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(6), self._test_object.get_vertex(3),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(3), self._test_object.get_vertex(6),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(9), self._test_object.get_vertex(3),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(8), self._test_object.get_vertex(0),
+                                   None)
+        # when
+        result = self._test_object.edges
+        # then
+        self.assertListEqual(
+                [(self._test_object.get_vertex(1), self._test_object.get_vertex(5)),
+                 (self._test_object.get_vertex(2), self._test_object.get_vertex(4)),
+                 (self._test_object.get_vertex(3), self._test_object.get_vertex(6)),
+                 (self._test_object.get_vertex(6), self._test_object.get_vertex(3)),
+                 (self._test_object.get_vertex(7), self._test_object.get_vertex(7)),
+                 (self._test_object.get_vertex(8), self._test_object.get_vertex(0)),
+                 (self._test_object.get_vertex(9), self._test_object.get_vertex(3))],
+                sorted([(e.source, e.destination) for e in result]))
 
     def test__add_edge(self):
-        self._test_object.add_edge(1, 5)
-        self._test_object.add_edge(1, 5)
-        self._test_object.add_edge(1, 1)
-
-        self.assertEqual(2, self._test_object.edges_number)
-        self.assertListEqual([1, 5], sorted(self._test_object.get_neighbours(1)))
-        self.assertListEqual([], sorted(self._test_object.get_neighbours(5)))
+        # when
+        self._test_object.add_edge(self._test_object.get_vertex(1), self._test_object.get_vertex(5),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(1), self._test_object.get_vertex(5),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(1), self._test_object.get_vertex(1),
+                                   None)
+        # then
+        self.assertEqual(2, self._test_object.edges_count)
+        self.assertListEqual([self._test_object.get_vertex(1), self._test_object.get_vertex(5)],
+                             sorted(self._test_object.get_neighbours(
+                                     self._test_object.get_vertex(1))))
+        self.assertListEqual([], sorted(self._test_object.get_neighbours(
+                self._test_object.get_vertex(5))))
 
     def test__get_neighbours(self):
-        self._test_object.add_edge(1, 1)
-        self._test_object.add_edge(1, 3)
-        self._test_object.add_edge(1, 4)
-        self._test_object.add_edge(1, 7)
-        self._test_object.add_edge(1, 9)
-        self._test_object.add_edge(2, 1)
-        self._test_object.add_edge(6, 1)
+        # given
+        self._test_object.add_edge(self._test_object.get_vertex(1), self._test_object.get_vertex(1),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(1), self._test_object.get_vertex(3),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(1), self._test_object.get_vertex(4),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(1), self._test_object.get_vertex(7),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(1), self._test_object.get_vertex(9),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(2), self._test_object.get_vertex(1),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(6), self._test_object.get_vertex(1),
+                                   None)
+        # when
+        result = self._test_object.get_neighbours(self._test_object.get_vertex(1))
+        # then
+        self.assertListEqual([self._test_object.get_vertex(1), self._test_object.get_vertex(3),
+                              self._test_object.get_vertex(4), self._test_object.get_vertex(7),
+                              self._test_object.get_vertex(9)], sorted(result))
 
-        result = self._test_object.get_neighbours(1)
-
-        self.assertListEqual([1, 3, 4, 7, 9], sorted(result))
-
-    def test__get_outdegree(self):
-        self._test_object.add_edge(1, 1)
-        self._test_object.add_edge(1, 3)
-        self._test_object.add_edge(1, 4)
-        self._test_object.add_edge(1, 7)
-        self._test_object.add_edge(1, 9)
-        self._test_object.add_edge(2, 1)
-        self._test_object.add_edge(6, 1)
-
-        result = self._test_object.get_outdegree(1)
-
+    def test__get_output_degree(self):
+        # given
+        self._test_object.add_edge(self._test_object.get_vertex(1), self._test_object.get_vertex(1),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(1), self._test_object.get_vertex(3),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(1), self._test_object.get_vertex(4),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(1), self._test_object.get_vertex(7),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(1), self._test_object.get_vertex(9),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(2), self._test_object.get_vertex(1),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(6), self._test_object.get_vertex(1),
+                                   None)
+        # when
+        result = self._test_object.get_output_degree(self._test_object.get_vertex(1))
+        # then
         self.assertEqual(5, result)
 
-    def test__get_indegree(self):
-        self._test_object.add_edge(1, 1)
-        self._test_object.add_edge(3, 1)
-        self._test_object.add_edge(4, 1)
-        self._test_object.add_edge(7, 1)
-        self._test_object.add_edge(9, 1)
-        self._test_object.add_edge(1, 2)
-        self._test_object.add_edge(1, 6)
-
-        result = self._test_object.get_indegree(1)
-
+    def test__get_input_degree(self):
+        # given
+        self._test_object.add_edge(self._test_object.get_vertex(1), self._test_object.get_vertex(1),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(3), self._test_object.get_vertex(1),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(4), self._test_object.get_vertex(1),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(7), self._test_object.get_vertex(1),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(9), self._test_object.get_vertex(1),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(1), self._test_object.get_vertex(2),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(1), self._test_object.get_vertex(6),
+                                   None)
+        # when
+        result = self._test_object.get_input_degree(self._test_object.get_vertex(1))
+        # then
         self.assertEqual(5, result)
 
     def test__reverse(self):
-        self._test_object.add_edge(1, 2)
-        self._test_object.add_edge(3, 5)
-        self._test_object.add_edge(4, 9)
-        self._test_object.add_edge(5, 4)
-        self._test_object.add_edge(5, 7)
-        self._test_object.add_edge(6, 2)
-        self._test_object.add_edge(6, 6)
-        self._test_object.add_edge(7, 8)
-        self._test_object.add_edge(9, 1)
-        self._test_object.add_edge(9, 6)
-
+        # given
+        self._test_object.add_edge(self._test_object.get_vertex(1), self._test_object.get_vertex(2),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(3), self._test_object.get_vertex(5),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(4), self._test_object.get_vertex(9),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(5), self._test_object.get_vertex(4),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(5), self._test_object.get_vertex(7),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(6), self._test_object.get_vertex(2),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(6), self._test_object.get_vertex(6),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(7), self._test_object.get_vertex(8),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(9), self._test_object.get_vertex(1),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(9), self._test_object.get_vertex(6),
+                                   None)
+        # when
         self._test_object.reverse()
+        # then
+        self.assertListEqual([(self._test_object.get_vertex(1), self._test_object.get_vertex(9)),
+                              (self._test_object.get_vertex(2), self._test_object.get_vertex(1)),
+                              (self._test_object.get_vertex(2), self._test_object.get_vertex(6)),
+                              (self._test_object.get_vertex(4), self._test_object.get_vertex(5)),
+                              (self._test_object.get_vertex(5), self._test_object.get_vertex(3)),
+                              (self._test_object.get_vertex(6), self._test_object.get_vertex(6)),
+                              (self._test_object.get_vertex(6), self._test_object.get_vertex(9)),
+                              (self._test_object.get_vertex(7), self._test_object.get_vertex(5)),
+                              (self._test_object.get_vertex(8), self._test_object.get_vertex(7)),
+                              (self._test_object.get_vertex(9), self._test_object.get_vertex(4))],
+                             sorted([(edge.source, edge.destination)
+                                     for edge in self._test_object.edges]))
 
-        self.assertListEqual([(1, 9), (2, 1), (2, 6), (4, 5), (5, 3), (6, 6), (6, 9), (7, 5),
-                              (8, 7), (9, 4)], sorted(self._test_object.get_edges()))
+    def test__reversed_copy(self):
+        # given
+        self._test_object.add_edge(self._test_object.get_vertex(1), self._test_object.get_vertex(2),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(3), self._test_object.get_vertex(5),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(4), self._test_object.get_vertex(9),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(5), self._test_object.get_vertex(4),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(5), self._test_object.get_vertex(7),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(6), self._test_object.get_vertex(2),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(6), self._test_object.get_vertex(6),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(7), self._test_object.get_vertex(8),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(9), self._test_object.get_vertex(1),
+                                   None)
+        self._test_object.add_edge(self._test_object.get_vertex(9), self._test_object.get_vertex(6),
+                                   None)
+        # when
+        result = self._test_object.reversed_copy()
+        # then
+        self.assertListEqual(self._test_object.vertices, result.vertices)
+        self.assertListEqual(
+                [(self._test_object.get_vertex(1), self._test_object.get_vertex(9)),
+                 (self._test_object.get_vertex(2), self._test_object.get_vertex(1)),
+                 (self._test_object.get_vertex(2), self._test_object.get_vertex(6)),
+                 (self._test_object.get_vertex(4), self._test_object.get_vertex(5)),
+                 (self._test_object.get_vertex(5), self._test_object.get_vertex(3)),
+                 (self._test_object.get_vertex(6), self._test_object.get_vertex(6)),
+                 (self._test_object.get_vertex(6), self._test_object.get_vertex(9)),
+                 (self._test_object.get_vertex(7), self._test_object.get_vertex(5)),
+                 (self._test_object.get_vertex(8), self._test_object.get_vertex(7)),
+                 (self._test_object.get_vertex(9), self._test_object.get_vertex(4))],
+                sorted([(edge.source, edge.destination) for edge in result.edges]))

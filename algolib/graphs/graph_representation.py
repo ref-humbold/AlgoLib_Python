@@ -49,9 +49,10 @@ class GraphRepresentation:
 
     def _validate_vertex(self, vertex):
         if all(vertex is not v for v in self._graphDict.keys()):
-            raise ValueError("Vertex object does not belong to this graph")
+            raise ValueError(f"Vertex object {vertex} does not belong to this graph")
 
     def _validate_edge(self, edge):
         if all(v is not edge.source for v in self._graphDict.keys()) \
                 and all(v is not edge.destination for v in self._graphDict.keys()):
-            raise ValueError("Edge source or destination does not belong to this graph")
+            raise ValueError(f"Edge source {edge.source} or destination {edge.destination} "
+                             "does not belong to this graph")
