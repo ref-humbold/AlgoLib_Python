@@ -55,25 +55,27 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         # then
         self.assertListEqual(list(range(10)), sorted(result))
 
-    def test__add_vertex__when_new_vertex__then_vertex_added(self):
+    def test__add_vertex__when_new_vertex__then_true(self):
         # given
         new_vertex = 13
         vertex_property = "qwerty"
         # when
-        self._test_object.add_vertex(new_vertex, vertex_property)
+        result = self._test_object.add_vertex(new_vertex, vertex_property)
         # then
+        self.assertTrue(result)
         self.assertEqual(11, self._test_object.vertices_count)
         self.assertListEqual([], list(self._test_object.get_neighbours(new_vertex)))
         self.assertEqual(vertex_property, self._test_object[new_vertex])
 
-    def test__add_vertex__when_existing_vertex__then_no_changes(self):
+    def test__add_vertex__when_existing_vertex__then_false(self):
         # given
         vertex = 6
         vertex_property = "qwerty"
         self._test_object[vertex] = vertex_property
         # when
-        self._test_object.add_vertex(vertex, "abcdefg")
+        result = self._test_object.add_vertex(vertex, "abcdefg")
         # then
+        self.assertFalse(result)
         self.assertEqual(10, self._test_object.vertices_count)
         self.assertEqual(vertex_property, self._test_object[vertex])
 

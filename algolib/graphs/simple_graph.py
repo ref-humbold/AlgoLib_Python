@@ -42,11 +42,14 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
         """Adds a new vertex with given property to this graph.
 
          :param vertex: a new vertex
-         :param vertex_property: vertex property"""
+         :param vertex_property: vertex property
+         :return: ``true`` if the vertex was added, otherwise ``false``"""
         was_added = self._representation.add_vertex(vertex)
 
         if was_added:
             self[vertex] = vertex_property
+
+        return was_added
 
     @abstractmethod
     def add_edge(self, source, destination, edge_property=None):
