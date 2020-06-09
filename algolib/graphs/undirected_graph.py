@@ -11,8 +11,8 @@ class UndirectedGraph(Graph, metaclass=ABCMeta):
 
 
 class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
-    def __init__(self, properties=None, *, graph=None):
-        super().__init__(properties=properties, graph=graph)
+    def __init__(self, vertices=None):
+        super().__init__(vertices)
 
     @property
     def edges_count(self):
@@ -28,11 +28,15 @@ class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
     def get_input_degree(self, vertex):
         return len(self._representation.get_adjacent_edges(vertex))
 
-    def add_edge(self, source, destination, edge_property):
-        new_source = min(source, destination)
-        new_destination = max(source, destination)
-        edge = Edge(new_source, new_destination, edge_property)
+    def add_edge(self, source, destination, edge_property=None):
+        existing_edge = self.get_edge(source, destination)
 
-        self._representation.add_edge_to_source(edge)
-        self._representation.add_edge_to_destination(edge)
-        return edge
+        if existing_edge is not None:
+            return existing_edge
+
+        new_edge = Edge(source, destination)
+
+        self._representation.add_edge_to_source(new_edge)
+        self._representation.add_edge_to_destination(new_edge)
+        self._representation[new_edge] = edge_property
+        return new_edge

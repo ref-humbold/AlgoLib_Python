@@ -18,8 +18,8 @@ class DirectedGraph(Graph, metaclass=ABCMeta):
 
 
 class DirectedSimpleGraph(SimpleGraph, DirectedGraph):
-    def __init__(self, properties=None, *, graph=None):
-        super().__init__(properties=properties, graph=graph)
+    def __init__(self, vertices=None):
+        super().__init__(vertices)
 
     @property
     def edges_count(self):
@@ -36,23 +36,37 @@ class DirectedSimpleGraph(SimpleGraph, DirectedGraph):
         return len([edge for edges in self._representation.edges_set for edge in edges if
                     edge.destination is vertex])
 
-    def add_edge(self, source, destination, edge_property):
-        edge = Edge(source, destination, edge_property)
+    def add_edge(self, source, destination, edge_property=None):
+        existing_edge = self.get_edge(source, destination)
 
-        self._representation.add_edge_to_source(edge)
-        return edge
+        if existing_edge is not None:
+            return existing_edge
+
+        new_edge = Edge(source, destination)
+        self._representation.add_edge_to_source(new_edge)
+        self._representation[new_edge] = edge_property
+        return new_edge
 
     def reverse(self):
-        edges = self.edges
-        self._representation = GraphRepresentation(vertices=self.vertices)
+        new_representation = GraphRepresentation(self.vertices)
 
-        for edge in edges:
-            self._representation.add_edge_to_source(edge.reversed())
-
-    def reversed_copy(self):
-        reversed_graph = DirectedSimpleGraph(graph=self)
+        for vertex in self.vertices:
+            new_representation[vertex] = self._representation[vertex]
 
         for edge in self.edges:
-            reversed_graph.add_edge(edge.destination, edge.source, edge.property)
+            new_edge = edge.reversed()
+            new_representation.add_edge_to_source(new_edge)
+            new_representation[new_edge] = self._representation[edge]
+
+        self._representation = new_representation
+
+    def reversed_copy(self):
+        reversed_graph = DirectedSimpleGraph(self.vertices)
+
+        for vertex in self.vertices:
+            reversed_graph[vertex] = self._representation[vertex]
+
+        for edge in self.edges:
+            reversed_graph.add_edge(edge.destination, edge.source, self._representation[edge])
 
         return reversed_graph

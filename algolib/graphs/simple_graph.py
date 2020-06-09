@@ -7,15 +7,8 @@ from .graph_representation import GraphRepresentation
 
 
 class SimpleGraph(Graph, metaclass=ABCMeta):
-    def __init__(self, properties=None, *, graph=None):
-        if graph is not None:
-            self._representation = GraphRepresentation(vertices=graph.vertices)
-        else:
-            self._representation = GraphRepresentation()
-
-            if properties is not None:
-                for prop in properties:
-                    self.add_vertex(prop)
+    def __init__(self, vertices=None):
+        self._representation = GraphRepresentation(vertices)
 
     @property
     def vertices_count(self):
@@ -25,11 +18,11 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
     def vertices(self):
         return sorted(self._representation.vertices)
 
-    def get_vertex(self, index):
-        try:
-            return [v for v in self._representation.vertices if v.index == index][0]
-        except IndexError:
-            raise IndexError(f"No vertex with index {index} in this graph")
+    def __getitem__(self, item):
+        return self._representation[item]
+
+    def __setitem__(self, item, value):
+        self._representation[item] = value
 
     def get_neighbours(self, vertex):
         return set(edge.get_neighbour(vertex)
@@ -45,19 +38,20 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
         except IndexError:
             return None
 
-    def add_vertex(self, vertex_property):
+    def add_vertex(self, vertex, vertex_property=None):
         """Adds a new vertex with given property to this graph.
 
-         :param vertex_property: a vertex property
-         :return the new vertex"""
-        return self._representation.add_vertex(vertex_property)
+         :param vertex: a new vertex
+         :param vertex_property: vertex property"""
+        self._representation.add_vertex(vertex)
+        self[vertex] = vertex_property
 
     @abstractmethod
-    def add_edge(self, source, destination, edge_property):
+    def add_edge(self, source, destination, edge_property=None):
         """Adds a new edge with given properties to this graph.
 
         :param source: a source vertex
         :param destination: a destination vertex
-        :param edge_property: an edge property
+        :param edge_property: edge property
         :return: the new edge"""
         pass

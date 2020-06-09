@@ -29,17 +29,18 @@ class Graph(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def get_vertex(self, index):
-        """:param index: vertex index
-        :return: vertex with the index
-        :raise IndexError: if no vertex found"""
+    def __getitem__(self, item):
+        pass
+
+    @abstractmethod
+    def __setitem__(self, item, value):
         pass
 
     @abstractmethod
     def get_edge(self, source, destination):
         """:param source: source vertex
         :param destination: destination vertex
-        :return: edge between the vertices, or ``None`` of no edge"""
+        :return: edge between the vertices, or ``None`` if no edge"""
         pass
 
     @abstractmethod
@@ -67,45 +68,10 @@ class Graph(metaclass=ABCMeta):
         pass
 
 
-class Vertex:
-    def __init__(self, index, vertex_property):
-        self._index = index
-        self.property = vertex_property
-
-    @property
-    def index(self):
-        return self._index
-
-    def __hash__(self):
-        return hash(self._index)
-
-    def __eq__(self, other):
-        return self.index == other.index
-
-    def __ne__(self, other):
-        return self.index != other.index
-
-    def __lt__(self, other):
-        return self.index < other.index
-
-    def __le__(self, other):
-        return self.index <= other.index
-
-    def __gt__(self, other):
-        return self.index > other.index
-
-    def __ge__(self, other):
-        return self.index > other.index
-
-    def __str__(self):
-        return f"Vertex{{{self._index} ({self.property})}}"
-
-
 class Edge:
-    def __init__(self, source, destination, edge_property):
+    def __init__(self, source, destination):
         self._source = source
         self._destination = destination
-        self.property = edge_property
 
     @property
     def source(self):
@@ -125,7 +91,7 @@ class Edge:
         raise ValueError(f"Edge {self} is not adjacent to given vertex {vertex}")
 
     def reversed(self):
-        return Edge(self._destination, self._source, self.property)
+        return Edge(self._destination, self._source)
 
     def __hash__(self):
         return hash((self._source, self._destination))
@@ -149,4 +115,4 @@ class Edge:
         return (self.source, self._destination) >= (other.source, other.destination)
 
     def __str__(self):
-        return f"Edge{{{self._source} -> {self._destination} ({self.property})}}"
+        return f"Edge{{{self._source} -> {self._destination}}}"

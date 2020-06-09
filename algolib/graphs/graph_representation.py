@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
-from graphs.graph import Vertex
+from .graph import Edge
 
 
 class GraphRepresentation:
     def __init__(self, vertices=None):
+        self._properties = {}
+
         if vertices is not None:
             self._graphDict = {v: set() for v in vertices}
         else:
@@ -29,30 +31,34 @@ class GraphRepresentation:
     def edges_set(self):
         return self._graphDict.values()
 
+    def __getitem__(self, item):
+        self._validate(item)
+        return self._properties.get(item, None)
+
+    def __setitem__(self, item, value):
+        self._validate(item)
+        self._properties[item] = value
+
     def get_adjacent_edges(self, vertex):
-        self._validate_vertex(vertex)
+        self._validate(vertex)
         return self._graphDict[vertex]
 
-    def add_vertex(self, vertex_property):
-        vertex = Vertex(len(self._graphDict), vertex_property)
-
-        self._graphDict[vertex] = set()
-        return vertex
+    def add_vertex(self, vertex):
+        if vertex not in self._graphDict:
+            self._graphDict[vertex] = set()
 
     def add_edge_to_source(self, edge):
-        self._validate_edge(edge)
+        self._validate(edge)
         self._graphDict[edge.source].add(edge)
 
     def add_edge_to_destination(self, edge):
-        self._validate_edge(edge)
+        self._validate(edge)
         self._graphDict[edge.destination].add(edge)
 
-    def _validate_vertex(self, vertex):
-        if all(vertex is not v for v in self._graphDict.keys()):
-            raise ValueError(f"Vertex object {vertex} does not belong to this graph")
-
-    def _validate_edge(self, edge):
-        if all(v is not edge.source for v in self._graphDict.keys()) \
-                and all(v is not edge.destination for v in self._graphDict.keys()):
-            raise ValueError(f"Edge source {edge.source} or destination {edge.destination} "
-                             "does not belong to this graph")
+    def _validate(self, item):
+        if isinstance(item, Edge):
+            if item.source not in self._graphDict or item.destination not in self._graphDict:
+                raise ValueError(f"Edge source {item.source} or destination {item.destination} "
+                                 "does not belong to this graph")
+        elif item not in self._graphDict:
+            raise ValueError(f"Vertex object {item} does not belong to this graph")
