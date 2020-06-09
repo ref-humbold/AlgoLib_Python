@@ -48,8 +48,11 @@ class GraphRepresentation:
         return self._graphDict[vertex]
 
     def add_vertex(self, vertex):
-        if vertex not in self._graphDict:
-            self._graphDict[vertex] = set()
+        if vertex in self._graphDict:
+            return False
+
+        self._graphDict[vertex] = set()
+        return True
 
     def add_edge_to_source(self, edge):
         self._validate(edge)

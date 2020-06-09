@@ -2,6 +2,7 @@
 """Structure of undirected graphs"""
 from abc import ABCMeta
 
+from . import DirectedSimpleGraph
 from .graph import Edge, Graph
 from .simple_graph import SimpleGraph
 
@@ -39,3 +40,15 @@ class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
         self._representation.add_edge_to_destination(new_edge)
         self._representation[new_edge] = edge_property
         return new_edge
+
+    def as_directed(self):
+        directed_simple_graph = DirectedSimpleGraph(self.vertices)
+
+        for vertex in self.vertices:
+            directed_simple_graph[vertex] = self[vertex]
+
+        for edge in self.edges:
+            directed_simple_graph.add_edge(edge.source, edge.destination, self[edge])
+            directed_simple_graph.add_edge(edge.destination, edge.source, self[edge])
+
+        return directed_simple_graph

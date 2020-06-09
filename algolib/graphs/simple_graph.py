@@ -29,7 +29,7 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
                    for edge in self._representation.get_adjacent_edges(vertex))
 
     def get_adjacent_edges(self, vertex):
-        self._representation.get_adjacent_edges(vertex)
+        return self._representation.get_adjacent_edges(vertex)
 
     def get_edge(self, source, destination):
         try:
@@ -43,8 +43,10 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
 
          :param vertex: a new vertex
          :param vertex_property: vertex property"""
-        self._representation.add_vertex(vertex)
-        self[vertex] = vertex_property
+        was_added = self._representation.add_vertex(vertex)
+
+        if was_added:
+            self[vertex] = vertex_property
 
     @abstractmethod
     def add_edge(self, source, destination, edge_property=None):
