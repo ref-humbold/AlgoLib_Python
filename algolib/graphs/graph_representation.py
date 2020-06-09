@@ -37,7 +37,11 @@ class GraphRepresentation:
 
     def __setitem__(self, item, value):
         self._validate(item)
-        self._properties[item] = value
+
+        if value is not None:
+            self._properties[item] = value
+        elif item in self._properties:
+            del self._properties[item]
 
     def get_adjacent_edges(self, vertex):
         self._validate(vertex)

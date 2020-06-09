@@ -35,7 +35,6 @@ class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
             return existing_edge
 
         new_edge = Edge(source, destination)
-
         self._representation.add_edge_to_source(new_edge)
         self._representation.add_edge_to_destination(new_edge)
         self._representation[new_edge] = edge_property
