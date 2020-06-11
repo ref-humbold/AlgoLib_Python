@@ -150,7 +150,7 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         self.assertListEqual([1, 5], sorted(self._test_object.get_neighbours(1)))
         self.assertListEqual([], list(self._test_object.get_neighbours(5)))
 
-    def add_edge__when_duplicated_edge__then_existing_edge(self):
+    def test__add_edge__when_duplicated_edge__then_existing_edge(self):
         # given
         source = 3
         destination = 7

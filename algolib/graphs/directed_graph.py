@@ -2,9 +2,9 @@
 """Structure of directed graphs"""
 from abc import ABCMeta, abstractmethod
 
-from .graph import Edge, Graph
-from .graph_representation import GraphRepresentation
-from .simple_graph import SimpleGraph
+from algolib.graphs.graph import Edge, Graph
+from algolib.graphs.graph_representation import GraphRepresentation
+from algolib.graphs.simple_graph import SimpleGraph
 
 
 class DirectedGraph(Graph, metaclass=ABCMeta):

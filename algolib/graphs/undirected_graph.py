@@ -2,9 +2,9 @@
 """Structure of undirected graphs"""
 from abc import ABCMeta
 
-from . import DirectedSimpleGraph
-from .graph import Edge, Graph
-from .simple_graph import SimpleGraph
+from algolib.graphs.directed_graph import DirectedSimpleGraph
+from algolib.graphs.graph import Edge, Graph
+from algolib.graphs.simple_graph import SimpleGraph
 
 
 class UndirectedGraph(Graph, metaclass=ABCMeta):

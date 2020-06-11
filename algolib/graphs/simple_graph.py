@@ -2,8 +2,8 @@
 """Structure of simple graphs"""
 from abc import ABCMeta, abstractmethod
 
-from .graph import Graph
-from .graph_representation import GraphRepresentation
+from algolib.graphs.graph import Graph
+from algolib.graphs.graph_representation import GraphRepresentation
 
 
 class SimpleGraph(Graph, metaclass=ABCMeta):
@@ -58,5 +58,5 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
         :param source: a source vertex
         :param destination: a destination vertex
         :param edge_property: edge property
-        :return: the new edge"""
+        :return: the new edge if added, or the existing edge"""
         pass
