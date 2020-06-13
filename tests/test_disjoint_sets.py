@@ -151,6 +151,7 @@ class DisjointSetsTest(unittest.TestCase):
         self.assertTrue(result)
 
     def test__is_same_set__when_absent__then_raise_key_error(self):
-        # when - then
+        # then
         with self.assertRaises(KeyError):
+            # when
             self._test_object.is_same_set(15, 6)
