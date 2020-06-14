@@ -47,7 +47,7 @@ class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
             directed_simple_graph[vertex] = self[vertex]
 
         for edge in self.edges:
-            directed_simple_graph.add_edge_between(edge.source, edge.destination, self[edge])
-            directed_simple_graph.add_edge_between(edge.destination, edge.source, self[edge])
+            directed_simple_graph.add_edge(edge, self[edge])
+            directed_simple_graph.add_edge(edge.reversed(), self[edge])
 
         return directed_simple_graph
