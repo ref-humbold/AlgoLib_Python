@@ -53,11 +53,11 @@ class MultipartiteGraph(UndirectedGraph):
     def get_edges(self):
         return self.__graph.get_edges()
 
-    def add_edge(self, vertex1, vertex2):
+    def add_edge_between(self, vertex1, vertex2):
         if self.is_same_group(vertex1, vertex2):
             raise GraphPartitionError()
 
-        self.__graph.add_edge(vertex1, vertex2)
+        self.__graph.add_edge_between(vertex1, vertex2)
 
     def get_neighbours(self, vertex, group=None):
         """:param vertex: numer wierzchołka

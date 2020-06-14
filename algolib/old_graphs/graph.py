@@ -44,7 +44,7 @@ class Graph(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def add_edge(self, vertex1, vertex2):
+    def add_edge_between(self, vertex1, vertex2):
         """Dodawanie nowej krawędzi.
 
         :param vertex1: początkowy wierzchołek
@@ -123,7 +123,7 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
         v = len(self._graphrepr) - 1
 
         for nb in neighbours:
-            self.add_edge(v, nb)
+            self.add_edge_between(v, nb)
 
         return v
 
@@ -137,7 +137,7 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def add_edge(self, vertex1, vertex2):
+    def add_edge_between(self, vertex1, vertex2):
         pass
 
     def get_neighbours(self, vertex):

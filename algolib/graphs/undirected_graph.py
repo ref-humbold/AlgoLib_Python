@@ -3,7 +3,7 @@
 from abc import ABCMeta
 
 from algolib.graphs.directed_graph import DirectedSimpleGraph
-from algolib.graphs.graph import Edge, Graph
+from algolib.graphs.graph import Graph
 from algolib.graphs.simple_graph import SimpleGraph
 
 
@@ -29,17 +29,16 @@ class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
     def get_input_degree(self, vertex):
         return len(self._representation.get_adjacent_edges(vertex))
 
-    def add_edge(self, source, destination, edge_property=None):
-        existing_edge = self.get_edge(source, destination)
+    def add_edge(self, edge, edge_property=None):
+        existing_edge = self.get_edge(edge.source, edge.destination)
 
         if existing_edge is not None:
             return existing_edge
 
-        new_edge = Edge(source, destination)
-        self._representation.add_edge_to_source(new_edge)
-        self._representation.add_edge_to_destination(new_edge)
-        self._representation[new_edge] = edge_property
-        return new_edge
+        self._representation.add_edge_to_source(edge)
+        self._representation.add_edge_to_destination(edge)
+        self._representation[edge] = edge_property
+        return edge
 
     def as_directed(self):
         directed_simple_graph = DirectedSimpleGraph(self.vertices)
@@ -48,7 +47,7 @@ class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
             directed_simple_graph[vertex] = self[vertex]
 
         for edge in self.edges:
-            directed_simple_graph.add_edge(edge.source, edge.destination, self[edge])
-            directed_simple_graph.add_edge(edge.destination, edge.source, self[edge])
+            directed_simple_graph.add_edge_between(edge.source, edge.destination, self[edge])
+            directed_simple_graph.add_edge_between(edge.destination, edge.source, self[edge])
 
         return directed_simple_graph

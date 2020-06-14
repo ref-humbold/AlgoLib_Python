@@ -13,13 +13,13 @@ class MinimalSpanningTreeTest(unittest.TestCase):
 
     def setUp(self):
         self._graph = UndirectedSimpleGraph(range(5))
-        self._graph.add_edge(0, 1, self._Weight(-1))
-        self._graph.add_edge(0, 2, self._Weight(4))
-        self._graph.add_edge(1, 2, self._Weight(9))
-        self._graph.add_edge(1, 3, self._Weight(7))
-        self._graph.add_edge(1, 4, self._Weight(12))
-        self._graph.add_edge(2, 4, self._Weight(6))
-        self._graph.add_edge(3, 4, self._Weight(3))
+        self._graph.add_edge_between(0, 1, self._Weight(-1))
+        self._graph.add_edge_between(0, 2, self._Weight(4))
+        self._graph.add_edge_between(1, 2, self._Weight(9))
+        self._graph.add_edge_between(1, 3, self._Weight(7))
+        self._graph.add_edge_between(1, 4, self._Weight(12))
+        self._graph.add_edge_between(2, 4, self._Weight(6))
+        self._graph.add_edge_between(3, 4, self._Weight(3))
 
     def tearDown(self):
         del self._graph

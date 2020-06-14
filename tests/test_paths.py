@@ -24,36 +24,36 @@ class PathsTest(unittest.TestCase):
 
     def setUp(self):
         self._directed_graph = DirectedSimpleGraph(range(10))
-        self._directed_graph.add_edge(0, 1, self._Weight(4))
-        self._directed_graph.add_edge(1, 4, self._Weight(7))
-        self._directed_graph.add_edge(1, 7, self._Weight(12))
-        self._directed_graph.add_edge(2, 4, self._Weight(6))
-        self._directed_graph.add_edge(2, 6, self._Weight(8))
-        self._directed_graph.add_edge(3, 0, self._Weight(3))
-        self._directed_graph.add_edge(3, 7, self._Weight(5))
-        self._directed_graph.add_edge(4, 5, self._Weight(1))
-        self._directed_graph.add_edge(4, 3, self._Weight(10))
-        self._directed_graph.add_edge(5, 6, self._Weight(4))
-        self._directed_graph.add_edge(5, 8, self._Weight(2))
-        self._directed_graph.add_edge(6, 5, self._Weight(7))
-        self._directed_graph.add_edge(7, 5, self._Weight(2))
-        self._directed_graph.add_edge(7, 8, self._Weight(6))
-        self._directed_graph.add_edge(8, 9, self._Weight(10))
-        self._directed_graph.add_edge(9, 6, self._Weight(3))
+        self._directed_graph.add_edge_between(0, 1, self._Weight(4))
+        self._directed_graph.add_edge_between(1, 4, self._Weight(7))
+        self._directed_graph.add_edge_between(1, 7, self._Weight(12))
+        self._directed_graph.add_edge_between(2, 4, self._Weight(6))
+        self._directed_graph.add_edge_between(2, 6, self._Weight(8))
+        self._directed_graph.add_edge_between(3, 0, self._Weight(3))
+        self._directed_graph.add_edge_between(3, 7, self._Weight(5))
+        self._directed_graph.add_edge_between(4, 5, self._Weight(1))
+        self._directed_graph.add_edge_between(4, 3, self._Weight(10))
+        self._directed_graph.add_edge_between(5, 6, self._Weight(4))
+        self._directed_graph.add_edge_between(5, 8, self._Weight(2))
+        self._directed_graph.add_edge_between(6, 5, self._Weight(7))
+        self._directed_graph.add_edge_between(7, 5, self._Weight(2))
+        self._directed_graph.add_edge_between(7, 8, self._Weight(6))
+        self._directed_graph.add_edge_between(8, 9, self._Weight(10))
+        self._directed_graph.add_edge_between(9, 6, self._Weight(3))
 
         self._undirected_graph = UndirectedSimpleGraph(range(10))
-        self._undirected_graph.add_edge(0, 1, self._Weight(4))
-        self._undirected_graph.add_edge(1, 4, self._Weight(7))
-        self._undirected_graph.add_edge(1, 7, self._Weight(12))
-        self._undirected_graph.add_edge(2, 6, self._Weight(8))
-        self._undirected_graph.add_edge(3, 0, self._Weight(3))
-        self._undirected_graph.add_edge(3, 7, self._Weight(5))
-        self._undirected_graph.add_edge(4, 5, self._Weight(1))
-        self._undirected_graph.add_edge(4, 3, self._Weight(10))
-        self._undirected_graph.add_edge(5, 8, self._Weight(2))
-        self._undirected_graph.add_edge(7, 5, self._Weight(2))
-        self._undirected_graph.add_edge(7, 8, self._Weight(6))
-        self._undirected_graph.add_edge(9, 6, self._Weight(3))
+        self._undirected_graph.add_edge_between(0, 1, self._Weight(4))
+        self._undirected_graph.add_edge_between(1, 4, self._Weight(7))
+        self._undirected_graph.add_edge_between(1, 7, self._Weight(12))
+        self._undirected_graph.add_edge_between(2, 6, self._Weight(8))
+        self._undirected_graph.add_edge_between(3, 0, self._Weight(3))
+        self._undirected_graph.add_edge_between(3, 7, self._Weight(5))
+        self._undirected_graph.add_edge_between(4, 5, self._Weight(1))
+        self._undirected_graph.add_edge_between(4, 3, self._Weight(10))
+        self._undirected_graph.add_edge_between(5, 8, self._Weight(2))
+        self._undirected_graph.add_edge_between(7, 5, self._Weight(2))
+        self._undirected_graph.add_edge_between(7, 8, self._Weight(6))
+        self._undirected_graph.add_edge_between(9, 6, self._Weight(3))
 
     def tearDown(self):
         del self._directed_graph
@@ -63,7 +63,7 @@ class PathsTest(unittest.TestCase):
         # given
         distances = [20, 0, self.INF, 17, 7, 8, 12, 12, 10, 20]
         expected = _from_list(distances)
-        self._directed_graph.add_edge(2, 1, self._Weight(-2))
+        self._directed_graph.add_edge_between(2, 1, self._Weight(-2))
         # when
         result = bellman_ford(self._directed_graph, 1)
         # then
@@ -80,7 +80,7 @@ class PathsTest(unittest.TestCase):
 
     def test__bellman_ford__when_negative_cycle_ValueError(self):
         # given
-        self._directed_graph.add_edge(8, 3, self._Weight(-20.0))
+        self._directed_graph.add_edge_between(8, 3, self._Weight(-20.0))
         # then
         with self.assertRaises(ValueError):
             # when
@@ -106,7 +106,7 @@ class PathsTest(unittest.TestCase):
 
     def test__dijkstra__when_negative_edge__then_ValueError(self):
         # given
-        self._directed_graph.add_edge(2, 1, self._Weight(-2))
+        self._directed_graph.add_edge_between(2, 1, self._Weight(-2))
         # then
         with self.assertRaises(ValueError):
             # when
@@ -124,10 +124,9 @@ class PathsTest(unittest.TestCase):
                 [self.INF, self.INF, self.INF, self.INF, self.INF, 7, 0, self.INF, 9, 19],
                 [self.INF, self.INF, self.INF, self.INF, self.INF, 2, 6, 0, 4, 14],
                 [self.INF, self.INF, self.INF, self.INF, self.INF, 20, 13, self.INF, 0, 10],
-                [self.INF, self.INF, self.INF, self.INF, self.INF, 10, 3, self.INF, 12, 0],
-        ]
+                [self.INF, self.INF, self.INF, self.INF, self.INF, 10, 3, self.INF, 12, 0], ]
         expected = _from_matrix(distances)
-        self._directed_graph.add_edge(2, 1, self._Weight(-2))
+        self._directed_graph.add_edge_between(2, 1, self._Weight(-2))
         # when
         result = floyd_warshall(self._directed_graph)
         # then

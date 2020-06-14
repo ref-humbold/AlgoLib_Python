@@ -2,8 +2,8 @@
 """Structure of directed graphs"""
 from abc import ABCMeta, abstractmethod
 
-from algolib.graphs.graph import Edge, Graph
-from algolib.graphs.graph_representation import GraphRepresentation
+from algolib.graphs.graph import Graph
+from algolib.graphs.graph_representation import _GraphRepresentation
 from algolib.graphs.simple_graph import SimpleGraph
 
 
@@ -36,19 +36,18 @@ class DirectedSimpleGraph(SimpleGraph, DirectedGraph):
         return len([edge for edges in self._representation.edges_set for edge in edges if
                     edge.destination is vertex])
 
-    def add_edge(self, source, destination, edge_property=None):
-        existing_edge = self.get_edge(source, destination)
+    def add_edge(self, edge, edge_property=None):
+        existing_edge = self.get_edge(edge.source, edge.destination)
 
         if existing_edge is not None:
             return existing_edge
 
-        new_edge = Edge(source, destination)
-        self._representation.add_edge_to_source(new_edge)
-        self._representation[new_edge] = edge_property
-        return new_edge
+        self._representation.add_edge_to_source(edge)
+        self._representation[edge] = edge_property
+        return edge
 
     def reverse(self):
-        new_representation = GraphRepresentation(self.vertices)
+        new_representation = _GraphRepresentation(self.vertices)
 
         for vertex in self.vertices:
             new_representation[vertex] = self._representation[vertex]
@@ -67,6 +66,6 @@ class DirectedSimpleGraph(SimpleGraph, DirectedGraph):
             reversed_graph[vertex] = self._representation[vertex]
 
         for edge in self.edges:
-            reversed_graph.add_edge(edge.destination, edge.source, self._representation[edge])
+            reversed_graph.add_edge(edge.reversed(), self._representation[edge])
 
         return reversed_graph

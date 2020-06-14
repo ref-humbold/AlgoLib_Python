@@ -23,7 +23,7 @@ class TreeGraph(UndirectedGraph):
             if components.is_same_set(e[0], e[1]):
                 raise CycleError(f"Edge from vertex {e[0]} to vertex {e[1]} may create a cycle")
 
-            self._graph.add_edge(e[0], e[1])
+            self._graph.add_edge_between(e[0], e[1])
             components.union_set(e[0], e[1])
 
         if len(components) > 1:
@@ -52,7 +52,7 @@ class TreeGraph(UndirectedGraph):
     def get_edges(self):
         return self._graph.get_edges()
 
-    def add_edge(self, vertex1, vertex2):
+    def add_edge_between(self, vertex1, vertex2):
         raise CycleError(f"Edge from vertex {vertex1} to vertex {vertex2} may create a cycle")
 
     def get_neighbours(self, vertex):

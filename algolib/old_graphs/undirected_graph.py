@@ -29,7 +29,7 @@ class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
 
         if edges is not None:
             for e in edges:
-                self.add_edge(e[0], e[1])
+                self.add_edge_between(e[0], e[1])
 
     @property
     def edges_number(self):
@@ -40,7 +40,7 @@ class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
     def get_edges(self):
         return ((v, u) for v in self.get_vertices() for u in self.get_neighbours(v) if u >= v)
 
-    def add_edge(self, vertex1, vertex2):
+    def add_edge_between(self, vertex1, vertex2):
         if not 0 <= vertex1 < self.vertices_number:
             raise NoSuchVertexError(f"No vertex {vertex1}")
 

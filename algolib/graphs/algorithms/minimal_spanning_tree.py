@@ -22,7 +22,7 @@ def kruskal(graph):
         weight, edge = edge_queue.get()
 
         if not vertex_sets.is_same_set(edge.source, edge.destination):
-            mst.add_edge(edge.source, edge.destination, graph[edge])
+            mst.add_edge_between(edge.source, edge.destination, graph[edge])
             vertex_sets.union_set(edge.source, edge.destination)
 
     return mst
@@ -49,7 +49,7 @@ def prim(graph, source):
 
         if vertex not in visited:
             visited.add(vertex)
-            mst.add_edge(edge.source, edge.destination, graph[edge])
+            mst.add_edge_between(edge.source, edge.destination, graph[edge])
 
             for adjacent_edge in graph.get_adjacent_edges(vertex):
                 neighbour = adjacent_edge.get_neighbour(vertex)

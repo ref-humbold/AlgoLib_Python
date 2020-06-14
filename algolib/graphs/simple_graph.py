@@ -2,13 +2,13 @@
 """Structure of simple graphs"""
 from abc import ABCMeta, abstractmethod
 
-from algolib.graphs.graph import Graph
-from algolib.graphs.graph_representation import GraphRepresentation
+from algolib.graphs.graph import Edge, Graph
+from algolib.graphs.graph_representation import _GraphRepresentation
 
 
 class SimpleGraph(Graph, metaclass=ABCMeta):
     def __init__(self, vertices=None):
-        self._representation = GraphRepresentation(vertices)
+        self._representation = _GraphRepresentation(vertices)
 
     @property
     def vertices_count(self):
@@ -51,12 +51,20 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
 
         return was_added
 
-    @abstractmethod
-    def add_edge(self, source, destination, edge_property=None):
-        """Adds a new edge with given properties to this graph.
+    def add_edge_between(self, source, destination, edge_property=None):
+        """Adds a new edge with given property to this graph.
 
         :param source: a source vertex
         :param destination: a destination vertex
+        :param edge_property: edge property
+        :return: the new edge if added, or the existing edge"""
+        return self.add_edge(Edge(source, destination), edge_property)
+
+    @abstractmethod
+    def add_edge(self, edge, edge_property=None):
+        """Adds a new edge with given property to this graph.
+
+        :param edge: a new edge
         :param edge_property: edge property
         :return: the new edge if added, or the existing edge"""
         pass

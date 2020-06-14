@@ -4,7 +4,6 @@ from algolib.graphs.undirected_graph import UndirectedGraph, UndirectedSimpleGra
 
 
 class TreeGraph(UndirectedGraph):
-
     def __init__(self, vertex):
         super().__init__()
         self._graph = UndirectedSimpleGraph([vertex])
@@ -48,7 +47,7 @@ class TreeGraph(UndirectedGraph):
 
     def add_vertex(self, vertex, neighbour, vertex_property=None, edge_property=None):
         was_added = self._graph.add_vertex(vertex, vertex_property)
-        return self._graph.add_edge(vertex, neighbour, edge_property) if was_added else None
+        return self._graph.add_edge_between(vertex, neighbour, edge_property) if was_added else None
 
     def as_directed(self):
         return self._graph.as_directed()
