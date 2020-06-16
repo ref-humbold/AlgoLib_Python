@@ -5,6 +5,11 @@ import queue
 from .searching import dfs_recursive
 
 
+class DirectedCyclicGraphError(ValueError):
+    def __init__(self, *args):
+        super().__init__(*args)
+
+
 def sort_topological1(graph):
     """Topological sorting algorithm using predecessors counting.
 
@@ -34,7 +39,7 @@ def sort_topological1(graph):
                 vertex_queue.put(neighbour)
 
     if len(order) != graph.vertices_count:
-        raise ValueError("Given graph contains a cycle")
+        raise DirectedCyclicGraphError("Given graph contains a cycle")
 
     return iter(order)
 
@@ -70,4 +75,4 @@ class _TopologicalStrategy:
         self.order.append(vertex)
 
     def on_edge_to_visited(self, vertex, neighbour):
-        raise ValueError("Given graph contains a cycle")
+        raise DirectedCyclicGraphError("The graph contains a cycle")

@@ -88,7 +88,7 @@ class Edge:
         if vertex is self._destination:
             return self._source
 
-        raise ValueError(f"Edge {self} is not adjacent to given vertex {vertex}")
+        raise ValueError(f"Edge {self} is not adjacent to the vertex {vertex}")
 
     def reversed(self):
         return Edge(self._destination, self._source)

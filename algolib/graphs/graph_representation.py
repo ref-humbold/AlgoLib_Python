@@ -65,11 +65,11 @@ class _GraphRepresentation:
     def _validate(self, item, *, existing_edge=None):
         if isinstance(item, Edge):
             if item.source not in self._graphDict or item.destination not in self._graphDict:
-                raise ValueError(f"Edge {item} does not belong to this graph")
+                raise ValueError(f"Edge {item} does not belong to the graph")
 
             if existing_edge and item not in self._graphDict[item.source] \
                     and item not in self._graphDict[item.destination]:
-                raise ValueError(f"Edge {item} does not belong to this graph")
+                raise ValueError(f"Edge {item} does not belong to the graph")
 
         elif item not in self._graphDict:
-            raise ValueError(f"Vertex object {item} does not belong to this graph")
+            raise ValueError(f"Vertex {item} does not belong to the graph")
