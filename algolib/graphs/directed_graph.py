@@ -37,14 +37,14 @@ class DirectedSimpleGraph(SimpleGraph, DirectedGraph):
                     edge.destination is vertex])
 
     def add_edge(self, edge, edge_property=None):
-        existing_edge = self.get_edge(edge.source, edge.destination)
-
-        if existing_edge is not None:
+        try:
+            existing_edge = self.get_edge(edge.source, edge.destination)
+        except KeyError:
+            self._representation.add_edge_to_source(edge)
+            self._representation[edge] = edge_property
+            return edge
+        else:
             return existing_edge
-
-        self._representation.add_edge_to_source(edge)
-        self._representation[edge] = edge_property
-        return edge
 
     def reverse(self):
         new_representation = _GraphRepresentation(self.vertices)

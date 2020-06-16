@@ -40,7 +40,8 @@ class Graph(metaclass=ABCMeta):
     def get_edge(self, source, destination):
         """:param source: source vertex
         :param destination: destination vertex
-        :return: edge between the vertices, or ``None`` if no edge"""
+        :return: edge between the vertices
+        :raise KeyError: if no edge"""
         pass
 
     @abstractmethod

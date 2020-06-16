@@ -30,15 +30,15 @@ class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
         return len(self._representation.get_adjacent_edges(vertex))
 
     def add_edge(self, edge, edge_property=None):
-        existing_edge = self.get_edge(edge.source, edge.destination)
-
-        if existing_edge is not None:
+        try:
+            existing_edge = self.get_edge(edge.source, edge.destination)
+        except KeyError:
+            self._representation.add_edge_to_source(edge)
+            self._representation.add_edge_to_destination(edge)
+            self._representation[edge] = edge_property
+            return edge
+        else:
             return existing_edge
-
-        self._representation.add_edge_to_source(edge)
-        self._representation.add_edge_to_destination(edge)
-        self._representation[edge] = edge_property
-        return edge
 
     def as_directed(self):
         directed_simple_graph = DirectedSimpleGraph(self.vertices)

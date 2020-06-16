@@ -140,11 +140,11 @@ class UndirectedSimpleGraphTest(unittest.TestCase):
         self.assertEqual(source, result.source)
         self.assertEqual(destination, result.destination)
 
-    def test__get_edge__when_not_exists__then_None(self):
-        # when
-        result = self._test_object.get_edge(1, 2)
+    def test__get_edge__when_not_exists__then_KeyError(self):
         # then
-        self.assertIsNone(result)
+        with self.assertRaises(KeyError):
+            # when
+            self._test_object.get_edge(1, 2)
 
     def test__add_edge_between__when_new_edge__then_created_edge(self):
         # given
