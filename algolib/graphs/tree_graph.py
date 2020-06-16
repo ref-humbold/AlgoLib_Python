@@ -33,11 +33,11 @@ class TreeGraph(UndirectedGraph):
     def get_edge(self, source, destination):
         return self._graph.get_edge(source, destination)
 
-    def get_neighbours(self, vertex):
-        return self._graph.get_neighbours(vertex)
-
     def get_adjacent_edges(self, vertex):
         return self._graph.get_adjacent_edges(vertex)
+
+    def get_neighbours(self, vertex):
+        return self._graph.get_neighbours(vertex)
 
     def get_output_degree(self, vertex):
         return self._graph.get_output_degree(vertex)

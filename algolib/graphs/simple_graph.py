@@ -24,17 +24,17 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
     def __setitem__(self, item, value):
         self._representation[item] = value
 
+    def get_adjacent_edges(self, vertex):
+        return self._representation.get_adjacent_edges(vertex)
+
     def get_neighbours(self, vertex):
         return set(edge.get_neighbour(vertex)
                    for edge in self._representation.get_adjacent_edges(vertex))
 
-    def get_adjacent_edges(self, vertex):
-        return self._representation.get_adjacent_edges(vertex)
-
     def get_edge(self, source, destination):
         try:
             return [edge for edge in self._representation.get_adjacent_edges(source)
-                    if edge.get_neighbour(source) is destination][0]
+                    if edge.get_neighbour(source) == destination][0]
         except IndexError:
             return None
 

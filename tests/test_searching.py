@@ -49,10 +49,14 @@ class SearchingTest(unittest.TestCase):
         self.assertListEqual([0, 1, 3, 4, 5, 7, 8], sorted(result))
 
     def test__bfs__when_undirected_graph_and_many_roots__then_all_visited(self):
+        # given
+        strategy = self._TestingStrategy()
         # when
-        result = bfs(self._undirected_graph, EmptyStrategy(), [0, 6])
+        result = bfs(self._undirected_graph, strategy, [0, 6])
         # then
         self.assertListEqual(sorted(self._undirected_graph.vertices), sorted(result))
+        self.assertListEqual(sorted(self._undirected_graph.vertices), sorted(strategy.entries))
+        self.assertListEqual(sorted(self._undirected_graph.vertices), sorted(strategy.exits))
 
     def test__bfs__when_undirected_graph_and_no_roots__then_empty(self):
         # when
@@ -67,10 +71,14 @@ class SearchingTest(unittest.TestCase):
         self.assertListEqual([0, 1, 3, 4, 7], sorted(result))
 
     def test__bfs__when_directed_graph_and_many_roots__then_all_visited(self):
+        # given
+        strategy = self._TestingStrategy()
         # when
-        result = bfs(self._directed_graph, EmptyStrategy(), [8, 6])
+        result = bfs(self._directed_graph, strategy, [8, 6])
         # then
         self.assertListEqual(sorted(self._directed_graph.vertices), sorted(result))
+        self.assertListEqual(sorted(self._undirected_graph.vertices), sorted(strategy.entries))
+        self.assertListEqual(sorted(self._undirected_graph.vertices), sorted(strategy.exits))
 
     # endregion
     # region dfs_iterative
@@ -82,10 +90,14 @@ class SearchingTest(unittest.TestCase):
         self.assertListEqual([0, 1, 3, 4, 5, 7, 8], sorted(result))
 
     def test__dfs_iterative__when_undirected_graph_and_many_roots__then_all_visited(self):
+        # given
+        strategy = self._TestingStrategy()
         # when
-        result = dfs_iterative(self._undirected_graph, EmptyStrategy(), [0, 6])
+        result = dfs_iterative(self._undirected_graph, strategy, [0, 6])
         # then
         self.assertListEqual(sorted(self._undirected_graph.vertices), sorted(result))
+        self.assertListEqual(sorted(self._undirected_graph.vertices), sorted(strategy.entries))
+        self.assertListEqual(sorted(self._undirected_graph.vertices), sorted(strategy.exits))
 
     def test__dfs_iterative__when_undirected_graph_and_no_roots__then_empty(self):
         # when
@@ -100,10 +112,14 @@ class SearchingTest(unittest.TestCase):
         self.assertListEqual([0, 1, 3, 4, 7], sorted(result))
 
     def test__dfs_iterative__when_directed_graph_and_many_roots__then_all_visited(self):
+        # given
+        strategy = self._TestingStrategy()
         # when
-        result = dfs_iterative(self._directed_graph, EmptyStrategy(), [8, 6])
+        result = dfs_iterative(self._directed_graph, strategy, [8, 6])
         # then
         self.assertListEqual(sorted(self._directed_graph.vertices), sorted(result))
+        self.assertListEqual(sorted(self._undirected_graph.vertices), sorted(strategy.entries))
+        self.assertListEqual(sorted(self._undirected_graph.vertices), sorted(strategy.exits))
 
     # endregion
     # region dfs_recursive
@@ -115,10 +131,14 @@ class SearchingTest(unittest.TestCase):
         self.assertListEqual([0, 1, 3, 4, 5, 7, 8], sorted(result))
 
     def test__dfs_recursive__when_undirected_graph_and_many_roots__then_all_visited(self):
+        # given
+        strategy = self._TestingStrategy()
         # when
-        result = dfs_recursive(self._undirected_graph, EmptyStrategy(), [0, 6])
+        result = dfs_recursive(self._undirected_graph, strategy, [0, 6])
         # then
         self.assertListEqual(sorted(self._undirected_graph.vertices), sorted(result))
+        self.assertListEqual(sorted(self._undirected_graph.vertices), sorted(strategy.entries))
+        self.assertListEqual(sorted(self._undirected_graph.vertices), sorted(strategy.exits))
 
     def test__dfs_recursive__when_undirected_graph_and_no_roots__then_empty(self):
         # when
@@ -133,9 +153,33 @@ class SearchingTest(unittest.TestCase):
         self.assertListEqual([0, 1, 3, 4, 7], sorted(result))
 
     def test__dfs_recursive__when_directed_graph_and_many_roots__then_all_visited(self):
+        # given
+        strategy = self._TestingStrategy()
         # when
-        result = dfs_recursive(self._directed_graph, EmptyStrategy(), [8, 6])
+        result = dfs_recursive(self._directed_graph, strategy, [8, 6])
         # then
         self.assertListEqual(sorted(self._directed_graph.vertices), sorted(result))
+        self.assertListEqual(sorted(self._undirected_graph.vertices), sorted(strategy.entries))
+        self.assertListEqual(sorted(self._undirected_graph.vertices), sorted(strategy.exits))
 
     # endregion
+
+    class _TestingStrategy:
+        def __init__(self):
+            self.entries = []
+            self.exits = []
+
+        def for_root(self, vertex):
+            pass
+
+        def on_entry(self, vertex):
+            self.entries.append(vertex)
+
+        def on_next_vertex(self, vertex, neighbour):
+            pass
+
+        def on_exit(self, vertex):
+            self.exits.append(vertex)
+
+        def on_edge_to_visited(self, vertex, neighbour):
+            pass

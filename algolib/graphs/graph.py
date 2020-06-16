@@ -12,14 +12,14 @@ class Graph(metaclass=ABCMeta):
 
     @property
     @abstractmethod
-    def vertices(self):
-        """:return: sorted list of vertices"""
+    def edges_count(self):
+        """:return: number of edges"""
         pass
 
     @property
     @abstractmethod
-    def edges_count(self):
-        """:return: number of edges"""
+    def vertices(self):
+        """:return: sorted list of vertices"""
         pass
 
     @property
@@ -44,15 +44,15 @@ class Graph(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def get_neighbours(self, vertex):
-        """:param vertex: a vertex from this graph
-        :return: generator of neighbouring vertices"""
-        pass
-
-    @abstractmethod
     def get_adjacent_edges(self, vertex):
         """:param vertex: a vertex from this graph
         :return: generator of edges adjacent to this vertex"""
+        pass
+
+    @abstractmethod
+    def get_neighbours(self, vertex):
+        """:param vertex: a vertex from this graph
+        :return: generator of neighbouring vertices"""
         pass
 
     @abstractmethod

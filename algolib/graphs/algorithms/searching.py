@@ -105,7 +105,7 @@ def _dfs_recursive_step(graph, strategy, state):
         elif state.reached[neighbour] == state.iteration:
             strategy.on_edge_to_visited(vertex, neighbour)
 
-    strategy.on_entry(vertex)
+    strategy.on_exit(vertex)
     state.on_exit(vertex)
 
 
