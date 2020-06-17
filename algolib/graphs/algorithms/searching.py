@@ -21,7 +21,7 @@ def bfs(graph, strategy, roots):
 
             while not vertex_queue.empty():
                 vertex = vertex_queue.get()
-                strategy.on_entry(vertex)
+                strategy.on_enter(vertex)
 
                 for neighbour in graph.get_neighbours(vertex):
                     if neighbour not in reached:
@@ -55,7 +55,7 @@ def dfs_iterative(graph, strategy, roots):
 
                 if vertex not in reached:
                     reached[vertex] = iteration
-                    strategy.on_entry(vertex)
+                    strategy.on_enter(vertex)
 
                     for neighbour in graph.get_neighbours(vertex):
                         if neighbour not in reached:
@@ -94,8 +94,8 @@ def dfs_recursive(graph, strategy, roots):
 def _dfs_recursive_step(graph, strategy, state):
     # Single step of recursive DFS
     vertex = state.vertex
-    state.on_entry(vertex)
-    strategy.on_entry(vertex)
+    state.on_enter(vertex)
+    strategy.on_enter(vertex)
 
     for neighbour in graph.get_neighbours(vertex):
         if neighbour not in state.reached:
@@ -115,7 +115,7 @@ class _DfsRecursiveState:
         self.iteration = 1
         self.reached = {}
 
-    def on_entry(self, vertex):
+    def on_enter(self, vertex):
         self.reached[vertex] = self.iteration
 
     def on_exit(self, vertex):

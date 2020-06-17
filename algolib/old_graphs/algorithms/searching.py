@@ -93,7 +93,7 @@ def rec_dfs(graph, strategy, *roots):
 
 
 def _dfs_step(graph, strategy, vertex, state):
-    state.on_entry(vertex)
+    state.on_enter(vertex)
     strategy.preprocess(vertex)
 
     for neighbour in graph.get_neighbours(vertex):
@@ -112,7 +112,7 @@ class _DfsrState:
         self.iteration = 1
         self.reached = [0] * vertices_number
 
-    def on_entry(self, vertex):
+    def on_enter(self, vertex):
         self.reached[vertex] = self.iteration
 
     def on_exit(self, vertex):

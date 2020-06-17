@@ -6,7 +6,7 @@ class EmptyStrategy:
     def for_root(self, vertex):
         pass
 
-    def on_entry(self, vertex):
+    def on_enter(self, vertex):
         pass
 
     def on_next_vertex(self, vertex, neighbour):
