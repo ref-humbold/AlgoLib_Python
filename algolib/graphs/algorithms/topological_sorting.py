@@ -62,7 +62,7 @@ class _TopologicalStrategy:
     def __init__(self):
         self.order = []
 
-    def for_root(self, vertex):
+    def for_root(self, root):
         pass
 
     def on_enter(self, vertex):

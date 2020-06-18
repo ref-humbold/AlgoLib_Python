@@ -2,68 +2,71 @@
 """Tests: lowest common ancestor algorithm"""
 import unittest
 
-from algolib.old_graphs import TreeGraph
-from algolib.old_graphs.algorithms import find_lca
+from algolib.graphs import TreeGraph
+from algolib.graphs.algorithms import LowestCommonAncestor
 
 
 class LCATest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._trees = None
+        self._test_object = None
 
     def setUp(self):
-        self._trees = TreeGraph(10, [(0, 1), (0, 2), (1, 3), (1, 4), (1, 5), (2, 6), (4, 7), (6, 8),
-                                     (6, 9)])
+        tree = TreeGraph(0)
+        tree.add_vertex(1, 0)
+        tree.add_vertex(2, 0)
+        tree.add_vertex(3, 1)
+        tree.add_vertex(4, 1)
+        tree.add_vertex(5, 1)
+        tree.add_vertex(6, 2)
+        tree.add_vertex(7, 4)
+        tree.add_vertex(8, 6)
+        tree.add_vertex(9, 6)
+
+        self._test_object = LowestCommonAncestor(tree, 0)
 
     def tearDown(self):
-        self._trees = None
+        self._test_object = None
 
-    def test__find_lca__when_same_vertex(self):
+    def test__find__when_same_vertex__then_vertex_is_lca(self):
+        # given
         vertex = 6
-
-        result = find_lca(self._trees, vertex, vertex)
-
+        # when
+        result = self._test_object.find(vertex, vertex)
+        # then
         self.assertEqual(vertex, result)
 
-    def test__find_lca__when_vertices_changed(self):
-        vertex1 = 5
-        vertex2 = 7
-
-        result1 = find_lca(self._trees, vertex1, vertex2)
-        result2 = find_lca(self._trees, vertex2, vertex1)
-
-        self.assertEqual(1, result1)
-        self.assertEqual(1, result2)
-
-    def test__find_lca__when_vertices_in_different_subtrees(self):
-        vertex1 = 5
-        vertex2 = 7
-
-        result = find_lca(self._trees, vertex1, vertex2)
-
+    def test__find__when_vertices_in_different_subtrees__then_lca(self):
+        # when
+        result = self._test_object.find(5, 7)
+        # then
         self.assertEqual(1, result)
 
-    def test__find_lca__when_root_is_lca(self):
-        vertex1 = 3
-        vertex2 = 9
-        root = 0
+    def test__find__when_vertices_swapped__then_same_lca(self):
+        # when
+        result1 = self._test_object.find(5, 7)
+        result2 = self._test_object.find(7, 5)
+        # then
+        self.assertEqual(1, result1)
+        self.assertEqual(result1, result2)
 
-        result = find_lca(self._trees, vertex1, vertex2, root)
+    def test__find__when_root_is_common_ancestor__then_root(self):
+        # when
+        result = self._test_object.find(3, 9)
+        # then
+        self.assertEqual(self._test_object.root, result)
 
-        self.assertEqual(root, result)
-
-    def test__find_lca__when_vertices_are_offsprings(self):
+    def test__find__when_vertices_are_offsprings__then_lca_is_closer_to_root(self):
+        # given
         vertex1 = 8
         vertex2 = 2
-
-        result = find_lca(self._trees, vertex1, vertex2)
-
+        # when
+        result = self._test_object.find(vertex1, vertex2)
+        # then
         self.assertEqual(vertex2, result)
 
-    def test__find_lca__when_root_is_one_of_vertices(self):
-        vertex1 = 4
-        vertex2 = 0
-
-        result = find_lca(self._trees, vertex1, vertex2, vertex2)
-
-        self.assertEqual(vertex2, result)
+    def test__find__when_root_is_one_of_vertices__then_root(self):
+        # when
+        result = self._test_object.find(4, self._test_object.root)
+        # then
+        self.assertEqual(self._test_object.root, result)

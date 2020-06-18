@@ -3,7 +3,7 @@
 
 
 class EmptyStrategy:
-    def for_root(self, vertex):
+    def for_root(self, root):
         pass
 
     def on_enter(self, vertex):
