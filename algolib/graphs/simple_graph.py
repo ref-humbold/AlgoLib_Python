@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structure of simple graphs"""
+"""Structure of simple graph"""
 from abc import ABCMeta, abstractmethod
 
 from algolib.graphs.graph import Edge, Graph
