@@ -19,12 +19,12 @@ class TreeGraph(UndirectedGraph):
         return self._graph.vertices_count
 
     @property
-    def vertices(self):
-        return self._graph.vertices
-
-    @property
     def edges_count(self):
         return self._graph.edges_count
+
+    @property
+    def vertices(self):
+        return self._graph.vertices
 
     @property
     def edges(self):

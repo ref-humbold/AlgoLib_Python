@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Structure of directed graphs"""
+"""Tests: Structure of directed graph"""
 import unittest
 
 from algolib.graphs import DirectedSimpleGraph
