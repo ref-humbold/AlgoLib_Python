@@ -8,25 +8,21 @@ class Graph(metaclass=ABCMeta):
     @abstractmethod
     def vertices_count(self):
         """:return: number of vertices"""
-        pass
 
     @property
     @abstractmethod
     def edges_count(self):
         """:return: number of edges"""
-        pass
 
     @property
     @abstractmethod
     def vertices(self):
         """:return: sorted list of vertices"""
-        pass
 
     @property
     @abstractmethod
     def edges(self):
         """:return: sorted list of edges"""
-        pass
 
     @abstractmethod
     def __getitem__(self, item):
@@ -42,31 +38,26 @@ class Graph(metaclass=ABCMeta):
         :param destination: destination vertex
         :return: edge between the vertices
         :raise KeyError: if no edge"""
-        pass
 
     @abstractmethod
     def get_adjacent_edges(self, vertex):
         """:param vertex: a vertex from this graph
         :return: generator of edges adjacent to this vertex"""
-        pass
 
     @abstractmethod
     def get_neighbours(self, vertex):
         """:param vertex: a vertex from this graph
         :return: generator of neighbouring vertices"""
-        pass
 
     @abstractmethod
     def get_output_degree(self, vertex):
         """:param vertex: a vertex from this graph
         :return: the output degree of this vertex"""
-        pass
 
     @abstractmethod
     def get_input_degree(self, vertex):
         """:param vertex: a vertex from this graph
         :return: the input degree of this vertex"""
-        pass
 
 
 class Edge:

@@ -17,15 +17,15 @@ class PrimesTest(unittest.TestCase):
 
     # region test_find_primes
 
-    def test__find_primes__when_zero_args__then_TypeError(self):
+    def test__find_primes__when_zero_args__then_type_error(self):
         with self.assertRaises(TypeError):
             find_primes()
 
-    def test__find_primes__when_three_args__then_TypeError(self):
+    def test__find_primes__when_three_args__then_type_error(self):
         with self.assertRaises(TypeError):
             find_primes(20, 200, 10)
 
-    def test__find_primes__when_two_args_descending__then_ValueError(self):
+    def test__find_primes__when_two_args_descending__then_value_error(self):
         with self.assertRaises(ValueError):
             find_primes(100, 30)
 

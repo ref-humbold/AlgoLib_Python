@@ -7,7 +7,7 @@ from algolib.graphs.algorithms import Paths, bellman_ford, dijkstra, floyd_warsh
 
 
 def _from_list(distances):
-    return {i: d for i, d in enumerate(distances)}
+    return dict(enumerate(distances))
 
 
 def _from_matrix(distances):
@@ -78,7 +78,7 @@ class PathsTest(unittest.TestCase):
         # then
         self.assertDictEqual(expected, result)
 
-    def test__bellman_ford__when_negative_cycle_ValueError(self):
+    def test__bellman_ford__when_negative_cycle_value_error(self):
         # given
         self._directed_graph.add_edge_between(8, 3, self._Weight(-20.0))
         # then
@@ -104,7 +104,7 @@ class PathsTest(unittest.TestCase):
         # then
         self.assertDictEqual(expected, result)
 
-    def test__dijkstra__when_negative_edge__then_ValueError(self):
+    def test__dijkstra__when_negative_edge__then_value_error(self):
         # given
         self._directed_graph.add_edge_between(2, 1, self._Weight(-2))
         # then

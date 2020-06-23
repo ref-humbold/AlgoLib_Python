@@ -55,7 +55,7 @@ class MultipartiteGraphTest(unittest.TestCase):
         # then
         self.assertListEqual([5, 6, 7, 8], sorted(result))
 
-    def test__get_vertices_from_group__when_invalid_group__then_IndexError(self):
+    def test__get_vertices_from_group__when_invalid_group__then_index_error(self):
         # then
         with self.assertRaises(IndexError):
             # when
@@ -86,7 +86,7 @@ class MultipartiteGraphTest(unittest.TestCase):
         self.assertEqual(10, self._test_object.vertices_count)
         self.assertEqual(vertex_property, self._test_object[vertex])
 
-    def test__add_vertex__when_invalid_group__then_IndexError(self):
+    def test__add_vertex__when_invalid_group__then_index_error(self):
         # then
         with self.assertRaises(IndexError):
             # when
@@ -139,7 +139,7 @@ class MultipartiteGraphTest(unittest.TestCase):
         # then
         self.assertIs(expected, result)
 
-    def test__add_edge_between__whenSameGroup__then_GraphPartitionError(self):
+    def test__add_edge_between__whenSameGroup__then_graph_partition_error(self):
         # then
         with self.assertRaises(GraphPartitionError):
             # when

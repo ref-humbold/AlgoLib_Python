@@ -43,7 +43,7 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         self.assertIsNone(result_vertex)
         self.assertIsNone(result_edge)
 
-    def test__getitem__when_not_existing_edge__then_ValueError(self):
+    def test__getitem__when_not_existing_edge__then_value_error(self):
         # then
         with self.assertRaises(ValueError):
             # when
@@ -133,7 +133,7 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         self.assertEqual(source, result.source)
         self.assertEqual(destination, result.destination)
 
-    def test__get_edge__when_reversed_direction__then_KeyError(self):
+    def test__get_edge__when_reversed_direction__then_key_error(self):
         # given
         source = 9
         destination = 5
@@ -143,7 +143,7 @@ class DirectedSimpleGraphTest(unittest.TestCase):
             # when
             self._test_object.get_edge(destination, source)
 
-    def test__get_edge__when_not_exists__then_KeyError(self):
+    def test__get_edge__when_not_exists__then_key_error(self):
         # then
         with self.assertRaises(KeyError):
             # when

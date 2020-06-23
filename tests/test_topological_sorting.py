@@ -34,7 +34,7 @@ class TopologicalSortingTest(unittest.TestCase):
         # then
         self.assertListEqual([3, 5, 1, 0, 2, 4], list(result))
 
-    def test__sort_topological1__when_cyclic_graph__then_DirectedCyclicGraphError(self):
+    def test__sort_topological1__when_cyclic_graph__then_directed_cyclic_graph_error(self):
         # given
         graph = DirectedSimpleGraph(range(6))
         graph.add_edge_between(0, 2)
@@ -79,7 +79,7 @@ class TopologicalSortingTest(unittest.TestCase):
         self.assertIn(list(result), [[3, 5, 1, 0, 2, 4], [5, 3, 1, 0, 2, 4], [3, 5, 1, 0, 4, 2],
                                      [5, 3, 1, 0, 4, 2]])
 
-    def test__sort_topological2__when_cyclic_graph__then_DirectedCyclicGraphError(self):
+    def test__sort_topological2__when_cyclic_graph__then_directed_cyclic_graph_error(self):
         # given
         graph = DirectedSimpleGraph(range(6))
         graph.add_edge_between(0, 2)

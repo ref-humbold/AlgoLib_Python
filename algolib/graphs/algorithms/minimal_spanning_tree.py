@@ -19,7 +19,7 @@ def kruskal(graph):
         edge_queue.put((graph[edge].weight, edge))
 
     while len(vertex_sets) > 1 and not edge_queue.empty():
-        weight, edge = edge_queue.get()
+        _, edge = edge_queue.get()
 
         if not vertex_sets.is_same_set(edge.source, edge.destination):
             mst.add_edge(edge, graph[edge])
