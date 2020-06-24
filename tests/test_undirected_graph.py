@@ -43,11 +43,13 @@ class UndirectedSimpleGraphTest(unittest.TestCase):
         self.assertIsNone(result_vertex)
         self.assertIsNone(result_edge)
 
-    def test__getitem__when_not_existing_edge__then_value_error(self):
+    def test__getitem__when_not_existing__then_value_error(self):
         # then
         with self.assertRaises(ValueError):
             # when
+            _ = self._test_object[14]
             _ = self._test_object[Edge(2, 8)]
+            _ = self._test_object[Edge(0, -1)]
 
     def test__vertices_count__then_number_of_vertices(self):
         # when
