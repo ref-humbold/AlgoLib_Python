@@ -72,9 +72,11 @@ def floyd_warshall(graph):
     for edge in graph.edges:
         distances[(edge.source, edge.destination)] = graph[edge].weight
 
-    for w in graph.vertices:
-        for v in graph.vertices:
-            for u in graph.vertices:
-                distances[(v, u)] = min(distances[(v, u)], distances[(v, w)] + distances[(w, u)])
+    for vertex0 in graph.vertices:
+        for vertex1 in graph.vertices:
+            for vertex2 in graph.vertices:
+                distances[(vertex1, vertex2)] = \
+                    min(distances[(vertex1, vertex2)],
+                        distances[(vertex1, vertex0)] + distances[(vertex0, vertex2)])
 
     return distances

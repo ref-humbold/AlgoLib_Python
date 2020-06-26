@@ -30,7 +30,7 @@ class DoubleHeapTest(unittest.TestCase):
         # then
         self.assertEqual(len(self._numbers), result)
 
-    def test_left__when_empty__then_key_error(self):
+    def test__left__when_empty__then_key_error(self):
         # given
         self._test_object = DoubleHeap()
         # then
@@ -38,13 +38,13 @@ class DoubleHeapTest(unittest.TestCase):
             # when
             _ = self._test_object.left
 
-    def test_left__when_not_empty__then_minimal_element(self):
+    def test__left__when_not_empty__then_minimal_element(self):
         # when
         result = self._test_object.left
         # then
         self.assertEqual(min(self._numbers), result)
 
-    def test_right__when_empty__then_key_error(self):
+    def test__right__when_empty__then_key_error(self):
         # given
         self._test_object = DoubleHeap()
         # then
@@ -52,7 +52,7 @@ class DoubleHeapTest(unittest.TestCase):
             # when
             _ = self._test_object.right
 
-    def test_right__when_single_element__then_this_element(self):
+    def test__right__when_single_element__then_this_element(self):
         # given
         element = 19
         self._test_object = DoubleHeap([element])
@@ -61,13 +61,13 @@ class DoubleHeapTest(unittest.TestCase):
         # then
         self.assertEqual(element, result)
 
-    def test_right__when_multiple_elements__then_maximal_element(self):
+    def test__right__when_multiple_elements__then_maximal_element(self):
         # when
         result = self._test_object.right
         # then
         self.assertEqual(max(self._numbers), result)
 
-    def test_push__when_empty__then_added(self):
+    def test__push__when_empty__then_added(self):
         # given
         element = 19
         self._test_object = DoubleHeap()
@@ -78,7 +78,7 @@ class DoubleHeapTest(unittest.TestCase):
         self.assertEqual(element, self._test_object.left)
         self.assertEqual(element, self._test_object.right)
 
-    def test_push__when_new_element_is_less__then_added_to_left(self):
+    def test__push__when_new_element_is_less__then_added_to_left(self):
         # given
         element = min(self._numbers) - 1
         # when
@@ -87,7 +87,7 @@ class DoubleHeapTest(unittest.TestCase):
         self.assertEqual(len(self._numbers) + 1, len(self._test_object))
         self.assertEqual(element, self._test_object.left)
 
-    def test_push__when_new_element_is_greater__then_added_to_right(self):
+    def test__push__when_new_element_is_greater__then_added_to_right(self):
         # given
         element = max(self._numbers) + 1
         # when
@@ -96,7 +96,7 @@ class DoubleHeapTest(unittest.TestCase):
         self.assertEqual(len(self._numbers) + 1, len(self._test_object))
         self.assertEqual(element, self._test_object.right)
 
-    def test_push__when_new_element__then_added(self):
+    def test__push__when_new_element__then_added(self):
         # when
         self._test_object.push(46)
         # then
@@ -104,7 +104,7 @@ class DoubleHeapTest(unittest.TestCase):
         self.assertEqual(min(self._numbers), self._test_object.left)
         self.assertEqual(max(self._numbers), self._test_object.right)
 
-    def test_popleft__when_empty__then_key_error(self):
+    def test__popleft__when_empty__then_key_error(self):
         # given
         self._test_object = DoubleHeap()
         # then
@@ -112,14 +112,14 @@ class DoubleHeapTest(unittest.TestCase):
             # when
             _ = self._test_object.popleft()
 
-    def test_popleft__when_not_empty__then_minimal_element_removed(self):
+    def test__popleft__when_not_empty__then_minimal_element_removed(self):
         # when
         result = self._test_object.popleft()
         # then
         self.assertEqual(len(self._numbers) - 1, len(self._test_object))
         self.assertEqual(min(self._numbers), result)
 
-    def test_popleft__when_single_element__then_this_element_removed(self):
+    def test__popleft__when_single_element__then_this_element_removed(self):
         # given
         element = 19
         self._test_object = DoubleHeap([element])
@@ -129,7 +129,7 @@ class DoubleHeapTest(unittest.TestCase):
         self.assertEqual(0, len(self._test_object))
         self.assertEqual(element, result)
 
-    def test_popright__when_empty__then_key_error(self):
+    def test__popright__when_empty__then_key_error(self):
         # given
         self._test_object = DoubleHeap()
         # then
@@ -137,7 +137,7 @@ class DoubleHeapTest(unittest.TestCase):
             # when
             _ = self._test_object.popright()
 
-    def test_popleft__when_multiple_calls__then_sorted_ascending(self):
+    def test__popleft__when_multiple_calls__then_sorted_ascending(self):
         # when
         result = []
 
@@ -147,7 +147,7 @@ class DoubleHeapTest(unittest.TestCase):
         # then
         self.assertListEqual(sorted(self._numbers), result)
 
-    def test_popright__when_single_element__then_this_element_removed(self):
+    def test__popright__when_single_element__then_this_element_removed(self):
         # given
         element = 19
         self._test_object = DoubleHeap([element])
@@ -157,14 +157,14 @@ class DoubleHeapTest(unittest.TestCase):
         self.assertEqual(0, len(self._test_object))
         self.assertEqual(element, result)
 
-    def test_popright__when_multiple_elements__then_maximal_element_removed(self):
+    def test__popright__when_multiple_elements__then_maximal_element_removed(self):
         # when
         result = self._test_object.popright()
         # then
         self.assertEqual(len(self._numbers) - 1, len(self._test_object))
         self.assertEqual(max(self._numbers), result)
 
-    def test_popright__when_multiple_calls__then_sorted_descending(self):
+    def test__popright__when_multiple_calls__then_sorted_descending(self):
         # when
         result = []
 
@@ -174,7 +174,7 @@ class DoubleHeapTest(unittest.TestCase):
         # then
         self.assertListEqual(sorted(self._numbers, key=lambda x: -x), result)
 
-    def test_clear__when_not_empty__then_empty(self):
+    def test__clear__when_not_empty__then_empty(self):
         # when
         self._test_object.clear()
         # then

@@ -49,7 +49,7 @@ class MultipartiteGraphTest(unittest.TestCase):
         # then
         self.assertListEqual(list(range(10)), sorted(result))
 
-    def test__get_vertices_from_group__whenValidGroup__thenVertices(self):
+    def test__get_vertices_from_group__when_valid_group__then_vertices(self):
         # when
         result = self._test_object.get_vertices_from_group(2)
         # then
@@ -106,7 +106,7 @@ class MultipartiteGraphTest(unittest.TestCase):
                 Edge(0, 3), Edge(1, 5), Edge(2, 9),
                 Edge(4, 6), Edge(7, 9)], sorted(result))
 
-    def test__get_edge__when_Exists__then_edge(self):
+    def test__get_edge__when_exists__then_edge(self):
         # given
         source = 2
         destination = 9
@@ -116,7 +116,7 @@ class MultipartiteGraphTest(unittest.TestCase):
         self.assertEqual(source, result.source)
         self.assertEqual(destination, result.destination)
 
-    def test__add_edge_between__whenNewEdge__thenCreatedEdge(self):
+    def test__add_edge_between__when_new_edge__then_created_edge(self):
         # given
         vertex1 = 2
         vertex2 = 8
@@ -129,7 +129,7 @@ class MultipartiteGraphTest(unittest.TestCase):
         self.assertEqual(edge_property, self._test_object[result])
         self.assertListEqual([vertex1], list(self._test_object.neighbours(vertex2)))
 
-    def test__add_edge_between__whenDuplicatedEdge__thenExistingEdge(self):
+    def test__add_edge_between__when_duplicated_edge__then_existing_edge(self):
         # given
         source = 8
         destination = 3
@@ -139,31 +139,31 @@ class MultipartiteGraphTest(unittest.TestCase):
         # then
         self.assertIs(expected, result)
 
-    def test__add_edge_between__whenSameGroup__then_graph_partition_error(self):
+    def test__add_edge_between__when_same_group__then_graph_partition_error(self):
         # then
         with self.assertRaises(GraphPartitionError):
             # when
             self._test_object.add_edge_between(5, 8)
 
-    def test__neighbours__thenDestinationVerticesOfOutgoingEdges(self):
+    def test__neighbours__then_destination_vertices_of_outgoing_edges(self):
         # when
         result = self._test_object.neighbours(9)
         # then
         self.assertListEqual([2, 7], sorted(result))
 
-    def test__adjacent_edges__thenDestinationVerticesOfOutgoingEdges(self):
+    def test__adjacent_edges__then_destination_vertices_of_outgoing_edges(self):
         # when
         result = self._test_object.adjacent_edges(9)
         # then
         self.assertListEqual([Edge(2, 9), Edge(7, 9)], sorted(result))
 
-    def test__output_degree__thenNumberOfOutgoingEdges(self):
+    def test__output_degree__then_number_of_outgoing_edges(self):
         # when
         result = self._test_object.output_degree(9)
         # then
         self.assertEqual(2, result)
 
-    def test__input_degree__thenNumberOfIncomingEdges(self):
+    def test__input_degree__then_number_of_incoming_edges(self):
         # when
         result = self._test_object.input_degree(9)
         # then

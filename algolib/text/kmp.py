@@ -14,11 +14,11 @@ def kmp(text, pattern):
     pi_values = _prefix(pattern)
     pos = 0
 
-    for i, c in enumerate(text):
-        while pos > 0 and pattern[pos] != c:
+    for i, char in enumerate(text):
+        while pos > 0 and pattern[pos] != char:
             pos = pi_values[pos - 1]
 
-        if pattern[pos] == c:
+        if pattern[pos] == char:
             pos += 1
 
         if pos == len(pattern):

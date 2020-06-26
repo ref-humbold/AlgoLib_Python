@@ -395,16 +395,16 @@ function-naming-style=snake_case
 good-names=i,
            j,
            k,
-           ex,
-           Run,
-           _,
-           e,
-           ix,
            m,
            n,
-           pt,
            x,
-           y
+           y,
+           e,
+           ex,
+           ix,
+           pt,
+           Run,
+           _
 
 # Include a hint for the correct naming format with invalid-name.
 include-naming-hint=no

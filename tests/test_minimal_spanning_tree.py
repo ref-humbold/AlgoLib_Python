@@ -24,7 +24,7 @@ class MinimalSpanningTreeTest(unittest.TestCase):
     def tearDown(self):
         del self._graph
 
-    def test__kruskal__then_MST(self):
+    def test__kruskal__then_mst(self):
         # when
         result = kruskal(self._graph)
         # then
@@ -37,7 +37,7 @@ class MinimalSpanningTreeTest(unittest.TestCase):
                                      self._graph.get_edge(3, 4)]), sorted(result.edges))
         self.assertAlmostEqual(12, mst_size, 6)
 
-    def test__prim__then_MST(self):
+    def test__prim__then_mst(self):
         # when
         result = prim(self._graph, 0)
         # then
@@ -51,7 +51,7 @@ class MinimalSpanningTreeTest(unittest.TestCase):
                              sorted(result.edges))
         self.assertEqual(12, mst_size)
 
-    def test__prim__when_different_sources__then_same_MST(self):
+    def test__prim__when_different_sources__then_same_mst(self):
         # when
         result1 = prim(self._graph, 1)
         result4 = prim(self._graph, 4)

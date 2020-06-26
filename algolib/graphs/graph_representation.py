@@ -7,29 +7,29 @@ class _GraphRepresentation:
         self._properties = {}
 
         if vertices is not None:
-            self._graphDict = {v: set() for v in vertices}
+            self._graph_dict = {v: set() for v in vertices}
         else:
-            self._graphDict = {}
+            self._graph_dict = {}
 
     @property
     def vertices(self):
-        return self._graphDict.keys()
+        return self._graph_dict.keys()
 
     @property
     def edges(self):
         result = []
 
-        for edges_set in self._graphDict.values():
+        for edges_set in self._graph_dict.values():
             result += edges_set
 
         return result
 
     @property
     def edges_set(self):
-        return self._graphDict.values()
+        return self._graph_dict.values()
 
     def __len__(self):
-        return len(self._graphDict)
+        return len(self._graph_dict)
 
     def __getitem__(self, item):
         self._validate(item, existing_edge=True)
@@ -45,31 +45,31 @@ class _GraphRepresentation:
 
     def get_adjacent_edges(self, vertex):
         self._validate(vertex)
-        return self._graphDict[vertex]
+        return self._graph_dict[vertex]
 
     def add_vertex(self, vertex):
-        if vertex in self._graphDict:
+        if vertex in self._graph_dict:
             return False
 
-        self._graphDict[vertex] = set()
+        self._graph_dict[vertex] = set()
         return True
 
     def add_edge_to_source(self, edge):
         self._validate(edge, existing_edge=False)
-        self._graphDict[edge.source].add(edge)
+        self._graph_dict[edge.source].add(edge)
 
     def add_edge_to_destination(self, edge):
         self._validate(edge, existing_edge=False)
-        self._graphDict[edge.destination].add(edge)
+        self._graph_dict[edge.destination].add(edge)
 
     def _validate(self, item, *, existing_edge=None):
         if isinstance(item, Edge):
-            if item.source not in self._graphDict or item.destination not in self._graphDict:
+            if item.source not in self._graph_dict or item.destination not in self._graph_dict:
                 raise ValueError(f"Edge {item} does not belong to the graph")
 
-            if existing_edge and item not in self._graphDict[item.source] \
-                    and item not in self._graphDict[item.destination]:
+            if existing_edge and item not in self._graph_dict[item.source] \
+                    and item not in self._graph_dict[item.destination]:
                 raise ValueError(f"Edge {item} does not belong to the graph")
 
-        elif item not in self._graphDict:
+        elif item not in self._graph_dict:
             raise ValueError(f"Vertex {item} does not belong to the graph")

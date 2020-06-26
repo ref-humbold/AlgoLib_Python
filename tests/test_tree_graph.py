@@ -69,7 +69,7 @@ class TreeGraphTest(unittest.TestCase):
         self.assertEqual(vertex_property, self._test_object[new_vertex])
         self.assertEqual(edge_property, self._test_object[result])
 
-    def test__add_vertex__when_existing_vertex__then_None(self):
+    def test__add_vertex__when_existing_vertex__then_none(self):
         # given
         vertex = 6
         vertex_property = "qwerty"

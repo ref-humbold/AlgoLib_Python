@@ -22,8 +22,8 @@ class MultipartiteGraph(UndirectedGraph):
 
             i = 0
 
-            for groupVertices in vertices:
-                for vertex in groupVertices:
+            for group_vertices in vertices:
+                for vertex in group_vertices:
                     self.add_vertex(i, vertex)
 
                 i += 1

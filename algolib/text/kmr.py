@@ -24,10 +24,10 @@ def _sign_letters(text):
     letters = sorted(text)
     factors[letters[0]] = code_value
 
-    for i, c in enumerate(letters[1:], start=1):
-        if c != letters[i - 1]:
+    for i, char in enumerate(letters[1:], start=1):
+        if char != letters[i - 1]:
             code_value += 1
-            factors[c] = code_value
+            factors[char] = code_value
 
     return factors
 
