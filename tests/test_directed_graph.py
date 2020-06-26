@@ -174,20 +174,6 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         # then
         self.assertIs(expected, result)
 
-    def test__neighbours__then_destination_vertices_of_outgoing_edges(self):
-        # given
-        self._test_object.add_edge_between(1, 1)
-        self._test_object.add_edge_between(1, 3)
-        self._test_object.add_edge_between(1, 4)
-        self._test_object.add_edge_between(1, 7)
-        self._test_object.add_edge_between(1, 9)
-        self._test_object.add_edge_between(2, 1)
-        self._test_object.add_edge_between(6, 1)
-        # when
-        result = self._test_object.neighbours(1)
-        # then
-        self.assertListEqual([1, 3, 4, 7, 9], sorted(result))
-
     def test__adjacent_edges__then_outgoing_edges(self):
         # given
         self._test_object.add_edge_between(1, 1)
@@ -203,6 +189,20 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         self.assertListEqual([
                 Edge(1, 1), Edge(1, 3), Edge(1, 4),
                 Edge(1, 7), Edge(1, 9)], sorted(result))
+
+    def test__neighbours__then_destination_vertices_of_outgoing_edges(self):
+        # given
+        self._test_object.add_edge_between(1, 1)
+        self._test_object.add_edge_between(1, 3)
+        self._test_object.add_edge_between(1, 4)
+        self._test_object.add_edge_between(1, 7)
+        self._test_object.add_edge_between(1, 9)
+        self._test_object.add_edge_between(2, 1)
+        self._test_object.add_edge_between(6, 1)
+        # when
+        result = self._test_object.neighbours(1)
+        # then
+        self.assertListEqual([1, 3, 4, 7, 9], sorted(result))
 
     def test__output_degree__then_number_of_outgoing_edges(self):
         # given
@@ -288,7 +288,7 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         # when
         result = self._test_object.reversed_copy()
         # then
-        self.assertListEqual(self._test_object.vertices, result.vertices)
+        self.assertListEqual(sorted(self._test_object.vertices), sorted(result.vertices))
         self.assertListEqual([
                 Edge(1, 9),
                 Edge(2, 1),
