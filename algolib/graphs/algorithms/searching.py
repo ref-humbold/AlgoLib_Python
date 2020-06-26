@@ -23,7 +23,7 @@ def bfs(graph, strategy, roots):
                 vertex = vertex_queue.get()
                 strategy.on_enter(vertex)
 
-                for neighbour in graph.get_neighbours(vertex):
+                for neighbour in graph.neighbours(vertex):
                     if neighbour not in reached:
                         strategy.on_next_vertex(vertex, neighbour)
                         reached.add(neighbour)
@@ -57,7 +57,7 @@ def dfs_iterative(graph, strategy, roots):
                     reached[vertex] = iteration
                     strategy.on_enter(vertex)
 
-                    for neighbour in graph.get_neighbours(vertex):
+                    for neighbour in graph.neighbours(vertex):
                         if neighbour not in reached:
                             strategy.on_next_vertex(vertex, neighbour)
                             vertex_stack.put(neighbour)
@@ -97,7 +97,7 @@ def _dfs_recursive_step(graph, strategy, state):
     state.on_enter(vertex)
     strategy.on_enter(vertex)
 
-    for neighbour in graph.get_neighbours(vertex):
+    for neighbour in graph.neighbours(vertex):
         if neighbour not in state.reached:
             strategy.on_next_vertex(vertex, neighbour)
             state.vertex = neighbour

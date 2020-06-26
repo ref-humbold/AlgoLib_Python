@@ -51,7 +51,7 @@ def dijkstra(graph, source):
         if vertex not in visited:
             visited.add(vertex)
 
-            for edge in graph.get_adjacent_edges(vertex):
+            for edge in graph.adjacent_edges(vertex):
                 neighbour = edge.get_neighbour(vertex)
 
                 if distances[vertex] + graph[edge].weight < distances[neighbour]:

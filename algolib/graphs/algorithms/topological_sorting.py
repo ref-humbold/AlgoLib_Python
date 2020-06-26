@@ -20,7 +20,7 @@ def sort_topological1(graph):
         return list(graph.vertices)
 
     vertex_queue = queue.PriorityQueue()
-    input_degrees = {v: graph.get_input_degree(v) for v in graph.vertices}
+    input_degrees = {v: graph.input_degree(v) for v in graph.vertices}
     order = []
 
     for vertex in graph.vertices:
@@ -32,7 +32,7 @@ def sort_topological1(graph):
         order.append(vertex)
         del input_degrees[vertex]
 
-        for neighbour in graph.get_neighbours(vertex):
+        for neighbour in graph.neighbours(vertex):
             input_degrees[neighbour] -= 1
 
             if input_degrees[neighbour] == 0:

@@ -38,7 +38,7 @@ def prim(graph, source):
     visited = {source}
     edge_queue = queue.PriorityQueue()
 
-    for adjacent_edge in graph.get_adjacent_edges(source):
+    for adjacent_edge in graph.adjacent_edges(source):
         neighbour = adjacent_edge.get_neighbour(source)
 
         if neighbour != source:
@@ -51,7 +51,7 @@ def prim(graph, source):
             visited.add(vertex)
             mst.add_edge(edge, graph[edge])
 
-            for adjacent_edge in graph.get_adjacent_edges(vertex):
+            for adjacent_edge in graph.adjacent_edges(vertex):
                 neighbour = adjacent_edge.get_neighbour(vertex)
 
                 if neighbour not in visited:

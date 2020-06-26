@@ -72,7 +72,7 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         # then
         self.assertTrue(result)
         self.assertEqual(11, self._test_object.vertices_count)
-        self.assertListEqual([], list(self._test_object.get_neighbours(new_vertex)))
+        self.assertListEqual([], list(self._test_object.neighbours(new_vertex)))
         self.assertEqual(vertex_property, self._test_object[new_vertex])
 
     def test__add_vertex__when_existing_vertex__then_false(self):
@@ -161,8 +161,8 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         self.assertEqual(1, result.source)
         self.assertEqual(5, result.destination)
         self.assertEqual(edge_property, self._test_object[result])
-        self.assertListEqual([1, 5], sorted(self._test_object.get_neighbours(1)))
-        self.assertListEqual([], list(self._test_object.get_neighbours(5)))
+        self.assertListEqual([1, 5], sorted(self._test_object.neighbours(1)))
+        self.assertListEqual([], list(self._test_object.neighbours(5)))
 
     def test__add_edge_between__when_duplicated_edge__then_existing_edge(self):
         # given
@@ -174,7 +174,7 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         # then
         self.assertIs(expected, result)
 
-    def test__get_neighbours__then_destination_vertices_of_outgoing_edges(self):
+    def test__neighbours__then_destination_vertices_of_outgoing_edges(self):
         # given
         self._test_object.add_edge_between(1, 1)
         self._test_object.add_edge_between(1, 3)
@@ -184,11 +184,11 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         self._test_object.add_edge_between(2, 1)
         self._test_object.add_edge_between(6, 1)
         # when
-        result = self._test_object.get_neighbours(1)
+        result = self._test_object.neighbours(1)
         # then
         self.assertListEqual([1, 3, 4, 7, 9], sorted(result))
 
-    def test__get_adjacent_edges__then_outgoing_edges(self):
+    def test__adjacent_edges__then_outgoing_edges(self):
         # given
         self._test_object.add_edge_between(1, 1)
         self._test_object.add_edge_between(1, 3)
@@ -198,13 +198,13 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         self._test_object.add_edge_between(2, 1)
         self._test_object.add_edge_between(6, 1)
         # when
-        result = self._test_object.get_adjacent_edges(1)
+        result = self._test_object.adjacent_edges(1)
         # then
         self.assertListEqual([
                 Edge(1, 1), Edge(1, 3), Edge(1, 4),
                 Edge(1, 7), Edge(1, 9)], sorted(result))
 
-    def test__get_output_degree__then_number_of_outgoing_edges(self):
+    def test__output_degree__then_number_of_outgoing_edges(self):
         # given
         self._test_object.add_edge_between(1, 1)
         self._test_object.add_edge_between(1, 3)
@@ -214,11 +214,11 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         self._test_object.add_edge_between(2, 1)
         self._test_object.add_edge_between(6, 1)
         # when
-        result = self._test_object.get_output_degree(1)
+        result = self._test_object.output_degree(1)
         # then
         self.assertEqual(5, result)
 
-    def test__get_input_degree__then_number_of_incoming_edges(self):
+    def test__input_degree__then_number_of_incoming_edges(self):
         # given
         self._test_object.add_edge_between(1, 1)
         self._test_object.add_edge_between(3, 1)
@@ -228,7 +228,7 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         self._test_object.add_edge_between(1, 2)
         self._test_object.add_edge_between(1, 6)
         # when
-        result = self._test_object.get_input_degree(1)
+        result = self._test_object.input_degree(1)
         # then
         self.assertEqual(5, result)
 

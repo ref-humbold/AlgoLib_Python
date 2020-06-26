@@ -40,22 +40,22 @@ class Graph(metaclass=ABCMeta):
         :raise KeyError: if no edge"""
 
     @abstractmethod
-    def get_adjacent_edges(self, vertex):
+    def adjacent_edges(self, vertex):
         """:param vertex: a vertex from this graph
         :return: generator of edges adjacent to this vertex"""
 
     @abstractmethod
-    def get_neighbours(self, vertex):
+    def neighbours(self, vertex):
         """:param vertex: a vertex from this graph
         :return: generator of neighbouring vertices"""
 
     @abstractmethod
-    def get_output_degree(self, vertex):
+    def output_degree(self, vertex):
         """:param vertex: a vertex from this graph
         :return: the output degree of this vertex"""
 
     @abstractmethod
-    def get_input_degree(self, vertex):
+    def input_degree(self, vertex):
         """:param vertex: a vertex from this graph
         :return: the input degree of this vertex"""
 

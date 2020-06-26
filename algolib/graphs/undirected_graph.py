@@ -23,10 +23,10 @@ class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
     def edges(self):
         return sorted(set(self._representation.edges))
 
-    def get_output_degree(self, vertex):
+    def output_degree(self, vertex):
         return len(self._representation.get_adjacent_edges(vertex))
 
-    def get_input_degree(self, vertex):
+    def input_degree(self, vertex):
         return len(self._representation.get_adjacent_edges(vertex))
 
     def add_edge(self, edge, edge_property=None):

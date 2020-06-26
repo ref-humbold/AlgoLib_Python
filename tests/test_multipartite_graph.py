@@ -70,7 +70,7 @@ class MultipartiteGraphTest(unittest.TestCase):
         # then
         self.assertTrue(result)
         self.assertEqual(11, self._test_object.vertices_count)
-        self.assertListEqual([], list(self._test_object.get_neighbours(new_vertex)))
+        self.assertListEqual([], list(self._test_object.neighbours(new_vertex)))
         self.assertEqual(vertex_property, self._test_object[new_vertex])
 
     def test__add_vertex__when_existing_vertex__then_false(self):
@@ -127,7 +127,7 @@ class MultipartiteGraphTest(unittest.TestCase):
         self.assertEqual(vertex1, result.source)
         self.assertEqual(vertex2, result.destination)
         self.assertEqual(edge_property, self._test_object[result])
-        self.assertListEqual([vertex1], list(self._test_object.get_neighbours(vertex2)))
+        self.assertListEqual([vertex1], list(self._test_object.neighbours(vertex2)))
 
     def test__add_edge_between__whenDuplicatedEdge__thenExistingEdge(self):
         # given
@@ -145,26 +145,26 @@ class MultipartiteGraphTest(unittest.TestCase):
             # when
             self._test_object.add_edge_between(5, 8)
 
-    def test__get_neighbours__thenDestinationVerticesOfOutgoingEdges(self):
+    def test__neighbours__thenDestinationVerticesOfOutgoingEdges(self):
         # when
-        result = self._test_object.get_neighbours(9)
+        result = self._test_object.neighbours(9)
         # then
         self.assertListEqual([2, 7], sorted(result))
 
-    def test__get_adjacent_edges__thenDestinationVerticesOfOutgoingEdges(self):
+    def test__adjacent_edges__thenDestinationVerticesOfOutgoingEdges(self):
         # when
-        result = self._test_object.get_adjacent_edges(9)
+        result = self._test_object.adjacent_edges(9)
         # then
         self.assertListEqual([Edge(2, 9), Edge(7, 9)], sorted(result))
 
-    def test__get_output_degree__thenNumberOfOutgoingEdges(self):
+    def test__output_degree__thenNumberOfOutgoingEdges(self):
         # when
-        result = self._test_object.get_output_degree(9)
+        result = self._test_object.output_degree(9)
         # then
         self.assertEqual(2, result)
 
-    def test__get_input_degree__thenNumberOfIncomingEdges(self):
+    def test__input_degree__thenNumberOfIncomingEdges(self):
         # when
-        result = self._test_object.get_input_degree(9)
+        result = self._test_object.input_degree(9)
         # then
         self.assertEqual(2, result)

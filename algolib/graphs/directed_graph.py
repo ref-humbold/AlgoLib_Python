@@ -29,10 +29,10 @@ class DirectedSimpleGraph(SimpleGraph, DirectedGraph):
     def edges(self):
         return sorted(self._representation.edges)
 
-    def get_output_degree(self, vertex):
+    def output_degree(self, vertex):
         return len(self._representation.get_adjacent_edges(vertex))
 
-    def get_input_degree(self, vertex):
+    def input_degree(self, vertex):
         return len([edge for edges in self._representation.edges_set for edge in edges if
                     edge.destination is vertex])
 

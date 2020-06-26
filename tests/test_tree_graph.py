@@ -65,7 +65,7 @@ class TreeGraphTest(unittest.TestCase):
         self.assertEqual(new_vertex, result.source)
         self.assertEqual(neighbour, result.destination)
         self.assertEqual(9, self._test_object.vertices_count)
-        self.assertListEqual([5], list(self._test_object.get_neighbours(new_vertex)))
+        self.assertListEqual([5], list(self._test_object.neighbours(new_vertex)))
         self.assertEqual(vertex_property, self._test_object[new_vertex])
         self.assertEqual(edge_property, self._test_object[result])
 
@@ -91,8 +91,14 @@ class TreeGraphTest(unittest.TestCase):
         # when
         result = self._test_object.edges
         # then
-        self.assertListEqual([Edge(1, 0), Edge(2, 0), Edge(3, 0), Edge(4, 1), Edge(5, 1),
-                              Edge(6, 2), Edge(7, 2)], sorted(result))
+        self.assertListEqual([
+                Edge(1, 0),
+                Edge(2, 0),
+                Edge(3, 0),
+                Edge(4, 1),
+                Edge(5, 1),
+                Edge(6, 2),
+                Edge(7, 2)], sorted(result))
 
     def test__get_edge__when_in_direction__then_edge(self):
         # given
@@ -104,26 +110,26 @@ class TreeGraphTest(unittest.TestCase):
         self.assertEqual(source, result.source)
         self.assertEqual(destination, result.destination)
 
-    def test__get_neighbours__then_destination_vertices_of_outgoing_edges(self):
+    def test__neighbours__then_destination_vertices_of_outgoing_edges(self):
         # when
-        result = self._test_object.get_neighbours(1)
+        result = self._test_object.neighbours(1)
         # then
         self.assertListEqual([0, 4, 5], sorted(result))
 
-    def test__get_adjacent_edges__then_outgoing_edges(self):
+    def test__adjacent_edges__then_outgoing_edges(self):
         # when
-        result = self._test_object.get_adjacent_edges(1)
+        result = self._test_object.adjacent_edges(1)
         # then
         self.assertListEqual([Edge(1, 0), Edge(4, 1), Edge(5, 1)], sorted(result))
 
-    def test__get_output_degree__then_number_of_outgoing_edges(self):
+    def test__output_degree__then_number_of_outgoing_edges(self):
         # when
-        result = self._test_object.get_output_degree(1)
+        result = self._test_object.output_degree(1)
         # then
         self.assertEqual(3, result)
 
-    def test__get_input_degree__then_number_of_incoming_edges(self):
+    def test__input_degree__then_number_of_incoming_edges(self):
         # when
-        result = self._test_object.get_input_degree(1)
+        result = self._test_object.input_degree(1)
         # then
         self.assertEqual(3, result)

@@ -54,7 +54,7 @@ class _MatchAugmenter:
         while not vertex_queue.empty():
             vertex = vertex_queue.get()
 
-            for neighbour in self._graph.get_neighbours(vertex):
+            for neighbour in self._graph.neighbours(vertex):
                 matched = self.matching.get(neighbour)
 
                 if matched is not None and distances[matched] == self._INFINITY:
@@ -64,7 +64,7 @@ class _MatchAugmenter:
     def _dfs(self, vertex, visited, distances):
         visited.add(vertex)
 
-        for neighbour in self._graph.get_neighbours(vertex):
+        for neighbour in self._graph.neighbours(vertex):
             matched = self.matching.get(neighbour)
 
             if matched is None:

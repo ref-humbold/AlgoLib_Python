@@ -33,17 +33,17 @@ class TreeGraph(UndirectedGraph):
     def get_edge(self, source, destination):
         return self._graph.get_edge(source, destination)
 
-    def get_adjacent_edges(self, vertex):
-        return self._graph.get_adjacent_edges(vertex)
+    def adjacent_edges(self, vertex):
+        return self._graph.adjacent_edges(vertex)
 
-    def get_neighbours(self, vertex):
-        return self._graph.get_neighbours(vertex)
+    def neighbours(self, vertex):
+        return self._graph.neighbours(vertex)
 
-    def get_output_degree(self, vertex):
-        return self._graph.get_output_degree(vertex)
+    def output_degree(self, vertex):
+        return self._graph.output_degree(vertex)
 
-    def get_input_degree(self, vertex):
-        return self._graph.get_input_degree(vertex)
+    def input_degree(self, vertex):
+        return self._graph.input_degree(vertex)
 
     def add_vertex(self, vertex, neighbour, vertex_property=None, edge_property=None):
         was_added = self._graph.add_vertex(vertex, vertex_property)
