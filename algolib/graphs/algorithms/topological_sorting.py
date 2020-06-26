@@ -2,64 +2,77 @@
 """Algorithms for topological sorting"""
 import queue
 
+from .searching import dfs_recursive
+
 
 class DirectedCyclicGraphError(ValueError):
-    pass
+    def __init__(self, *args):
+        super().__init__(*args)
 
 
-def sort_topological1(digraph):
-    """Sortowanie topologiczne przez liczenie poprzedników.
-    
-    :param digraph: graf skierowany
-    :return: porządek topologiczny wierzchołków"""
+def sort_topological1(graph):
+    """Topological sorting algorithm using predecessors counting.
+
+    :param graph: a directed graph
+    :return: topological order of vertices
+    :raise ValueError: if given graph contains a cycle"""
+    if graph.edges_count == 0:
+        return list(graph.vertices)
+
     vertex_queue = queue.PriorityQueue()
-    indegs = [digraph.get_indegree(v) for v in digraph.get_vertices()]
+    input_degrees = {v: graph.get_input_degree(v) for v in graph.vertices}
     order = []
 
-    for v in digraph.get_vertices():
-        if indegs[v] == 0:
-            vertex_queue.put(v)
+    for vertex in graph.vertices:
+        if input_degrees[vertex] == 0:
+            vertex_queue.put(vertex)
 
     while not vertex_queue.empty():
-        v = vertex_queue.get()
-        order.append(v)
-        indegs[v] = None
+        vertex = vertex_queue.get()
+        order.append(vertex)
+        del input_degrees[vertex]
 
-        for nb in digraph.get_neighbours(v):
-            indegs[nb] -= 1
+        for neighbour in graph.get_neighbours(vertex):
+            input_degrees[neighbour] -= 1
 
-            if indegs[nb] == 0:
-                vertex_queue.put(nb)
+            if input_degrees[neighbour] == 0:
+                vertex_queue.put(neighbour)
 
-    if len(order) != digraph.vertices_number:
-        raise DirectedCyclicGraphError()
+    if len(order) != graph.vertices_count:
+        raise DirectedCyclicGraphError("Given graph contains a cycle")
 
     return iter(order)
 
 
-def sort_topological2(digraph):
-    """Sortowanie topologiczne z użyciem DFS.
-    
-    :param digraph: graf skierowany
-    :return: porządek topologiczny wierzchołków"""
-    indices = [None] * digraph.vertices_number
-    order = []
+def sort_topological2(graph):
+    """Topological sorting algorithm using DFS.
 
-    for v in reversed(sorted(digraph.get_vertices())):
-        if indices[v] is None:
-            _dfs(v, v, digraph, order, indices)
+    :param graph: a directed graph
+    :return: topological order of vertices
+    :raise ValueError: if given graph contains a cycle"""
+    if graph.edges_count == 0:
+        return list(graph.vertices)
 
-    return (v for v in reversed(order))
+    strategy = _TopologicalStrategy()
+    dfs_recursive(graph, strategy, graph.vertices)
+    return list(reversed(strategy.order))
 
 
-def _dfs(vertex, index, digraph, order, indices):
-    indices[vertex] = (index, True)
+class _TopologicalStrategy:
+    def __init__(self):
+        self.order = []
 
-    for neighbour in digraph.get_neighbours(vertex):
-        if indices[neighbour] is None:
-            _dfs(neighbour, index, digraph, order, indices)
-        elif indices[neighbour] == (index, True):
-            raise DirectedCyclicGraphError()
+    def for_root(self, root):
+        pass
 
-    order.append(vertex)
-    indices[vertex] = (index, False)
+    def on_enter(self, vertex):
+        pass
+
+    def on_next_vertex(self, vertex, neighbour):
+        pass
+
+    def on_exit(self, vertex):
+        self.order.append(vertex)
+
+    def on_edge_to_visited(self, vertex, neighbour):
+        raise DirectedCyclicGraphError("The graph contains a cycle")

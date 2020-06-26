@@ -44,7 +44,7 @@ class DisjointSetsTest(unittest.TestCase):
             self.assertIn(elem, self._test_object)
             self.assertEqual(elem, self._test_object.find_set(elem))
 
-    def test__iadd__when_present_element__then_raise_value_error(self):
+    def test__iadd__when_present_element__then_value_error(self):
         # when - then
         with self.assertRaises(ValueError):
             self._test_object += [11, 7, 15]
@@ -57,7 +57,7 @@ class DisjointSetsTest(unittest.TestCase):
         # then
         self.assertEqual(elem, result)
 
-    def test__getitem__when_absent_element__then_raise_key_error(self):
+    def test__getitem__when_absent_element__then_key_error(self):
         # when - then
         with self.assertRaises(KeyError):
             _ = self._test_object[18]
@@ -114,7 +114,7 @@ class DisjointSetsTest(unittest.TestCase):
         self.assertTrue(self._test_object.is_same_set(elem1, elem2))
         self.assertEqual(self._test_object[elem1], self._test_object[elem2])
 
-    def test__union_set__when_absent_element__then_raise_key_error(self):
+    def test__union_set__when_absent_element__then_key_error(self):
         # when - then
         with self.assertRaises(KeyError):
             self._test_object.union_set(15, 6)
@@ -150,7 +150,8 @@ class DisjointSetsTest(unittest.TestCase):
         # then
         self.assertTrue(result)
 
-    def test__is_same_set__when_absent__then_raise_key_error(self):
-        # when - then
+    def test__is_same_set__when_absent__then_key_error(self):
+        # then
         with self.assertRaises(KeyError):
+            # when
             self._test_object.is_same_set(15, 6)

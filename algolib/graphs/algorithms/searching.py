@@ -3,116 +3,119 @@
 import queue
 
 
-def bfs(graph, strategy, *roots):
-    """Algorytm BFS.
+def bfs(graph, strategy, roots):
+    """Breadth-first-search algorithm.
 
-    :param graph: graf
-    :param strategy: strategia dla wierzchołków
-    :param roots: wierzchołki początkowe
-    :return: generator odwiedzonych wierzchołków"""
-    reached = [0] * graph.vertices_number
+    :param graph: a graph
+    :param strategy: a searching strategy
+    :param roots: starting vertices
+    :return: iterable object of visited vertices"""
+    reached = set()
     vertex_queue = queue.Queue()
-    iteration = 1
 
     for root in roots:
-        if reached[root] == 0:
+        if root not in reached:
+            strategy.for_root(root)
             vertex_queue.put(root)
-            reached[root] = iteration
+            reached.add(root)
 
             while not vertex_queue.empty():
                 vertex = vertex_queue.get()
-                strategy.preprocess(vertex)
+                strategy.on_enter(vertex)
 
                 for neighbour in graph.get_neighbours(vertex):
-                    if reached[neighbour] == 0:
-                        strategy.for_neighbour(vertex, neighbour)
-                        reached[neighbour] = iteration
+                    if neighbour not in reached:
+                        strategy.on_next_vertex(vertex, neighbour)
+                        reached.add(neighbour)
                         vertex_queue.put(neighbour)
-                    elif reached[neighbour] == iteration:
-                        strategy.on_cycle(vertex, neighbour)
 
-                strategy.postprocess(vertex)
-                reached[vertex] = -iteration
+                strategy.on_exit(vertex)
 
-            iteration += 1
-
-    return map(lambda i: i != 0, reached)
+    return reached
 
 
-def iter_dfs(graph, strategy, *roots):
-    """Iteracyjny algorytm DFS.
+def dfs_iterative(graph, strategy, roots):
+    """Iterative depth-first-search algorithm.
 
-    :param graph: graf
-    :param strategy: strategia dla wierzchołków
-    :param roots: wierzchołki początkowe
-    :return: generator odwiedzonych wierzchołków"""
-    reached = [0] * graph.vertices_number
+    :param graph: a graph
+    :param strategy: a searching strategy
+    :param roots: starting vertices
+    :return: iterable object of visited vertices"""
+    reached = {}
     vertex_stack = queue.LifoQueue()
     iteration = 1
 
     for root in roots:
-        vertex_stack.put(root)
+        if root not in reached:
+            strategy.for_root(root)
+            vertex_stack.put(root)
 
-        while not vertex_stack.empty():
-            vertex = vertex_stack.get()
+            while not vertex_stack.empty():
+                vertex = vertex_stack.get()
 
-            if reached[vertex] == 0:
-                reached[vertex] = iteration
-                strategy.preprocess(vertex)
+                if vertex not in reached:
+                    reached[vertex] = iteration
+                    strategy.on_enter(vertex)
 
-                for neighbour in graph.get_neighbours(vertex):
-                    if reached[neighbour] == 0:
-                        strategy.for_neighbour(vertex, neighbour)
-                        vertex_stack.put(neighbour)
-                    elif reached[neighbour] == iteration:
-                        strategy.on_cycle(vertex, neighbour)
+                    for neighbour in graph.get_neighbours(vertex):
+                        if neighbour not in reached:
+                            strategy.on_next_vertex(vertex, neighbour)
+                            vertex_stack.put(neighbour)
+                        elif reached[neighbour] == iteration:
+                            strategy.on_edge_to_visited(vertex, neighbour)
 
-                strategy.postprocess(vertex)
-                reached[vertex] = -iteration
+                    strategy.on_exit(vertex)
+                    reached[vertex] = -iteration
 
-        iteration += 1
+            iteration += 1
 
-    return map(lambda i: i != 0, reached)
+    return reached.keys()
 
 
-def rec_dfs(graph, strategy, *roots):
-    """Rekurencyjny algorytm DFS.
+def dfs_recursive(graph, strategy, roots):
+    """Recursive depth-first-search algorithm.
 
-    :param graph: graf
-    :param strategy: strategia dla wierzchołków
-    :param roots: wierzchołki początkowe
-    :return: generator odwiedzonych wierzchołków"""
-    state = _DfsrState(graph.vertices_number)
+    :param graph: a graph
+    :param strategy: a searching strategy
+    :param roots: starting vertices
+    :return: iterable object of visited vertices"""
+    state = _DfsRecursiveState()
 
     for root in roots:
-        if state.reached[root] == 0:
-            _dfs_step(graph, strategy, root, state)
+        if root not in state.reached:
+            strategy.for_root(root)
+            state.vertex = root
+            _dfs_recursive_step(graph, strategy, state)
             state.iteration += 1
 
-    return map(lambda i: i != 0, state.reached)
+    return state.reached.keys()
 
 
-def _dfs_step(graph, strategy, vertex, state):
-    state.on_entry(vertex)
-    strategy.preprocess(vertex)
+def _dfs_recursive_step(graph, strategy, state):
+    # Single step of recursive DFS
+    vertex = state.vertex
+    state.on_enter(vertex)
+    strategy.on_enter(vertex)
 
     for neighbour in graph.get_neighbours(vertex):
-        if state.reached[neighbour] == 0:
-            strategy.for_neighbour(vertex, neighbour)
-            _dfs_step(graph, strategy, neighbour, state)
+        if neighbour not in state.reached:
+            strategy.on_next_vertex(vertex, neighbour)
+            state.vertex = neighbour
+            _dfs_recursive_step(graph, strategy, state)
         elif state.reached[neighbour] == state.iteration:
-            strategy.on_cycle(vertex, neighbour)
+            strategy.on_edge_to_visited(vertex, neighbour)
 
-    strategy.postprocess(vertex)
+    strategy.on_exit(vertex)
     state.on_exit(vertex)
 
 
-class _DfsrState:
-    def __init__(self, vertices_number):
+class _DfsRecursiveState:
+    def __init__(self):
+        self.vertex = None
         self.iteration = 1
-        self.reached = [0] * vertices_number
+        self.reached = {}
 
-    def on_entry(self, vertex):
+    def on_enter(self, vertex):
         self.reached[vertex] = self.iteration
 
     def on_exit(self, vertex):

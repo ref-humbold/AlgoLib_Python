@@ -1,96 +1,53 @@
 # -*- coding: utf-8 -*-
-"""Structure of undirected graphs"""
-from abc import ABCMeta, abstractmethod
+"""Structure of undirected graph"""
+from abc import ABCMeta
 
-from algolib.graphs.directed_graph import DirectedSimpleGraph, DirectedWeightedSimpleGraph
-from algolib.graphs.graph import Graph, NoSuchVertexError, SimpleGraph, WeightedGraph
+from algolib.graphs.directed_graph import DirectedSimpleGraph
+from algolib.graphs.graph import Graph
+from algolib.graphs.simple_graph import SimpleGraph
 
 
 class UndirectedGraph(Graph, metaclass=ABCMeta):
-    def __init__(self):
-        super().__init__()
-
-    @abstractmethod
-    def to_directed(self):
-        """Zamiana krawędzi nieskierowanych na skierowane.
-
-        :return: graf ze skierowanymi krawędziami"""
-        pass
-
-
-class UndirectedWeightedGraph(UndirectedGraph, WeightedGraph, metaclass=ABCMeta):
-    def __init__(self):
-        super().__init__()
+    pass
 
 
 class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
-    def __init__(self, n, edges=None):
-        super().__init__(n)
-
-        if edges is not None:
-            for e in edges:
-                self.add_edge(e[0], e[1])
+    def __init__(self, vertices=None):
+        super().__init__(vertices)
 
     @property
-    def edges_number(self):
-        return sum(
-                self.get_outdegree(v) + 1 if v in self.get_neighbours(v) else self.get_outdegree(v)
-                for v in self.get_vertices()) / 2
+    def edges_count(self):
+        return len(set(self._representation.edges))
 
-    def get_edges(self):
-        return ((v, u) for v in self.get_vertices() for u in self.get_neighbours(v) if u >= v)
+    @property
+    def edges(self):
+        return sorted(set(self._representation.edges))
 
-    def add_edge(self, vertex1, vertex2):
-        if not 0 <= vertex1 < self.vertices_number:
-            raise NoSuchVertexError(f"No vertex {vertex1}")
+    def get_output_degree(self, vertex):
+        return len(self._representation.get_adjacent_edges(vertex))
 
-        if not 0 <= vertex2 < self.vertices_number:
-            raise NoSuchVertexError(f"No vertex {vertex2}")
+    def get_input_degree(self, vertex):
+        return len(self._representation.get_adjacent_edges(vertex))
 
-        self._graphrepr[vertex1].add((vertex2, self._DEFAULT_WEIGHT))
-        self._graphrepr[vertex2].add((vertex1, self._DEFAULT_WEIGHT))
+    def add_edge(self, edge, edge_property=None):
+        try:
+            existing_edge = self.get_edge(edge.source, edge.destination)
+        except KeyError:
+            self._representation.add_edge_to_source(edge)
+            self._representation.add_edge_to_destination(edge)
+            self._representation[edge] = edge_property
+            return edge
+        else:
+            return existing_edge
 
-    def get_indegree(self, vertex):
-        if not 0 <= vertex < self.vertices_number:
-            raise NoSuchVertexError(f"No vertex {vertex}")
+    def as_directed(self):
+        directed_simple_graph = DirectedSimpleGraph(self.vertices)
 
-        return self.get_outdegree(vertex)
+        for vertex in self.vertices:
+            directed_simple_graph[vertex] = self[vertex]
 
-    def to_directed(self):
-        diedges = list(self.get_edges()) + [(u, v) for v, u in self.get_edges()]
-        return DirectedSimpleGraph(self.vertices_number, edges=diedges)
+        for edge in self.edges:
+            directed_simple_graph.add_edge(edge, self[edge])
+            directed_simple_graph.add_edge(edge.reversed(), self[edge])
 
-
-class UndirectedWeightedSimpleGraph(UndirectedSimpleGraph, UndirectedWeightedGraph):
-    def __init__(self, n, edges=None):
-        super().__init__(n)
-
-        if edges is not None:
-            for edge in map(lambda e: e
-                            if len(e) > 2 else (e[0], e[1], self._DEFAULT_WEIGHT), edges):
-                self.add_weighted_edge(edge[0], edge[1], edge[2])
-
-    def get_weighted_edges(self):
-        return ((v, u, wg) for v in self.get_vertices() for u, wg in self.get_weighted_neighbours(v)
-                if u > v)
-
-    def add_weighted_edge(self, vertex1, vertex2, weight):
-        if not 0 <= vertex1 < self.vertices_number:
-            raise NoSuchVertexError(str(vertex1))
-
-        if not 0 <= vertex2 < self.vertices_number:
-            raise NoSuchVertexError(str(vertex2))
-
-        self._graphrepr[vertex1].add((vertex2, weight))
-        self._graphrepr[vertex2].add((vertex1, weight))
-
-    def get_weighted_neighbours(self, vertex):
-        if not 0 <= vertex < self.vertices_number:
-            raise NoSuchVertexError(str(vertex))
-
-        return iter(self._graphrepr[vertex])
-
-    def to_directed(self):
-        diwedges = list(self.get_weighted_edges()) \
-                   + [(u, v, wg) for v, u, wg in self.get_weighted_edges()]
-        return DirectedWeightedSimpleGraph(self.vertices_number, edges=diwedges)
+        return directed_simple_graph

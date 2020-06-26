@@ -116,7 +116,7 @@ class AVLTreeTest(unittest.TestCase):
         avl_tree = self._test_object
         self.assertTrue(avl_tree._count == 0)
 
-    def test__remove__when_empty__then_raise_value_error(self):
+    def test__remove__when_empty__then_value_error(self):
         self._test_object = AVLTree()
 
         with self.assertRaises(ValueError):
@@ -125,7 +125,7 @@ class AVLTreeTest(unittest.TestCase):
         avl_tree = self._test_object
         self.assertTrue(avl_tree._count == 0)
 
-    def test__remove__when_outer_element__then_raise_value_error(self):
+    def test__remove__when_outer_element__then_value_error(self):
         for e in [111, 140, 187]:
             with self.assertRaises(ValueError):
                 self._test_object.remove(e)

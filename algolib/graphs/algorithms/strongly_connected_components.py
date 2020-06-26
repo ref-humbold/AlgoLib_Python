@@ -1,60 +1,61 @@
 # -*- coding: utf-8 -*-
-"""Strongly connected components algorithm"""
+"""Algorithm for strongly connected components"""
+from .searching import dfs_recursive
 
 
-def find_scc(digraph):
-    """Algorytm wyznaczania silnie spójnych składowych grafu.
+def find_scc(graph):
+    """Finds strongly connected components in given directed graph.
 
-    :param digraph: graf skierowany
-    :return: numery silnie spójnych składowych dla wierzchołków"""
-    comps = _GraphComponents(digraph).find_scc()
-    components = [set() for i in range(max(comps) + 1)]
+    :param graph: a directed graph
+    :return: list of vertices in strongly connected components"""
+    post_order_strategy = _PostOrderStrategy()
+    dfs_recursive(graph, post_order_strategy, graph.vertices)
+    vertices = map(lambda item: item[0],
+                   sorted(post_order_strategy.post_times.items(), key=lambda item: item[1],
+                          reverse=True))
+    reversed_graph = graph.reversed_copy()
+    scc_strategy = _SCCStrategy()
+    dfs_recursive(reversed_graph, scc_strategy, vertices)
+    return scc_strategy.components
 
-    for v in digraph.get_vertices():
-        components[comps[v]].add(v)
 
-    return components
+class _PostOrderStrategy:
+    def __init__(self):
+        self.post_times = {}
+        self._timer = 0
+
+    def for_root(self, root):
+        pass
+
+    def on_enter(self, vertex):
+        pass
+
+    def on_next_vertex(self, vertex, neighbour):
+        pass
+
+    def on_exit(self, vertex):
+        self.post_times[vertex] = self._timer
+        self._timer += 1
+
+    def on_edge_to_visited(self, vertex, neighbour):
+        pass
 
 
-class _GraphComponents:
-    def __init__(self, digraph):
-        self._digraph = digraph
-        self._components = [None] * digraph.vertices_number
-        self._postorder = [None] * digraph.vertices_number
+class _SCCStrategy:
+    def __init__(self):
+        self.components = []
 
-    def find_scc(self):
-        timer = 0
-        component = 0
+    def for_root(self, root):
+        self.components.append(set())
 
-        for v in self._digraph.get_vertices():
-            if self._postorder[v] is None:
-                timer = self._dfs_order(v, timer)
-                timer += 1
+    def on_enter(self, vertex):
+        self.components[-1].add(vertex)
 
-        self._postorder.sort(reverse=True)
-        self._digraph.reverse()
+    def on_next_vertex(self, vertex, neighbour):
+        pass
 
-        for _, v in self._postorder:
-            if self._components[v] is None:
-                self._dfs_scc(v, component)
-                component += 1
+    def on_exit(self, vertex):
+        pass
 
-        return self._components
-
-    def _dfs_order(self, vertex, timer):
-        self._postorder[vertex] = (0, vertex)
-        timer += 1
-
-        for neighbour in self._digraph.get_neighbours(vertex):
-            if self._postorder[neighbour] is None:
-                timer = self._dfs_order(neighbour, timer)
-
-        self._postorder[vertex] = (timer, vertex)
-        return timer + 1
-
-    def _dfs_scc(self, vertex, component):
-        self._components[vertex] = component
-
-        for neighbour in self._digraph.get_neighbours(vertex):
-            if self._components[neighbour] is None:
-                self._dfs_scc(neighbour, component)
+    def on_edge_to_visited(self, vertex, neighbour):
+        pass

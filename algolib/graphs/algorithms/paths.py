@@ -1,71 +1,80 @@
 # -*- coding: utf-8 -*-
 """Algorithms for shortest paths"""
+import math
 import queue
 
 
-def bellman_ford(diwgraph, source):
-    """Algorytm Bellmana-Forda.
+class Paths:
+    INFINITY = math.inf
 
-    :param diwgraph: skierowany graf ważony
-    :param source: wierzchołek początkowy
-    :return: lista odległości wierzchołków"""
-    distances = [diwgraph.INF] * diwgraph.vertices_number
+
+def bellman_ford(graph, source):
+    """Bellman-Ford algorithm.
+
+    :param graph: a directed graph with weighted edges
+    :param source: source vertex
+    :return: dictionary of vertices' distances"""
+    distances = {v: Paths.INFINITY for v in graph.vertices}
     distances[source] = 0.0
 
-    for _ in range(diwgraph.vertices_number - 1):
-        for v, u, wg in diwgraph.get_weighted_edges():
-            distances[u] = min(distances[u], distances[v] + wg)
+    for _ in range(graph.vertices_count - 1):
+        for edge in graph.edges:
+            distances[edge.destination] = min(distances[edge.destination],
+                                              distances[edge.source] + graph[edge].weight)
 
-    for v, u, wg in diwgraph.get_weighted_edges():
-        if distances[v] < diwgraph.INF and distances[v] + wg < distances[u]:
-            raise ValueError("Graph contains a negative cycle.")
+    for edge in graph.edges:
+        if distances[edge.source] < Paths.INFINITY \
+                and distances[edge.source] + graph[edge].weight < distances[edge.destination]:
+            raise ValueError("Graph contains a negative cycle")
 
     return distances
 
 
-def dijkstra(wgraph, source):
-    """Algorytm Dijkstry.
+def dijkstra(graph, source):
+    """Dijkstra algorithm.
 
-    :param wgraph: graf ważony z wagami nieujemnymi
-    :param source: wierzchołek początkowy
-    :return: lista odległości wierzchołków"""
-    if any(wg < 0.0 for _, _, wg in wgraph.get_weighted_edges()):
-        raise ValueError("Graph contains an edge with negative weight.")
+    :param graph: a graph with weighted edges (weights are not negative)
+    :param source: source vertex
+    :return: dictionary of vertices' distances"""
+    if any(graph[e].weight < 0.0 for e in graph.edges):
+        raise ValueError("Graph contains an edge with negative weight")
 
     vertex_queue = queue.PriorityQueue()
     vertex_queue.put((0.0, source))
-    is_visited = [False] * wgraph.vertices_number
-    distances = [wgraph.INF] * wgraph.vertices_number
+    visited = set()
+    distances = {v: Paths.INFINITY for v in graph.vertices}
     distances[source] = 0.0
 
     while not vertex_queue.empty():
-        v = vertex_queue.get()[1]
+        vertex = vertex_queue.get()[1]
 
-        if not is_visited[v]:
-            is_visited[v] = True
+        if vertex not in visited:
+            visited.add(vertex)
 
-            for nb, wg in wgraph.get_weighted_neighbours(v):
-                if distances[v] + wg < distances[nb]:
-                    distances[nb] = distances[v] + wg
-                    vertex_queue.put((distances[nb], nb))
+            for edge in graph.get_adjacent_edges(vertex):
+                neighbour = edge.get_neighbour(vertex)
+
+                if distances[vertex] + graph[edge].weight < distances[neighbour]:
+                    distances[neighbour] = distances[vertex] + graph[edge].weight
+                    vertex_queue.put((distances[neighbour], neighbour))
 
     return distances
 
 
-def floyd_warshall(diwgraph):
-    """Algorytm Floyda-Warshalla.
+def floyd_warshall(graph):
+    """Floyd-Warshall algorithm.
 
-    :param diwgraph: skierowany graf ważony
-    :return: macierz odległości wierzchołków"""
-    distances = [[0.0 if v == u else diwgraph.INF for u in diwgraph.get_vertices()]
-                 for v in diwgraph.get_vertices()]
+    :param graph: a directed graph with weighted edges
+    :return: map of distances between all pairs of vertices"""
+    distances = {(v, u): 0.0 if v == u else Paths.INFINITY for v in graph.vertices
+                 for u in graph.vertices}
 
-    for v, u, wg in diwgraph.get_weighted_edges():
-        distances[v][u] = wg
+    for edge in graph.edges:
+        distances[(edge.source, edge.destination)] = graph[edge].weight
 
-    for w in diwgraph.get_vertices():
-        for v in diwgraph.get_vertices():
-            for u in diwgraph.get_vertices():
-                distances[v][u] = min(distances[v][u], distances[v][w] + distances[w][u])
+    for w in graph.vertices:
+        for v in graph.vertices:
+            for u in graph.vertices:
+                distances[(v, u)] = min(distances[(v, u)], distances[(v, w)] + distances[(w, u)])
 
     return distances

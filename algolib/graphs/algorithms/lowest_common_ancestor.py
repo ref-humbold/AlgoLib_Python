@@ -2,62 +2,77 @@
 """Lowest common ancestor algorithm"""
 from math import log
 
-
-def find_lca(treegraph, vertex1, vertex2, root=0):
-    """Wyznaczanie najniższego wspólnego przodka.
-
-    :param treegraph: graf drzewo
-    :param vertex1: wierzchołek 1
-    :param vertex2: wierzchołek 2
-    :param root: korzeń drzewa
-    :return: najniższy wspólny przodek"""
-    return _LCAFinder(treegraph).search_lca(vertex1, vertex2, root)
+from .searching import dfs_recursive
 
 
-class _LCAFinder:
-    def __init__(self, treegraph):
-        self._graph = treegraph  # Reprezentacja drzewa
-        self._paths = \
-            [[] for _ in self._graph.get_vertices()]  # Skompresowane ścieżki do korzenia drzewa
-        self._pre_post_times = \
-            [None] * self._graph.vertices_number  # Czas wejścia i wyjścia dla wierzchołka
+class LowestCommonAncestor:
+    def __init__(self, graph, root):
+        self._graph = graph
+        self._root = root
+        self._paths = {v: [] for v in graph.vertices}
+        self._strategy = self._LCAStrategy()
+        self._initialize()
 
-    def search_lca(self, vertex1, vertex2, root):
-        self._dfs(root, root, 0)
+    @property
+    def graph(self):
+        return self._graph
 
-        for i in range(0, int(log(self._graph.vertices_number, 2)) + 3):
-            for v in self._graph.get_vertices():
-                if len(self._paths[v]) > 0:
-                    self._paths[v].append(self._paths[self._paths[v][i]][i])
+    @property
+    def root(self):
+        return self._root
 
-        return self._search(vertex1, vertex2)
+    def find(self, vertex1, vertex2):
+        """Finds a lowest common ancestor of two vertices in a rooted tree.
 
-    def _search(self, vertex1, vertex2):
-        def is_offspring(vt1, vt2):
-            return self._pre_post_times[vt1][0] >= self._pre_post_times[vt2][0] and \
-                   self._pre_post_times[vt1][1] <= self._pre_post_times[vt2][1]
-
-        if is_offspring(vertex1, vertex2):
+        :param vertex1: first vertex
+        :param vertex2: second vertex
+        :return: lowest common ancestor of given vertices"""
+        if self._is_offspring(vertex1, vertex2):
             return vertex2
 
-        if is_offspring(vertex2, vertex1):
+        if self._is_offspring(vertex2, vertex1):
             return vertex1
 
         for candidate in reversed(self._paths[vertex1]):
-            if not is_offspring(vertex2, candidate):
-                return self._search(candidate, vertex2)
+            if not self._is_offspring(vertex2, candidate):
+                return self.find(candidate, vertex2)
 
-        return self._search(self._paths[vertex1][0], vertex2)
+        return self.find(self._paths[vertex1][0], vertex2)
 
-    def _dfs(self, vertex, parent, timer):
-        self._pre_post_times[vertex] = ()
-        self._paths[vertex].append(parent)
-        pre_time = timer
-        timer += 1
+    def _initialize(self):
+        dfs_recursive(self._graph, self._strategy, [self._root])
 
-        for neighbour in self._graph.get_neighbours(vertex):
-            if self._pre_post_times[neighbour] is None:
-                timer = self._dfs(neighbour, vertex, timer)
+        for vertex in self._graph.vertices:
+            self._paths[vertex].append(self._strategy.parents[vertex])
 
-        self._pre_post_times[vertex] = (pre_time, timer)
-        return timer + 1
+        for i in range(int(log(self._graph.vertices_count, 2)) + 3):
+            for vertex in self._graph.vertices:
+                self._paths[vertex].append(self._paths[self._paths[vertex][i]][i])
+
+    def _is_offspring(self, vertex1, vertex2):
+        return self._strategy.pre_times[vertex1] >= self._strategy.pre_times[vertex2] \
+               and self._strategy.post_times[vertex1] <= self._strategy.post_times[vertex2]
+
+    class _LCAStrategy:
+        def __init__(self):
+            self.parents = {}
+            self.pre_times = {}
+            self.post_times = {}
+            self._timer = 0
+
+        def for_root(self, root):
+            self.parents[root] = root
+
+        def on_enter(self, vertex):
+            self.pre_times[vertex] = self._timer
+            self._timer += 1
+
+        def on_next_vertex(self, vertex, neighbour):
+            self.parents[neighbour] = vertex
+
+        def on_exit(self, vertex):
+            self.post_times[vertex] = self._timer
+            self._timer += 1
+
+        def on_edge_to_visited(self, vertex, neighbour):
+            pass

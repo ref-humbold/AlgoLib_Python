@@ -1,46 +1,19 @@
 # -*- coding: utf-8 -*-
-"""Algorithms for strategies for graph searching"""
+"""Strategies for graph searching"""
 
 
 class EmptyStrategy:
-    def __init__(self):
+    def for_root(self, root):
         pass
 
-    def preprocess(self, vertex):
+    def on_enter(self, vertex):
         pass
 
-    def for_neighbour(self, vertex, neighbour):
+    def on_next_vertex(self, vertex, neighbour):
         pass
 
-    def postprocess(self, vertex):
+    def on_exit(self, vertex):
         pass
 
-    def on_cycle(self, vertex, neighbour):
-        pass
-
-
-class TimerStrategy:
-    def __init__(self, graph):
-        self._timer = 1
-        self._pre_times = [0] * graph.vertices_number
-        self._post_times = [0] * graph.vertices_number
-
-    def pre_time(self, vertex):
-        return self._pre_times[vertex]
-
-    def post_time(self, vertex):
-        return self._post_times[vertex]
-
-    def preprocess(self, vertex):
-        self._pre_times[vertex] = self._timer
-        self._timer += 1
-
-    def for_neighbour(self, vertex, neighbour):
-        pass
-
-    def postprocess(self, vertex):
-        self._post_times[vertex] = self._timer
-        self._timer += 1
-
-    def on_cycle(self, vertex, neighbour):
+    def on_edge_to_visited(self, vertex, neighbour):
         pass

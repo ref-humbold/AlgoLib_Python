@@ -27,7 +27,7 @@ class Equation:
         :param constant: constant
         :raises ValueError: if the constant is equal to zero"""
         if constant == 0:
-            raise ValueError("Constant cannot be zero")
+            raise ValueError("Constant cannot be equal to zero")
 
         for i in range(len(self)):
             self.coefficients[i] *= constant
@@ -45,7 +45,7 @@ class Equation:
             raise ValueError("Equation has different number of variables")
 
         if constant == 0:
-            raise ValueError("Constant cannot be zero")
+            raise ValueError("Constant cannot be equal to zero")
 
         for i in range(len(self)):
             self.coefficients[i] += constant * equation[i]

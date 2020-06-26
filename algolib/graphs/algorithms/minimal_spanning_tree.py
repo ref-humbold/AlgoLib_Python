@@ -2,53 +2,59 @@
 """Algorithms for minimal spanning tree"""
 import queue
 
+from algolib.graphs import UndirectedSimpleGraph
 from algolib.structures.disjoint_sets import DisjointSets
 
 
-def kruskal(uwgraph):
-    """Algorytm Kruskala wyliczający długość MST.
+def kruskal(graph):
+    """Kruskal algorithm.
 
-    :param uwgraph: graf nieskierowany ważony
-    :return: długość minimalnego drzewa spinającego"""
-    size_mst = 0.0
-    components = uwgraph.vertices_number
+    :param graph: an undirected graph with weighted edges
+    :return: the minimal spanning tree"""
+    mst = UndirectedSimpleGraph(graph.vertices)
     edge_queue = queue.PriorityQueue()
-    vertex_sets = DisjointSets(uwgraph.get_vertices())
+    vertex_sets = DisjointSets(graph.vertices)
 
-    for v, u, wg in uwgraph.get_weighted_edges():
-        edge_queue.put((wg, v, u))
+    for edge in graph.edges:
+        edge_queue.put((graph[edge].weight, edge))
 
-    while components > 1 and not edge_queue.empty():
-        edge_weight, edge_first, edge_second = edge_queue.get()
+    while len(vertex_sets) > 1 and not edge_queue.empty():
+        _, edge = edge_queue.get()
 
-        if not vertex_sets.is_same_set(edge_first, edge_second):
-            size_mst += edge_weight
-            vertex_sets.union_set(edge_first, edge_second)
-            components -= 1
+        if not vertex_sets.is_same_set(edge.source, edge.destination):
+            mst.add_edge(edge, graph[edge])
+            vertex_sets.union_set(edge.source, edge.destination)
 
-    return size_mst
+    return mst
 
 
-def prim(uwgraph, source):
-    """Algorytm Prima wyliczający długość MST.
+def prim(graph, source):
+    """Prim algorithm.
 
-    :param uwgraph: graf nieskierowany ważony
-    :param source: początkowy wierzchołek
-    :return: długość minimalnego drzewa spinającego"""
-    size_mst = 0.0
-    is_visited = [False] * (uwgraph.vertices_number + 1)
-    vertex_queue = queue.PriorityQueue()
-    vertex_queue.put((0.0, source))
+    :param graph: an undirected graph with weighted edges
+    :param source: source vertex
+    :return: the minimal spanning tree"""
+    mst = UndirectedSimpleGraph(graph.vertices)
+    visited = {source}
+    edge_queue = queue.PriorityQueue()
 
-    while not vertex_queue.empty():
-        edge_weight, v = vertex_queue.get()
+    for adjacent_edge in graph.get_adjacent_edges(source):
+        neighbour = adjacent_edge.get_neighbour(source)
 
-        if not is_visited[v]:
-            is_visited[v] = True
-            size_mst += edge_weight
+        if neighbour != source:
+            edge_queue.put((graph[adjacent_edge].weight, adjacent_edge, neighbour))
 
-            for s, wg in uwgraph.get_weighted_neighbours(v):
-                if not is_visited[s]:
-                    vertex_queue.put((wg, s))
+    while not edge_queue.empty():
+        _, edge, vertex = edge_queue.get()
 
-    return size_mst
+        if vertex not in visited:
+            visited.add(vertex)
+            mst.add_edge(edge, graph[edge])
+
+            for adjacent_edge in graph.get_adjacent_edges(vertex):
+                neighbour = adjacent_edge.get_neighbour(vertex)
+
+                if neighbour not in visited:
+                    edge_queue.put((graph[adjacent_edge].weight, adjacent_edge, neighbour))
+
+    return mst

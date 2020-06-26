@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
-from .directed_graph import DirectedGraph, DirectedSimpleGraph, DirectedWeightedSimpleGraph
-from .graph import Graph, NoSuchVertexError, SimpleGraph, WeightedGraph
+from .directed_graph import DirectedGraph, DirectedSimpleGraph
+from .graph import Edge, Graph
 from .multipartite_graph import GraphPartitionError, MultipartiteGraph
-from .tree_graph import CycleError, NotConnectedError, TreeGraph
-from .undirected_graph import UndirectedGraph, UndirectedSimpleGraph, UndirectedWeightedSimpleGraph
+from .simple_graph import SimpleGraph
+from .tree_graph import TreeGraph
+from .undirected_graph import UndirectedGraph, UndirectedSimpleGraph
 
-__all__ = [
-        "DirectedGraph", "DirectedSimpleGraph", "DirectedWeightedSimpleGraph", "Graph",
-        "SimpleGraph", "WeightedGraph", "NoSuchVertexError", "MultipartiteGraph",
-        "GraphPartitionError", "CycleError", "NotConnectedError", "TreeGraph", "UndirectedGraph",
-        "UndirectedSimpleGraph", "UndirectedWeightedSimpleGraph"
-]
+__all__ = ["DirectedGraph", "DirectedSimpleGraph", "Graph", "Edge", "GraphPartitionError",
+           "MultipartiteGraph", "SimpleGraph", "UndirectedSimpleGraph", "UndirectedGraph",
+           "TreeGraph"]

@@ -15,6 +15,10 @@ class AVLTree:
         """:return: string representation of this tree"""
         return f"{{|{', '.join(str(x) for x in self)}|}}"
 
+    def __len__(self):
+        """:return: number of elements in this tree"""
+        return self._count
+
     def __iter__(self):
         """:return: a forward iterator object"""
         return self._AVLIterator(self._tree.minimum())
@@ -22,10 +26,6 @@ class AVLTree:
     def __reversed__(self):
         """:return: a reversed iterator object"""
         return self._AVLReverseIterator(self._tree.maximum())
-
-    def __len__(self):
-        """:return: number of elements in this tree"""
-        return self._count
 
     def __contains__(self, element):
         """:param element: element to be found

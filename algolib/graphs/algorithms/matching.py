@@ -1,76 +1,81 @@
 # -*- coding: utf-8 -*-
-"""HOPCROFT-KARP MATCHING ALGORITHM"""
+"""Hopcroft-Karp algorithm for matching in bipartite graph"""
+import math
 import queue
 
 
-def match(partgraph):
-    """Wyznaczanie maksymalnego skojarzenia.
+def match(graph):
+    """Finds maximal matching in given bipartite graph.
 
-    :param partgraph: graf wielodzielny
-    :return: pary skojarzonych wierzchołków"""
-    augmenter = _MatchAugmenter(partgraph)
+    :param graph: a bipartite graph
+    :return: dictionary of matched vertices"""
+    augmenter = _MatchAugmenter(graph)
+    was_augmented = True
 
-    while augmenter.augment_match():
-        pass
+    while was_augmented:
+        was_augmented = augmenter.augment_match()
 
-    matching = augmenter.matching
-    return [(v, matching[v]) for v in partgraph.get_group(1) if matching[v] is not None]
+    return augmenter.matching
 
 
 class _MatchAugmenter:
-    def __init__(self, partgraph, matching=None):
-        if partgraph.groups_number != 2:
-            raise ValueError("Graph is not bipartite.")
+    _INFINITY = math.inf
 
-        self._graph = partgraph  # Reprezentacja grafu dwudzielnego
-        self._matching = matching  # Skojarzenia wierzchołków
-        self._distances = None  # Odległości wierzchołków
-        self._is_visited = None  # Lista odwiedzonych wierzchołków
+    def __init__(self, graph):
+        if graph.groups_count != 2:
+            raise ValueError("Graph is not bipartite")
 
-        if matching is None:
-            self._matching = [None] * partgraph.vertices_number
-
-    @property
-    def matching(self):
-        return self._matching
+        self._graph = graph
+        self.matching = {}
 
     def augment_match(self):
-        self._distances = [self._graph.INF] * self._graph.vertices_number
-        self._is_visited = [False] * self._graph.vertices_number
-        self._bfs()
-        return any([self._dfs(v) for v in self._graph.get_group(1)])
+        was_added = False
+        visited = set()
+        distances = {v: self._INFINITY for v in self._graph.vertices}
+        self._bfs(distances)
 
-    def _bfs(self):
+        for vertex in self._unmatched_vertices():
+            was_added = self._dfs(vertex, visited, distances) or was_added
+
+        return was_added
+
+    def _unmatched_vertices(self):
+        for vertex in self._graph.get_vertices_from_group(1):
+            if vertex not in self.matching:
+                yield vertex
+
+    def _bfs(self, distances):
         vertex_queue = queue.Queue()
 
-        for v in self._graph.get_group(1):
-            self._distances[v] = 0
-            vertex_queue.put(v)
+        for vertex in self._unmatched_vertices():
+            distances[vertex] = 0
+            vertex_queue.put(vertex)
 
         while not vertex_queue.empty():
-            v = vertex_queue.get()
+            vertex = vertex_queue.get()
 
-            for nb in self._graph.get_neighbours(v):
-                if self._matching[nb] is not None \
-                        and self._distances[self._matching[nb]] == self._graph.INF:
-                    self._distances[self._matching[nb]] = self._distances[v] + 1
-                    vertex_queue.put(self._matching[nb])
+            for neighbour in self._graph.get_neighbours(vertex):
+                matched = self.matching.get(neighbour)
 
-    def _dfs(self, vertex):
-        self._is_visited[vertex] = True
+                if matched is not None and distances[matched] == self._INFINITY:
+                    distances[matched] = distances[vertex] + 1
+                    vertex_queue.put(matched)
+
+    def _dfs(self, vertex, visited, distances):
+        visited.add(vertex)
 
         for neighbour in self._graph.get_neighbours(vertex):
-            if self._matching[neighbour] is None:
-                self._matching[vertex] = neighbour
-                self._matching[neighbour] = vertex
-                return True
-            else:
-                mtc = self._matching[neighbour]
+            matched = self.matching.get(neighbour)
 
-                if self._distances[mtc] == self._distances[vertex] + 1 \
-                        and not self._is_visited[mtc] and self._dfs(mtc):
-                    self._matching[vertex] = neighbour
-                    self._matching[neighbour] = vertex
-                    return True
+            if matched is None:
+                self.matching[vertex] = neighbour
+                self.matching[neighbour] = vertex
+                return True
+
+            if matched not in visited and distances[matched] == distances[vertex] + 1 \
+                    and self._dfs(matched, visited, distances):
+                self.matching[vertex] = neighbour
+                self.matching[neighbour] = vertex
+                return True
 
         return False

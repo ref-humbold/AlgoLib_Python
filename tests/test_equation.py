@@ -29,7 +29,7 @@ class EquationTest(unittest.TestCase):
         self.assertListEqual([4, 6, 0, -4], self._test_object.coefficients)
         self.assertEqual(30, self._test_object.free)
 
-    def test__imul__when_constant_is_zero__then_raise_value_error(self):
+    def test__imul__when_constant_is_zero__then_value_error(self):
         # when - then
         with self.assertRaises(ValueError):
             self._test_object *= 0
@@ -41,7 +41,7 @@ class EquationTest(unittest.TestCase):
         self.assertListEqual([0, 5, -8, -22], self._test_object.coefficients)
         self.assertEqual(5, self._test_object.free)
 
-    def test__combine__when_constant_is_zero__then_raise_value_error(self):
+    def test__combine__when_constant_is_zero__then_value_error(self):
         # when - then
         with self.assertRaises(ValueError):
             self._test_object.combine(Equation([1, -1, 10, 7], 5), 0)

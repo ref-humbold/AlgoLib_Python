@@ -1,94 +1,101 @@
 # -*- coding: utf-8 -*-
-"""Structure of multipartite graphs"""
-from algolib.graphs.undirected_graph import UndirectedGraph, UndirectedSimpleGraph
+"""Structure of multipartite graph"""
+from .graph import Edge
+from .undirected_graph import UndirectedGraph, UndirectedSimpleGraph
 
 
-class GraphPartitionError(ValueError):
+class GraphPartitionError(BaseException):
     pass
 
 
 class MultipartiteGraph(UndirectedGraph):
-    def __init__(self, g, n, groups):
+    def __init__(self, groups_count, vertices=None):
         super().__init__()
-        if len(groups) != n:
-            raise ValueError("Groups mapping is not consistent with vertices number")
+        self._graph = UndirectedSimpleGraph()
+        self._groups_count = groups_count
+        self._vertex_group_dict = {}
 
-        if not all(0 <= grp < g for grp in groups):
-            raise ValueError("Groups mapping is not consistent with maximal groups number")
+        if vertices is not None:
+            if len(vertices) > groups_count:
+                raise GraphPartitionError(f"Cannot add vertices to group {len(vertices)}, "
+                                          f"graph contains only {self._groups_count} groups")
 
-        self.__graph = UndirectedSimpleGraph(n)  # Struktura grafu wielodzielnego
-        self.__groups_number = g  # Maksymalna liczba grup wierzchołków
-        self.__groups = list(groups)  # Numery grup wierzchołków
+            i = 0
 
-    @property
-    def groups_number(self):
-        return self.__groups_number
+            for groupVertices in vertices:
+                for vertex in groupVertices:
+                    self.add_vertex(i, vertex)
 
-    @property
-    def vertices_number(self):
-        return self.__graph.vertices_number
-
-    def get_vertices(self, group=None):
-        """:param group: numer grupy wierzchołków.
-
-        :return: generator wierzchołków z zadanej grupy"""
-        if group is None:
-            return self.__graph.get_vertices()
-
-        return (v for v in self.__graph.get_vertices() if self.__groups[v] == group)
-
-    def add_vertex(self, neighbours=None, group=0):
-        """Dodawanie nowego wierzchołka do zadanej grupy.
-
-        :param group: numer grupy
-        :return: oznaczenie wierzchołka"""
-        v = self.__graph.add_vertex(neighbours)
-        self.__groups.append(group)
-        return v
+                i += 1
 
     @property
-    def edges_number(self):
-        return self.__graph.edges_number
+    def groups_count(self):
+        return self._groups_count
 
-    def get_edges(self):
-        return self.__graph.get_edges()
+    @property
+    def vertices_count(self):
+        return self._graph.vertices_count
 
-    def add_edge(self, vertex1, vertex2):
-        if self.is_same_group(vertex1, vertex2):
-            raise GraphPartitionError()
+    @property
+    def edges_count(self):
+        return self._graph.edges_count
 
-        self.__graph.add_edge(vertex1, vertex2)
+    @property
+    def vertices(self):
+        return self._graph.vertices
 
-    def get_neighbours(self, vertex, group=None):
-        """:param vertex: numer wierzchołka
-        :param group: numer grupy sąsiadów
-        :return: generator sąsiadów wierzchołka z zadanej grupy"""
-        if group is None:
-            return self.__graph.get_neighbours(vertex)
+    @property
+    def edges(self):
+        return self._graph.edges
 
-        return (v for v in self.__graph.get_neighbours(vertex) if self.__groups[v] == group)
+    def __getitem__(self, item):
+        return self._graph[item]
 
-    def get_outdegree(self, vertex):
-        return self.__graph.get_outdegree(vertex)
+    def __setitem__(self, item, value):
+        self._graph[item] = value
 
-    def get_indegree(self, vertex):
-        return self.__graph.get_indegree(vertex)
+    def get_edge(self, source, destination):
+        return self._graph.get_edge(source, destination)
 
-    def to_directed(self):
-        return self.__graph.to_directed()
+    def get_adjacent_edges(self, vertex):
+        return self._graph.get_adjacent_edges(vertex)
 
-    def is_in_group(self, vertex, group):
-        """Sprawdzanie, czy wierzchołek nalezy do zadanej grupy.
+    def get_neighbours(self, vertex):
+        return self._graph.get_neighbours(vertex)
 
-        :param vertex: wierzchołek
-        :param group: numer grupy
-        :return: czy wierzchołek jest w grupie"""
-        return self.__groups[vertex] == group
+    def get_output_degree(self, vertex):
+        return self._graph.get_output_degree(vertex)
 
-    def is_same_group(self, vertex1, vertex2):
-        """Sprawdzanie, czy wierzchołki należą do tej samej grupy.
+    def get_input_degree(self, vertex):
+        return self._graph.get_input_degree(vertex)
 
-        :param vertex1: pierwszy wierzchołek
-        :param vertex2: drugi wierzchołek
-        :return: czy wierzchołki są w jednej grupie"""
-        return self.__groups[vertex1] == self.__groups[vertex2]
+    def get_vertices_from_group(self, group_number):
+        self._validate_group(group_number)
+        return (item[0] for item in self._vertex_group_dict.items() if item[1] == group_number)
+
+    def add_vertex(self, group_number, vertex, vertex_property=None):
+        self._validate_group(group_number)
+
+        was_added = self._graph.add_vertex(vertex, vertex_property)
+
+        if was_added:
+            self._vertex_group_dict[vertex] = group_number
+
+        return was_added
+
+    def add_edge_between(self, source, destination, edge_property=None):
+        return self.add_edge(Edge(source, destination), edge_property)
+
+    def add_edge(self, edge, edge_property=None):
+        if self._are_in_same_group(edge.source, edge.destination):
+            raise GraphPartitionError("Cannot create an edge between vertices in the same group")
+
+        return self._graph.add_edge(edge, edge_property)
+
+    def _are_in_same_group(self, vertex1, vertex2):
+        return self._vertex_group_dict[vertex1] == self._vertex_group_dict[vertex2]
+
+    def _validate_group(self, group_number):
+        if group_number < 0 or group_number >= self._groups_count:
+            raise IndexError(f"Invalid group number {group_number}, "
+                             f"graph contains only {self._groups_count} groups")

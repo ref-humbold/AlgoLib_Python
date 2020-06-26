@@ -3,11 +3,13 @@
 
 
 class InfiniteSolutionsError(ValueError):
-    pass
+    def __init__(self, *args):
+        super().__init__(*args)
 
 
 class NoSolutionError(ValueError):
-    pass
+    def __init__(self, *args):
+        super().__init__(*args)
 
 
 class EquationSystem:
@@ -22,7 +24,6 @@ class EquationSystem:
         return f"{{ {' ; '.join(map(str, self._equations))} }}"
 
     def __len__(self):
-        """:return: number of equations"""
         return len(self._equations)
 
     def __getitem__(self, i):
@@ -45,10 +46,10 @@ class EquationSystem:
         self.gaussian_reduce()
 
         if self[-1][-1] == 0 and self[-1].free == 0:
-            raise InfiniteSolutionsError()
+            raise InfiniteSolutionsError("Equation system has an infinite number of solutions")
 
         if self[-1][-1] == 0 and self[-1].free != 0:
-            raise NoSolutionError()
+            raise NoSolutionError("Equation system has no solution")
 
         solution = [None] * self.__len__()
         solution[-1] = self[-1].free / self[-1][-1]

@@ -1,70 +1,72 @@
 # -*- coding: utf-8 -*-
 """Algorithms for graph cutting (edge cut and vertex cut)"""
+from .searching import dfs_recursive
 
 
-def find_edge_cut(ugraph):
-    """Wyznaczanie mostów w grafie.
+def find_edge_cut(graph):
+    """Finds an edge cut of given graph.
 
-    :param ugraph: graf nieskierowany
-    :return: lista krawędzi będących mostami"""
-    return _GraphCutting(ugraph).edge_cut()
+    :param graph: an undirected graph
+    :return: generator of edges in the edge cut"""
+    strategy = _CuttingStrategy()
+    dfs_recursive(graph, strategy, graph.vertices)
 
-
-def find_vertex_cut(ugraph):
-    """Wyznaczanie punktów artykulacji w grafie.
-
-    :param ugraph: graf nieskierowany
-    :return: lista punktów artykulacji"""
-    return _GraphCutting(ugraph).vertex_cut()
+    for vertex in graph.vertices:
+        if strategy.has_bridge(vertex):
+            yield graph.get_edge(vertex, strategy.dfs_parents[vertex])
 
 
-class _GraphCutting:
-    def __init__(self, graph):
-        self._graph = graph  # Reprezentacja grafu nieskierowanego
-        self._dfs_parents = [None] * graph.vertices_number  # Ojciec w drzewie DFS
-        self._dfs_children = [[] for _ in self._graph.get_vertices()]  # Lista synów w drzewie DFS
-        self._dfs_depths = [None] * graph.vertices_number  # Głębokość w drzewie DFS
-        self._low_values = [None] * graph.vertices_number  # Wartości funkcji LOW
+def find_vertex_cut(graph):
+    """Finds a vertex cut of given graph.
 
-    def edge_cut(self):
-        for v in self._graph.get_vertices():
-            if self._dfs_depths[v] is None:
-                self._dfs(v, None, 0)
+    param graph: an undirected graph
+    :return: generator of vertices in the vertex cut"""
+    strategy = _CuttingStrategy()
+    dfs_recursive(graph, strategy, graph.vertices)
 
-        return ((min(v, self._dfs_parents[v]), max(v, self._dfs_parents[v]))
-                for v in self._graph.get_vertices() if self._has_bridge(v))
+    for vertex in graph.vertices:
+        if strategy.is_separator(vertex):
+            yield vertex
 
-    def vertex_cut(self):
-        for v in self._graph.get_vertices():
-            if self._dfs_depths[v] is None:
-                self._dfs(v, None, 0)
 
-        return (v for v in self._graph.get_vertices() if self._is_separator(v))
+class _CuttingStrategy:
+    def __init__(self):
+        self.depth = 0
+        self.dfs_parents = {}
+        self.dfs_children = {}
+        self.dfs_depths = {}
+        self.low_values = {}
 
-    def _has_bridge(self, vertex):
-        return self._low_values[vertex] == self._dfs_depths[vertex] \
-               and not self._is_dfs_root(vertex)
+    def for_root(self, root):
+        pass
 
-    def _is_separator(self, vertex):
-        return len(self._dfs_children[vertex]) > 1 \
-            if self._is_dfs_root(vertex) \
-            else any(self._low_values[ch] >= self._dfs_depths[vertex]
-                     for ch in self._dfs_children[vertex])
+    def on_enter(self, vertex):
+        self.dfs_depths[vertex] = self.depth
+        self.low_values[vertex] = self.depth
+        self.dfs_children[vertex] = []
+        self.depth += 1
 
-    def _is_dfs_root(self, vertex):
-        return self._dfs_depths[vertex] == 0
+    def on_next_vertex(self, vertex, neighbour):
+        self.dfs_parents[neighbour] = vertex
+        self.dfs_children[vertex].append(neighbour)
 
-    def _dfs(self, vertex, parent, depth):
-        self._dfs_parents[vertex] = parent
-        self._dfs_depths[vertex] = depth
-        self._low_values[vertex] = depth
+    def on_exit(self, vertex):
+        values = [self.low_values[child] for child in self.dfs_children[vertex]]
+        values.append(self.low_values[vertex])
+        self.low_values[vertex] = min(values)
+        self.depth -= 1
 
-        for neighbour in self._graph.get_neighbours(vertex):
-            if self._dfs_depths[neighbour] is None:
-                self._dfs_children[vertex].append(neighbour)
-                self._dfs(neighbour, vertex, depth + 1)
-                self._low_values[vertex] = min(self._low_values[vertex],
-                                               self._low_values[neighbour])
-            elif neighbour != parent:
-                self._low_values[vertex] = min(self._low_values[vertex],
-                                               self._dfs_depths[neighbour])
+    def on_edge_to_visited(self, vertex, neighbour):
+        if neighbour != self.dfs_parents[vertex]:
+            self.low_values[vertex] = min(self.low_values[vertex], self.dfs_depths[neighbour])
+
+    def has_bridge(self, vertex):
+        return not self.is_dfs_root(vertex) and self.low_values[vertex] == self.dfs_depths[vertex]
+
+    def is_separator(self, vertex):
+        return len(self.dfs_children[vertex]) > 1 if self.is_dfs_root(vertex) \
+            else any(self.low_values[child] >= self.dfs_depths[vertex]
+                     for child in self.dfs_children[vertex])
+
+    def is_dfs_root(self, vertex):
+        return self.dfs_depths[vertex] == 0
