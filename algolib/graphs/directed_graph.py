@@ -2,18 +2,13 @@
 """Structure of directed graph"""
 from abc import ABCMeta, abstractmethod
 
-from algolib.graphs.graph import Graph
-from algolib.graphs.graph_representation import _GraphRepresentation
-from algolib.graphs.simple_graph import SimpleGraph
+from .graph import Graph
+from .simple_graph import SimpleGraph, _GraphRepresentation
 
 
 class DirectedGraph(Graph, metaclass=ABCMeta):
     @abstractmethod
     def reverse(self):
-        pass
-
-    @abstractmethod
-    def reversed_copy(self):
         pass
 
 

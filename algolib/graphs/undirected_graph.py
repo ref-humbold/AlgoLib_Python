@@ -2,9 +2,9 @@
 """Structure of undirected graph"""
 from abc import ABCMeta
 
-from algolib.graphs.directed_graph import DirectedSimpleGraph
-from algolib.graphs.graph import Graph
-from algolib.graphs.simple_graph import SimpleGraph
+from .directed_graph import DirectedSimpleGraph
+from .graph import Graph
+from .simple_graph import SimpleGraph
 
 
 class UndirectedGraph(Graph, metaclass=ABCMeta):
@@ -41,13 +41,13 @@ class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
             return existing_edge
 
     def as_directed(self):
-        directed_simple_graph = DirectedSimpleGraph(self.vertices)
+        graph = DirectedSimpleGraph(self.vertices)
 
         for vertex in self.vertices:
-            directed_simple_graph[vertex] = self[vertex]
+            graph[vertex] = self[vertex]
 
         for edge in self.edges:
-            directed_simple_graph.add_edge(edge, self[edge])
-            directed_simple_graph.add_edge(edge.reversed(), self[edge])
+            graph.add_edge(edge, self[edge])
+            graph.add_edge(edge.reversed(), self[edge])
 
-        return directed_simple_graph
+        return graph
