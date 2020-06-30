@@ -4,7 +4,7 @@ import queue
 
 
 def bfs(graph, strategy, roots):
-    """Breadth-first-search algorithm.
+    """Breadth-first search algorithm.
 
     :param graph: a graph
     :param strategy: a searching strategy
@@ -21,7 +21,7 @@ def bfs(graph, strategy, roots):
 
             while not vertex_queue.empty():
                 vertex = vertex_queue.get()
-                strategy.on_enter(vertex)
+                strategy.on_entry(vertex)
 
                 for neighbour in graph.neighbours(vertex):
                     if neighbour not in reached:
@@ -35,7 +35,7 @@ def bfs(graph, strategy, roots):
 
 
 def dfs_iterative(graph, strategy, roots):
-    """Iterative depth-first-search algorithm.
+    """Iterative depth-first search algorithm.
 
     :param graph: a graph
     :param strategy: a searching strategy
@@ -55,7 +55,7 @@ def dfs_iterative(graph, strategy, roots):
 
                 if vertex not in reached:
                     reached[vertex] = iteration
-                    strategy.on_enter(vertex)
+                    strategy.on_entry(vertex)
 
                     for neighbour in graph.neighbours(vertex):
                         if neighbour not in reached:
@@ -73,7 +73,7 @@ def dfs_iterative(graph, strategy, roots):
 
 
 def dfs_recursive(graph, strategy, roots):
-    """Recursive depth-first-search algorithm.
+    """Recursive depth-first search algorithm.
 
     :param graph: a graph
     :param strategy: a searching strategy
@@ -92,10 +92,10 @@ def dfs_recursive(graph, strategy, roots):
 
 
 def _dfs_recursive_step(graph, strategy, state):
-    # Single step of recursive DFS
+    # Single step of recursive DFS.
     vertex = state.vertex
-    state.on_enter(vertex)
-    strategy.on_enter(vertex)
+    state.on_entry(vertex)
+    strategy.on_entry(vertex)
 
     for neighbour in graph.neighbours(vertex):
         if neighbour not in state.reached:
@@ -115,8 +115,8 @@ class _DfsRecursiveState:
         self.iteration = 1
         self.reached = {}
 
-    def on_enter(self, vertex):
-        self.reached[vertex] = self.iteration
+    def on_entry(self, vertex_):
+        self.reached[vertex_] = self.iteration
 
-    def on_exit(self, vertex):
-        self.reached[vertex] = -self.iteration
+    def on_exit(self, vertex_):
+        self.reached[vertex_] = -self.iteration

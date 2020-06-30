@@ -45,9 +45,9 @@ class TreeGraph(UndirectedGraph):
     def input_degree(self, vertex):
         return self._graph.input_degree(vertex)
 
+    def as_directed(self):
+        return self._graph.as_directed()
+
     def add_vertex(self, vertex, neighbour, vertex_property=None, edge_property=None):
         was_added = self._graph.add_vertex(vertex, vertex_property)
         return self._graph.add_edge_between(vertex, neighbour, edge_property) if was_added else None
-
-    def as_directed(self):
-        return self._graph.as_directed()

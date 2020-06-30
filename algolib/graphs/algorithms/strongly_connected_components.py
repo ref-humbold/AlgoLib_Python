@@ -27,7 +27,7 @@ class _PostOrderStrategy:
     def for_root(self, root):
         pass
 
-    def on_enter(self, vertex):
+    def on_entry(self, vertex):
         pass
 
     def on_next_vertex(self, vertex, neighbour):
@@ -48,7 +48,7 @@ class _SCCStrategy:
     def for_root(self, root):
         self.components.append(set())
 
-    def on_enter(self, vertex):
+    def on_entry(self, vertex):
         self.components[-1].add(vertex)
 
     def on_next_vertex(self, vertex, neighbour):

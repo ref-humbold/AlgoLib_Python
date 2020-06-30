@@ -40,7 +40,7 @@ class _CuttingStrategy:
     def for_root(self, root):
         pass
 
-    def on_enter(self, vertex):
+    def on_entry(self, vertex):
         self.dfs_depths[vertex] = self.depth
         self.low_values[vertex] = self.depth
         self.dfs_children[vertex] = []

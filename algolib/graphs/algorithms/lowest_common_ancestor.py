@@ -63,7 +63,7 @@ class LowestCommonAncestor:
         def for_root(self, root):
             self.parents[root] = root
 
-        def on_enter(self, vertex):
+        def on_entry(self, vertex):
             self.pre_times[vertex] = self._timer
             self._timer += 1
 

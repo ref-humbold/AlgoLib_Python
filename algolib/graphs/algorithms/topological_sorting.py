@@ -65,7 +65,7 @@ class _TopologicalStrategy:
     def for_root(self, root):
         pass
 
-    def on_enter(self, vertex):
+    def on_entry(self, vertex):
         pass
 
     def on_next_vertex(self, vertex, neighbour):

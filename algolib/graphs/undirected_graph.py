@@ -31,14 +31,12 @@ class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
 
     def add_edge(self, edge, edge_property=None):
         try:
-            existing_edge = self.get_edge(edge.source, edge.destination)
+            return self.get_edge(edge.source, edge.destination)
         except KeyError:
             self._representation.add_edge_to_source(edge)
             self._representation.add_edge_to_destination(edge)
             self._representation[edge] = edge_property
             return edge
-        else:
-            return existing_edge
 
     def as_directed(self):
         graph = DirectedSimpleGraph(self.vertices)
