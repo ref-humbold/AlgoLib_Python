@@ -49,17 +49,17 @@ class MultipartiteGraphTest(unittest.TestCase):
         # then
         self.assertListEqual(list(range(10)), sorted(result))
 
-    def test__get_vertices_from_group__when_valid_group__then_vertices(self):
+    def test__vertices_from_group__when_valid_group__then_vertices(self):
         # when
-        result = self._test_object.get_vertices_from_group(2)
+        result = self._test_object.vertices_from_group(2)
         # then
         self.assertListEqual([5, 6, 7, 8], sorted(result))
 
-    def test__get_vertices_from_group__when_invalid_group__then_index_error(self):
+    def test__vertices_from_group__when_invalid_group__then_index_error(self):
         # then
         with self.assertRaises(IndexError):
             # when
-            self._test_object.get_vertices_from_group(14)
+            self._test_object.vertices_from_group(14)
 
     def test__add_vertex__when_new_vertex__then_true(self):
         # given
@@ -151,7 +151,7 @@ class MultipartiteGraphTest(unittest.TestCase):
         # then
         self.assertListEqual([2, 7], sorted(result))
 
-    def test__adjacent_edges__then_destination_vertices_of_outgoing_edges(self):
+    def test__adjacent_edges__then_outgoing_edges(self):
         # when
         result = self._test_object.adjacent_edges(9)
         # then

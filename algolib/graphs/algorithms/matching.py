@@ -40,7 +40,7 @@ class _MatchAugmenter:
         return was_added
 
     def _unmatched_vertices(self):
-        for vertex in self._graph.get_vertices_from_group(1):
+        for vertex in self._graph.vertices_from_group(1):
             if vertex not in self.matching:
                 yield vertex
 

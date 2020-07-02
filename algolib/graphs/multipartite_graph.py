@@ -11,6 +11,10 @@ class GraphPartitionError(BaseException):
 class MultipartiteGraph(UndirectedGraph):
     def __init__(self, groups_count, vertices=None):
         super().__init__()
+
+        if groups_count < 0:
+            raise ValueError("Number of groups cannot be negative")
+
         self._graph = UndirectedSimpleGraph()
         self._groups_count = groups_count
         self._vertex_group_dict = {}
@@ -69,7 +73,7 @@ class MultipartiteGraph(UndirectedGraph):
     def input_degree(self, vertex):
         return self._graph.input_degree(vertex)
 
-    def get_vertices_from_group(self, group_number):
+    def vertices_from_group(self, group_number):
         self._validate_group(group_number)
         return (item[0] for item in self._vertex_group_dict.items() if item[1] == group_number)
 
