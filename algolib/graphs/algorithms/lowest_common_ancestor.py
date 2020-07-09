@@ -9,9 +9,9 @@ class LowestCommonAncestor:
     def __init__(self, graph, root):
         self._graph = graph
         self._root = root
-        self._paths = {v: [] for v in graph.vertices}
+        self._empty = True
+        self._paths = {}
         self._strategy = self._LCAStrategy()
-        self._initialize()
 
     @property
     def graph(self):
@@ -27,6 +27,12 @@ class LowestCommonAncestor:
         :param vertex1: first vertex
         :param vertex2: second vertex
         :return: lowest common ancestor of given vertices"""
+        if self._empty:
+            self._initialize()
+
+        return self._do_find(vertex1, vertex2)
+
+    def _do_find(self, vertex1, vertex2):
         if self._is_offspring(vertex1, vertex2):
             return vertex2
 
@@ -35,19 +41,21 @@ class LowestCommonAncestor:
 
         for candidate in reversed(self._paths[vertex1]):
             if not self._is_offspring(vertex2, candidate):
-                return self.find(candidate, vertex2)
+                return self._do_find(candidate, vertex2)
 
-        return self.find(self._paths[vertex1][0], vertex2)
+        return self._do_find(self._paths[vertex1][0], vertex2)
 
     def _initialize(self):
         dfs_recursive(self._graph, self._strategy, [self._root])
 
         for vertex in self._graph.vertices:
-            self._paths[vertex].append(self._strategy.parents[vertex])
+            self._paths[vertex] = [self._strategy.parents[vertex]]
 
         for i in range(int(log(self._graph.vertices_count, 2)) + 3):
             for vertex in self._graph.vertices:
                 self._paths[vertex].append(self._paths[self._paths[vertex][i]][i])
+
+        self._empty = False
 
     def _is_offspring(self, vertex1, vertex2):
         return self._strategy.pre_times[vertex1] >= self._strategy.pre_times[vertex2] \

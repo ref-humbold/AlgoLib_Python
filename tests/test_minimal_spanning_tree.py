@@ -47,8 +47,7 @@ class MinimalSpanningTreeTest(unittest.TestCase):
         self.assertListEqual(sorted([self._graph.get_edge(0, 1),
                                      self._graph.get_edge(0, 2),
                                      self._graph.get_edge(2, 4),
-                                     self._graph.get_edge(3, 4)]),
-                             sorted(result.edges))
+                                     self._graph.get_edge(3, 4)]), sorted(result.edges))
         self.assertEqual(12, mst_size)
 
     def test__prim__when_different_sources__then_same_mst(self):
