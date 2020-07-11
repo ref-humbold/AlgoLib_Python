@@ -6,11 +6,10 @@ from .searching import dfs_recursive
 
 
 class DirectedCyclicGraphError(ValueError):
-    def __init__(self, *args):
-        super().__init__(*args)
+    pass
 
 
-def sort_topological1(graph):
+def sort_topological_using_inputs(graph):
     """Topological sorting algorithm using predecessors counting.
 
     :param graph: a directed graph
@@ -44,7 +43,7 @@ def sort_topological1(graph):
     return iter(order)
 
 
-def sort_topological2(graph):
+def sort_topological_using_dfs(graph):
     """Topological sorting algorithm using DFS.
 
     :param graph: a directed graph

@@ -3,7 +3,8 @@
 import unittest
 
 from algolib.graphs import DirectedSimpleGraph
-from algolib.graphs.algorithms import DirectedCyclicGraphError, sort_topological1, sort_topological2
+from algolib.graphs.algorithms import DirectedCyclicGraphError, sort_topological_using_dfs, \
+    sort_topological_using_inputs
 
 
 class TopologicalSortingTest(unittest.TestCase):
@@ -16,7 +17,7 @@ class TopologicalSortingTest(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test__sort_topological1__when_acyclic_graph__then_topological_order(self):
+    def test__sort_topological_using_inputs__when_acyclic_graph__then_topological_order(self):
         # given
         graph = DirectedSimpleGraph(range(6))
         graph.add_edge_between(0, 2)
@@ -30,11 +31,12 @@ class TopologicalSortingTest(unittest.TestCase):
         graph.add_edge_between(5, 2)
         graph.add_edge_between(5, 4)
         # when
-        result = sort_topological1(graph)
+        result = sort_topological_using_inputs(graph)
         # then
         self.assertListEqual([3, 5, 1, 0, 2, 4], list(result))
 
-    def test__sort_topological1__when_cyclic_graph__then_directed_cyclic_graph_error(self):
+    def test__sort_topological_using_inputs__when_cyclic_graph__then_directed_cyclic_graph_error(
+            self):
         # given
         graph = DirectedSimpleGraph(range(6))
         graph.add_edge_between(0, 2)
@@ -50,17 +52,17 @@ class TopologicalSortingTest(unittest.TestCase):
         graph.add_edge_between(5, 4)
         # then
         with self.assertRaises(DirectedCyclicGraphError):
-            sort_topological1(graph)
+            sort_topological_using_inputs(graph)
 
-    def test__sort_topological1__when_empty_graph__then_natural_order(self):
+    def test__sort_topological_using_inputs__when_empty_graph__then_natural_order(self):
         # given
         graph = DirectedSimpleGraph(range(6))
         # when
-        result = sort_topological1(graph)
+        result = sort_topological_using_inputs(graph)
         # then
         self.assertListEqual([0, 1, 2, 3, 4, 5], list(result))
 
-    def test__sort_topological2__when_acyclic_graph__then_topological_order(self):
+    def test__sort_topological_using_dfs__when_acyclic_graph__then_topological_order(self):
         # given
         graph = DirectedSimpleGraph(range(6))
         graph.add_edge_between(0, 2)
@@ -74,12 +76,12 @@ class TopologicalSortingTest(unittest.TestCase):
         graph.add_edge_between(5, 2)
         graph.add_edge_between(5, 4)
         # when
-        result = sort_topological2(graph)
+        result = sort_topological_using_dfs(graph)
         # then
         self.assertIn(list(result), [[3, 5, 1, 0, 2, 4], [5, 3, 1, 0, 2, 4], [3, 5, 1, 0, 4, 2],
                                      [5, 3, 1, 0, 4, 2]])
 
-    def test__sort_topological2__when_cyclic_graph__then_directed_cyclic_graph_error(self):
+    def test__sort_topological_using_dfs__when_cyclic_graph__then_directed_cyclic_graph_error(self):
         # given
         graph = DirectedSimpleGraph(range(6))
         graph.add_edge_between(0, 2)
@@ -96,12 +98,12 @@ class TopologicalSortingTest(unittest.TestCase):
         # then
         with self.assertRaises(DirectedCyclicGraphError):
             # when
-            sort_topological2(graph)
+            sort_topological_using_dfs(graph)
 
-    def test__sort_topological2__when_empty_graph__then_natural_order(self):
+    def test__sort_topological_using_dfs__when_empty_graph__then_natural_order(self):
         # given
         graph = DirectedSimpleGraph(range(6))
         # when
-        result = sort_topological2(graph)
+        result = sort_topological_using_dfs(graph)
         # then
         self.assertListEqual([0, 1, 2, 3, 4, 5], list(result))
