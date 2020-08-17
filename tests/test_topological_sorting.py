@@ -54,7 +54,7 @@ class TopologicalSortingTest(unittest.TestCase):
         with self.assertRaises(DirectedCyclicGraphError):
             sort_topological_using_inputs(graph)
 
-    def test__sort_topological_using_inputs__when_empty_graph__then_natural_order(self):
+    def test__sort_topological_using_inputs__when_empty_graph__then_vertices(self):
         # given
         graph = DirectedSimpleGraph(range(6))
         # when
@@ -100,7 +100,7 @@ class TopologicalSortingTest(unittest.TestCase):
             # when
             sort_topological_using_dfs(graph)
 
-    def test__sort_topological_using_dfs__when_empty_graph__then_natural_order(self):
+    def test__sort_topological_using_dfs__when_empty_graph__then_vertices(self):
         # given
         graph = DirectedSimpleGraph(range(6))
         # when
