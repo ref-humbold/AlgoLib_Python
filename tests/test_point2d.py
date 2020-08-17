@@ -120,35 +120,3 @@ class Point2DTest(TestCase):
         result = self._test_object != Point2D(-7, 5)
         # then
         self.assertTrue(result)
-
-    def test__gt__when_x_coordinate_is_greater__then_true(self):
-        # given
-        self._test_object = Point2D(7, 5)
-        # when
-        result = self._test_object > Point2D(3, 5)
-        # then
-        self.assertTrue(result)
-
-    def test__ge__when_y_coordinate_is_greater__then_true(self):
-        # given
-        self._test_object = Point2D(7, 15)
-        # when
-        result = self._test_object >= Point2D(7, 8)
-        # then
-        self.assertTrue(result)
-
-    def test__lt__when_x_coordinate_is_less__then_true(self):
-        # given
-        self._test_object = Point2D(7, 5)
-        # when
-        result = self._test_object < Point2D(16, 5)
-        # then
-        self.assertTrue(result)
-
-    def test__le__when_y_coordinate_is_less__then_true(self):
-        # given
-        self._test_object = Point2D(7, 5)
-        # when
-        result = self._test_object <= Point2D(7, 11)
-        # then
-        self.assertTrue(result)

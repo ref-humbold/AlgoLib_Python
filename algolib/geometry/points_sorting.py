@@ -8,7 +8,7 @@ def sorted_by_x(points):
 
     :param points: a sequence of points
     :return: sorted list of points"""
-    return list(sorted(points))
+    return list(sorted(points, key=lambda pt: (pt.x, pt.y)))
 
 
 def sorted_by_y(points):

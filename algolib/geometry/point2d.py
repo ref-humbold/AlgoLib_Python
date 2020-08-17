@@ -17,40 +17,28 @@ class Point2D:
         return self._y
 
     @property
-    def angle_deg(self):
-        """:return: angle from X axis in degrees (0 <= angle < 360)"""
-        return (self.angle_rad * 180.0 / pi) % 360.0
-
-    @property
     def angle_rad(self):
         """:return: angle from X axis in radians (-PI < angle <= PI)"""
         return atan2(self._y, self._x)
 
     @property
+    def angle_deg(self):
+        """:return: angle from X axis in degrees (0 <= angle < 360)"""
+        return (self.angle_rad * 180.0 / pi) % 360.0
+
+    @property
     def radius(self):
         """:return: distance between this point from zero point"""
-        return sqrt(self._x**2 + self._y**2)
+        return sqrt(self._x * self._x + self._y * self._y)
 
     def __hash__(self):
-        return hash((self._x, self._y))
+        return hash((self._x, self._y, 0x933ff53))
 
-    def __eq__(self, pt):
-        return (self._x, self._y) == (pt.x, pt.y)
+    def __eq__(self, p):
+        return (self._x, self._y) == (p.x, p.y)
 
-    def __ne__(self, pt):
-        return not self == pt
-
-    def __lt__(self, pt):
-        return (self._x, self._y) < (pt.x, pt.y)
-
-    def __le__(self, pt):
-        return (self._x, self._y) <= (pt.x, pt.y)
-
-    def __gt__(self, pt):
-        return not self <= pt
-
-    def __ge__(self, pt):
-        return not self < pt
+    def __ne__(self, p):
+        return not self == p
 
     def __str__(self):
         return f"({self._x}, {self._y})"
