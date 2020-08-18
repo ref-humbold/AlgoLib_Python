@@ -20,7 +20,7 @@ def sorted_by_y(points):
     return list(sorted(points, key=lambda pt: (pt.y, pt.x)))
 
 
-def angle_sorted(points):
+def sorted_by_angle(points):
     """Immutably sorts 2D points with respect to their polar coordinates.
     First sorts by angle, then by radius.
 

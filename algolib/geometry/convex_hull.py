@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Algorithm for convex hull on a plane (monotone chain)"""
-from algolib.geometry.points_sorting import sorted_by_x
+from .points_sorting import sorted_by_x
 
 
 def convex_hull(points):

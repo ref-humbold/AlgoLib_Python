@@ -2,7 +2,7 @@
 """Algorithm for pair of closest points on a plane"""
 from math import hypot
 
-from algolib.geometry.points_sorting import sorted_by_x, sorted_by_y
+from .points_sorting import sorted_by_x, sorted_by_y
 
 
 def find_closest_points(points):
