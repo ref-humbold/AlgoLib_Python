@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Algorithm for pair of closest points on a plane"""
-from math import hypot
 
+from .geometry import distance
 from .points_sorting import sorted_by_x, sorted_by_y
 
 
@@ -32,8 +32,8 @@ def _search_closest(points_x, points_y, index_begin, index_end):
     closest_right = _search_closest(points_x, (p for p in points_y if p.x > middle_x),
                                     index_middle + 1, index_end)
     closest_points = \
-        closest_left if _distance(*closest_left) <= _distance(*closest_right) else closest_right
-    belt_points = _check_belt(points_y, middle_x, _distance(closest_points[0], closest_points[1]))
+        closest_left if distance(*closest_left) <= distance(*closest_right) else closest_right
+    belt_points = _check_belt(points_y, middle_x, distance(closest_points[0], closest_points[1]))
     return belt_points if belt_points is not None else closest_points
 
 
@@ -53,7 +53,7 @@ def _check_belt(points_y, middle_x, belt_width):
                 break
 
             if point1.x <= middle_x < point2.x or point2.x <= middle_x < point1:
-                points_distance = _distance(point1, point2)
+                points_distance = distance(point1, point2)
 
                 if points_distance < min_distance:
                     min_distance = points_distance
@@ -64,9 +64,9 @@ def _check_belt(points_y, middle_x, belt_width):
 
 def _search_three(point1, point2, point3):
     # Finds closest pair of points among three of them.
-    distance12 = _distance(point1, point2)
-    distance23 = _distance(point2, point3)
-    distance31 = _distance(point1, point3)
+    distance12 = distance(point1, point2)
+    distance23 = distance(point2, point3)
+    distance31 = distance(point1, point3)
 
     if distance23 >= distance12 <= distance31:
         return point1, point2
@@ -75,7 +75,3 @@ def _search_three(point1, point2, point3):
         return point2, point3
 
     return point1, point3
-
-
-def _distance(pt1, pt2):
-    return hypot(pt1.x - pt2.x, pt1.y - pt2.y)

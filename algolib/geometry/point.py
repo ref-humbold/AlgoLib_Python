@@ -32,13 +32,13 @@ class Point2D:
         return sqrt(self._x * self._x + self._y * self._y)
 
     def __hash__(self):
-        return hash((self._x, self._y, 0x933ff53))
+        return hash((self._x, self._y, 0x9e3779b9))
 
-    def __eq__(self, p):
-        return (self._x, self._y) == (p.x, p.y)
+    def __eq__(self, pt):
+        return (self._x, self._y) == (pt.x, pt.y)
 
-    def __ne__(self, p):
-        return not self == p
+    def __ne__(self, pt):
+        return not self == pt
 
     def __str__(self):
         return f"({self._x}, {self._y})"
@@ -68,13 +68,13 @@ class Point3D:
         return sqrt(self._x * self._x + self._y * self._y + self._z * self._z)
 
     def __hash__(self):
-        return hash((self._x, self._y, 0x933ff53))
+        return hash((self._x, self._y, self._z, 0x9e3779b9))
 
-    def __eq__(self, p):
-        return (self._x, self._y, self._z) == (p.x, p.y, p.z)
+    def __eq__(self, pt):
+        return (self._x, self._y, self._z) == (pt.x, pt.y, pt.z)
 
-    def __ne__(self, p):
-        return not self == p
+    def __ne__(self, pt):
+        return not self == pt
 
     def __str__(self):
         return f"({self._x}, {self._y}, {self._z})"
