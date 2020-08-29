@@ -6,7 +6,7 @@ from .point import Point2D, Point3D
 from .vector import Vector2D, Vector3D
 
 
-def to_vector(begin, end):
+def make_vector(begin, end):
     if isinstance(begin, Point2D) and isinstance(end, Point2D):
         return Vector2D(end.x - begin.x, end.y - begin.y)
 
