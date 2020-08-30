@@ -10,12 +10,6 @@ class CuttingTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
-
     def test__find_edge_cut__when_present_bridges(self):
         # given
         graph = UndirectedSimpleGraph(range(12))

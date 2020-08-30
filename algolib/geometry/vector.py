@@ -19,6 +19,9 @@ class Vector2D:
     def __hash__(self):
         return hash((self._x, self._y, 0x9e3d79b9))
 
+    def __str__(self):
+        return f"[{self._x}, {self._y}]"
+
     def __len__(self):
         return sqrt(self._x * self._x + self._y * self._y)
 
@@ -27,9 +30,6 @@ class Vector2D:
 
     def __ne__(self, vec):
         return not self == vec
-
-    def __str__(self):
-        return f"[{self._x}, {self._y}]"
 
     def __add__(self, vec):
         return Vector2D(self._x + vec.x, self._y + vec.y)
@@ -97,6 +97,9 @@ class Vector3D:
     def __hash__(self):
         return hash((self._x, self._y, self._z, 0x9e3d79b9))
 
+    def __str__(self):
+        return f"[{self._x}, {self._y}, {self._z}]"
+
     def __len__(self):
         return sqrt(self._x * self._x + self._y * self._y + self._z * self._z)
 
@@ -105,9 +108,6 @@ class Vector3D:
 
     def __ne__(self, vec):
         return not self == vec
-
-    def __str__(self):
-        return f"[{self._x}, {self._y}, {self._z}]"
 
     def __add__(self, vec):
         return Vector3D(self._x + vec.x, self._y + vec.y, self._z + vec.z)

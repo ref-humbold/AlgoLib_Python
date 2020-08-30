@@ -3,7 +3,7 @@
 from .points_sorting import sorted_by_x
 
 
-def convex_hull(points):
+def find_convex_hull(points):
     """Constructs a convex hull of specified points.
 
     :param points: a sequence of points
@@ -12,13 +12,13 @@ def convex_hull(points):
         return []
 
     points = sorted_by_x(points)
-    upper_hull = _create_half_hull(points)
-    lower_hull = _create_half_hull(reversed(points))
+    lower_hull = _create_half_hull(points)
+    upper_hull = _create_half_hull(reversed(points))
 
-    upper_hull.pop()
     lower_hull.pop()
+    upper_hull.pop()
 
-    return upper_hull + lower_hull
+    return lower_hull + upper_hull
 
 
 def _create_half_hull(points):
@@ -26,7 +26,7 @@ def _create_half_hull(points):
     hull = []
 
     for pt in points:
-        while len(hull) > 1 and _cross_product(hull[-2], hull[-1], pt) <= 0:
+        while len(hull) > 1 and _cross_product(hull[-2], hull[-1], pt) >= 0:
             hull.pop()
 
         hull.append(pt)
