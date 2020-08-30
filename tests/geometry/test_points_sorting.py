@@ -10,10 +10,11 @@ class SortingTest(unittest.TestCase):
         super().__init__(*args, **kwargs)
 
     def test__sorted_by_angle(self):
+        # given
         sequence = [Point2D(0, 0), Point2D(-2, -3), Point2D(-3, -2), Point2D(3, -2), Point2D(-2, 3),
                     Point2D(3, 2), Point2D(2, -3), Point2D(2, 3), Point2D(-3, 2)]
         sequence_copy = sequence[:]
-
+        # when
         result = sorted_by_angle(sequence)
 
         self.assertIsInstance(result, list)
@@ -30,9 +31,10 @@ class SortingTest(unittest.TestCase):
         self.assertListEqual(sequence_copy, sequence)
 
     def test__sorted_by_angle__when_argument_is_not_list(self):
+        # given
         sequence = {Point2D(0, 0), Point2D(-2, -3), Point2D(-3, -2), Point2D(3, -2), Point2D(-2, 3),
                     Point2D(3, 2), Point2D(2, -3), Point2D(2, 3), Point2D(-3, 2)}
-
+        # when
         result = sorted_by_angle(sequence)
 
         self.assertIsInstance(result, list)
@@ -48,9 +50,10 @@ class SortingTest(unittest.TestCase):
                 Point2D(3, -2)], result)
 
     def test__sorted_by_angle__when_all_equal(self):
+        # given
         sequence = [Point2D(1, 2), Point2D(1, 2), Point2D(1, 2), Point2D(1, 2), Point2D(1, 2),
                     Point2D(1, 2), Point2D(1, 2)]
-
+        # when
         result = sorted_by_angle(sequence)
 
         self.assertListEqual([
@@ -63,6 +66,7 @@ class SortingTest(unittest.TestCase):
                 Point2D(1, 2)], result)
 
     def test__sorted_by_angle__when_empty_list(self):
+        # given
         sequence = []
 
         result = sorted_by_angle(sequence)
@@ -70,10 +74,11 @@ class SortingTest(unittest.TestCase):
         self.assertListEqual([], result)
 
     def test__sorted_by_x(self):
+        # given
         sequence = [Point2D(0, 0), Point2D(-2, -3), Point2D(-3, -2), Point2D(3, -2), Point2D(-2, 3),
                     Point2D(3, 2), Point2D(2, -3), Point2D(2, 3), Point2D(-3, 2)]
         sequence_copy = sequence[:]
-
+        # when
         result = sorted_by_x(sequence)
 
         self.assertIsInstance(result, list)
@@ -90,10 +95,11 @@ class SortingTest(unittest.TestCase):
         self.assertListEqual(sequence_copy, sequence)
 
     def test__sorted_by_y(self):
+        # given
         sequence = [Point2D(0, 0), Point2D(-2, -3), Point2D(-3, -2), Point2D(3, -2), Point2D(-2, 3),
                     Point2D(3, 2), Point2D(2, -3), Point2D(2, 3), Point2D(-3, 2)]
         sequence_copy = sequence[:]
-
+        # when
         result = sorted_by_y(sequence)
 
         self.assertIsInstance(result, list)

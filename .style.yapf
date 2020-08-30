@@ -47,4 +47,4 @@ split_before_first_argument = false
 split_before_logical_operator = true
 split_before_named_assigns = true
 split_complex_comprehension = false
-use_tabs = false
+split_penalty_after_opening_bracket = 1000000000000
