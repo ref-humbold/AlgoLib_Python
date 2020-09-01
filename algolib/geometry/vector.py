@@ -75,6 +75,10 @@ class Vector2D:
     def __matmul__(self, vec):
         return self._x * vec.x + self._y * vec.y
 
+    @staticmethod
+    def area(vec1, vec2):
+        return vec1.x * vec2.y - vec1.y * vec2.x
+
 
 class Vector3D:
     def __init__(self, x, y, z):
@@ -160,3 +164,11 @@ class Vector3D:
     def __xor__(self, vec):
         return Vector3D(self._y * vec.z - self._z * vec.y, self._z * vec.x - self._x * vec.z,
                         self._x * vec.y - self._y * vec.x)
+
+    @staticmethod
+    def area(vec1, vec2):
+        return len(vec1 ^ vec2)
+
+    @staticmethod
+    def volume(vec1, vec2, vec3):
+        return vec1 @ (vec2 ^ vec3)
