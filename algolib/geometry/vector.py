@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structure of vector on a plane"""
+"""Structure of vector on a plane or in a space"""
 from math import sqrt
 
 

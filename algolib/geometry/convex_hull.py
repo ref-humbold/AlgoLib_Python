@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Algorithm for convex hull on a plane (monotone chain)"""
 from .geometry import make_vector
-from .points_sorting import sorted_by_xy
+from .points_sorting import sorted_by_x
 from .vector import Vector2D
 
 
@@ -13,7 +13,7 @@ def find_convex_hull(points):
     if len(points) < 3:
         return []
 
-    points = sorted_by_xy(points)
+    points = sorted_by_x(points)
     lower_hull = _create_half_hull(points)
     upper_hull = _create_half_hull(reversed(points))
 

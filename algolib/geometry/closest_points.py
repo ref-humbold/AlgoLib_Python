@@ -2,7 +2,7 @@
 """Algorithm for pair of closest points on a plane"""
 
 from .geometry import distance
-from .points_sorting import sorted_by_xy, sorted_by_yx
+from .points_sorting import sorted_by_x, sorted_by_y
 
 
 def find_closest_points(points):
@@ -11,8 +11,8 @@ def find_closest_points(points):
     :param points: an iterable of points
     :return: pair of closest points"""
     points = list(points)
-    points_x = sorted_by_xy(points)
-    points_y = sorted_by_yx(points)
+    points_x = sorted_by_x(points)
+    points_y = sorted_by_y(points)
     return _search_closest(points_x, points_y, 0, len(points))
 
 
