@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """Algorithm for convex hull on a plane (monotone chain)"""
-from .geometry import make_vector
 from .points_sorting import sorted_by_x
 from .vector import Vector2D
 
@@ -36,4 +35,4 @@ def _create_half_hull(points):
 
 
 def _cross_product(pt1, pt2, pt3):
-    return Vector2D.area(make_vector(pt2, pt1), make_vector(pt2, pt3))
+    return Vector2D.area(Vector2D.between(pt2, pt1), Vector2D.between(pt2, pt3))

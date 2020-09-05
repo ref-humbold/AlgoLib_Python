@@ -2,13 +2,21 @@
 """Algorithms for points sorting"""
 
 
+def sorted_by_dim(i, points):
+    """Immutably sorts points by given coordinate index. Sorting is guaranteed to be stable.
+    :param i: coordinate index
+    :param points: a list of points
+    :return: sorted list of points"""
+    return sorted(points, key=lambda pt: pt[i])
+
+
 def sorted_by_x(points):
     """Immutably sorts points with respect to their X coordinate.
     Sorting is guaranteed to be stable.
 
     :param points: a sequence of points
     :return: sorted list of points"""
-    return list(sorted(points, key=lambda pt: pt.x))
+    return sorted(points, key=lambda pt: pt.x)
 
 
 def sorted_by_y(points):
@@ -17,7 +25,7 @@ def sorted_by_y(points):
 
     :param points: a sequence of points
     :return: sorted list of points"""
-    return list(sorted(points, key=lambda pt: pt.y))
+    return sorted(points, key=lambda pt: pt.y)
 
 
 def sorted_by_z(points):
@@ -26,7 +34,7 @@ def sorted_by_z(points):
 
     :param points: a sequence of points
     :return: sorted list of points"""
-    return list(sorted(points, key=lambda pt: pt.z))
+    return sorted(points, key=lambda pt: pt.z)
 
 
 def sorted_by_angle(points):
@@ -35,4 +43,4 @@ def sorted_by_angle(points):
 
     :param points: a sequence of points
     :return: sorted list of points"""
-    return list(sorted(points, key=lambda pt: (pt.angle_deg, pt.radius)))
+    return sorted(points, key=lambda pt: (pt.angle_deg, pt.radius))
