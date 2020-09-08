@@ -78,7 +78,7 @@ class PathsTest(unittest.TestCase):
         # then
         self.assertDictEqual(expected, result)
 
-    def test__bellman_ford__when_negative_cycle_value_error(self):
+    def test__bellman_ford__when_negative_cycle__then_value_error(self):
         # given
         self._directed_graph.add_edge_between(8, 3, self._Weight(-20.0))
         # then
@@ -144,8 +144,7 @@ class PathsTest(unittest.TestCase):
                 [self.INF, self.INF, 8, self.INF, self.INF, self.INF, 0, self.INF, self.INF, 3],
                 [8, 10, self.INF, 5, 3, 2, self.INF, 0, 4, self.INF],
                 [12, 10, self.INF, 9, 3, 2, self.INF, 4, 0, self.INF],
-                [self.INF, self.INF, 11, self.INF, self.INF, self.INF, 3, self.INF, self.INF, 0]
-        ]
+                [self.INF, self.INF, 11, self.INF, self.INF, self.INF, 3, self.INF, self.INF, 0], ]
         expected = _from_matrix(distances)
         # when
         result = floyd_warshall(self._undirected_graph.as_directed())

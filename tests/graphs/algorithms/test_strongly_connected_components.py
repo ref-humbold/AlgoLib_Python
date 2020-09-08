@@ -10,12 +10,6 @@ class SCCTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
-
     def test__find_scc__when_many_components_then_all_listed(self):
         # given
         graph = DirectedSimpleGraph(range(10))

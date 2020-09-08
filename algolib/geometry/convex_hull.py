@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """Algorithm for convex hull on a plane (monotone chain)"""
-from algolib.geometry.points_sorting import sorted_by_x
+from .points_sorting import sorted_by_x
+from .vector import Vector2D
 
 
-def convex_hull(points):
+def find_convex_hull(points):
     """Constructs a convex hull of specified points.
 
     :param points: a sequence of points
@@ -12,13 +13,12 @@ def convex_hull(points):
         return []
 
     points = sorted_by_x(points)
-    upper_hull = _create_half_hull(points)
-    lower_hull = _create_half_hull(reversed(points))
+    lower_hull = _create_half_hull(points)
+    upper_hull = _create_half_hull(reversed(points))
 
-    upper_hull.pop()
     lower_hull.pop()
-
-    return upper_hull + lower_hull
+    upper_hull.pop()
+    return lower_hull + upper_hull
 
 
 def _create_half_hull(points):
@@ -26,7 +26,7 @@ def _create_half_hull(points):
     hull = []
 
     for pt in points:
-        while len(hull) > 1 and _cross_product(hull[-2], hull[-1], pt) <= 0:
+        while len(hull) > 1 and _cross_product(hull[-2], hull[-1], pt) >= 0:
             hull.pop()
 
         hull.append(pt)
@@ -35,4 +35,4 @@ def _create_half_hull(points):
 
 
 def _cross_product(pt1, pt2, pt3):
-    return (pt1.x - pt2.x) * (pt3.y - pt2.y) - (pt3.x - pt2.x) * (pt1.y - pt2.y)
+    return Vector2D.area(Vector2D.between(pt2, pt1), Vector2D.between(pt2, pt3))

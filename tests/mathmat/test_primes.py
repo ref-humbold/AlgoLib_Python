@@ -9,12 +9,6 @@ class PrimesTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
-
     # region test_find_primes
 
     def test__find_primes__when_zero_args__then_type_error(self):

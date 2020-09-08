@@ -11,12 +11,6 @@ class TopologicalSortingTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
-
     def test__sort_topological_using_inputs__when_acyclic_graph__then_topological_order(self):
         # given
         graph = DirectedSimpleGraph(range(6))

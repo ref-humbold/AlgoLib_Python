@@ -10,12 +10,6 @@ class MathsTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
-
     def test__gcd__when_numbers_are_composite(self):
         number1 = 161
         number2 = 46
