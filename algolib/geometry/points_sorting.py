@@ -11,7 +11,7 @@ def sorted_by_dim(i, points):
 
 
 def sorted_by_x(points):
-    """Immutably sorts points with respect to their X coordinate.
+    """Immutably sorts points by their X coordinate.
     Sorting is guaranteed to be stable.
 
     :param points: a sequence of points
@@ -20,7 +20,7 @@ def sorted_by_x(points):
 
 
 def sorted_by_y(points):
-    """Immutably sorts points with respect to their Y coordinate.
+    """Immutably sorts points by their Y coordinate.
     Sorting is guaranteed to be stable.
 
     :param points: a sequence of points
@@ -29,7 +29,7 @@ def sorted_by_y(points):
 
 
 def sorted_by_z(points):
-    """Immutably sorts points with respect to their Z coordinate.
+    """Immutably sorts points by their Z coordinate.
     Sorting is guaranteed to be stable.
 
     :param points: a sequence of points
@@ -38,7 +38,7 @@ def sorted_by_z(points):
 
 
 def sorted_by_angle(points):
-    """Immutably sorts 2D points with respect to their polar coordinates.
+    """Immutably sorts 2D points by their polar coordinates.
     First sorts by angle, then by radius.
 
     :param points: a sequence of points

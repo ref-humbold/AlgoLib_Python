@@ -36,7 +36,7 @@ class Point:
 
     def project(self, dimensions):
         if dimensions <= 0:
-            raise ValueError("Dimensions count has to be positive")
+            raise IndexError("Dimensions count has to be positive")
 
         if dimensions == len(self._coordinates):
             return self

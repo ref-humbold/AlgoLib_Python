@@ -50,7 +50,7 @@ def _move_down(heap, vertex, index_begin, index_end):
     _move_down(heap, next_vertex, index_begin, index_end)
 
 
-def mergedown_sorted(sequence):
+def top_down_merge_sorted(sequence):
     """Immutably sorts specified sequence using a top-down merge-sort algorithm.
 
     :param sequence: a sequence of elements
@@ -75,7 +75,7 @@ def _do_merge_sort(sequence, index_begin, index_end):
     _merge(sequence, index_begin, index_middle, index_end)
 
 
-def mergeup_sorted(sequence):
+def bottom_up_merge_sorted(sequence):
     """Immutably sorts specified sequence using a bottom-up merge-sort algorithm.
 
     :param sequence: a sequence of elements

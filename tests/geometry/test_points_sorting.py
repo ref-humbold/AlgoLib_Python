@@ -18,11 +18,11 @@ class SortingTest(unittest.TestCase):
         sequence = [Point2D(0.0, 0.0), Point2D(-2.0, -3.0), Point2D(-3.0, 2.0), Point2D(2.0, 3.0),
                     Point2D(3.0, -2.0), Point2D(-2.0, 3.0), Point2D(3.0, 2.0), Point2D(2.0, -3.0),
                     Point2D(-3.0, -2.0)]
-        sequence_copy = sequence[:]
         # when
         result = sorted_by_x(sequence)
 
         self.assertIsInstance(result, list)
+        self.assertIsNot(sequence, result)
         self.assertListEqual([
                 Point2D(-3.0, 2.0),
                 Point2D(-3.0, -2.0),
@@ -33,7 +33,6 @@ class SortingTest(unittest.TestCase):
                 Point2D(2.0, -3.0),
                 Point2D(3.0, -2.0),
                 Point2D(3.0, 2.0)], result)
-        self.assertListEqual(sequence_copy, sequence)
 
     def test__sorted_by_x__when_tuple_3d__then_new_stably_sorted_list_ascending_by_x_coordinate(
             self):
@@ -85,11 +84,11 @@ class SortingTest(unittest.TestCase):
         sequence = [Point3D(0.0, 0.0, 0.0), Point3D(2.0, 3.0, -5.0), Point3D(-2.0, -3.0, 5.0),
                     Point3D(2.0, -3.0, -5.0), Point3D(-2.0, -3.0, -5.0), Point3D(3.0, 2.0, 5.0),
                     Point3D(-3.0, 2.0, 5.0)]
-        sequence_copy = sequence[:]
         # when
         result = sorted_by_y(sequence)
 
         self.assertIsInstance(result, list)
+        self.assertIsNot(sequence, result)
         self.assertListEqual([
                 Point3D(-2.0, -3.0, 5.0),
                 Point3D(2.0, -3.0, -5.0),
@@ -98,7 +97,6 @@ class SortingTest(unittest.TestCase):
                 Point3D(3.0, 2.0, 5.0),
                 Point3D(-3.0, 2.0, 5.0),
                 Point3D(2.0, 3.0, -5.0)], result)
-        self.assertListEqual(sequence_copy, sequence)
 
     # endregion
     # region sorted_by_z
@@ -109,11 +107,11 @@ class SortingTest(unittest.TestCase):
         sequence = [Point3D(0.0, 0.0, 0.0), Point3D(2.0, 3.0, -5.0), Point3D(-2.0, -3.0, 5.0),
                     Point3D(2.0, -3.0, -5.0), Point3D(-2.0, -3.0, -5.0), Point3D(3.0, 2.0, 5.0),
                     Point3D(-3.0, 2.0, 5.0)]
-        sequence_copy = sequence[:]
         # when
         result = sorted_by_z(sequence)
 
         self.assertIsInstance(result, list)
+        self.assertIsNot(sequence, result)
         self.assertListEqual([
                 Point3D(2.0, 3.0, -5.0),
                 Point3D(2.0, -3.0, -5.0),
@@ -122,7 +120,6 @@ class SortingTest(unittest.TestCase):
                 Point3D(-2.0, -3.0, 5.0),
                 Point3D(3.0, 2.0, 5.0),
                 Point3D(-3.0, 2.0, 5.0)], result)
-        self.assertListEqual(sequence_copy, sequence)
 
     # endregion
     # region sorted_by_angle
@@ -131,11 +128,11 @@ class SortingTest(unittest.TestCase):
         # given
         sequence = [Point2D(0, 0), Point2D(-2, -3), Point2D(-3, -2), Point2D(3, -2), Point2D(-2, 3),
                     Point2D(3, 2), Point2D(2, -3), Point2D(2, 3), Point2D(-3, 2)]
-        sequence_copy = sequence[:]
         # when
         result = sorted_by_angle(sequence)
 
         self.assertIsInstance(result, list)
+        self.assertIsNot(sequence, result)
         self.assertListEqual([
                 Point2D(0, 0),
                 Point2D(3, 2),
@@ -146,6 +143,5 @@ class SortingTest(unittest.TestCase):
                 Point2D(-2, -3),
                 Point2D(2, -3),
                 Point2D(3, -2)], result)
-        self.assertListEqual(sequence_copy, sequence)
 
     # endregion
