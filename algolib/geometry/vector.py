@@ -11,14 +11,6 @@ class Vector:
     def dims(self):
         return len(self._coordinates)
 
-    @staticmethod
-    def between(begin, end):
-        vector_dims = max(begin.dims, end.dims)
-        new_begin = begin.project(vector_dims)
-        new_end = end.project(vector_dims)
-
-        return Vector(*(new_end[i] - new_begin[i] for i in range(1, vector_dims + 1)))
-
     def __getitem__(self, i):
         if i <= 0 or i > self.dims:
             raise IndexError(f"Coordinate index has to be between 1 and {self.dims}")
@@ -97,13 +89,6 @@ class Vector:
         self._coordinates = [c / constant for c in self._coordinates]
         return self
 
-    def __matmul__(self, vec):
-        new_dims = max(self.dims, vec.dims)
-        coordinates1 = self._project_coordinates(new_dims)
-        coordinates2 = vec._project_coordinates(new_dims)
-
-        return sum(c1 * c2 for c1, c2 in zip(coordinates1, coordinates2))
-
     def project(self, dimensions):
         if dimensions <= 0:
             raise ValueError("Dimensions count has to be positive")
@@ -121,6 +106,22 @@ class Vector:
             return self._coordinates[:dimensions]
 
         return self._coordinates + [0] * (dimensions - self.dims)
+
+    @staticmethod
+    def between(begin, end):
+        vector_dims = max(begin.dims, end.dims)
+        new_begin = begin.project(vector_dims)
+        new_end = end.project(vector_dims)
+
+        return Vector(*(new_end[i] - new_begin[i] for i in range(1, vector_dims + 1)))
+
+    @staticmethod
+    def dot(vec1, vec2):
+        new_dims = max(vec1.dims, vec2.dims)
+        coordinates1 = vec1._project_coordinates(new_dims)
+        coordinates2 = vec2._project_coordinates(new_dims)
+
+        return sum(c1 * c2 for c1, c2 in zip(coordinates1, coordinates2))
 
 
 class Vector2D:
@@ -192,9 +193,6 @@ class Vector2D:
         self._y /= constant
         return self
 
-    def __matmul__(self, vec):
-        return self._x * vec.x + self._y * vec.y
-
     def to_vector(self):
         return Vector(self._x, self._y)
 
@@ -208,6 +206,10 @@ class Vector2D:
             raise ValueError("Point should have exactly 2 dimensions")
 
         return Vector2D(vec[1], vec[2])
+
+    @staticmethod
+    def dot(vec1, vec2):
+        return vec1.x * vec2.x + vec1.y * vec2.y
 
     @staticmethod
     def area(vec1, vec2):
@@ -292,13 +294,6 @@ class Vector3D:
         self._z /= constant
         return self
 
-    def __matmul__(self, vec):
-        return self._x * vec.x + self._y * vec.y + self._z * vec.z
-
-    def __xor__(self, vec):
-        return Vector3D(self._y * vec.z - self._z * vec.y, self._z * vec.x - self._x * vec.z,
-                        self._x * vec.y - self._y * vec.x)
-
     def to_vector(self):
         return Vector(self._x, self._y, self._z)
 
@@ -314,9 +309,18 @@ class Vector3D:
         return Vector3D(vec[1], vec[2], vec[3])
 
     @staticmethod
+    def dot(vec1, vec2):
+        return vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z
+
+    @staticmethod
+    def cross(vec1, vec2):
+        return Vector3D(vec1.y * vec2.z - vec1.z * vec2.y, vec1.z * vec2.x - vec1.x * vec2.z,
+                        vec1.x * vec2.y - vec1.y * vec2.x)
+
+    @staticmethod
     def area(vec1, vec2):
-        return len(vec1 ^ vec2)
+        return len(Vector3D.cross(vec1, vec2))
 
     @staticmethod
     def volume(vec1, vec2, vec3):
-        return vec1 @ (vec2 ^ vec3)
+        return Vector3D.dot(vec1, Vector3D.cross(vec2, vec3))
