@@ -78,10 +78,7 @@ def test_miller(number: int) -> bool:
 
 def _find_primes_range(min_number: int, max_number: int) -> Generator[int, None, None]:
     # Finds prime numbers inside a specified range (minimum inclusive, maximum exclusive)
-    if max_number < min_number:
-        raise ValueError("Second argument must be grater or equal to the first argument")
-
-    if max_number < 2:
+    if max_number <= min_number or max_number < 2:
         return
 
     is_prime = [i == 2 or (i > 2 and i % 2 == 1) for i in range(min_number, max_number)]
