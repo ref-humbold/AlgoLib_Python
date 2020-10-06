@@ -18,7 +18,7 @@ class SuffixArray:
         """:return: text for suffix array"""
         return self._text
 
-    def __len__(self) -> int:
+    def __len__(self):
         """:return: length of suffix array"""
         return self._length
 

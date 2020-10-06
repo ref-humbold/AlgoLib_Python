@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 """Structure of linear equation"""
+from __future__ import annotations
+
+from typing import Iterable, Sequence
 
 
 class Equation:
-    def __init__(self, coefficients, free):
+    def __init__(self, coefficients: Iterable[float], free: float):
         self.coefficients = list(coefficients)
         self.free = free
 
@@ -16,12 +19,12 @@ class Equation:
         """:returns: number of variables"""
         return len(self.coefficients)
 
-    def __getitem__(self, i):
+    def __getitem__(self, i: int) -> float:
         """:param i: index of a variable
         :returns: coefficient by i-th variable"""
         return self.coefficients[i]
 
-    def __imul__(self, constant):
+    def __imul__(self, constant: float):
         """Multiplies equation by a constant.
 
         :param constant: constant
@@ -35,7 +38,7 @@ class Equation:
         self.free *= constant
         return self
 
-    def combine(self, equation, constant=1):
+    def combine(self, equation: Equation, constant: float = 1) -> None:
         """Transforms equation through a linear combination with another equation.
 
         :param equation: equation
@@ -52,10 +55,10 @@ class Equation:
 
         self.free += constant * equation.free
 
-    def is_solution(self, solution):
+    def is_solution(self, solution: Sequence[float]) -> bool:
         """Checks whether given values solve this equation.
 
         :param solution: values to check
         :return: ``true`` if solution is correct, otherwise ``false``"""
-        return len(solution) == len(self) and \
-               sum(coef * sol for coef, sol in zip(self.coefficients, solution)) == self.free
+        return len(solution) == len(self) and sum(
+                map(lambda c, s: c * s, self.coefficients, solution)) == self.free

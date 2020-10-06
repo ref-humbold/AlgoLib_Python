@@ -2,11 +2,12 @@
 """Algorithms for prime numbers"""
 from math import sqrt
 from random import randint
+from typing import Generator
 
 from algolib.mathmat.maths import gcd, power_mod
 
 
-def find_primes(*numbers):
+def find_primes(*numbers: int) -> Generator[int, None, None]:
     """Finds prime numbers inside a range of integers.
 
     :param numbers: range borders; beginning inclusive, ending exclusive; beginning can be omitted,
@@ -21,7 +22,7 @@ def find_primes(*numbers):
     raise TypeError(f"Expected 1 or 2 arguments, got {len(numbers)}")
 
 
-def test_fermat(number):
+def test_fermat(number: int) -> bool:
     """Checks whether specified number is prime running Fermat's prime test.
 
     :param number: number to check
@@ -35,11 +36,11 @@ def test_fermat(number):
         return False
 
     return all(
-            map(lambda rdv: gcd(rdv, number) == 1 and power_mod(rdv, number - 1, number) == 1,
-                [randint(1, number - 1) for _ in range(15)]))
+        map(lambda rdv: gcd(rdv, number) == 1 and power_mod(rdv, number - 1, number) == 1,
+            [randint(1, number - 1) for _ in range(15)]))
 
 
-def test_miller(number):
+def test_miller(number: int) -> bool:
     """Checks whether specified number is prime running Miller-Rabin's prime test.
 
     :param number: number to check
@@ -52,23 +53,22 @@ def test_miller(number):
     if number < 2 or number % 2 == 0 or number % 3 == 0:
         return False
 
-    multip = number - 1
+    multiplicand = number - 1
 
-    while multip % 2 == 0:
-        multip >>= 1
+    while multiplicand % 2 == 0:
+        multiplicand >>= 1
 
-    for i in range(15):
+    for _ in range(15):
         rdv = randint(1, number - 1)
+        exponent = multiplicand
 
-        if power_mod(rdv, multip, number) != 1:
+        if power_mod(rdv, exponent, number) != 1:
             is_composite = True
 
-            d = multip
-
-            while d <= number / 2:
-                pwm = power_mod(rdv, d, number)
+            while exponent <= number / 2:
+                pwm = power_mod(rdv, exponent, number)
                 is_composite = is_composite and pwm != number - 1
-                d <<= 1
+                exponent <<= 1
 
             if is_composite:
                 return False
@@ -76,13 +76,13 @@ def test_miller(number):
     return True
 
 
-def _find_primes_range(min_number, max_number):
+def _find_primes_range(min_number: int, max_number: int) -> Generator[int, None, None]:
     # Finds prime numbers inside a specified range (minimum inclusive, maximum exclusive)
     if max_number < min_number:
         raise ValueError("Second argument must be grater or equal to the first argument")
 
     if max_number < 2:
-        return []
+        return
 
     is_prime = [i == 2 or (i > 2 and i % 2 == 1) for i in range(min_number, max_number)]
     base_primes = [True] * int(sqrt(max_number) / 2)
@@ -98,4 +98,4 @@ def _find_primes_range(min_number, max_number):
             for j in range(begin, len(is_prime), num):
                 is_prime[j] = False
 
-    return (min_number + i for i, prime in enumerate(is_prime) if prime)
+    yield from (min_number + i for i, prime in enumerate(is_prime) if prime)
