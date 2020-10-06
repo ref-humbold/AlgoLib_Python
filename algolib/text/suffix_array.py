@@ -2,7 +2,7 @@
 """Structure of suffix array"""
 from math import inf
 from queue import Queue
-from typing import MutableSequence, Sequence
+from typing import List, MutableSequence, Sequence
 
 
 class SuffixArray:
@@ -62,11 +62,11 @@ class SuffixArray:
         ix2 = max(self._inv_array[suf1], self._inv_array[suf2])
         return min(self._lcp_array[i] for i in range(ix1 + 1, ix2 + 1))
 
-    def _init_array(self) -> Sequence[int]:
+    def _init_array(self) -> List[int]:
         # Builds a suffix array.
         return self._create_array(list(map(ord, self._text)))
 
-    def _init_inv(self) -> Sequence[int]:
+    def _init_inv(self) -> List[int]:
         # Builds an inverted suffix array.
         arr = [0] * self._length
 
@@ -75,7 +75,7 @@ class SuffixArray:
 
         return arr
 
-    def _init_lcp(self) -> Sequence[int]:
+    def _init_lcp(self) -> List[int]:
         # Builds the LCP array.
         arr = [0] * self._length
         length = 0
@@ -93,7 +93,7 @@ class SuffixArray:
 
         return arr
 
-    def _create_array(self, text: Sequence[int]) -> Sequence[int]:
+    def _create_array(self, text: Sequence[int]) -> List[int]:
         # Creates a suffix array assuming a sized alphabet.
         if len(text) < 2:
             return [0]
@@ -134,7 +134,7 @@ class SuffixArray:
         return self._merge(text, sa0, text_new12, sa12)
 
     def _merge(self, text0: Sequence[int], sa0: Sequence[int], text12: Sequence[int],
-               sa12: Sequence[int]) -> Sequence[int]:
+               sa12: Sequence[int]) -> List[int]:
         # Merges suffix arrays for two texts:
         # - text of thirds from indices giving 0 modulo 3
         # - text of thirds from indices giving 1 or 2 modulo 3

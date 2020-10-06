@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Structure of point on a plane or in a space"""
 from math import atan2, pi, sqrt
+from typing import Union
 
 
 class Point:
@@ -142,3 +143,6 @@ class Point3D:
             raise ValueError("Point should have exactly 3 dimensions")
 
         return Point3D(pt[1], pt[2], pt[3])
+
+
+PointType = Union[Point, Point2D, Point3D]

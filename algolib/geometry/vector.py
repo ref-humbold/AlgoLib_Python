@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Structure of vector on a plane or in a space"""
 from math import sqrt
+from typing import Union
 
 
 class Vector:
@@ -324,3 +325,6 @@ class Vector3D:
     @staticmethod
     def volume(vec1, vec2, vec3):
         return Vector3D.dot(vec1, Vector3D.cross(vec2, vec3))
+
+
+VectorType = Union[Vector, Vector2D, Vector3D]

@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 """Algorithm for convex hull on a plane (monotone chain)"""
+from typing import Iterable, List, Sequence
+
+from .point import Point2D
 from .points_sorting import sorted_by_x
 from .vector import Vector2D
 
 
-def find_convex_hull(points):
+def find_convex_hull(points: Sequence[Point2D]) -> List[Point2D]:
     """Constructs a convex hull of specified points.
 
     :param points: a sequence of points
@@ -21,7 +24,7 @@ def find_convex_hull(points):
     return lower_hull + upper_hull
 
 
-def _create_half_hull(points):
+def _create_half_hull(points: Iterable[Point2D]) -> List[Point2D]:
     # Creates a half of a convex hull for specified points.
     hull = []
 
@@ -34,5 +37,5 @@ def _create_half_hull(points):
     return hull
 
 
-def _cross_product(pt1, pt2, pt3):
+def _cross_product(pt1: Point2D, pt2: Point2D, pt3: Point2D) -> float:
     return Vector2D.area(Vector2D.between(pt2, pt1), Vector2D.between(pt2, pt3))

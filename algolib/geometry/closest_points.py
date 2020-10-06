@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 """Algorithm for pair of closest points on a plane"""
+from typing import Iterable, Optional, Sequence, Tuple
 
 from .geometry import distance
+from .point import Point2D
 from .points_sorting import sorted_by_x, sorted_by_y
 
 
-def find_closest_points(points):
+def find_closest_points(points: Iterable[Point2D]) -> Tuple[Point2D, Point2D]:
     """Searches for closest points among specified points.
 
     :param points: an iterable of points
@@ -16,7 +18,8 @@ def find_closest_points(points):
     return _search_closest(points_x, points_y, 0, len(points))
 
 
-def _search_closest(points_x, points_y, index_begin, index_end):
+def _search_closest(points_x: Sequence[Point2D], points_y: Iterable[Point2D], index_begin: int,
+                    index_end: int) -> Tuple[Point2D, Point2D]:
     # Searches for a pair of closest points in specified sublist of points.
     # Points are specified sorted by X coordinate and by Y coordinate.
     if index_end - index_begin == 1:
@@ -37,7 +40,8 @@ def _search_closest(points_x, points_y, index_begin, index_end):
     return belt_points if belt_points is not None else closest_points
 
 
-def _check_belt(points_y, middle_x, belt_width):
+def _check_belt(points_y: Iterable[Point2D], middle_x: float, belt_width: float) \
+        -> Optional[Tuple[Point2D, Point2D]]:
     # Finds closest pair inside a belt of specified width.
     # The resulting distance should not be less than belt width.
     closest_points = None
@@ -52,7 +56,7 @@ def _check_belt(points_y, middle_x, belt_width):
             if point2.y > point1.y + belt_width:
                 break
 
-            if point1.x <= middle_x < point2.x or point2.x <= middle_x < point1:
+            if point1.x <= middle_x < point2.x or point2.x <= middle_x < point1.x:
                 points_distance = distance(point1, point2)
 
                 if points_distance < min_distance:
