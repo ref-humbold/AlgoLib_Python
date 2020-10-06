@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 """Structure of linear equation system with Gauss elimination algorithm"""
+from typing import List, Sequence
+
+from .equation import Equation
 
 
 class InfiniteSolutionsError(ValueError):
@@ -13,7 +16,7 @@ class NoSolutionError(ValueError):
 
 
 class EquationSystem:
-    def __init__(self, equations):
+    def __init__(self, equations: Sequence[Equation]):
         if any(len(eq) != len(equations) for eq in equations):
             raise ValueError("Incorrect number of variables in one of equations")
 
@@ -26,7 +29,7 @@ class EquationSystem:
     def __len__(self):
         return len(self._equations)
 
-    def __getitem__(self, i):
+    def __getitem__(self, i: int) -> Equation:
         """:param i: index of equation
         :return: i-th equation of this system"""
         return self._equations[i]
@@ -37,7 +40,7 @@ class EquationSystem:
     def __reversed__(self):
         return reversed(self._equations)
 
-    def solve(self):
+    def solve(self) -> List[float]:
         """Computes the solution of this equation system.
 
         :return: solution vector
@@ -51,7 +54,7 @@ class EquationSystem:
         if self[-1][-1] == 0 and self[-1].free != 0:
             raise NoSolutionError("Equation system has no solution")
 
-        solution = [None] * self.__len__()
+        solution = [0.0] * self.__len__()
         solution[-1] = self[-1].free / self[-1][-1]
 
         for i in range(-2, -self.__len__() - 1, -1):
@@ -60,7 +63,7 @@ class EquationSystem:
 
         return solution
 
-    def gaussian_reduce(self):
+    def gaussian_reduce(self) -> None:
         """Runs the Gauss elimination algorithm on this equation system."""
         for i in range(self.__len__() - 1):
             index_min = i
@@ -81,14 +84,14 @@ class EquationSystem:
                     if param != 0:
                         self[j].combine(self[i], -param)
 
-    def swap(self, i, j):
+    def swap(self, i: int, j: int) -> None:
         """Swaps two equations in this system.
 
         :param i: index of first equation
         :param j: index of second equation"""
         self._equations[i], self._equations[j] = self._equations[j], self._equations[i]
 
-    def is_solution(self, solution):
+    def is_solution(self, solution: Sequence[float]) -> bool:
         """Checks whether given values solve this equation system.
 
         :param solution: values to check
