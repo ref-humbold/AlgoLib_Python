@@ -2,10 +2,11 @@
 """Structure of suffix array"""
 from math import inf
 from queue import Queue
+from typing import MutableSequence, Sequence
 
 
 class SuffixArray:
-    def __init__(self, text):
+    def __init__(self, text: str):
         self._length = len(text)  # length of suffix array
         self._text = text  # text
         self._suf_array = self._init_array()  # suffix array
@@ -13,15 +14,15 @@ class SuffixArray:
         self._lcp_array = self._init_lcp()  # longest common prefixes array
 
     @property
-    def text(self):
+    def text(self) -> str:
         """:return: text for suffix array"""
         return self._text
 
-    def __len__(self):
+    def __len__(self) -> int:
         """:return: length of suffix array"""
         return self._length
 
-    def __getitem__(self, i):
+    def __getitem__(self, i: int) -> str:
         """:param i: an index in suffix array
         :return: suffix"""
         if i < 0 or i >= self._length:
@@ -29,7 +30,7 @@ class SuffixArray:
 
         return self._text[self._suf_array[i]:]
 
-    def index_at(self, i):
+    def index_at(self, i: int) -> int:
         """:param i: an index in suffix array
         :return: index in text where the suffix begins"""
         if i < 0 or i >= self._length:
@@ -37,7 +38,7 @@ class SuffixArray:
 
         return self._suf_array[i]
 
-    def index_of(self, suf):
+    def index_of(self, suf: int) -> int:
         """:param suf: an index in text denoting suffix
         :return: index of suffix in this array"""
         if suf < 0 or suf >= self._length:
@@ -45,7 +46,7 @@ class SuffixArray:
 
         return self._inv_array[suf]
 
-    def lcp(self, suf1, suf2):
+    def lcp(self, suf1: int, suf2: int) -> int:
         """Counts longest common prefix of two suffixes.
 
         :param suf1: an index in text denoting first suffix
@@ -61,11 +62,11 @@ class SuffixArray:
         ix2 = max(self._inv_array[suf1], self._inv_array[suf2])
         return min(self._lcp_array[i] for i in range(ix1 + 1, ix2 + 1))
 
-    def _init_array(self):
+    def _init_array(self) -> Sequence[int]:
         # Builds a suffix array.
         return self._create_array(list(map(ord, self._text)))
 
-    def _init_inv(self):
+    def _init_inv(self) -> Sequence[int]:
         # Builds an inverted suffix array.
         arr = [0] * self._length
 
@@ -74,7 +75,7 @@ class SuffixArray:
 
         return arr
 
-    def _init_lcp(self):
+    def _init_lcp(self) -> Sequence[int]:
         # Builds the LCP array.
         arr = [0] * self._length
         length = 0
@@ -92,7 +93,7 @@ class SuffixArray:
 
         return arr
 
-    def _create_array(self, text):
+    def _create_array(self, text: Sequence[int]) -> Sequence[int]:
         # Creates a suffix array assuming a sized alphabet.
         if len(text) < 2:
             return [0]
@@ -132,7 +133,8 @@ class SuffixArray:
         SuffixArray._sort_by_keys(sa0, text, 0)
         return self._merge(text, sa0, text_new12, sa12)
 
-    def _merge(self, text0, sa0, text12, sa12):
+    def _merge(self, text0: Sequence[int], sa0: Sequence[int], text12: Sequence[int],
+               sa12: Sequence[int]) -> Sequence[int]:
         # Merges suffix arrays for two texts:
         # - text of thirds from indices giving 0 modulo 3
         # - text of thirds from indices giving 1 or 2 modulo 3
@@ -177,7 +179,7 @@ class SuffixArray:
         return sa_merged
 
     @staticmethod
-    def _sort_by_keys(indices, keys, shift):
+    def _sort_by_keys(indices: MutableSequence[int], keys: Sequence[int], shift: int) -> None:
         # Sorts specified array of shifted indices of specified keys from a sized alphabet.
         buckets = {}
         j = 0
@@ -196,6 +198,6 @@ class SuffixArray:
                 j += 1
 
     @staticmethod
-    def _get(array, i):
+    def _get(array: Sequence[int], i: int) -> int:
         # Retrieves element from specified index or returns zero if index is out of range.
         return array[i] if i < len(array) else 0

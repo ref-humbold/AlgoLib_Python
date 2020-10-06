@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 """Karp-Miller-Rosenberg algorithm"""
+from typing import Dict
+
+BaseWordsDict = Dict[str, int]
 
 
-def kmr(text):
+def kmr(text: str) -> BaseWordsDict:
     """Builds a base words dictionary for specified text using Karp-Miller-Rosenberg algorithm.
 
     :param text: text to build the dictionary for
@@ -17,7 +20,7 @@ def kmr(text):
     return factors
 
 
-def _sign_letters(text):
+def _sign_letters(text: str) -> BaseWordsDict:
     # Encodes single letters of specified text
     factors = {}
     code_value = 0
@@ -32,7 +35,7 @@ def _sign_letters(text):
     return factors
 
 
-def _sign_new_length(new_length, text, factors):
+def _sign_new_length(new_length: int, text: str, factors: BaseWordsDict) -> None:
     # Encodes substring of specified length using already counted factors
     code_value = 0
     codes = sorted([(factors[text[i:i + new_length // 2]],

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """Knuth-Morris-Pratt algorithm"""
+from typing import Generator, List
 
 
-def kmp(text, pattern):
+def kmp(text: str, pattern: str) -> Generator[int, None, None]:
     """Searches for pattern occurrences in specified text using Knuth-Morris-Pratt algorithm.
 
     :param text: a text
@@ -26,7 +27,7 @@ def kmp(text, pattern):
             pos = pi_values[pos - 1]
 
 
-def _prefix(pattern):
+def _prefix(pattern: str) -> List[int]:
     # Counts values of Knuth's PI prefix function for specified pattern.
     pi_values = [0]
     pos = 0
