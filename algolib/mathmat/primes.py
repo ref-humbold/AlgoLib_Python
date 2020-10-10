@@ -2,12 +2,12 @@
 """Algorithms for prime numbers"""
 from math import sqrt
 from random import randint
-from typing import Generator
+from typing import Iterable
 
 from algolib.mathmat.maths import gcd, power_mod
 
 
-def find_primes(*numbers: int) -> Generator[int, None, None]:
+def find_primes(*numbers: int) -> Iterable[int]:
     """Finds prime numbers inside a range of integers.
 
     :param numbers: range borders; beginning inclusive, ending exclusive; beginning can be omitted,
@@ -76,7 +76,7 @@ def test_miller(number: int) -> bool:
     return True
 
 
-def _find_primes_range(min_number: int, max_number: int) -> Generator[int, None, None]:
+def _find_primes_range(min_number: int, max_number: int) -> Iterable[int]:
     # Finds prime numbers inside a specified range (minimum inclusive, maximum exclusive)
     if max_number <= min_number or max_number <= 2:
         return

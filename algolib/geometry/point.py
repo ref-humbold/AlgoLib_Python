@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Structure of point on a plane or in a space"""
 from math import atan2, pi, sqrt
-from typing import Union
+from typing import TypeVar
 
 
 class Point:
@@ -145,4 +145,4 @@ class Point3D:
         return Point3D(pt[1], pt[2], pt[3])
 
 
-PointType = Union[Point, Point2D, Point3D]
+TPoint = TypeVar("TPoint", Point, Point2D, Point3D)

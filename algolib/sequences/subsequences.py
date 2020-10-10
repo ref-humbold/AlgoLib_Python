@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 """Algorithms for subsequences"""
-from typing import Any, Iterator, List, Sequence
+from typing import Iterable, Iterator, List, Sequence, TypeVar
+
+_T = TypeVar("_T")
 
 
-def longest_ordered(sequence: Sequence[Any], key=lambda x: x) -> Iterator[any]:
+def longest_ordered(sequence: Sequence[_T], key=lambda x: x) -> Iterator[_T]:
     """Constructs longest ordered subsequence.
 
     :param sequence: a sequence of elements
@@ -43,15 +45,15 @@ def _search_ord(key, sequence, subseq_last, index_begin, index_end, index_elem):
     return _search_ord(key, sequence, subseq_last, index_begin, index_middle, index_elem)
 
 
-def maximum_subarray(sequence: Sequence[float]) -> List[float]:
+def maximum_subarray(iterable: Iterable[float]) -> List[float]:
     """Dynamically constructs coherent subarray with maximal sum.
 
-    :param sequence: sequence of numbers
+    :param iterable: sequence of numbers
     :return: maximum subarray"""
     actual = [0, []]
     maximal = (0, [])
 
-    for elem in sequence:
+    for elem in iterable:
         if actual[0] < 0.0:
             actual = [0, []]
 

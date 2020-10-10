@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Structure of vector on a plane or in a space"""
 from math import sqrt
-from typing import Union
+from typing import TypeVar
 
 
 class Vector:
@@ -327,4 +327,4 @@ class Vector3D:
         return Vector3D.dot(vec1, Vector3D.cross(vec2, vec3))
 
 
-VectorType = Union[Vector, Vector2D, Vector3D]
+TVector = TypeVar("TVector", Vector, Vector2D, Vector3D)

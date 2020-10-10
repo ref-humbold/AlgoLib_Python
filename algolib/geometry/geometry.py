@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from math import sqrt
 
-from .point import Point, Point2D, Point3D, PointType
-from .vector import Vector2D, Vector3D, VectorType
+from .point import Point, Point2D, Point3D, TPoint
+from .vector import TVector, Vector2D, Vector3D
 
 
-def distance(point1: PointType, point2: PointType) -> float:
+def distance(point1: TPoint, point2: TPoint) -> float:
     if isinstance(point1, Point2D) and isinstance(point2, Point2D):
         return sqrt((point2.x - point1.x) * (point2.x - point1.x)
                     + (point2.y - point1.y) * (point2.y - point1.y))
@@ -22,7 +22,7 @@ def distance(point1: PointType, point2: PointType) -> float:
     return sqrt(sum(map(lambda c: c * c, [pt2[i] - pt1[i] for i in range(1, new_dims + 1)])))
 
 
-def translate(point: PointType, vector: VectorType) -> PointType:
+def translate(point: TPoint, vector: TVector) -> TPoint:
     if isinstance(point, Point2D) and isinstance(vector, Vector2D):
         return Point2D(point.x + vector.x, point.y + vector.y)
 

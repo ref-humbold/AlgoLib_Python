@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 """Algorithms for sequence sorting"""
 from random import randint
-from typing import Any, List, Sequence
+from typing import Iterable, List, TypeVar
+
+_T = TypeVar("_T")
 
 
-def heap_sorted(sequence: Sequence[Any]) -> List[Any]:
-    """Immutably sorts specified sequence using a heap.
+def heap_sorted(iterable: Iterable[_T]) -> List[_T]:
+    """Immutably sorts specified iterable using a heap.
 
-    :param sequence: a sequence of elements
+    :param iterable: an iterable of elements
     :return: list of sorted elements"""
-    sequence_list = list(sequence)
+    sequence_list = list(iterable)
 
     if sequence_list == []:
         return []
@@ -51,12 +53,12 @@ def _move_down(heap, vertex, index_begin, index_end):
     _move_down(heap, next_vertex, index_begin, index_end)
 
 
-def top_down_merge_sorted(sequence: Sequence[Any]) -> List[Any]:
-    """Immutably sorts specified sequence using a top-down merge-sort algorithm.
+def top_down_merge_sorted(iterable: Iterable[_T]) -> List[_T]:
+    """Immutably sorts specified iterable using a top-down merge-sort algorithm.
 
-    :param sequence: a sequence of elements
+    :param iterable: an iterable of elements
     :return: list of sorted elements"""
-    sequence_list = list(sequence)
+    sequence_list = list(iterable)
 
     if sequence_list == []:
         return []
@@ -65,12 +67,12 @@ def top_down_merge_sorted(sequence: Sequence[Any]) -> List[Any]:
     return sequence_list
 
 
-def bottom_up_merge_sorted(sequence: Sequence[Any]) -> List[Any]:
-    """Immutably sorts specified sequence using a bottom-up merge-sort algorithm.
+def bottom_up_merge_sorted(iterable: Iterable[_T]) -> List[_T]:
+    """Immutably sorts specified iterable using a bottom-up merge-sort algorithm.
 
-    :param sequence: a sequence of elements
+    :param iterable: an iterable of elements
     :return: list of sorted elements"""
-    sequence_list = list(sequence)
+    sequence_list = list(iterable)
 
     if sequence_list == []:
         return []
@@ -118,12 +120,12 @@ def _merge(sequence, index_begin, index_middle, index_end):
     sequence[index_begin:index_begin + len(ordered)] = ordered
 
 
-def quick_sorted(sequence: Sequence[Any]) -> List[Any]:
-    """Immutably sorts specified sequence using a quick-sort algorithm.
+def quick_sorted(iterable: Iterable[_T]) -> List[_T]:
+    """Immutably sorts specified iterable using a quick-sort algorithm.
 
-    :param sequence: a sequence of elements
+    :param iterable: an iterable of elements
     :return: list of sorted elements"""
-    sequence_list = list(sequence)
+    sequence_list = list(iterable)
 
     if sequence_list == []:
         return []
