@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 """Structure of linear equation"""
-from __future__ import annotations
-
 from typing import Iterable, Sequence
 
 
@@ -38,7 +36,7 @@ class Equation:
         self.free *= constant
         return self
 
-    def combine(self, equation: Equation, constant: float = 1) -> None:
+    def combine(self, equation, constant: float = 1) -> None:
         """Transforms equation through a linear combination with another equation.
 
         :param equation: equation

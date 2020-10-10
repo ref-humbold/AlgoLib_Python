@@ -1,22 +1,23 @@
 # -*- coding: utf-8 -*-
 """Algorithms for subsequences"""
+from typing import Any, Iterator, List, Sequence
 
 
-def longest_ordered(sequence, order):
+def longest_ordered(sequence: Sequence[Any], key=lambda x: x) -> Iterator[any]:
     """Constructs longest ordered subsequence.
-    
+
     :param sequence: a sequence of elements
-    :param order: order function of elements in subsequence
+    :param key: key function for elements in subsequence
     :return: least lexicographically longest ordered subsequence"""
     previous_elem = [None]
     subseq_last = [0]
 
     for (i, elem) in enumerate(sequence[1:], start=1):
-        if order(elem, sequence[subseq_last[-1]]):
+        if key(elem) < key(sequence[subseq_last[-1]]):
             previous_elem.append(subseq_last[-1])
             subseq_last.append(i)
         else:
-            index = _search_ord(order, sequence, subseq_last, 0, len(subseq_last) - 1, i)
+            index = _search_ord(key, sequence, subseq_last, 0, len(subseq_last) - 1, i)
             subseq_last[index] = i
             previous_elem.append(subseq_last[index - 1] if index > 0 else None)
 
@@ -27,25 +28,24 @@ def longest_ordered(sequence, order):
         longest_subseq.append(sequence[j])
         j = previous_elem[j]
 
-    longest_subseq.reverse()
-    return longest_subseq
+    return reversed(longest_subseq)
 
 
-def _search_ord(order, sequence, subseq_last, index_begin, index_end, index_elem):
+def _search_ord(key, sequence, subseq_last, index_begin, index_end, index_elem):
     if index_begin == index_end:
         return index_begin
 
     index_middle = (index_begin + index_end) // 2
 
-    if order(sequence[index_elem], sequence[subseq_last[index_middle]]):
-        return _search_ord(order, sequence, subseq_last, index_middle + 1, index_end, index_elem)
+    if key(sequence[index_elem]) < key(sequence[subseq_last[index_middle]]):
+        return _search_ord(key, sequence, subseq_last, index_middle + 1, index_end, index_elem)
 
-    return _search_ord(order, sequence, subseq_last, index_begin, index_middle, index_elem)
+    return _search_ord(key, sequence, subseq_last, index_begin, index_middle, index_elem)
 
 
-def maximum_subarray(sequence):
+def maximum_subarray(sequence: Sequence[float]) -> List[float]:
     """Dynamically constructs coherent subarray with maximal sum.
-    
+
     :param sequence: sequence of numbers
     :return: maximum subarray"""
     actual = [0, []]
@@ -64,9 +64,9 @@ def maximum_subarray(sequence):
     return maximal[1]
 
 
-def maximal_subsum(sequence):
+def maximal_subsum(sequence: Sequence[float]) -> float:
     """Counts maximal sum from all coherent subarrays using interval tree.
-    
+
     :param sequence: sequence of numbers
     :return: the sum of maximum subarray"""
     size = 1
