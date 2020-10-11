@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Structure of suffix array"""
+from collections import deque
 from math import inf
-import queue
 
 
 class SuffixArray:
@@ -186,13 +186,13 @@ class SuffixArray:
             k = SuffixArray._get(keys, i + shift)
 
             if k not in buckets:
-                buckets[k] = queue.Queue()
+                buckets[k] = deque()
 
-            buckets[k].put(i)
+            buckets[k].append(i)
 
         for bucket in map(lambda p: p[1], sorted(buckets.items(), key=lambda p: p[0])):
-            while not bucket.empty():
-                indices[j] = bucket.get()
+            while len(bucket) > 0:
+                indices[j] = bucket.popleft()
                 j += 1
 
     @staticmethod

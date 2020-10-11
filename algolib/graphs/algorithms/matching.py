@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Hopcroft-Karp algorithm for matching in bipartite graph"""
+from collections import deque
 import math
-import queue
 
 
 def match(graph):
@@ -45,21 +45,21 @@ class _MatchAugmenter:
                 yield vertex
 
     def _bfs(self, distances):
-        vertex_queue = queue.Queue()
+        vertex_queue = deque()
 
         for vertex in self._unmatched_vertices():
             distances[vertex] = 0
-            vertex_queue.put(vertex)
+            vertex_queue.append(vertex)
 
-        while not vertex_queue.empty():
-            vertex = vertex_queue.get()
+        while len(vertex_queue) > 0:
+            vertex = vertex_queue.popleft()
 
             for neighbour in self._graph.neighbours(vertex):
                 matched = self.matching.get(neighbour)
 
                 if matched is not None and distances[matched] == self._INFINITY:
                     distances[matched] = distances[vertex] + 1
-                    vertex_queue.put(matched)
+                    vertex_queue.append(matched)
 
     def _dfs(self, vertex, visited, distances):
         visited.add(vertex)
