@@ -36,7 +36,7 @@ class Equation:
         self.free *= constant
         return self
 
-    def combine(self, equation, constant: float = 1) -> None:
+    def combine(self, equation: "Equation", constant: float = 1) -> None:
         """Transforms equation through a linear combination with another equation.
 
         :param equation: equation
