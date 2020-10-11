@@ -20,7 +20,7 @@ def kmr(text: str) -> BaseWordsDict:
     return factors
 
 
-def _sign_letters(text: str) -> BaseWordsDict:
+def _sign_letters(text):
     # Encodes single letters of specified text
     factors = {}
     code_value = 0
@@ -35,7 +35,7 @@ def _sign_letters(text: str) -> BaseWordsDict:
     return factors
 
 
-def _sign_new_length(new_length: int, text: str, factors: BaseWordsDict) -> None:
+def _sign_new_length(new_length, text, factors):
     # Encodes substring of specified length using already counted factors
     code_value = 0
     codes = sorted([(factors[text[i:i + new_length // 2]],

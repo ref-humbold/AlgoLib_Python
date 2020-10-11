@@ -76,7 +76,7 @@ def test_miller(number: int) -> bool:
     return True
 
 
-def _find_primes_range(min_number: int, max_number: int) -> Iterable[int]:
+def _find_primes_range(min_number, max_number):
     # Finds prime numbers inside a specified range (minimum inclusive, maximum exclusive)
     if max_number <= min_number or max_number <= 2:
         return

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Knuth-Morris-Pratt algorithm"""
-from typing import Iterable, List
+from typing import Iterable
 
 
 def kmp(text: str, pattern: str) -> Iterable[int]:
@@ -27,7 +27,7 @@ def kmp(text: str, pattern: str) -> Iterable[int]:
             pos = pi_values[pos - 1]
 
 
-def _prefix(pattern: str) -> List[int]:
+def _prefix(pattern):
     # Counts values of Knuth's PI prefix function for specified pattern.
     pi_values = [0]
     pos = 0

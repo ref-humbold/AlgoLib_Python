@@ -46,10 +46,10 @@ class DisjointSets:
 
         return self
 
-    def add(self, elements):
+    def add(self, *elements):
         """Adds elements as singleton sets.
 
-        :param elements: a sequence of elements
+        :param elements: elements to be added
         :raises ValueError: if any of the elements is already in this structure
         :return: ``self`` for method chaining"""
         self.__iadd__(elements)
