@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Algorithms for graph searching"""
-import queue
+from collections import deque
 
 
 def bfs(graph, strategy, roots):
@@ -11,23 +11,23 @@ def bfs(graph, strategy, roots):
     :param roots: starting vertices
     :return: iterable object of visited vertices"""
     reached = set()
-    vertex_queue = queue.Queue()
+    vertex_queue = deque()
 
     for root in roots:
         if root not in reached:
             strategy.for_root(root)
-            vertex_queue.put(root)
+            vertex_queue.append(root)
             reached.add(root)
 
-            while not vertex_queue.empty():
-                vertex = vertex_queue.get()
+            while len(vertex_queue) > 0:
+                vertex = vertex_queue.popleft()
                 strategy.on_entry(vertex)
 
                 for neighbour in graph.neighbours(vertex):
                     if neighbour not in reached:
                         strategy.on_next_vertex(vertex, neighbour)
                         reached.add(neighbour)
-                        vertex_queue.put(neighbour)
+                        vertex_queue.append(neighbour)
 
                 strategy.on_exit(vertex)
 
@@ -42,16 +42,16 @@ def dfs_iterative(graph, strategy, roots):
     :param roots: starting vertices
     :return: iterable object of visited vertices"""
     reached = {}
-    vertex_stack = queue.LifoQueue()
+    vertex_stack = deque()
     iteration = 1
 
     for root in roots:
         if root not in reached:
             strategy.for_root(root)
-            vertex_stack.put(root)
+            vertex_stack.append(root)
 
-            while not vertex_stack.empty():
-                vertex = vertex_stack.get()
+            while len(vertex_stack) > 0:
+                vertex = vertex_stack.pop()
 
                 if vertex not in reached:
                     reached[vertex] = iteration
@@ -60,7 +60,7 @@ def dfs_iterative(graph, strategy, roots):
                     for neighbour in graph.neighbours(vertex):
                         if neighbour not in reached:
                             strategy.on_next_vertex(vertex, neighbour)
-                            vertex_stack.put(neighbour)
+                            vertex_stack.append(neighbour)
                         elif reached[neighbour] == iteration:
                             strategy.on_edge_to_visited(vertex, neighbour)
 

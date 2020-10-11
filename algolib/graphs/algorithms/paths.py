@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Algorithms for shortest paths"""
+from collections import deque
 import math
-import queue
 
 
 class Paths:
@@ -39,14 +39,14 @@ def dijkstra(graph, source):
     if any(graph[e].weight < 0.0 for e in graph.edges):
         raise ValueError("Graph contains an edge with negative weight")
 
-    vertex_queue = queue.PriorityQueue()
-    vertex_queue.put((0.0, source))
+    vertex_queue = deque()
+    vertex_queue.append((0.0, source))
     visited = set()
     distances = {v: Paths.INFINITY for v in graph.vertices}
     distances[source] = 0.0
 
-    while not vertex_queue.empty():
-        vertex = vertex_queue.get()[1]
+    while len(vertex_queue) > 0:
+        vertex = vertex_queue.popleft()[1]
 
         if vertex not in visited:
             visited.add(vertex)
@@ -56,7 +56,7 @@ def dijkstra(graph, source):
 
                 if distances[vertex] + graph[edge].weight < distances[neighbour]:
                     distances[neighbour] = distances[vertex] + graph[edge].weight
-                    vertex_queue.put((distances[neighbour], neighbour))
+                    vertex_queue.append((distances[neighbour], neighbour))
 
     return distances
 
