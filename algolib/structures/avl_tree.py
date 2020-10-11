@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 """Structure of AVL tree"""
+import collections.abc
+from typing import Iterable, TypeVar
+
+_T = TypeVar("_T")
 
 
-class AVLTree:
-    def __init__(self, elements=None):
+class AVLTree(collections.abc.Set):
+    def __init__(self, elements: Iterable[_T] = ()):
         self._tree = None
         self._count = 0
 
-        if elements is not None:
-            for i in elements:
-                self.add(i)
+        for i in elements:
+            self.add(i)
 
     def __str__(self):
         """:return: string representation of this tree"""
@@ -27,17 +30,17 @@ class AVLTree:
         """:return: a reversed iterator object"""
         return self._AVLReverseIterator(self._tree.maximum())
 
-    def __contains__(self, element):
+    def __contains__(self, element: _T):
         """:param element: element to be found
         :return: ``true`` if value is present in this tree, otherwise ``false``"""
         return len(self) > 0 and self._find_node(element, lambda n, e: n.element == e) is not None
 
-    def add(self, element):
+    def add(self, element: _T):
         """Adds a new value to this tree.
 
         :param element: value to be added"""
         node_parent = self._find_node(
-                element, lambda n, e: self._search(n, e) is None or self._search(n, e).element == e)
+            element, lambda n, e: self._search(n, e) is None or self._search(n, e).element == e)
 
         if node_parent is None:
             new_node = self._AVLNode(element)
@@ -57,7 +60,7 @@ class AVLTree:
                 self._balance(new_node)
                 self._count += 1
 
-    def remove(self, element):
+    def remove(self, element: _T):
         """Removes specified element from this tree if present.
 
         :param element: element to be removed

@@ -14,14 +14,15 @@ class Vector:
     def dims(self) -> int:
         return len(self._coordinates)
 
+    @property
+    def length(self) -> float:
+        return sqrt(sum(c * c for c in self._coordinates))
+
     def __getitem__(self, i: int) -> float:
         if i <= 0 or i > self.dims:
             raise IndexError(f"Coordinate index has to be between 1 and {self.dims}")
 
         return self._coordinates[i - 1]
-
-    def __len__(self) -> float:
-        return sqrt(sum(c * c for c in self._coordinates))
 
     def __hash__(self):
         return hash(self._coordinates)
@@ -96,16 +97,16 @@ class Vector:
         if dimensions <= 0:
             raise ValueError("Dimensions count has to be positive")
 
-        if dimensions == len(self._coordinates):
+        if dimensions == self.dims:
             return self
 
         return Vector(*self._project_coordinates(dimensions))
 
     def _project_coordinates(self, dimensions):
-        if dimensions == len(self._coordinates):
+        if dimensions == self.dims:
             return self._coordinates
 
-        if dimensions < len(self._coordinates):
+        if dimensions < self.dims:
             return self._coordinates[:dimensions]
 
         return self._coordinates + [0] * (dimensions - self.dims)
@@ -140,7 +141,8 @@ class Vector2D:
     def y(self) -> float:
         return self._y
 
-    def __len__(self) -> float:
+    @property
+    def length(self) -> float:
         return sqrt(self._x * self._x + self._y * self._y)
 
     def __hash__(self):
@@ -237,7 +239,8 @@ class Vector3D:
     def z(self) -> float:
         return self._z
 
-    def __len__(self) -> float:
+    @property
+    def length(self) -> float:
         return sqrt(self._x * self._x + self._y * self._y + self._z * self._z)
 
     def __hash__(self):
@@ -322,7 +325,7 @@ class Vector3D:
 
     @staticmethod
     def area(vec1: "Vector3D", vec2: "Vector3D") -> float:
-        return len(Vector3D.cross(vec1, vec2))
+        return Vector3D.cross(vec1, vec2).length
 
     @staticmethod
     def volume(vec1: "Vector3D", vec2: "Vector3D", vec3: "Vector3D") -> float:

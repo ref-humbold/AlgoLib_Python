@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Structure of suffix array"""
 from math import inf
-from queue import Queue
+import queue
 
 
 class SuffixArray:
@@ -186,7 +186,7 @@ class SuffixArray:
             k = SuffixArray._get(keys, i + shift)
 
             if k not in buckets:
-                buckets[k] = Queue()
+                buckets[k] = queue.Queue()
 
             buckets[k].put(i)
 
