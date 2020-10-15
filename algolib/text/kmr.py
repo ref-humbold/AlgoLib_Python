@@ -1,5 +1,19 @@
 # -*- coding: utf-8 -*-
-"""Karp-Miller-Rosenberg algorithm"""
+"""Base words dictionary structure using Karp-Miller-Rosenberg algorithm"""
+
+
+class BaseWordsDict:
+    def __init__(self, text):
+        self._text = text
+        self._factors = {}
+        self._create()
+
+    @property
+    def text(self):
+        return self._text
+
+    def _create(self):
+        pass
 
 
 def kmr(text):
