@@ -5,57 +5,50 @@
 class BaseWordsDict:
     def __init__(self, text):
         self._text = text
-        self._factors = {}
+        self._factors = {(i, i): 0 for i in range(len(text))}
         self._create()
 
     @property
     def text(self):
         return self._text
 
+    def __getitem__(self, item):
+        try:
+            return self._factors[item], 0
+        except KeyError:
+            n = self._max_length(item[1] - item[0])
+            return self._factors[item[0], item[0] + n], self._factors[item[1] - n, item[1]]
+
     def _create(self):
-        pass
+        # Builds a base words dictionary using Karp-Miller-Rosenberg algorithm
+        length = 1
 
+        while length <= len(self._text):
+            self._extend(length)
+            length *= 2
 
-def kmr(text):
-    """Builds a base words dictionary for specified text using Karp-Miller-Rosenberg algorithm.
+    def _extend(self, length):
+        # Encodes substring of specified length using already counted factors
+        code_value = 0
+        previous_code = (0, 0)
+        codes = sorted((self._factors[i, i + length // 2], self._factors[i + length // 2,
+                                                                         i + length], i, i + length)
+                       for i in range(len(self._text) - length + 1))
 
-    :param text: text to build the dictionary for
-    :return: base words dictionary"""
-    factors = _sign_letters(text)
-    length = 2
+        for code in codes:
+            if code[0] != previous_code[0] or code[1] != previous_code[1]:
+                code_value += 1
+                previous_code = (code[0], code[1])
 
-    while length <= len(text):
-        _sign_new_length(length, text, factors)
-        length *= 2
+            self._factors[code[2], code[3]] = code_value
 
-    return factors
+    @staticmethod
+    def _max_length(n):
+        prev = 0
+        power = 1
 
+        while power < n:
+            prev = power
+            power *= 2
 
-def _sign_letters(text):
-    # Encodes single letters of specified text
-    factors = {}
-    code_value = 0
-    letters = sorted(text)
-    factors[letters[0]] = code_value
-
-    for i, char in enumerate(letters[1:], start=1):
-        if char != letters[i - 1]:
-            code_value += 1
-            factors[char] = code_value
-
-    return factors
-
-
-def _sign_new_length(new_length, text, factors):
-    # Encodes substring of specified length using already counted factors
-    code_value = 0
-    codes = sorted([(factors[text[i:i + new_length // 2]],
-                     factors[text[i + new_length // 2:i + new_length]], i)
-                    for i in range(len(text) - new_length + 1)])
-    factors[text[codes[0][2]:codes[0][2] + new_length]] = code_value
-
-    for i, code in enumerate(codes[1:], start=1):
-        if code != codes[i - 1]:
-            substring = text[code[2]:code[2] + new_length]
-            code_value += 1
-            factors[substring] = code_value
+        return prev
