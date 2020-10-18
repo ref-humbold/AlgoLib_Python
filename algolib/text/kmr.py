@@ -22,14 +22,14 @@ class BaseWordsDict:
     def _create(self):
         # Builds a base words dictionary using Karp-Miller-Rosenberg algorithm
         length = 1
+        code_value = 1
 
         while length <= len(self._text):
-            self._extend(length)
+            code_value = self._extend(length, code_value)
             length *= 2
 
-    def _extend(self, length):
+    def _extend(self, length, code_value):
         # Encodes substring of specified length using already counted factors
-        code_value = 0
         previous_code = (0, 0)
         codes = sorted((self._factors[i, i + length // 2], self._factors[i + length // 2,
                                                                          i + length], i, i + length)
@@ -41,6 +41,8 @@ class BaseWordsDict:
                 previous_code = (code[0], code[1])
 
             self._factors[code[2], code[3]] = code_value
+
+        return code_value + 1
 
     @staticmethod
     def _max_length(n):
