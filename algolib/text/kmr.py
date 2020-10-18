@@ -3,27 +3,33 @@
 
 
 class BaseWordsDict:
-    def __init__(self, text):
+    def __init__(self, text: str):
         self._text = text
         self._factors = {}
         self._create()
 
     @property
-    def text(self):
+    def text(self) -> str:
         return self._text
 
     def __str__(self):
         return f"BaseWordsDict({self._factors})"
 
-    def __getitem__(self, item):
-        if item[0] == item[1]:
+    def __getitem__(self, slice_: slice):
+        if slice_.step is not None:
+            raise IndexError("Slice step must be None")
+
+        start = self._clip(slice_.start, 0)
+        stop = self._clip(slice_.stop, len(self._text))
+
+        if stop <= start:
             return 0, 0
 
         try:
-            return self._factors[item], 0
+            return self._factors[start, stop], 0
         except KeyError:
-            n = self._max_length(item[1] - item[0])
-            return self._factors[item[0], item[0] + n], self._factors[item[1] - n, item[1]]
+            n = self._max_length(stop - start)
+            return self._factors[start, start + n], self._factors[stop - n, stop]
 
     def _create(self):
         # Builds a base words dictionary using Karp-Miller-Rosenberg algorithm
@@ -54,6 +60,18 @@ class BaseWordsDict:
     def _from_shorter(self, i, length):
         return self._factors[i, i + length // 2], self._factors[i + length // 2,
                                                                 i + length], i, i + length
+
+    def _clip(self, i, default):
+        if i is None:
+            return default
+
+        if i < -len(self._text):
+            return 0
+
+        if i >= len(self._text):
+            return len(self._text)
+
+        return i % len(self._text)
 
     @staticmethod
     def _max_length(n):
