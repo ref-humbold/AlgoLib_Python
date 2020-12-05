@@ -57,6 +57,19 @@ class AVLTreeTest(unittest.TestCase):
 
         self.assertListEqual(sorted(self._numbers), result)
 
+    def test__iterator__when_empty_tree__then_no_elements(self):
+        self.test_object = AVLTree()
+        result = []
+        iterator = iter(self.test_object)
+
+        while True:
+            try:
+                result.append(next(iterator))
+            except StopIteration:
+                break
+
+        self.assertListEqual([], result)
+
     def test__reversed__then_reverse_ordered_elements(self):
         result = []
         iterator = reversed(self.test_object)
@@ -68,6 +81,19 @@ class AVLTreeTest(unittest.TestCase):
                 break
 
         self.assertListEqual(sorted(self._numbers, reverse=True), result)
+
+    def test__reversed__when_empty_tree__then_no_elements(self):
+        self.test_object = AVLTree()
+        result = []
+        iterator = reversed(self.test_object)
+
+        while True:
+            try:
+                result.append(next(iterator))
+            except StopIteration:
+                break
+
+        self.assertListEqual([], result)
 
     def test__add__when_new_element__then_increase_length(self):
         for i, e in enumerate([111, 140, 187], start=1):
