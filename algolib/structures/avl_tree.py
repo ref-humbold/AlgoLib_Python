@@ -24,15 +24,15 @@ class AVLTree(collections.abc.Set):
 
     def __iter__(self):
         """:return: a forward iterator object"""
-        return self._AVLIterator(self._tree.minimum())
+        return self._AVLIterator(self._tree and self._tree.minimum())
 
     def __reversed__(self):
         """:return: a reversed iterator object"""
-        return self._AVLReverseIterator(self._tree.maximum())
+        return self._AVLReverseIterator(self._tree and self._tree.maximum())
 
     def __contains__(self, element: _T):
         """:param element: element to be found
-        :return: ``true`` if value is present in this tree, otherwise ``false``"""
+        :return: ``True`` if value is present in this tree, otherwise ``False``"""
         return len(self) > 0 and self._find_node(element, lambda n, e: n.element == e) is not None
 
     def add(self, element: _T):
@@ -85,11 +85,11 @@ class AVLTree(collections.abc.Set):
 
     @staticmethod
     def _is_left_child(node):
-        return node.parent is not None and node.parent.left is node
+        return node.parent and node.parent.left is node
 
     @staticmethod
     def _is_right_child(node):
-        return node.parent is not None and node.parent.right is node
+        return node.parent and node.parent.right is node
 
     @staticmethod
     def _search(node, element):
@@ -104,19 +104,19 @@ class AVLTree(collections.abc.Set):
         # Searches for node that satisfies specified predicate with specified value.
         node = self._tree
 
-        while node is not None and not predicate(node, value):
+        while node and not predicate(node, value):
             node = AVLTree._search(node, value)
 
         return node
 
     def _delete_node(self, node):
         # Removes inner node from the tree.
-        if node.left is not None and node.right is not None:
+        if node.left and node.right:
             succ = node.right.minimum()
             succ.element, node.element = node.element, succ.element
             self._delete_node(succ)
         else:
-            child = node.left if node.left is not None else node.right
+            child = node.left or node.right
 
             if node.parent is not None:
                 node_parent = node.parent
