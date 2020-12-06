@@ -58,8 +58,9 @@ class BaseWordsDict:
         return ord(self._text[i]), 1 + ord(self._text[i]), i, i + length
 
     def _from_shorter(self, i, length):
-        return self._factors[i, i + length // 2], self._factors[i + length // 2,
-                                                                i + length], i, i + length
+        return self._factors[i, i + length // 2], \
+               self._factors[i + length // 2, i + length], \
+               i, i + length
 
     def _clip(self, i, default):
         if i is None:

@@ -13,19 +13,19 @@ class KMRTest(unittest.TestCase):
     def setUp(self):
         self.test_object = BaseWordsDict("mississippi")
 
-    def test__getitem__when_empty_range(self):
+    def test__getitem__when_empty_range__then_zero_and_zero(self):
         # when
         result = self.test_object[4:4]
         # then
         self.assertEqual((0, 0), result)
 
-    def test__getitem__when_slice_has_step(self):
+    def test__getitem__when_slice_has_step__then_index_error(self):
         # then
         with self.assertRaises(IndexError):
             # when
             _ = self.test_object[::-2]
 
-    def test__getitem__when_single_character(self):
+    def test__getitem__when_single_character__then_code_and_zero(self):
         # when
         result1 = self.test_object[1:2]  # i
         result2 = self.test_object[-11:-10]  # m
@@ -37,7 +37,7 @@ class KMRTest(unittest.TestCase):
         self.assertEqual((3, 0), result3)
         self.assertEqual((4, 0), result4)
 
-    def test__getitem__when_base_word(self):
+    def test__getitem__when_base_word__then_code_and_zero(self):
         # when
         result1 = self.test_object[0:1]  # m
         result2 = self.test_object[4:6]  # is
@@ -51,7 +51,7 @@ class KMRTest(unittest.TestCase):
         self.assertEqual((12, 0), result4)
         self.assertEqual((16, 0), result5)
 
-    def test__getitem__when_composed_word(self):
+    def test__getitem__when_composed_word__then_code_and_code(self):
         # when
         result1 = self.test_object[0:3]  # mis
         # then
