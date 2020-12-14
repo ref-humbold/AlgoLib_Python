@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Base words dictionary structure using Karp-Miller-Rosenberg algorithm"""
+"""Structure of base words dictionary using Karp-Miller-Rosenberg algorithm"""
 
 
 class BaseWordsDict:
