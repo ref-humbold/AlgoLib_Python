@@ -19,11 +19,11 @@ class BaseWordsDictTest(unittest.TestCase):
         # then
         self.assertEqual((0, 0), result)
 
-    def test__getitem__when_slice_has_step__then_index_error(self):
+    def test__getitem__when_start_greater_than_end__then_zero_and_zero(self):
+        # when
+        result = self.test_object[6:2]
         # then
-        with self.assertRaises(IndexError):
-            # when
-            _ = self.test_object[::-2]
+        self.assertEqual((0, 0), result)
 
     def test__getitem__when_single_character__then_code_and_zero(self):
         # when
@@ -56,3 +56,9 @@ class BaseWordsDictTest(unittest.TestCase):
         result1 = self.test_object[0:3]  # mis
         # then
         self.assertEqual((7, 6), result1)
+
+    def test__getitem__when_slice_has_step__then_index_error(self):
+        # then
+        with self.assertRaises(IndexError):
+            # when
+            _ = self.test_object[::-2]
