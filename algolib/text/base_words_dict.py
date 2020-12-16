@@ -13,7 +13,7 @@ class BaseWordsDict:
         return self._text
 
     def __str__(self):
-        return f"BaseWordsDict({self._factors})"
+        return f"BaseWordsDict({self._text}, {self._factors})"
 
     def __getitem__(self, slice_: slice):
         if slice_.step is not None:

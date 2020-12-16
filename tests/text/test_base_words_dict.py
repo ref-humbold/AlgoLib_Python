@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Base words dictionary structure using Karp-Miller-Rosenberg algorithm"""
+"""Tests: Structure of base words dictionary using Karp-Miller-Rosenberg algorithm"""
 import unittest
 
 from algolib.text import BaseWordsDict
@@ -39,7 +39,7 @@ class BaseWordsDictTest(unittest.TestCase):
 
     def test__getitem__when_base_word__then_code_and_zero(self):
         # when
-        result1 = self.test_object[0:1]  # m
+        result1 = self.test_object[:1]  # m
         result2 = self.test_object[4:6]  # is
         result3 = self.test_object[8:-1]  # pp
         result4 = self.test_object[7:]  # ippi
@@ -54,8 +54,10 @@ class BaseWordsDictTest(unittest.TestCase):
     def test__getitem__when_composed_word__then_code_and_code(self):
         # when
         result1 = self.test_object[0:3]  # mis
+        result2 = self.test_object[:]  # mississippi
         # then
         self.assertEqual((7, 6), result1)
+        self.assertEqual((20, 21), result2)
 
     def test__getitem__when_slice_has_step__then_index_error(self):
         # then
