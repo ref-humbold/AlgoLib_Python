@@ -5,7 +5,7 @@ import unittest
 from algolib.text import BaseWordsDict
 
 
-class KMRTest(unittest.TestCase):
+class BaseWordsDictTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.test_object = None
