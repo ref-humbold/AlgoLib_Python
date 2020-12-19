@@ -98,6 +98,7 @@ class DoubleHeap:
         return maximal
 
     def clear(self):
+        """Removes all elements from this double heap."""
         self._heap = []
 
     def _move_to_left(self, index):
