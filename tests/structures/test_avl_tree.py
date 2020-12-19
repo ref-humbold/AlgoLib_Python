@@ -139,24 +139,54 @@ class AVLTreeTest(unittest.TestCase):
         self.test_object.remove(root)
 
         self.assertNotIn(root, self.test_object)
-        avl_tree = self.test_object
-        self.assertTrue(avl_tree._count == 0)
+        self.assertTrue(len(self.test_object) == 0)
 
-    def test__remove__when_empty__then_value_error(self):
+    def test__remove__when_empty__then_key_error(self):
         self.test_object = AVLTree()
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(KeyError):
             self.test_object.remove(0)
 
-        avl_tree = self.test_object
-        self.assertTrue(avl_tree._count == 0)
+        self.assertTrue(len(self.test_object) == 0)
 
-    def test__remove__when_outer_element__then_value_error(self):
+    def test__remove__when_outer_element__then_key_error(self):
         for e in [111, 140, 187]:
-            with self.assertRaises(ValueError):
+            with self.assertRaises(KeyError):
                 self.test_object.remove(e)
 
             self.assertNotIn(e, self.test_object)
+
+    def test__discard__when_present_element__then_not_in(self):
+        for i in [14, 24, 30, 45]:
+            self.test_object.discard(i)
+
+            self.assertNotIn(i, self.test_object)
+
+    def test__discard__when_outer_element__then_nothing(self):
+        for e in [111, 140, 187]:
+            self.test_object.discard(e)
+
+            self.assertNotIn(e, self.test_object)
+
+    def test__discard__when_empty__then_nothing(self):
+        self.test_object = AVLTree()
+
+        self.test_object.discard(0)
+
+        self.assertEqual(0, len(self.test_object))
+
+    def test__pop__when_not_empty__then_remove_and_return_element(self):
+        result = self.test_object.pop()
+
+        self.assertNotIn(result, self.test_object)
+        self.assertIn(result, self._numbers)
+        self.assertEqual(len(self._numbers) - 1, len(self.test_object))
+
+    def test__pop__when_empty__then_key_error(self):
+        self.test_object = AVLTree()
+
+        with self.assertRaises(KeyError):
+            self.test_object.pop()
 
     def test__clear__when_not_empty__then_empty(self):
         self.test_object.clear()

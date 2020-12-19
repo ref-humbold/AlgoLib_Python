@@ -6,7 +6,7 @@ from typing import Iterable, TypeVar
 _T = TypeVar("_T")
 
 
-class AVLTree(collections.abc.Set):
+class AVLTree(collections.abc.MutableSet):
     def __init__(self, elements: Iterable[_T] = ()):
         self._tree = None
         self._count = 0
@@ -24,35 +24,35 @@ class AVLTree(collections.abc.Set):
 
     def __iter__(self):
         """:return: a forward iterator object"""
-        return self._AVLIterator(self._tree and self._tree.minimum())
+        return self._AVLIterator(self._tree and self._tree.minimum)
 
     def __reversed__(self):
         """:return: a reversed iterator object"""
-        return self._AVLReverseIterator(self._tree and self._tree.maximum())
+        return self._AVLReverseIterator(self._tree and self._tree.maximum)
 
     def __contains__(self, element: _T):
         """:param element: element to be found
         :return: ``True`` if value is present in this tree, otherwise ``False``"""
         return len(self) > 0 and self._find_node(element, lambda n, e: n.element == e) is not None
 
-    def add(self, element: _T):
+    def add(self, value: _T):
         """Adds a new value to this tree.
 
-        :param element: value to be added"""
+        :param value: value to be added"""
         node_parent = self._find_node(
-            element, lambda n, e: self._search(n, e) is None or self._search(n, e).element == e)
+            value, lambda n, e: self._search(n, e) is None or self._search(n, e).element == e)
 
         if node_parent is None:
-            new_node = self._AVLNode(element)
+            new_node = self._AVLNode(value)
             self._set_root(new_node)
             self._count += 1
         else:
-            the_node = self._search(node_parent, element)
+            the_node = self._search(node_parent, value)
 
             if the_node is None:
-                new_node = self._AVLNode(element)
+                new_node = self._AVLNode(value)
 
-                if element < node_parent.element:
+                if value < node_parent.element:
                     node_parent.left = new_node
                 else:
                     node_parent.right = new_node
@@ -60,17 +60,38 @@ class AVLTree(collections.abc.Set):
                 self._balance(new_node)
                 self._count += 1
 
-    def remove(self, element: _T):
-        """Removes specified element from this tree if present.
+    def remove(self, value: _T):
+        """Removes specified element from this tree.
 
-        :param element: element to be removed
-        :raises ValueError: if the element is not present"""
-        the_node = self._find_node(element, lambda n, e: n.element == e)
+        :param value: element to be removed
+        :raises KeyError: if the element is not present"""
+        the_node = self._find_node(value, lambda n, e: n.element == e)
 
         if the_node is None:
-            raise ValueError(f"Value {element} is not present in the tree")
+            raise KeyError(value)
 
         self._delete_node(the_node)
+
+    def discard(self, value: _T):
+        """Removes specified element from this tree if present.
+
+        :param value: element to be removed"""
+        try:
+            self.remove(value)
+        except KeyError:
+            pass
+
+    def pop(self):
+        """Removes and returns an arbitrary element from this tree.
+
+        :raises KeyError: if the tree is empty"""
+        if self._tree is None:
+            raise KeyError("pop from an empty tree")
+
+        removed = self._tree.minimum
+        self._delete_node(removed)
+
+        return removed.element
 
     def clear(self):
         """Removes all elements from this tree."""
@@ -112,7 +133,7 @@ class AVLTree(collections.abc.Set):
     def _delete_node(self, node):
         # Removes inner node from the tree.
         if node.left and node.right:
-            succ = node.right.minimum()
+            succ = node.right.minimum
             succ.element, node.element = node.element, succ.element
             self._delete_node(succ)
         else:
@@ -154,8 +175,6 @@ class AVLTree(collections.abc.Set):
     def _balance(self, node):
         # Restores balancing on a path from specified node to the root.
         while node is not None:
-            node.count_height()
-
             if self._count_balance(node) > 1:
                 if self._count_balance(node.left) > 0:
                     self._rotate(node.left)
@@ -200,7 +219,7 @@ class AVLTree(collections.abc.Set):
             if self._left is not None:
                 self._left.parent = self
 
-            self.count_height()
+            self._count_height()
 
         @property
         def right(self):
@@ -213,7 +232,7 @@ class AVLTree(collections.abc.Set):
             if self._right is not None:
                 self._right.parent = self
 
-            self.count_height()
+            self._count_height()
 
         @property
         def parent(self):
@@ -223,19 +242,21 @@ class AVLTree(collections.abc.Set):
         def parent(self, parent):
             self._parent = parent
 
-        def count_height(self):
+        @property
+        def minimum(self):
+            # Searches in its subtree for the node with minimal value.
+            return self if self._left is None else self._left.minimum
+
+        @property
+        def maximum(self):
+            # Searches in its subtree for the node with maximal value.
+            return self if self._right is None else self._right.maximum
+
+        def _count_height(self):
             # Recounts the height of the node.
             left_height = 0 if self._left is None else self._left.height
             right_height = 0 if self._right is None else self._right.height
             self._height = max(left_height, right_height) + 1
-
-        def minimum(self):
-            # Searches in its subtree for the node with minimal value.
-            return self if self._left is None else self._left.minimum()
-
-        def maximum(self):
-            # Searches in its subtree for the node with maximal value.
-            return self if self._right is None else self._right.maximum()
 
     class _AVLIterator:
         def __init__(self, node):
@@ -248,7 +269,7 @@ class AVLTree(collections.abc.Set):
             return_value = self._current_node.element
 
             if self._current_node.right is not None:
-                self._current_node = self._current_node.right.minimum()
+                self._current_node = self._current_node.right.minimum
             else:
                 while self._current_node.parent is not None \
                         and self._current_node.parent.left is not self._current_node:
@@ -269,7 +290,7 @@ class AVLTree(collections.abc.Set):
             ret_elem = self._current_node.element
 
             if self._current_node.left is not None:
-                self._current_node = self._current_node.left.maximum()
+                self._current_node = self._current_node.left.maximum
             else:
                 while self._current_node.parent is not None \
                         and self._current_node.parent.right is not self._current_node:

@@ -73,8 +73,7 @@ class Vector:
     def __mul__(self, constant: float) -> "Vector":
         return Vector(*map(lambda c: c * constant, self._coordinates))
 
-    def __rmul__(self, constant: float):
-        return self.__mul__(constant)
+    __rmul__ = __mul__
 
     def __imul__(self, constant: float):
         self._coordinates = [c * constant for c in self._coordinates]
@@ -176,8 +175,7 @@ class Vector2D:
     def __mul__(self, constant: float) -> "Vector2D":
         return Vector2D(self._x * constant, self._y * constant)
 
-    def __rmul__(self, constant: float) -> "Vector2D":
-        return self.__mul__(constant)
+    __rmul__ = __mul__
 
     def __imul__(self, constant: float):
         self._x *= constant
@@ -276,8 +274,7 @@ class Vector3D:
     def __mul__(self, constant: float) -> "Vector3D":
         return Vector3D(self._x * constant, self._y * constant, self._z * constant)
 
-    def __rmul__(self, constant: float) -> "Vector3D":
-        return self.__mul__(constant)
+    __rmul__ = __mul__
 
     def __imul__(self, constant: float):
         self._x *= constant
