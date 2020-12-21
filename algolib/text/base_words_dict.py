@@ -51,9 +51,11 @@ class BaseWordsDict:
         codes = sorted(func(i, length) for i in range(len(self._text) - length + 1))
 
         for code in codes:
-            if code[0] != previous_code[0] or code[1] != previous_code[1]:
+            code_pair = (code[0], code[1])
+
+            if code_pair != previous_code:
                 code_value += 1
-                previous_code = (code[0], code[1])
+                previous_code = code_pair
 
             self._factors[code[2], code[3]] = code_value
 
