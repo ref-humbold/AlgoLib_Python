@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Structure of base words dictionary using Karp-Miller-Rosenberg algorithm"""
+from typing import Tuple
 
 
 class BaseWordsDict:
@@ -15,7 +16,7 @@ class BaseWordsDict:
     def __str__(self):
         return f"BaseWordsDict({self._text}, {self._factors})"
 
-    def __getitem__(self, slice_: slice):
+    def __getitem__(self, slice_: slice) -> Tuple[int, int]:
         if slice_.step is not None:
             raise IndexError("Slice step must be None")
 

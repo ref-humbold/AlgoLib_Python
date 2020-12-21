@@ -6,12 +6,12 @@ from abc import ABCMeta, abstractmethod
 class Graph(metaclass=ABCMeta):
     @property
     @abstractmethod
-    def vertices_count(self):
+    def vertices_count(self) -> int:
         """:return: number of vertices"""
 
     @property
     @abstractmethod
-    def edges_count(self):
+    def edges_count(self) -> int:
         """:return: number of edges"""
 
     @property
@@ -50,12 +50,12 @@ class Graph(metaclass=ABCMeta):
         :return: generator of neighbouring vertices"""
 
     @abstractmethod
-    def output_degree(self, vertex):
+    def output_degree(self, vertex) -> int:
         """:param vertex: a vertex from this graph
         :return: the output degree of this vertex"""
 
     @abstractmethod
-    def input_degree(self, vertex):
+    def input_degree(self, vertex) -> int:
         """:param vertex: a vertex from this graph
         :return: the input degree of this vertex"""
 
@@ -82,7 +82,7 @@ class Edge:
 
         raise ValueError(f"Edge {self} is not adjacent to the vertex {vertex}")
 
-    def reversed(self):
+    def reversed(self) -> "Edge":
         return Edge(self._destination, self._source)
 
     def __hash__(self):
