@@ -57,17 +57,17 @@ def test_miller(number: int) -> bool:
     if number < 2 or number % 2 == 0 or number % 3 == 0:
         return False
 
-    multiplier = number - 1
+    multiplicand = number - 1
 
-    while multiplier % 2 == 0:
-        multiplier //= 2
+    while multiplicand % 2 == 0:
+        multiplicand //= 2
 
     for _ in range(17):
         witness = randint(1, number - 1)
 
-        if power_mod(witness, multiplier, number) != 1:
+        if power_mod(witness, multiplicand, number) != 1:
             exponents = []
-            exp = multiplier
+            exp = multiplicand
 
             while exp <= number // 2:
                 exponents.append(exp)
