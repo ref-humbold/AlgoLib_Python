@@ -28,15 +28,19 @@ def test_fermat(number):
     :return: ``true`` if the number is probably prime, otherwise ``false``"""
     number = abs(number)
 
-    if number in (2, 3):
+    if number in {2, 3}:
         return True
 
     if number < 2 or number % 2 == 0 or number % 3 == 0:
         return False
 
-    return all(
-            map(lambda rdv: gcd(rdv, number) == 1 and power_mod(rdv, number - 1, number) == 1,
-                [randint(1, number - 1) for _ in range(15)]))
+    for _ in range(17):
+        witness = randint(1, number - 1)
+
+        if gcd(witness, number) > 1 and power_mod(witness, number - 1, number) != 1:
+            return False
+
+    return True
 
 
 def test_miller(number):
@@ -46,31 +50,29 @@ def test_miller(number):
     :return: ``true`` if the number is probably prime, otherwise ``false``"""
     number = abs(number)
 
-    if number in (2, 3):
+    if number in {2, 3}:
         return True
 
     if number < 2 or number % 2 == 0 or number % 3 == 0:
         return False
 
-    multip = number - 1
+    multiplier = number - 1
 
-    while multip % 2 == 0:
-        multip >>= 1
+    while multiplier % 2 == 0:
+        multiplier //= 2
 
-    for i in range(15):
-        rdv = randint(1, number - 1)
+    for _ in range(17):
+        witness = randint(1, number - 1)
 
-        if power_mod(rdv, multip, number) != 1:
-            is_composite = True
+        if power_mod(witness, multiplier, number) != 1:
+            exponents = []
+            exp = multiplier
 
-            d = multip
+            while exp <= number // 2:
+                exponents.append(exp)
+                exp *= 2
 
-            while d <= number / 2:
-                pwm = power_mod(rdv, d, number)
-                is_composite = is_composite and pwm != number - 1
-                d <<= 1
-
-            if is_composite:
+            if all(map(lambda d, wit=witness: power_mod(wit, d, number) != number - 1, exponents)):
                 return False
 
     return True
