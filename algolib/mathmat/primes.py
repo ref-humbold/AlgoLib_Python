@@ -29,15 +29,19 @@ def test_fermat(number: int) -> bool:
     :return: ``true`` if the number is probably prime, otherwise ``false``"""
     number = abs(number)
 
-    if number in (2, 3):
+    if number in {2, 3}:
         return True
 
     if number < 2 or number % 2 == 0 or number % 3 == 0:
         return False
 
-    return all(
-        map(lambda rdv: gcd(rdv, number) == 1 and power_mod(rdv, number - 1, number) == 1,
-            [randint(1, number - 1) for _ in range(15)]))
+    for _ in range(17):
+        witness = randint(1, number - 1)
+
+        if gcd(witness, number) > 1 and power_mod(witness, number - 1, number) != 1:
+            return False
+
+    return True
 
 
 def test_miller(number: int) -> bool:
@@ -47,30 +51,29 @@ def test_miller(number: int) -> bool:
     :return: ``true`` if the number is probably prime, otherwise ``false``"""
     number = abs(number)
 
-    if number in (2, 3):
+    if number in {2, 3}:
         return True
 
     if number < 2 or number % 2 == 0 or number % 3 == 0:
         return False
 
-    multiplicand = number - 1
+    multiplier = number - 1
 
-    while multiplicand % 2 == 0:
-        multiplicand >>= 1
+    while multiplier % 2 == 0:
+        multiplier //= 2
 
-    for _ in range(15):
-        rdv = randint(1, number - 1)
-        exponent = multiplicand
+    for _ in range(17):
+        witness = randint(1, number - 1)
 
-        if power_mod(rdv, exponent, number) != 1:
-            is_composite = True
+        if power_mod(witness, multiplier, number) != 1:
+            exponents = []
+            exp = multiplier
 
-            while exponent <= number / 2:
-                pwm = power_mod(rdv, exponent, number)
-                is_composite = is_composite and pwm != number - 1
-                exponent <<= 1
+            while exp <= number // 2:
+                exponents.append(exp)
+                exp *= 2
 
-            if is_composite:
+            if all(map(lambda d, wit=witness: power_mod(wit, d, number) != number - 1, exponents)):
                 return False
 
     return True

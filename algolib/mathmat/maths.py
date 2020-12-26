@@ -54,7 +54,7 @@ def mult_mod(factor1: int, factor2: int, modulo: int = 0) -> int:
             result = factor1 + result if modulo == 0 else (factor1 + result) % modulo
 
         factor1 = factor1 + factor1 if modulo == 0 else (factor1 + factor1) % modulo
-        factor2 >>= 1
+        factor2 //= 2
 
     return result
 
@@ -82,6 +82,6 @@ def power_mod(base: int, exponent: int, modulo: int = 0) -> Union[int, float]:
             result = mult_mod(base, result, modulo)
 
         base = mult_mod(base, base, modulo)
-        exponent >>= 1
+        exponent //= 2
 
     return result
