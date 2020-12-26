@@ -53,7 +53,7 @@ def mult_mod(factor1, factor2, modulo=0):
             result = factor1 + result if modulo == 0 else (factor1 + result) % modulo
 
         factor1 = factor1 + factor1 if modulo == 0 else (factor1 + factor1) % modulo
-        factor2 >>= 1
+        factor2 //= 2
 
     return result
 
@@ -81,6 +81,6 @@ def power_mod(base, exponent, modulo=0):
             result = mult_mod(base, result, modulo)
 
         base = mult_mod(base, base, modulo)
-        exponent >>= 1
+        exponent //= 2
 
     return result
