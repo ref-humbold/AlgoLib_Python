@@ -19,9 +19,10 @@ class PrimesTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             find_primes(20, 200, 10)
 
-    def test__find_primes__when_two_args_descending__then_value_error(self):
-        with self.assertRaises(ValueError):
-            find_primes(100, 30)
+    def test__find_primes__when_two_args_descending__then_empty_generator(self):
+        result = find_primes(100, 30)
+
+        self.assertListEqual([], list(result))
 
     def test__find_primes__when_one_arg__then_same_as_two_args_with_zero_as_min(self):
         result1 = find_primes(100)
@@ -42,8 +43,8 @@ class PrimesTest(unittest.TestCase):
         self.assertListEqual([2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61],
                              list(result))
 
-    def test__find_primes__when_less_than_two(self):
-        result = find_primes(1)
+    def test__find_primes__when_at_most_two(self):
+        result = find_primes(2)
 
         self.assertListEqual([], list(result))
 

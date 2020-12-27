@@ -123,7 +123,7 @@ class DisjointSetsTest(unittest.TestCase):
         # given
         elems = [20, 17, 35]
         # when
-        self.test_object.add(elems).union_set(elems[0], elems[1]).union_set(elems[1], elems[2])
+        self.test_object.add(*elems).union_set(elems[0], elems[1]).union_set(elems[1], elems[2])
         # then
         self.assertTrue(self.test_object.is_same_set(elems[0], elems[2]))
         self.assertEqual(self.test_object[elems[0]], self.test_object[elems[2]])

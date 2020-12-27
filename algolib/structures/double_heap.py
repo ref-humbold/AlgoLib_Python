@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 """Structure of double heap"""
+import collections.abc
+from typing import Iterable, Optional, TypeVar
+
+_T = TypeVar("_T")
 
 
-class DoubleHeap:
+class DoubleHeap(collections.abc.Sized):
     _INDEX_FRONT = 0
     _INDEX_BACK = 1
 
-    def __init__(self, elements=None, key=None):
+    def __init__(self, elements: Optional[Iterable[_T]] = None, key=None):
         self._heap = []
         self._key = key if key is not None else lambda x: x
 
@@ -18,7 +22,7 @@ class DoubleHeap:
         return len(self._heap)
 
     @property
-    def left(self):
+    def left(self) -> _T:
         """Retrieves minimal element from this double heap.
 
         :return: minimal element
@@ -29,7 +33,7 @@ class DoubleHeap:
         return self._heap[self._INDEX_FRONT]
 
     @property
-    def right(self):
+    def right(self) -> _T:
         """Retrieves maximal element from this double heap.
 
         :return: maximal element
@@ -40,7 +44,7 @@ class DoubleHeap:
         return self._heap[self._INDEX_BACK] if len(self._heap) > 1 else \
             self._heap[self._INDEX_FRONT]
 
-    def push(self, element):
+    def push(self, element: _T):
         """Adds new value to this double heap.
 
         :param element: value to be added
@@ -67,7 +71,7 @@ class DoubleHeap:
             else:
                 self._move_to_left(index)
 
-    def popleft(self):
+    def popleft(self) -> _T:
         """Retrieves and removes minimal element from this double heap.
 
         :return: removed minimal element
@@ -81,7 +85,7 @@ class DoubleHeap:
 
         return minimal
 
-    def popright(self):
+    def popright(self) -> _T:
         """Retrieves and removes maximal element from this double heap.
 
         :return: removed maximal element

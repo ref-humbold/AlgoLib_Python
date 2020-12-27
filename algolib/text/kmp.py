@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """Knuth-Morris-Pratt algorithm"""
+from typing import Iterable
 
 
-def kmp(text, pattern):
+def kmp(text: str, pattern: str) -> Iterable[int]:
     """Searches for pattern occurrences in specified text using Knuth-Morris-Pratt algorithm.
 
     :param text: a text

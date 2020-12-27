@@ -2,11 +2,12 @@
 """Algorithms for prime numbers"""
 from math import sqrt
 from random import randint
+from typing import Iterable
 
 from algolib.mathmat.maths import gcd, power_mod
 
 
-def find_primes(*numbers):
+def find_primes(*numbers: int) -> Iterable[int]:
     """Finds prime numbers inside a range of integers.
 
     :param numbers: range borders; beginning inclusive, ending exclusive; beginning can be omitted,
@@ -21,7 +22,7 @@ def find_primes(*numbers):
     raise TypeError(f"Expected 1 or 2 arguments, got {len(numbers)}")
 
 
-def test_fermat(number):
+def test_fermat(number: int) -> bool:
     """Checks whether specified number is prime running Fermat's prime test.
 
     :param number: number to check
@@ -43,7 +44,7 @@ def test_fermat(number):
     return True
 
 
-def test_miller(number):
+def test_miller(number: int) -> bool:
     """Checks whether specified number is prime running Miller-Rabin's prime test.
 
     :param number: number to check
@@ -56,17 +57,17 @@ def test_miller(number):
     if number < 2 or number % 2 == 0 or number % 3 == 0:
         return False
 
-    multiplier = number - 1
+    multiplicand = number - 1
 
-    while multiplier % 2 == 0:
-        multiplier //= 2
+    while multiplicand % 2 == 0:
+        multiplicand //= 2
 
     for _ in range(17):
         witness = randint(1, number - 1)
 
-        if power_mod(witness, multiplier, number) != 1:
+        if power_mod(witness, multiplicand, number) != 1:
             exponents = []
-            exp = multiplier
+            exp = multiplicand
 
             while exp <= number // 2:
                 exponents.append(exp)
@@ -80,11 +81,8 @@ def test_miller(number):
 
 def _find_primes_range(min_number, max_number):
     # Finds prime numbers inside a specified range (minimum inclusive, maximum exclusive)
-    if max_number < min_number:
-        raise ValueError("Second argument must be grater or equal to the first argument")
-
-    if max_number < 2:
-        return []
+    if max_number <= min_number or max_number <= 2:
+        return
 
     is_prime = [i == 2 or (i > 2 and i % 2 == 1) for i in range(min_number, max_number)]
     base_primes = [True] * int(sqrt(max_number) / 2)
@@ -100,4 +98,4 @@ def _find_primes_range(min_number, max_number):
             for j in range(begin, len(is_prime), num):
                 is_prime[j] = False
 
-    return (min_number + i for i, prime in enumerate(is_prime) if prime)
+    yield from (min_number + i for i, prime in enumerate(is_prime) if prime)

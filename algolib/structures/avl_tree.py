@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 """Structure of AVL tree"""
-from collections import abc
+import collections.abc
+from typing import Iterable, TypeVar
+
+_T = TypeVar("_T")
 
 
-class AVLTree(abc.MutableSet):
-    def __init__(self, elements=None):
+class AVLTree(collections.abc.MutableSet):
+    def __init__(self, elements: Iterable[_T] = ()):
         self._tree = None
         self._count = 0
 
-        if elements is not None:
-            for i in elements:
-                self.add(i)
+        for i in elements:
+            self.add(i)
 
     def __str__(self):
         """:return: string representation of this tree"""
@@ -28,12 +30,12 @@ class AVLTree(abc.MutableSet):
         """:return: a reversed iterator object"""
         return self._AVLReverseIterator(self._tree and self._tree.maximum)
 
-    def __contains__(self, element):
+    def __contains__(self, element: _T):
         """:param element: element to be found
         :return: ``True`` if value is present in this tree, otherwise ``False``"""
         return len(self) > 0 and self._find_node(element, lambda n, e: n.element == e) is not None
 
-    def add(self, value):
+    def add(self, value: _T):
         """Adds a new value to this tree.
 
         :param value: value to be added"""
@@ -58,7 +60,7 @@ class AVLTree(abc.MutableSet):
                 self._balance(new_node)
                 self._count += 1
 
-    def remove(self, value):
+    def remove(self, value: _T):
         """Removes specified element from this tree.
 
         :param value: element to be removed
@@ -70,7 +72,7 @@ class AVLTree(abc.MutableSet):
 
         self._delete_node(the_node)
 
-    def discard(self, value):
+    def discard(self, value: _T):
         """Removes specified element from this tree if present.
 
         :param value: element to be removed"""

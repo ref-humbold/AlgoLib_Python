@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """Algorithms for basic mathematical computations"""
+from typing import Union
 
 
-def gcd(number1, number2):
+def gcd(number1: int, number2: int) -> int:
     """Counts a greatest common divisor of two numbers.
 
     :param number1: a first number
@@ -16,7 +17,7 @@ def gcd(number1, number2):
     return number_pair[1]
 
 
-def lcm(number1, number2):
+def lcm(number1: int, number2: int) -> int:
     """Counts a lowest common multiple of two numbers.
 
     :param number1: a first number
@@ -27,7 +28,7 @@ def lcm(number1, number2):
     return max_number // gcd(number1, number2) * min_number
 
 
-def mult_mod(factor1, factor2, modulo=0):
+def mult_mod(factor1: int, factor2: int, modulo: int = 0) -> int:
     """Performs a fast multiplication of two numbers with modulo taken.
 
     :param factor1: a first factor
@@ -58,7 +59,7 @@ def mult_mod(factor1, factor2, modulo=0):
     return result
 
 
-def power_mod(base, exponent, modulo=0):
+def power_mod(base: int, exponent: int, modulo: int = 0) -> Union[int, float]:
     """Performs a fast exponentiation of two numbers with modulo taken.
 
     :param base: a base value

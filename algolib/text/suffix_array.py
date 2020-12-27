@@ -5,7 +5,7 @@ from math import inf
 
 
 class SuffixArray:
-    def __init__(self, text):
+    def __init__(self, text: str):
         self._length = len(text)  # length of suffix array
         self._text = text  # text
         self._suf_array = self._init_array()  # suffix array
@@ -13,7 +13,7 @@ class SuffixArray:
         self._lcp_array = self._init_lcp()  # longest common prefixes array
 
     @property
-    def text(self):
+    def text(self) -> str:
         """:return: text for suffix array"""
         return self._text
 
@@ -21,7 +21,7 @@ class SuffixArray:
         """:return: length of suffix array"""
         return self._length
 
-    def __getitem__(self, i):
+    def __getitem__(self, i: int) -> str:
         """:param i: an index in suffix array
         :return: suffix"""
         if i < 0 or i >= self._length:
@@ -29,7 +29,7 @@ class SuffixArray:
 
         return self._text[self._suf_array[i]:]
 
-    def index_at(self, i):
+    def index_at(self, i: int) -> int:
         """:param i: an index in suffix array
         :return: index in text where the suffix begins"""
         if i < 0 or i >= self._length:
@@ -37,7 +37,7 @@ class SuffixArray:
 
         return self._suf_array[i]
 
-    def index_of(self, suf):
+    def index_of(self, suf: int) -> int:
         """:param suf: an index in text denoting suffix
         :return: index of suffix in this array"""
         if suf < 0 or suf >= self._length:
@@ -45,7 +45,7 @@ class SuffixArray:
 
         return self._inv_array[suf]
 
-    def lcp(self, suf1, suf2):
+    def lcp(self, suf1: int, suf2: int) -> int:
         """Counts longest common prefix of two suffixes.
 
         :param suf1: an index in text denoting first suffix

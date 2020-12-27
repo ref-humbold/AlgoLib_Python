@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Structure of base words dictionary using Karp-Miller-Rosenberg algorithm"""
+from typing import Tuple
 
 
 class BaseWordsDict:
@@ -15,7 +16,7 @@ class BaseWordsDict:
     def __str__(self):
         return f"BaseWordsDict({self._text}, {self._factors})"
 
-    def __getitem__(self, slice_: slice):
+    def __getitem__(self, slice_: slice) -> Tuple[int, int]:
         if slice_.step is not None:
             raise IndexError("Slice step must be None")
 
@@ -33,12 +34,17 @@ class BaseWordsDict:
 
     def _create(self):
         # Builds a base words dictionary using Karp-Miller-Rosenberg algorithm
-        code_value = self._extend(1, 0, self._from_single)
-        length = 2
+        current_length = 2
+        code_value = self._extend(1, 0,
+                                  lambda i, length: (ord(self._text[i]), 1 + ord(self._text[i]),
+                                                     i, i + length))
 
-        while length <= len(self._text):
-            code_value = self._extend(length, code_value, self._from_shorter)
-            length *= 2
+        while current_length <= len(self._text):
+            code_value = self._extend(current_length, code_value,
+                                      lambda i, length: (self._factors[i, i + length // 2],
+                                                         self._factors[i + length // 2, i + length],
+                                                         i, i + length))
+            current_length *= 2
 
     def _extend(self, length, code_value, func):
         # Encodes substring of specified length using already counted factors
@@ -46,21 +52,15 @@ class BaseWordsDict:
         codes = sorted(func(i, length) for i in range(len(self._text) - length + 1))
 
         for code in codes:
-            if code[0] != previous_code[0] or code[1] != previous_code[1]:
+            code_pair = (code[0], code[1])
+
+            if code_pair != previous_code:
                 code_value += 1
-                previous_code = (code[0], code[1])
+                previous_code = code_pair
 
             self._factors[code[2], code[3]] = code_value
 
         return code_value
-
-    def _from_single(self, i, length):
-        return ord(self._text[i]), 1 + ord(self._text[i]), i, i + length
-
-    def _from_shorter(self, i, length):
-        return self._factors[i, i + length // 2], \
-               self._factors[i + length // 2, i + length], \
-               i, i + length
 
     def _clip(self, i, default):
         if i is None:
