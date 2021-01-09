@@ -2,9 +2,13 @@ version: 2.1
 
 jobs:
   run-tests:
+    parameters:
+      python-version:
+        type: string
+        default: latest
     working_directory: ~/AlgoLib_Python
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:<< parameters.python-version >>
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD
@@ -20,4 +24,9 @@ jobs:
 workflows:
   main:
     jobs:
-      - run-tests
+      - run-tests:
+          python-version: 3.9
+      - run-tests:
+          python-version: 3.8
+      - run-tests:
+          python-version: 3.7
