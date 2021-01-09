@@ -10,7 +10,7 @@ jobs:
       - checkout
       - python/install-deps
       - run:
-          name: Test
+          name: tests
           command: nose2 tests
 
 workflows:
