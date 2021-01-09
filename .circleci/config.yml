@@ -1,14 +1,22 @@
 version: 2.1
 
-orbs:
-  python: circleci/python@0.2.1
-
 jobs:
   run-tests:
-    executor: python/default
+    parameters:
+      python-version:
+        type: string
+        default: latest
+    working_directory: ~/AlgoLib_Python
+    docker:
+      - image: cimg/python:<< parameters.python-version >>
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
-      - python/install-deps
+      - run:
+          name: requirements
+          command: pip install -r requirements.txt
       - run:
           name: tests
           command: nose2 tests
@@ -16,4 +24,9 @@ jobs:
 workflows:
   main:
     jobs:
-      - run-tests
+      - run-tests:
+          python-version: "3.9"
+      - run-tests:
+          python-version: "3.8"
+      - run-tests:
+          python-version: "3.7"
