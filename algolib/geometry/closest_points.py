@@ -21,18 +21,20 @@ def find_closest_points(points: Iterable[Point2D]) -> Tuple[Point2D, Point2D]:
 def _search_closest(points_x, points_y, index_begin, index_end):
     # Searches for a pair of closest points in specified sublist of points.
     # Points are specified sorted by X coordinate and by Y coordinate.
-    if index_end - index_begin == 1:
-        return points_x[index_begin], points_x[index_end]
+    # (index_begin inclusive, index_end exclusive)
+    if index_end - index_begin <= 2:
+        return points_x[index_begin], points_x[index_end - 1]
 
-    if index_end - index_begin == 2:
-        return _search_three(points_x[index_begin], points_x[index_begin + 1], points_x[index_end])
+    if index_end - index_begin == 3:
+        return _search_three(points_x[index_begin], points_x[index_begin + 1],
+                             points_x[index_end - 1])
 
     index_middle = (index_begin + index_end) // 2
     middle_x = (points_x[index_middle].x + points_x[index_middle + 1].x) // 2
     closest_left = _search_closest(points_x, (p for p in points_y if p.x <= middle_x), index_begin,
-                                   index_middle)
+                                   index_middle + 1)
     closest_right = _search_closest(points_x, (p for p in points_y if p.x > middle_x),
-                                    index_middle + 1, index_end)
+                                    index_middle, index_end)
     closest_points = \
         closest_left if distance(*closest_left) <= distance(*closest_right) else closest_right
     belt_points = _check_belt(points_y, middle_x, distance(closest_points[0], closest_points[1]))
@@ -60,7 +62,7 @@ def _check_belt(points_y: Iterable[Point2D], middle_x: float, belt_width: float)
 
                 if points_distance < min_distance:
                     min_distance = points_distance
-                    closest_points = (point1, point2)
+                    closest_points = tuple(sorted_by_x([point1, point2]))
 
     return closest_points
 
