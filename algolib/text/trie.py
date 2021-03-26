@@ -33,13 +33,25 @@ class Trie:
             node.terminus = True
 
     def remove(self, text: str):
-        pass
+        self._remove_node(text, self._tree, 0)
 
     def discard(self, text: str):
         try:
             self.remove(text)
         except KeyError:
             pass
+
+    def _remove_node(self, text: str, node: "Trie._TrieNode", i: int) -> bool:
+        if i == len(text) and node.terminus:
+            self._size -= 1
+            node.terminus = False
+        elif i < len(text):
+            next_node = node[text[i]]
+
+            if next_node is not None and self._remove_node(text, next_node, i + 1):
+                del node[text[i]]
+
+        return not node.terminus and node.empty()
 
     class _TrieNode:
         def __init__(self):
@@ -56,5 +68,5 @@ class Trie:
         def __delitem__(self, char: str):
             del self._children[char]
 
-        def empty(self):
+        def empty(self) -> bool:
             return len(self._children) == 0
