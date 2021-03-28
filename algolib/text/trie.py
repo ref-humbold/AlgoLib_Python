@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
 """Structure of trie tree"""
+from typing import Iterable, Optional
 
 
 class Trie:
-    def __init__(self):
+    def __init__(self, texts: Optional[Iterable[str]] = None):
         self._tree = self._TrieNode()
         self._size = 0
+
+        if texts is not None:
+            for text in texts:
+                self.add(text)
 
     def __len__(self):
         return self._size
@@ -16,7 +21,7 @@ class Trie:
         for character in text:
             node = node[character]
 
-            if node is not None:
+            if node is None:
                 return False
 
         return node.terminus
@@ -42,13 +47,19 @@ class Trie:
             pass
 
     def _remove_node(self, text: str, node: "Trie._TrieNode", i: int) -> bool:
-        if i == len(text) and node.terminus:
+        if i == len(text):
+            if not node.terminus:
+                raise KeyError
+
             self._size -= 1
             node.terminus = False
         elif i < len(text):
             next_node = node[text[i]]
 
-            if next_node is not None and self._remove_node(text, next_node, i + 1):
+            if next_node is None:
+                raise KeyError
+
+            if self._remove_node(text, next_node, i + 1):
                 del node[text[i]]
 
         return not node.terminus and node.empty()
@@ -59,7 +70,7 @@ class Trie:
             self._children = {}
 
         def __getitem__(self, char: str) -> "Trie._TrieNode":
-            return self._children.get(char, None)
+            return self._children.get(char)
 
         def __setitem__(self, char: str, node: "Trie._TrieNode"):
             if char not in self._children:
