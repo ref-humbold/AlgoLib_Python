@@ -41,23 +41,23 @@ class Graph(metaclass=ABCMeta):
 
     @abstractmethod
     def adjacent_edges(self, vertex):
-        """:param vertex: a vertex from this graph
-        :return: generator of edges adjacent to this vertex"""
+        """:param vertex: a vertex from the graph
+        :return: generator of edges adjacent to the vertex"""
 
     @abstractmethod
     def neighbours(self, vertex):
-        """:param vertex: a vertex from this graph
+        """:param vertex: a vertex from the graph
         :return: generator of neighbouring vertices"""
 
     @abstractmethod
     def output_degree(self, vertex) -> int:
-        """:param vertex: a vertex from this graph
-        :return: the output degree of this vertex"""
+        """:param vertex: a vertex from the graph
+        :return: the output degree of the vertex"""
 
     @abstractmethod
     def input_degree(self, vertex) -> int:
-        """:param vertex: a vertex from this graph
-        :return: the input degree of this vertex"""
+        """:param vertex: a vertex from the graph
+        :return: the input degree of the vertex"""
 
 
 class Edge:

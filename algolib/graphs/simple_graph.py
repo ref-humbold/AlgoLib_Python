@@ -111,7 +111,7 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
             raise KeyError(f"No edge between the vertices {source} and {destination}")
 
     def add_vertex(self, vertex, vertex_property=None):
-        """Adds a new vertex with given property to this graph.
+        """Adds a new vertex with given property to the graph.
 
          :param vertex: a new vertex
          :param vertex_property: vertex property
@@ -124,7 +124,7 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
         return was_added
 
     def add_edge_between(self, source, destination, edge_property=None):
-        """Adds a new edge with given property to this graph.
+        """Adds a new edge with given property to the graph.
 
         :param source: a source vertex
         :param destination: a destination vertex
@@ -134,7 +134,7 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
 
     @abstractmethod
     def add_edge(self, edge, edge_property=None):
-        """Adds a new edge with given property to this graph.
+        """Adds a new edge with given property to the graph.
 
         :param edge: a new edge
         :param edge_property: edge property

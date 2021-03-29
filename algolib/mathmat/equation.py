@@ -9,7 +9,7 @@ class Equation:
         self.free = free
 
     def __str__(self):
-        """:return: string representation of this equation"""
+        """:return: string representation of the equation"""
         terms = [f'{c} x_{i}' for i, c in enumerate(self.coefficients) if c != 0]
         return f"{' + '.join(terms)} = {self.free}"
 
@@ -54,9 +54,9 @@ class Equation:
         self.free += constant * equation.free
 
     def is_solution(self, solution: Sequence[float]) -> bool:
-        """Checks whether given values solve this equation.
+        """Checks whether given values solve the equation.
 
         :param solution: values to check
         :return: ``true`` if solution is correct, otherwise ``false``"""
         return len(solution) == len(self) and sum(
-                map(lambda c, s: c * s, self.coefficients, solution)) == self.free
+            map(lambda c, s: c * s, self.coefficients, solution)) == self.free

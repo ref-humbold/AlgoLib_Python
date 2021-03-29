@@ -9,11 +9,11 @@ from .simple_graph import SimpleGraph, _GraphRepresentation
 class DirectedGraph(Graph, metaclass=ABCMeta):
     @abstractmethod
     def reverse(self):
-        """Reverses directions of edges in this graph."""
+        """Reverses directions of edges in the graph."""
 
     @abstractmethod
     def reversed_copy(self):
-        """:return: the copy of this graph with reversed directions of edges"""
+        """:return: the copy of the graph with reversed directions of edges"""
 
 
 class DirectedSimpleGraph(SimpleGraph, DirectedGraph):

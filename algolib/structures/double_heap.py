@@ -23,7 +23,7 @@ class DoubleHeap(collections.abc.Sized):
 
     @property
     def left(self) -> _T:
-        """Retrieves minimal element from this double heap.
+        """Retrieves minimal element from the double heap.
 
         :return: minimal element
         :raise KeyError: if double heap is empty"""
@@ -34,7 +34,7 @@ class DoubleHeap(collections.abc.Sized):
 
     @property
     def right(self) -> _T:
-        """Retrieves maximal element from this double heap.
+        """Retrieves maximal element from the double heap.
 
         :return: maximal element
         :raise KeyError: if double heap is empty"""
@@ -45,7 +45,7 @@ class DoubleHeap(collections.abc.Sized):
             self._heap[self._INDEX_FRONT]
 
     def push(self, element: _T):
-        """Adds new value to this double heap.
+        """Adds new value to the double heap.
 
         :param element: value to be added
         """
@@ -72,7 +72,7 @@ class DoubleHeap(collections.abc.Sized):
                 self._move_to_left(index)
 
     def popleft(self) -> _T:
-        """Retrieves and removes minimal element from this double heap.
+        """Retrieves and removes minimal element from the double heap.
 
         :return: removed minimal element
         :raise KeyError: if double heap is empty
@@ -86,7 +86,7 @@ class DoubleHeap(collections.abc.Sized):
         return minimal
 
     def popright(self) -> _T:
-        """Retrieves and removes maximal element from this double heap.
+        """Retrieves and removes maximal element from the double heap.
 
         :return: removed maximal element
         :raise KeyError: if double heap is empty
@@ -102,7 +102,7 @@ class DoubleHeap(collections.abc.Sized):
         return maximal
 
     def clear(self):
-        """Removes all elements from this double heap."""
+        """Removes all elements from the double heap."""
         self._heap = []
 
     def _move_to_left(self, index):

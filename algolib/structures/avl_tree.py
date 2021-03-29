@@ -15,11 +15,11 @@ class AVLTree(collections.abc.MutableSet):
             self.add(i)
 
     def __str__(self):
-        """:return: string representation of this tree"""
+        """:return: string representation of the tree"""
         return f"{{|{', '.join(str(x) for x in self)}|}}"
 
     def __len__(self):
-        """:return: number of elements in this tree"""
+        """:return: number of elements in the tree"""
         return self._count
 
     def __iter__(self):
@@ -31,12 +31,12 @@ class AVLTree(collections.abc.MutableSet):
         return self._AVLReverseIterator(self._tree and self._tree.maximum)
 
     def __contains__(self, element: _T):
-        """:param element: element to be found
-        :return: ``True`` if value is present in this tree, otherwise ``False``"""
+        """:param element: element to be checked
+        :return: ``True`` if value is present in the tree, otherwise ``False``"""
         return len(self) > 0 and self._find_node(element, lambda n, e: n.element == e) is not None
 
     def add(self, value: _T):
-        """Adds a new value to this tree.
+        """Adds a new value to the tree.
 
         :param value: value to be added"""
         node_parent = self._find_node(
@@ -61,7 +61,7 @@ class AVLTree(collections.abc.MutableSet):
                 self._count += 1
 
     def remove(self, value: _T):
-        """Removes specified element from this tree.
+        """Removes specified element from the tree.
 
         :param value: element to be removed
         :raises KeyError: if the element is not present"""
@@ -73,7 +73,7 @@ class AVLTree(collections.abc.MutableSet):
         self._delete_node(the_node)
 
     def discard(self, value: _T):
-        """Removes specified element from this tree if present.
+        """Removes specified element from the tree if present.
 
         :param value: element to be removed"""
         try:
@@ -82,7 +82,7 @@ class AVLTree(collections.abc.MutableSet):
             pass
 
     def pop(self):
-        """Removes and returns an arbitrary element from this tree.
+        """Removes and returns an arbitrary element from the tree.
 
         :raises KeyError: if the tree is empty"""
         if self._tree is None:
@@ -94,7 +94,7 @@ class AVLTree(collections.abc.MutableSet):
         return removed.element
 
     def clear(self):
-        """Removes all elements from this tree."""
+        """Removes all elements from the tree."""
         self._set_root(None)
         self._count = 0
 

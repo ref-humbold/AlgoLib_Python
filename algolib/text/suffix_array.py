@@ -39,7 +39,7 @@ class SuffixArray:
 
     def index_of(self, suf: int) -> int:
         """:param suf: an index in text denoting suffix
-        :return: index of suffix in this array"""
+        :return: index of suffix in the array"""
         if suf < 0 or suf >= self._length:
             raise IndexError("Text index out of range")
 
