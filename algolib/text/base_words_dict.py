@@ -17,6 +17,10 @@ class BaseWordsDict:
         return f"BaseWordsDict({self._text}, {self._factors})"
 
     def __getitem__(self, slice_: slice) -> Tuple[int, int]:
+        """Retrieves code of a substring denoted by slice.
+
+        :param slice_: slice indices
+        :return: the code of the substring"""
         if slice_.step is not None:
             raise IndexError("Slice step must be None")
 

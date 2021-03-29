@@ -44,7 +44,7 @@ class AVLTree(collections.abc.MutableSet):
 
         if node_parent is None:
             new_node = self._AVLNode(value)
-            self._set_root(new_node)
+            self._root = new_node
             self._count += 1
         else:
             the_node = self._search(node_parent, value)
@@ -95,10 +95,15 @@ class AVLTree(collections.abc.MutableSet):
 
     def clear(self):
         """Removes all elements from the tree."""
-        self._set_root(None)
+        self._root = None
         self._count = 0
 
-    def _set_root(self, node):
+    @property
+    def _root(self):
+        return self._tree
+
+    @_root.setter
+    def _root(self, node):
         self._tree = node
 
         if node is not None:
@@ -144,7 +149,7 @@ class AVLTree(collections.abc.MutableSet):
                 self._replace_node(node, child)
                 self._balance(node_parent)
             else:
-                self._set_root(child)
+                self._root = child
 
             self._count -= 1
 
@@ -155,7 +160,7 @@ class AVLTree(collections.abc.MutableSet):
         elif self._is_right_child(node1):
             node1.parent.right = node2
         else:
-            self._set_root(node2)
+            self._root = node2
 
         node1.parent = None
 
