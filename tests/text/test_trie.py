@@ -120,7 +120,7 @@ class TestTrie(TestCase):
         self.assertFalse(text in self.test_object)
         self.assertEqual(len(self.texts), len(self.test_object))
 
-    def test__clear__when_not_empty__then_length_zero(self):
+    def test__clear__when_not_empty__then_empty(self):
         # when
         self.test_object.clear()
         # then
