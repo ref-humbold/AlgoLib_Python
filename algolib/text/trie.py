@@ -16,7 +16,7 @@ class Trie:
         return self._size
 
     def __contains__(self, text: str):
-        """:param text: text to be found
+        """:param text: text to be checked
         :return: ``True`` if text is present in the trie, otherwise ``False``"""
         node = self._tree
 

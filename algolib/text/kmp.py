@@ -6,8 +6,8 @@ from typing import Iterable
 def kmp(text: str, pattern: str) -> Iterable[int]:
     """Searches for pattern occurrences in specified text using Knuth-Morris-Pratt algorithm.
 
-    :param text: a text
-    :param pattern: a pattern to search for
+    :param text: text to be searched in
+    :param pattern: pattern to be searched for
     :return: generator of pattern occurrence positions"""
     if pattern == "":
         return
@@ -32,11 +32,11 @@ def _prefix(pattern):
     pi_values = [0]
     pos = 0
 
-    for c in pattern[1:]:
-        while pos > 0 and pattern[pos] != c:
+    for char in pattern[1:]:
+        while pos > 0 and pattern[pos] != char:
             pos = pi_values[pos - 1]
 
-        if pattern[pos] == c:
+        if pattern[pos] == char:
             pos += 1
 
         pi_values.append(pos)
