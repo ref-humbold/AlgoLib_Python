@@ -16,6 +16,8 @@ class Trie:
         return self._size
 
     def __contains__(self, text: str):
+        """:param text: text to be found
+        :return: ``True`` if text is present in the trie, otherwise ``False``"""
         node = self._tree
 
         for character in text:
@@ -27,6 +29,9 @@ class Trie:
         return node.terminus
 
     def add(self, text: str):
+        """Adds a new text to the trie.
+
+        :param text: text to be added"""
         node = self._tree
 
         for character in text:
@@ -38,15 +43,28 @@ class Trie:
             node.terminus = True
 
     def remove(self, text: str):
+        """Removes specified text from the trie.
+
+        :param text: text to be removed
+        :raises KeyError: if the text is not present"""
         self._remove_node(text, self._tree, 0)
 
     def discard(self, text: str):
+        """Removes specified text from the trie if present.
+
+        :param text: text to be removed"""
         try:
             self.remove(text)
         except KeyError:
             pass
 
+    def clear(self):
+        """Removes all texts from the trie."""
+        self._tree = self._TrieNode()
+        self._size = 0
+
     def _remove_node(self, text: str, node: "Trie._TrieNode", i: int) -> bool:
+        # Removes node for a character in text at specified index.
         if i == len(text):
             if not node.terminus:
                 raise KeyError

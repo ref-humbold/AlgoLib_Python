@@ -20,7 +20,7 @@ class TestTrie(TestCase):
         # then
         self.assertEqual(0, result)
 
-    def test__size__when_not_empty__then_number_of_texts(self):
+    def test__len__when_not_empty__then_number_of_texts(self):
         # when
         result = len(self.test_object)
         # then
@@ -119,3 +119,9 @@ class TestTrie(TestCase):
         self.assertTrue("xyz" in self.test_object)
         self.assertFalse(text in self.test_object)
         self.assertEqual(len(self.texts), len(self.test_object))
+
+    def test__clear__when_not_empty__then_length_zero(self):
+        # when
+        self.test_object.clear()
+        # then
+        self.assertEqual(0, len(self.test_object))
