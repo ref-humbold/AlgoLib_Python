@@ -31,7 +31,7 @@ class EquationSystem:
 
     def __getitem__(self, i: int) -> Equation:
         """:param i: index of equation
-        :return: i-th equation of this system"""
+        :return: i-th equation of the system"""
         return self._equations[i]
 
     def __iter__(self):
@@ -41,7 +41,7 @@ class EquationSystem:
         return reversed(self._equations)
 
     def solve(self) -> List[float]:
-        """Computes the solution of this equation system.
+        """Computes the solution of the equation system.
 
         :return: solution vector
         :raises InfiniteSolutionsError: if there are infinitely many solutions
@@ -64,7 +64,7 @@ class EquationSystem:
         return solution
 
     def gaussian_reduce(self) -> None:
-        """Runs the Gauss elimination algorithm on this equation system."""
+        """Runs the Gauss elimination algorithm on the equation system."""
         for i in range(self.__len__() - 1):
             index_min = i
 
@@ -85,14 +85,14 @@ class EquationSystem:
                         self[j].combine(self[i], -param)
 
     def swap(self, i: int, j: int) -> None:
-        """Swaps two equations in this system.
+        """Swaps two equations in the system.
 
         :param i: index of first equation
         :param j: index of second equation"""
         self._equations[i], self._equations[j] = self._equations[j], self._equations[i]
 
     def is_solution(self, solution: Sequence[float]) -> bool:
-        """Checks whether given values solve this equation system.
+        """Checks whether given values solve the equation system.
 
         :param solution: values to check
         :return: ``true`` if solution is correct, otherwise ``false``"""

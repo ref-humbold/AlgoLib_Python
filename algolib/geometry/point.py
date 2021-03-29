@@ -14,7 +14,7 @@ class Point:
 
     @property
     def radius(self) -> float:
-        """:return: distance between this point from zero point"""
+        """:return: distance between the point from zero point"""
         return sqrt(sum(c * c for c in self._coordinates))
 
     def __getitem__(self, i: int) -> float:
@@ -73,7 +73,7 @@ class Point2D:
 
     @property
     def radius(self) -> float:
-        """:return: distance between this point from zero point"""
+        """:return: distance between the point from zero point"""
         return sqrt(self._x * self._x + self._y * self._y)
 
     def __hash__(self):
@@ -119,7 +119,7 @@ class Point3D:
 
     @property
     def radius(self) -> float:
-        """:return: distance between this point from zero point"""
+        """:return: distance between the point from zero point"""
         return sqrt(self._x * self._x + self._y * self._y + self._z * self._z)
 
     def __hash__(self):

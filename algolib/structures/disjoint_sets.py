@@ -16,7 +16,7 @@ class DisjointSets(collections.abc.Sized, collections.abc.Container):
         return self._sets
 
     def __contains__(self, element: _T):
-        """:param element: element to be found
+        """:param element: element to be checked
         :return: ``true`` if the element is included in one of sets, otherwise ``false``"""
         return element in self._represents
 
@@ -25,7 +25,7 @@ class DisjointSets(collections.abc.Sized, collections.abc.Container):
 
         :param element: an element
         :return: represent of the element
-        :raises KeyError: if element is not in this structure"""
+        :raises KeyError: if element is not in the structure"""
         if self._represents[element] != element:
             self._represents[element] = self.__getitem__(self._represents[element])
 
@@ -36,7 +36,7 @@ class DisjointSets(collections.abc.Sized, collections.abc.Container):
 
         :param elements: an iterable of elements
         :return: ``self``
-        :raises ValueError: if any of the elements is already in this structure"""
+        :raises ValueError: if any of the elements is already in the structure"""
         elements = tuple(elements)
 
         for elem in elements:
@@ -53,7 +53,7 @@ class DisjointSets(collections.abc.Sized, collections.abc.Container):
         """Adds elements as singleton sets.
 
         :param elements: elements to be added
-        :raises ValueError: if any of the elements is already in this structure
+        :raises ValueError: if any of the elements is already in the structure
         :return: ``self`` for method chaining"""
         self.__iadd__(elements)
         return self
@@ -75,7 +75,7 @@ class DisjointSets(collections.abc.Sized, collections.abc.Container):
         :param element1: element from the first set
         :param element2: element from the second set
         :return: ``self`` for method chaining
-        :raises KeyError: if either element is not in this structure"""
+        :raises KeyError: if either element is not in the structure"""
         if not self.is_same_set(element1, element2):
             self._represents[self.__getitem__(element2)] = self.__getitem__(element1)
             self._sets -= 1
@@ -88,5 +88,5 @@ class DisjointSets(collections.abc.Sized, collections.abc.Container):
         :param element1: a first element
         :param element2: a second element
         :return: ``true`` if both elements are in the same set, otherwise ``false``
-        :raises KeyError: if either element is not in this structure"""
+        :raises KeyError: if either element is not in the structure"""
         return self.__getitem__(element1) == self.__getitem__(element2)
