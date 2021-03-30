@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """Structure of double heap"""
-import collections.abc
+from collections.abc import Sized
 from typing import Iterable, Optional, TypeVar
 
 _T = TypeVar("_T")
 
 
-class DoubleHeap(collections.abc.Sized):
+class DoubleHeap(Sized):
     _INDEX_FRONT = 0
     _INDEX_BACK = 1
 
@@ -19,6 +19,7 @@ class DoubleHeap(collections.abc.Sized):
                 self.push(e)
 
     def __len__(self):
+        """:return: number of elements in the heap"""
         return len(self._heap)
 
     @property

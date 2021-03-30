@@ -6,13 +6,11 @@ from .equation import Equation
 
 
 class InfiniteSolutionsError(ValueError):
-    def __init__(self, *args):
-        super().__init__(*args)
+    pass
 
 
 class NoSolutionError(ValueError):
-    def __init__(self, *args):
-        super().__init__(*args)
+    pass
 
 
 class EquationSystem:
@@ -23,14 +21,14 @@ class EquationSystem:
         self._equations = list(equations)
 
     def __str__(self):
-        """:return: string representation"""
         return f"{{ {' ; '.join(map(str, self._equations))} }}"
 
     def __len__(self):
+        """:return: number of equations in the system"""
         return len(self._equations)
 
     def __getitem__(self, i: int) -> Equation:
-        """:param i: index of equation
+        """:param i: index of an equation
         :return: i-th equation of the system"""
         return self._equations[i]
 

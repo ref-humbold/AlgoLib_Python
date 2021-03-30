@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """Structure of AVL tree"""
-import collections.abc
+from collections.abc import MutableSet
 from typing import Iterable, TypeVar
 
 _T = TypeVar("_T")
 
 
-class AVLTree(collections.abc.MutableSet):
+class AVLTree(MutableSet):
     def __init__(self, elements: Iterable[_T] = ()):
         self._tree = None
         self._count = 0
@@ -15,7 +15,6 @@ class AVLTree(collections.abc.MutableSet):
             self.add(i)
 
     def __str__(self):
-        """:return: string representation of the tree"""
         return f"{{|{', '.join(str(x) for x in self)}|}}"
 
     def __len__(self):

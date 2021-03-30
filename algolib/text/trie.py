@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """Structure of trie tree"""
+from collections.abc import Container, Sized
 from typing import Iterable, Optional
 
 
-class Trie:
+class Trie(Sized, Container):
     def __init__(self, texts: Optional[Iterable[str]] = None):
         self._tree = self._TrieNode()
         self._size = 0
@@ -13,11 +14,15 @@ class Trie:
                 self.add(text)
 
     def __len__(self):
+        """:return: number of texts in the trie"""
         return self._size
 
-    def __contains__(self, text: str):
+    def __contains__(self, text: object):
         """:param text: text to be checked
         :return: ``True`` if text is present in the trie, otherwise ``False``"""
+        if not isinstance(text, str):
+            raise TypeError(f"Type should be 'str', not '{type(text)}'")
+
         node = self._tree
 
         for character in text:

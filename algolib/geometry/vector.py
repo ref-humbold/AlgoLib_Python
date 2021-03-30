@@ -8,17 +8,21 @@ from .point import Point, Point2D, Point3D
 
 class Vector:
     def __init__(self, *coordinates: float):
-        self._coordinates = list(map(float, coordinates))
+        self._coordinates = [float(c) for c in coordinates]
 
     @property
     def dims(self) -> int:
+        """:return: number of coordinates"""
         return len(self._coordinates)
 
     @property
     def length(self) -> float:
+        """:return: length of the vector"""
         return sqrt(sum(c * c for c in self._coordinates))
 
     def __getitem__(self, i: int) -> float:
+        """:param i: index of a coordinate (starting from 1)
+        :return: i-th coordinate of the point"""
         if i <= 0 or i > self.dims:
             raise IndexError(f"Coordinate index has to be between 1 and {self.dims}")
 
@@ -93,6 +97,10 @@ class Vector:
         return self
 
     def project(self, dimensions: int) -> "Vector":
+        """Performs projection of the vector to a space with specified dimensions count
+
+        :param dimensions: number of target dimensions
+        :return: point in target space"""
         if dimensions <= 0:
             raise ValueError("Dimensions count has to be positive")
 
@@ -121,10 +129,10 @@ class Vector:
     @staticmethod
     def dot(vec1: "Vector", vec2: "Vector") -> float:
         new_dims = max(vec1.dims, vec2.dims)
-        coordinates1 = vec1._project_coordinates(new_dims)
-        coordinates2 = vec2._project_coordinates(new_dims)
+        new_vec1 = vec1.project(new_dims)
+        new_vec2 = vec2.project(new_dims)
 
-        return sum(c1 * c2 for c1, c2 in zip(coordinates1, coordinates2))
+        return sum(new_vec1[i] * new_vec2[i] for i in range(1, new_dims + 1))
 
 
 class Vector2D:

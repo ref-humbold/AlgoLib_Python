@@ -9,12 +9,11 @@ class Equation:
         self.free = free
 
     def __str__(self):
-        """:return: string representation of the equation"""
         terms = [f'{c} x_{i}' for i, c in enumerate(self.coefficients) if c != 0]
         return f"{' + '.join(terms)} = {self.free}"
 
     def __len__(self):
-        """:returns: number of variables"""
+        """:returns: number of variables in the equation"""
         return len(self.coefficients)
 
     def __getitem__(self, i: int) -> float:

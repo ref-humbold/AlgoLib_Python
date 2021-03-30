@@ -6,18 +6,21 @@ from typing import TypeVar
 
 class Point:
     def __init__(self, *coordinates: float):
-        self._coordinates = list(map(float, coordinates))
+        self._coordinates = [float(c) for c in coordinates]
 
     @property
     def dims(self) -> int:
+        """:return: number of coordinates"""
         return len(self._coordinates)
 
     @property
     def radius(self) -> float:
-        """:return: distance between the point from zero point"""
+        """:return: distance of the point from zero point"""
         return sqrt(sum(c * c for c in self._coordinates))
 
     def __getitem__(self, i: int) -> float:
+        """:param i: index of a coordinate (starting from 1)
+        :return: i-th coordinate of the point"""
         if i <= 0 or i > self.dims:
             raise IndexError(f"Coordinate index has to be between 1 and {self.dims}")
 
@@ -36,6 +39,10 @@ class Point:
         return not self == pt
 
     def project(self, dimensions: int) -> "Point":
+        """Performs projection of the point to a space with specified dimensions count
+
+        :param dimensions: number of target dimensions
+        :return: point in target space"""
         if dimensions <= 0:
             raise IndexError("Dimensions count has to be positive")
 
@@ -73,7 +80,7 @@ class Point2D:
 
     @property
     def radius(self) -> float:
-        """:return: distance between the point from zero point"""
+        """:return: distance of the point from zero point"""
         return sqrt(self._x * self._x + self._y * self._y)
 
     def __hash__(self):
@@ -119,7 +126,7 @@ class Point3D:
 
     @property
     def radius(self) -> float:
-        """:return: distance between the point from zero point"""
+        """:return: distance of the point from zero point"""
         return sqrt(self._x * self._x + self._y * self._y + self._z * self._z)
 
     def __hash__(self):

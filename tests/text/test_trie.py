@@ -26,23 +26,29 @@ class TestTrie(TestCase):
         # then
         self.assertEqual(len(self.texts), result)
 
-    def test__find__when_present__then_true(self):
+    def test__contains__when_present__then_true(self):
         # when
         result = "abcd" in self.test_object
         # then
         self.assertTrue(result)
 
-    def test__find__when_absent__then_false(self):
+    def test__contains__when_absent__then_false(self):
         # when
         result = "abxx" in self.test_object
         # then
         self.assertFalse(result)
 
-    def test__find__when_absent_prefix__then_false(self):
+    def test__contains__when_absent_prefix__then_false(self):
         # when
         result = "xy" in self.test_object
         # then
         self.assertFalse(result)
+
+    def test__contains__when_wrong_type__then_type_error(self):
+        # then
+        with self.assertRaises(TypeError):
+            # when
+            _ = 123 in self.test_object
 
     def test__add__when_present__then_nothing(self):
         # given

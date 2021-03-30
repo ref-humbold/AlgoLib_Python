@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """Structure of disjoint sets (union-find)"""
-import collections.abc
+from collections.abc import Container, Sized
 from typing import Iterable, Optional, TypeVar
 
 _T = TypeVar("_T")
 
 
-class DisjointSets(collections.abc.Sized, collections.abc.Container):
+class DisjointSets(Sized, Container):
     def __init__(self, universe: Iterable[_T] = ()):
         self._represents = {e: e for e in universe}  # Dict of represents
         self._sets = len(self._represents)  # Number of sets
@@ -21,7 +21,7 @@ class DisjointSets(collections.abc.Sized, collections.abc.Container):
         return element in self._represents
 
     def __getitem__(self, element: _T) -> _T:
-        """Finds a represent of an element.
+        """Finds a represent of an element from the sets.
 
         :param element: an element
         :return: represent of the element
