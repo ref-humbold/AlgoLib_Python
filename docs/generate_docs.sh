@@ -1,10 +1,6 @@
 #! /bin/bash
 
-pushd $(dirname "$0")
+DOCS=$(dirname "$0")
 
-mkdir -p build
-sphinx-build -b html source build
-sphinx-apidoc -f -d 1 -M -o source/ ../algolib/
-make html
-
-popd
+sphinx-apidoc -f -d 1 -o $DOCS/source $DOCS/../algolib
+sphinx-build -b html $DOCS/source $DOCS/build
