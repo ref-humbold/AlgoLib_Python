@@ -107,8 +107,8 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
         try:
             return [edge for edge in self._representation.get_adjacent_edges(source)
                     if edge.get_neighbour(source) == destination][0]
-        except IndexError:
-            raise KeyError(f"No edge between the vertices {source} and {destination}")
+        except IndexError as ex:
+            raise KeyError(f"No edge between the vertices {source} and {destination}") from ex
 
     def add_vertex(self, vertex, vertex_property=None):
         """Adds a new vertex with given property to the graph.
@@ -139,4 +139,3 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
         :param edge: a new edge
         :param edge_property: edge property
         :return: the new edge if added, or the existing edge"""
-        pass

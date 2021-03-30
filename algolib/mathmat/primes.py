@@ -10,8 +10,7 @@ from algolib.mathmat.maths import gcd, power_mod
 def find_primes(*numbers: int) -> Iterable[int]:
     """Finds prime numbers inside a range of integers.
 
-    :param numbers: range borders; beginning inclusive, ending exclusive; beginning can be omitted,
-    then defaults to 0
+    :param numbers: range borders; beginning inclusive (defaults to 0), ending exclusive
     :return: generator of prime numbers"""
     if len(numbers) == 1:
         return _find_primes_range(0, numbers[0])
