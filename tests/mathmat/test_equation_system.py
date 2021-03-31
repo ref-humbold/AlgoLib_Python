@@ -6,46 +6,43 @@ from algolib.mathmat import Equation, EquationSystem, InfiniteSolutionsError, No
 
 
 class EquationSystemTest(unittest.TestCase):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.test_object = None
-
-    def setUp(self):
-        self.test_object = EquationSystem(
+    def test__solve__when_single_solution__then_solution(self):
+        # given
+        test_object = EquationSystem(
             [Equation([2, 3, -2], 15),
              Equation([7, -1, 0], 4),
              Equation([-1, 6, 4], 9)])
-
-    def tearDown(self):
-        self.test_object = None
-
-    def test__solve__when_single_solution__then_solution(self):
-        result = self.test_object.solve()
-
+        # when
+        result = test_object.solve()
+        # then
         self.assertListEqual([1, 3, -2], result)
-        self.assertTrue(self.test_object.is_solution(result))
-        self.assertFalse(self.test_object.is_solution([-2, -18, -36.5]))
+        self.assertTrue(test_object.is_solution(result))
+        self.assertFalse(test_object.is_solution([-2, -18, -36.5]))
 
     def test__solve__when_no_solution__then_raise_no_solution_error(self):
-        self.test_object = EquationSystem(
+        # given
+        test_object = EquationSystem(
             [Equation([2, 3, -2], 15),
              Equation([7, -1, 0], 4),
              Equation([-1, -1.5, 1], -1)])
-
+        # then
         with self.assertRaises(NoSolutionError):
-            self.test_object.solve()
-
-        self.assertFalse(self.test_object.is_solution([1, 3, -2]))
-        self.assertFalse(self.test_object.is_solution([-2, -18, -36.5]))
+            # when
+            test_object.solve()
+        # then
+        self.assertFalse(test_object.is_solution([1, 3, -2]))
+        self.assertFalse(test_object.is_solution([-2, -18, -36.5]))
 
     def test__solve__when_infinite_solutions__then_raise_infinite_solutions_error(self):
-        self.test_object = EquationSystem(
+        # given
+        test_object = EquationSystem(
             [Equation([2, 3, -2], 15),
              Equation([7, -1, 0], 4),
              Equation([4, 6, -4], 30)])
-
+        # then
         with self.assertRaises(InfiniteSolutionsError):
-            self.test_object.solve()
-
-        self.assertTrue(self.test_object.is_solution([1, 3, -2]))
-        self.assertTrue(self.test_object.is_solution([-2, -18, -36.5]))
+            # when
+            test_object.solve()
+        # then
+        self.assertTrue(test_object.is_solution([1, 3, -2]))
+        self.assertTrue(test_object.is_solution([-2, -18, -36.5]))

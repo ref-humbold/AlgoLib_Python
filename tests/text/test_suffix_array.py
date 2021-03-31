@@ -13,9 +13,6 @@ class SuffixArrayTest(unittest.TestCase):
     def setUp(self):
         self.test_object = SuffixArray("mississippi")
 
-    def tearDown(self):
-        self.test_object = None
-
     def test__len(self):
         result = len(self.test_object)
 

@@ -25,9 +25,6 @@ class LCATest(unittest.TestCase):
 
         self.test_object = LowestCommonAncestor(tree, 0)
 
-    def tearDown(self):
-        self.test_object = None
-
     def test__find__when_same_vertex__then_vertex_is_lca(self):
         # given
         vertex = 6

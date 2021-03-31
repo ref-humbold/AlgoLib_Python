@@ -13,9 +13,6 @@ class DisjointSetsTest(unittest.TestCase):
     def setUp(self):
         self.test_object = DisjointSets(range(10))
 
-    def tearDown(self):
-        self.test_object = None
-
     def test__len__then_sets_count(self):
         # when
         result = len(self.test_object)

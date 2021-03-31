@@ -21,9 +21,6 @@ class MinimalSpanningTreeTest(unittest.TestCase):
         self._graph.add_edge_between(2, 4, self._Weight(6))
         self._graph.add_edge_between(3, 4, self._Weight(3))
 
-    def tearDown(self):
-        del self._graph
-
     def test__kruskal__then_mst(self):
         # when
         result = kruskal(self._graph)

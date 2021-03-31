@@ -14,9 +14,6 @@ class AVLTreeTest(unittest.TestCase):
     def setUp(self):
         self.test_object = AVLTree(self._numbers)
 
-    def tearDown(self):
-        self.test_object = None
-
     def test__str__then_text_representation(self):
         result = str(self.test_object)
 

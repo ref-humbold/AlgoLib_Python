@@ -18,9 +18,6 @@ class MultipartiteGraphTest(unittest.TestCase):
         self.test_object.add_edge_between(4, 6)
         self.test_object.add_edge_between(7, 9)
 
-    def tearDown(self):
-        self.test_object = None
-
     def test__setitem_getitem__when_setting_property__then_property(self):
         # given
         vertex_property = "x"
@@ -103,8 +100,8 @@ class MultipartiteGraphTest(unittest.TestCase):
         result = self.test_object.edges
         # then
         self.assertListEqual([
-                Edge(0, 3), Edge(1, 5), Edge(2, 9),
-                Edge(4, 6), Edge(7, 9)], sorted(result))
+            Edge(0, 3), Edge(1, 5), Edge(2, 9),
+            Edge(4, 6), Edge(7, 9)], sorted(result))
 
     def test__get_edge__when_exists__then_edge(self):
         # given

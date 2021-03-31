@@ -14,9 +14,6 @@ class DoubleHeapTest(unittest.TestCase):
     def setUp(self):
         self.test_object = DoubleHeap(self._numbers)
 
-    def tearDown(self):
-        self.test_object = None
-
     def test__len__when_empty__then_zero(self):
         self.test_object = DoubleHeap()
         # when

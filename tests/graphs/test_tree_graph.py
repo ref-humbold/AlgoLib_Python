@@ -22,9 +22,6 @@ class TreeGraphTest(unittest.TestCase):
         self.test_object.add_vertex(6, 2)
         self.test_object.add_vertex(7, 2)
 
-    def tearDown(self):
-        self.test_object = None
-
     def test__setitem_getitem__when_setting_property__then_property(self):
         # given
         vertex_property = "x"
@@ -92,13 +89,13 @@ class TreeGraphTest(unittest.TestCase):
         result = self.test_object.edges
         # then
         self.assertListEqual([
-                Edge(1, 0),
-                Edge(2, 0),
-                Edge(3, 0),
-                Edge(4, 1),
-                Edge(5, 1),
-                Edge(6, 2),
-                Edge(7, 2)], sorted(result))
+            Edge(1, 0),
+            Edge(2, 0),
+            Edge(3, 0),
+            Edge(4, 1),
+            Edge(5, 1),
+            Edge(6, 2),
+            Edge(7, 2)], sorted(result))
 
     def test__get_edge__when_in_direction__then_edge(self):
         # given

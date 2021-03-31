@@ -14,9 +14,6 @@ class UndirectedSimpleGraphTest(unittest.TestCase):
     def setUp(self):
         self.test_object = UndirectedSimpleGraph(range(10))
 
-    def tearDown(self):
-        self.test_object = None
-
     def test__setitem_getitem__when_setting_property__then_property(self):
         # given
         vertex_property = "x"
@@ -116,9 +113,9 @@ class UndirectedSimpleGraphTest(unittest.TestCase):
         result = self.test_object.edges
         # then
         self.assertListEqual([
-                Edge(1, 5), Edge(2, 4),
-                Edge(6, 3), Edge(7, 7),
-                Edge(8, 0), Edge(9, 3)], sorted(result))
+            Edge(1, 5), Edge(2, 4),
+            Edge(6, 3), Edge(7, 7),
+            Edge(8, 0), Edge(9, 3)], sorted(result))
 
     def test__get_edge__when_in_direction__then_edge(self):
         # given
@@ -184,13 +181,13 @@ class UndirectedSimpleGraphTest(unittest.TestCase):
         result = self.test_object.adjacent_edges(1)
         # then
         self.assertListEqual([
-                Edge(1, 1),
-                Edge(1, 3),
-                Edge(1, 4),
-                Edge(1, 7),
-                Edge(1, 9),
-                Edge(2, 1),
-                Edge(6, 1)], sorted(result))
+            Edge(1, 1),
+            Edge(1, 3),
+            Edge(1, 4),
+            Edge(1, 7),
+            Edge(1, 9),
+            Edge(2, 1),
+            Edge(6, 1)], sorted(result))
 
     def test__neighbours__then_destination_vertices_of_outgoing_edges(self):
         # given
@@ -255,17 +252,17 @@ class UndirectedSimpleGraphTest(unittest.TestCase):
         self.assertIsInstance(result, DirectedGraph)
         self.assertListEqual(sorted(self.test_object.vertices), sorted(result.vertices))
         self.assertListEqual([
-                Edge(0, 8),
-                Edge(1, 5),
-                Edge(2, 4),
-                Edge(3, 6),
-                Edge(3, 9),
-                Edge(4, 2),
-                Edge(5, 1),
-                Edge(6, 3),
-                Edge(7, 7),
-                Edge(8, 0),
-                Edge(9, 3)], sorted(result.edges))
+            Edge(0, 8),
+            Edge(1, 5),
+            Edge(2, 4),
+            Edge(3, 6),
+            Edge(3, 9),
+            Edge(4, 2),
+            Edge(5, 1),
+            Edge(6, 3),
+            Edge(7, 7),
+            Edge(8, 0),
+            Edge(9, 3)], sorted(result.edges))
         self.assertEqual(vertex_property, result[vertex])
         self.assertIsNone(result[9])
         self.assertEqual(edge_property, result[result.get_edge(1, 5)])

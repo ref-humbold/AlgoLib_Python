@@ -13,9 +13,6 @@ class EquationTest(unittest.TestCase):
     def setUp(self):
         self.test_object = Equation([2, 3, 0, -2], 15)
 
-    def tearDown(self):
-        self.test_object = None
-
     def test__str(self):
         # when
         result = str(self.test_object)
@@ -30,8 +27,9 @@ class EquationTest(unittest.TestCase):
         self.assertEqual(30, self.test_object.free)
 
     def test__imul__when_constant_is_zero__then_value_error(self):
-        # when - then
+        # then
         with self.assertRaises(ValueError):
+            # when
             self.test_object *= 0
 
     def test__combine__when_constant_is_non_zero__then_combined(self):
@@ -42,6 +40,7 @@ class EquationTest(unittest.TestCase):
         self.assertEqual(5, self.test_object.free)
 
     def test__combine__when_constant_is_zero__then_value_error(self):
-        # when - then
+        # then
         with self.assertRaises(ValueError):
+            # when
             self.test_object.combine(Equation([1, -1, 10, 7], 5), 0)

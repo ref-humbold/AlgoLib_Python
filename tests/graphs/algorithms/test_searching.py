@@ -36,10 +36,6 @@ class SearchingTest(unittest.TestCase):
         self._undirected_graph.add_edge_between(5, 8)
         self._undirected_graph.add_edge_between(6, 9)
 
-    def tearDown(self):
-        del self._directed_graph
-        del self._undirected_graph
-
     # region bfs
 
     def test__bfs__when_undirected_graph_and_single_root__then_visited_visited(self):
