@@ -61,7 +61,7 @@ class EquationSystem:
 
         return solution
 
-    def gaussian_reduce(self) -> None:
+    def gaussian_reduce(self):
         """Runs the Gauss elimination algorithm on the equation system."""
         for i in range(self.__len__() - 1):
             index_min = i
@@ -82,7 +82,7 @@ class EquationSystem:
                     if param != 0:
                         self[j].combine(self[i], -param)
 
-    def swap(self, i: int, j: int) -> None:
+    def swap(self, i: int, j: int):
         """Swaps two equations in the system.
 
         :param i: index of first equation

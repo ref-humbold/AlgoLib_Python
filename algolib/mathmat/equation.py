@@ -21,6 +21,57 @@ class Equation:
         :returns: coefficient by i-th variable"""
         return self.coefficients[i]
 
+    def __add__(self, equation: "Equation") -> "Equation":
+        if len(equation) != self.__len__():
+            raise ValueError("Equation has different number of variables")
+
+        return Equation((c1 + c2 for (c1, c2) in zip(self.coefficients, equation.coefficients)),
+                        self.free + equation.free)
+
+    def __iadd__(self, equation: "Equation"):
+        """Adds another equation to the equation.
+
+        :param equation: equation to be added
+        :raises ValueError: if equations sizes differ"""
+        if len(equation) != self.__len__():
+            raise ValueError("Equation has different number of variables")
+
+        for i in range(len(self)):
+            self.coefficients[i] += equation[i]
+
+        self.free += equation.free
+        return self
+
+    def __sub__(self, equation: "Equation") -> "Equation":
+        if len(equation) != self.__len__():
+            raise ValueError("Equation has different number of variables")
+
+        return Equation((c1 - c2 for (c1, c2) in zip(self.coefficients, equation.coefficients)),
+                        self.free - equation.free)
+
+    def __isub__(self, equation: "Equation"):
+        """Subtracts another equation from the equation.
+
+        :param equation: equation to be subtracted
+        :raises ValueError: if equations sizes differ"""
+        if len(equation) != self.__len__():
+            raise ValueError("Equation has different number of variables")
+
+        for i in range(len(self)):
+            self.coefficients[i] -= equation[i]
+
+        self.free -= equation.free
+        return self
+
+    def __mul__(self, constant: float) -> "Equation":
+        if constant == 0:
+            raise ValueError("Constant cannot be equal to zero")
+
+        return Equation((c * constant for c in self.coefficients),
+                        self.free * constant)
+
+    __rmul__ = __mul__
+
     def __imul__(self, constant: float):
         """Multiplies equation by a constant.
 
@@ -35,7 +86,30 @@ class Equation:
         self.free *= constant
         return self
 
-    def combine(self, equation: "Equation", constant: float = 1) -> None:
+    def __truediv__(self, constant: float) -> "Equation":
+        if constant == 0:
+            raise ValueError("Constant cannot be equal to zero")
+
+        return Equation((c / constant for c in self.coefficients),
+                        self.free / constant)
+
+    __rtruediv__ = __truediv__
+
+    def __itruediv__(self, constant: float):
+        """Divides equation by a constant.
+
+        :param constant: constant
+        :raises ValueError: if the constant is equal to zero"""
+        if constant == 0:
+            raise ValueError("Constant cannot be equal to zero")
+
+        for i in range(len(self)):
+            self.coefficients[i] /= constant
+
+        self.free /= constant
+        return self
+
+    def combine(self, equation: "Equation", constant: float):
         """Transforms equation through a linear combination with another equation.
 
         :param equation: equation
