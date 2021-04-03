@@ -88,6 +88,9 @@ class Edge:
     def __hash__(self):
         return hash((self._source, self._destination))
 
+    def __str__(self):
+        return f"Edge{{{self._source} -> {self._destination}}}"
+
     def __eq__(self, other):
         return (self.source, self._destination) == (other.source, other.destination)
 
@@ -105,6 +108,3 @@ class Edge:
 
     def __ge__(self, other):
         return (self.source, self._destination) >= (other.source, other.destination)
-
-    def __str__(self):
-        return f"Edge{{{self._source} -> {self._destination}}}"
