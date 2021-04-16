@@ -6,7 +6,7 @@ from typing import TypeVar
 
 class Point:
     def __init__(self, *coordinates: float):
-        self._coordinates = [float(c) for c in coordinates]
+        self._coordinates = list(coordinates)
 
     @property
     def dims(self) -> int:
@@ -21,8 +21,11 @@ class Point:
     def __hash__(self):
         return hash(self._coordinates)
 
+    def __repr__(self):
+        return f"Point({', '.join(repr(c) for c in self._coordinates)})"
+
     def __str__(self):
-        return f"({', '.join(map(str, self._coordinates))})"
+        return f"({', '.join(repr(c) for c in self._coordinates)})"
 
     def __eq__(self, pt: "Point"):
         return self._coordinates == pt._coordinates
@@ -86,6 +89,9 @@ class Point2D:
     def __hash__(self):
         return hash((self._x, self._y))
 
+    def __repr__(self):
+        return f"Point2D({self._x}, {self._y})"
+
     def __str__(self):
         return f"({self._x}, {self._y})"
 
@@ -131,6 +137,9 @@ class Point3D:
 
     def __hash__(self):
         return hash((self._x, self._y, self._z))
+
+    def __repr__(self):
+        return f"Point3D({self._x}, {self._y}, {self._z})"
 
     def __str__(self):
         return f"({self._x}, {self._y}, {self._z})"

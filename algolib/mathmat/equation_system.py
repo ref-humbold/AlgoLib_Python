@@ -14,14 +14,17 @@ class NoSolutionError(ValueError):
 
 
 class EquationSystem:
-    def __init__(self, equations: Sequence[Equation]):
+    def __init__(self, *equations: Equation):
         if any(len(eq) != len(equations) for eq in equations):
             raise ValueError("Incorrect number of variables in one of equations")
 
         self._equations = list(equations)
 
+    def __repr__(self):
+        return f"EquationSystem({', '.join(repr(eq) for eq in self._equations)})"
+
     def __str__(self):
-        return f"{{ {' ; '.join(map(str, self._equations))} }}"
+        return f"{{ {' ; '.join(str(eq) for eq in self._equations)} }}"
 
     def __len__(self):
         """:return: number of equations in the system"""

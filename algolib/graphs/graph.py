@@ -73,6 +73,33 @@ class Edge:
     def destination(self):
         return self._destination
 
+    def __hash__(self):
+        return hash((self._source, self._destination))
+
+    def __repr__(self):
+        return f"Edge({self._source!r}, {self._destination!r})"
+
+    def __str__(self):
+        return f"Edge{{{self._source} -> {self._destination}}}"
+
+    def __eq__(self, edge: "Edge"):
+        return (self.source, self._destination) == (edge.source, edge.destination)
+
+    def __ne__(self, edge: "Edge"):
+        return (self.source, self._destination) != (edge.source, edge.destination)
+
+    def __lt__(self, edge: "Edge"):
+        return (self.source, self._destination) < (edge.source, edge.destination)
+
+    def __le__(self, edge: "Edge"):
+        return (self.source, self._destination) <= (edge.source, edge.destination)
+
+    def __gt__(self, edge: "Edge"):
+        return (self.source, self._destination) > (edge.source, edge.destination)
+
+    def __ge__(self, edge: "Edge"):
+        return (self.source, self._destination) >= (edge.source, edge.destination)
+
     def get_neighbour(self, vertex):
         if vertex is self._source:
             return self._destination
@@ -84,27 +111,3 @@ class Edge:
 
     def reversed(self) -> "Edge":
         return Edge(self._destination, self._source)
-
-    def __hash__(self):
-        return hash((self._source, self._destination))
-
-    def __str__(self):
-        return f"Edge{{{self._source} -> {self._destination}}}"
-
-    def __eq__(self, other):
-        return (self.source, self._destination) == (other.source, other.destination)
-
-    def __ne__(self, other):
-        return (self.source, self._destination) != (other.source, other.destination)
-
-    def __lt__(self, other):
-        return (self.source, self._destination) < (other.source, other.destination)
-
-    def __le__(self, other):
-        return (self.source, self._destination) <= (other.source, other.destination)
-
-    def __gt__(self, other):
-        return (self.source, self._destination) > (other.source, other.destination)
-
-    def __ge__(self, other):
-        return (self.source, self._destination) >= (other.source, other.destination)

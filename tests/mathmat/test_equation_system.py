@@ -8,10 +8,9 @@ from algolib.mathmat import Equation, EquationSystem, InfiniteSolutionsError, No
 class EquationSystemTest(unittest.TestCase):
     def test__solve__when_single_solution__then_solution(self):
         # given
-        test_object = EquationSystem(
-            [Equation([2, 3, -2], 15),
-             Equation([7, -1, 0], 4),
-             Equation([-1, 6, 4], 9)])
+        test_object = EquationSystem(Equation([2, 3, -2], 15),
+                                     Equation([7, -1, 0], 4),
+                                     Equation([-1, 6, 4], 9))
         # when
         result = test_object.solve()
         # then
@@ -21,10 +20,9 @@ class EquationSystemTest(unittest.TestCase):
 
     def test__solve__when_no_solution__then_raise_no_solution_error(self):
         # given
-        test_object = EquationSystem(
-            [Equation([2, 3, -2], 15),
-             Equation([7, -1, 0], 4),
-             Equation([-1, -1.5, 1], -1)])
+        test_object = EquationSystem(Equation([2, 3, -2], 15),
+                                     Equation([7, -1, 0], 4),
+                                     Equation([-1, -1.5, 1], -1))
         # then
         with self.assertRaises(NoSolutionError):
             # when
@@ -35,10 +33,9 @@ class EquationSystemTest(unittest.TestCase):
 
     def test__solve__when_infinite_solutions__then_raise_infinite_solutions_error(self):
         # given
-        test_object = EquationSystem(
-            [Equation([2, 3, -2], 15),
-             Equation([7, -1, 0], 4),
-             Equation([4, 6, -4], 30)])
+        test_object = EquationSystem(Equation([2, 3, -2], 15),
+                                     Equation([7, -1, 0], 4),
+                                     Equation([4, 6, -4], 30))
         # then
         with self.assertRaises(InfiniteSolutionsError):
             # when

@@ -8,7 +8,7 @@ from .point import Point, Point2D, Point3D
 
 class Vector:
     def __init__(self, *coordinates: float):
-        self._coordinates = [float(c) for c in coordinates]
+        self._coordinates = list(coordinates)
 
     @property
     def dims(self) -> int:
@@ -23,8 +23,11 @@ class Vector:
     def __hash__(self):
         return hash(self._coordinates)
 
+    def __repr__(self):
+        return f"Vector({', '.join(repr(c) for c in self._coordinates)})"
+
     def __str__(self):
-        return f"[{', '.join(map(str, self._coordinates))}]"
+        return f"[{', '.join(repr(c) for c in self._coordinates)}]"
 
     def __eq__(self, vec: "Vector"):
         return self._coordinates == vec._coordinates
@@ -155,6 +158,9 @@ class Vector2D:
     def __hash__(self):
         return hash((self._x, self._y))
 
+    def __repr__(self):
+        return f"Vector2D({self._x}, {self._y})"
+
     def __str__(self):
         return f"[{self._x}, {self._y}]"
 
@@ -251,6 +257,9 @@ class Vector3D:
 
     def __hash__(self):
         return hash((self._x, self._y, self._z))
+
+    def __repr__(self):
+        return f"Vector3D({self._x}, {self._y}, {self._z})"
 
     def __str__(self):
         return f"[{self._x}, {self._y}, {self._z}]"

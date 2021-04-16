@@ -8,8 +8,11 @@ class Equation:
         self.coefficients = list(coefficients)
         self.free = free
 
+    def __repr__(self):
+        return f"Equation({self.coefficients!r}, {self.free!r})"
+
     def __str__(self):
-        terms = [f'{c} x_{i}' for i, c in enumerate(self.coefficients) if c != 0]
+        terms = [f"{c} x_{i}" for i, c in enumerate(self.coefficients) if c != 0]
         return f"{' + '.join(terms)} = {self.free}"
 
     def __len__(self):
@@ -67,8 +70,7 @@ class Equation:
         if constant == 0:
             raise ValueError("Constant cannot be equal to zero")
 
-        return Equation((c * constant for c in self.coefficients),
-                        self.free * constant)
+        return Equation((c * constant for c in self.coefficients), self.free * constant)
 
     __rmul__ = __mul__
 
@@ -90,8 +92,7 @@ class Equation:
         if constant == 0:
             raise ValueError("Constant cannot be equal to zero")
 
-        return Equation((c / constant for c in self.coefficients),
-                        self.free / constant)
+        return Equation((c / constant for c in self.coefficients), self.free / constant)
 
     __rtruediv__ = __truediv__
 
@@ -132,4 +133,4 @@ class Equation:
         :param solution: values to check
         :return: ``true`` if solution is correct, otherwise ``false``"""
         return len(solution) == len(self) and sum(
-            map(lambda c, s: c * s, self.coefficients, solution)) == self.free
+                map(lambda c, s: c * s, self.coefficients, solution)) == self.free
