@@ -20,14 +20,6 @@ class Vector:
         """:return: length of the vector"""
         return sqrt(sum(c * c for c in self._coordinates))
 
-    def __getitem__(self, i: int) -> float:
-        """:param i: index of a coordinate (starting from 1)
-        :return: i-th coordinate of the point"""
-        if i <= 0 or i > self.dims:
-            raise IndexError(f"Coordinate index has to be between 1 and {self.dims}")
-
-        return self._coordinates[i - 1]
-
     def __hash__(self):
         return hash(self._coordinates)
 
@@ -39,6 +31,14 @@ class Vector:
 
     def __ne__(self, vec: "Vector"):
         return not self == vec
+
+    def __getitem__(self, i: int) -> float:
+        """:param i: index of a coordinate (starting from 1)
+        :return: i-th coordinate of the point"""
+        if i <= 0 or i > self.dims:
+            raise IndexError(f"Coordinate index has to be between 1 and {self.dims}")
+
+        return self._coordinates[i - 1]
 
     def __add__(self, vec: "Vector") -> "Vector":
         new_dims = max(self.dims, vec.dims)

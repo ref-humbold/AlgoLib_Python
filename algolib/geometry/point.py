@@ -18,14 +18,6 @@ class Point:
         """:return: distance of the point from zero point"""
         return sqrt(sum(c * c for c in self._coordinates))
 
-    def __getitem__(self, i: int) -> float:
-        """:param i: index of a coordinate (starting from 1)
-        :return: i-th coordinate of the point"""
-        if i <= 0 or i > self.dims:
-            raise IndexError(f"Coordinate index has to be between 1 and {self.dims}")
-
-        return self._coordinates[i - 1]
-
     def __hash__(self):
         return hash(self._coordinates)
 
@@ -37,6 +29,14 @@ class Point:
 
     def __ne__(self, pt: "Point"):
         return not self == pt
+
+    def __getitem__(self, i: int) -> float:
+        """:param i: index of a coordinate (starting from 1)
+        :return: i-th coordinate of the point"""
+        if i <= 0 or i > self.dims:
+            raise IndexError(f"Coordinate index has to be between 1 and {self.dims}")
+
+        return self._coordinates[i - 1]
 
     def project(self, dimensions: int) -> "Point":
         """Performs projection of the point to a space with specified dimensions count
