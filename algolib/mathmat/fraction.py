@@ -15,6 +15,9 @@ class Fraction:
     def __hash__(self):
         return hash((self._numerator, self._denominator))
 
+    def __repr__(self):
+        return f"Fraction({self._numerator}, {self._denominator})"
+
     def __str__(self):
         return f"{self._numerator}/{self._denominator}"
 
@@ -34,16 +37,24 @@ class Fraction:
         return not self == frac
 
     def __add__(self, frac: "Fraction") -> "Fraction":
-        pass
+        return Fraction(self._numerator * frac._denominator + frac._numerator * self._denominator,
+                        self._denominator * frac._denominator)
 
     def __iadd__(self, frac: "Fraction"):
-        pass
+        self._numerator = self._numerator * frac._denominator + frac._numerator * self._denominator
+        self._denominator *= frac._denominator
+        self._normalize()
+        return self
 
     def __sub__(self, frac: "Fraction") -> "Fraction":
-        pass
+        return Fraction(self._numerator * frac._denominator - frac._numerator * self._denominator,
+                        self._denominator * frac._denominator)
 
     def __isub__(self, frac: "Fraction"):
-        pass
+        self._numerator = self._numerator * frac._denominator - frac._numerator * self._denominator
+        self._denominator *= frac._denominator
+        self._normalize()
+        return self
 
     def __mul__(self, frac: "Fraction") -> "Fraction":
         return Fraction(self._numerator * frac._numerator, self._denominator * frac._denominator)
@@ -83,7 +94,7 @@ class Fraction:
             self._numerator = -self._numerator
             self._denominator = -self._denominator
 
-            gcd_val = gcd(self._numerator, self._denominator)
+        gcd_val = gcd(self._numerator, self._denominator)
 
-            self._numerator /= gcd_val
-            self._denominator /= gcd_val
+        self._numerator /= gcd_val
+        self._denominator /= gcd_val
