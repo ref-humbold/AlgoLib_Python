@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """Structure of fraction"""
-from .maths import gcd
+from typing import Tuple
+
+from .maths import gcd, lcm
 
 
 class Fraction:
@@ -35,6 +37,22 @@ class Fraction:
 
     def __ne__(self, frac: "Fraction"):
         return not self == frac
+
+    def __lt__(self, frac: "Fraction"):
+        num1, num2 = self._common(frac)
+        return num1 < num2
+
+    def __le__(self, frac: "Fraction"):
+        num1, num2 = self._common(frac)
+        return num1 <= num2
+
+    def __gt__(self, frac: "Fraction"):
+        num1, num2 = self._common(frac)
+        return num1 > num2
+
+    def __ge__(self, frac: "Fraction"):
+        num1, num2 = self._common(frac)
+        return num1 >= num2
 
     def __add__(self, frac: "Fraction") -> "Fraction":
         return Fraction(self._numerator * frac._denominator + frac._numerator * self._denominator,
@@ -98,3 +116,10 @@ class Fraction:
 
         self._numerator /= gcd_val
         self._denominator /= gcd_val
+
+    def _common(self, frac: "Fraction") -> Tuple[int, int]:
+        common_denominator = lcm(self._denominator, frac._denominator)
+
+        this_numerator = common_denominator // self._denominator * self._numerator
+        other_numerator = common_denominator // frac._denominator * frac._numerator
+        return this_numerator, other_numerator
