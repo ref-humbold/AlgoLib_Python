@@ -3,12 +3,14 @@
 from math import isnan
 import unittest
 
-from algolib.mathmat import gcd, lcm, mult_mod, power_mod
+from algolib.mathmat import gcd, lcm, multiply, power
 
 
 class MathsTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+    # region gcd
 
     def test__gcd__when_numbers_are_composite(self):
         # when
@@ -28,7 +30,7 @@ class MathsTest(unittest.TestCase):
         # then
         self.assertEqual(1, result)
 
-    def test__gcd__when_one_number_is_multiple_of_another(self):
+    def test__gcd__when_one_number_is_multiplyiple_of_another(self):
         # given
         number = 34
         # when
@@ -43,6 +45,9 @@ class MathsTest(unittest.TestCase):
         result = gcd(number, 0)
         # then
         self.assertEqual(number, result)
+
+    # endregion
+    # region lcm
 
     def test__lcm__when_numbers_are_composite(self):
         # when
@@ -62,7 +67,7 @@ class MathsTest(unittest.TestCase):
         # then
         self.assertEqual(6783, result)
 
-    def test__lcm__when_one_of_numbers_is_multiple_of_another(self):
+    def test__lcm__when_one_of_numbers_is_multiplyiple_of_another(self):
         # given
         number = 272
         # when
@@ -76,128 +81,136 @@ class MathsTest(unittest.TestCase):
         # then
         self.assertEqual(0, result)
 
-    def test__power_mod__when_base_is_zero(self):
+    # endregion
+    # region multiply
+
+    def test__multiply__when_first_factor_is_zero(self):
         # when
-        result = power_mod(0, 14, 0)
+        result = multiply(0, 14)
         # then
         self.assertEqual(0, result)
 
-    def test__power_mod__when_exponent_is_zero(self):
+    def test__multiply__when_second_factor_is_zero(self):
         # when
-        result = power_mod(14, 0, 0)
-        # then
-        self.assertEqual(1, result)
-
-    def test__power_mod__when_base_and_exponent_are_zero(self):
-        # when
-        result = power_mod(0, 0, 0)
-        # then
-        self.assertTrue(isnan(result))
-
-    def test__power_mod__when_base_and_exponent_are_positive(self):
-        # when
-        result = power_mod(3, 10, 0)
-        # then
-        self.assertEqual(59049, result)
-
-    def test__power_mod__when_base_is_negative_and_exponent_is_even(self):
-        # when
-        result = power_mod(-3, 10, 0)
-        # then
-        self.assertEqual(59049, result)
-
-    def test__power_mod__when_base_is_negative_and_exponent_is_odd(self):
-        # when
-        result = power_mod(-3, 9, 0)
-        # then
-        self.assertEqual(-19683, result)
-
-    def test__power_mod__when_exponent_is_negative(self):
-        # then
-        with self.assertRaises(ArithmeticError):
-            # when
-            power_mod(3, -10, 0)
-
-    def test__power_mod__when_modulo_and_base_are_positive(self):
-        # when
-        result = power_mod(5, 11, 10000)
-        # then
-        self.assertEqual(8125, result)
-
-    def test__power_mod__when_modulo_is_positive_and_base_is_negative(self):
-        # when
-        result = power_mod(-5, 11, 10000)
-        # then
-        self.assertEqual(1875, result)
-
-    def test__power_mod__when_modulo_is_negative(self):
-        # then
-        with self.assertRaises(ArithmeticError):
-            # when
-            power_mod(5, 11, -10000)
-
-    def test__mult_mod__when_first_factor_is_zero(self):
-        # when
-        result = mult_mod(0, 14, 0)
+        result = multiply(14, 0)
         # then
         self.assertEqual(0, result)
 
-    def test__power_mod__when_second_factor_is_zero(self):
+    def test__multiply__when_factors_are_zero(self):
         # when
-        result = mult_mod(14, 0, 0)
+        result = multiply(0, 0)
         # then
         self.assertEqual(0, result)
 
-    def test__mult_mod__when_factors_are_zero(self):
+    def test__multiply__when_one_factor_is_negative_and_another_is_positive(self):
         # when
-        result = mult_mod(0, 0, 0)
-        # then
-        self.assertEqual(0, result)
-
-    def test__mult_mod__when_one_factor_is_negative_and_another_is_positive(self):
-        # when
-        result = mult_mod(-3, 10, 0)
+        result = multiply(-3, 10)
         # then
         self.assertEqual(-30, result)
 
-    def test__mult_mod__when_one_factor_is_positive_and_another_is_negative(self):
+    def test__multiply__when_one_factor_is_positive_and_another_is_negative(self):
         # when
-        result = mult_mod(3, -10, 0)
+        result = multiply(3, -10)
         # then
         self.assertEqual(-30, result)
 
-    def test__mult_mod__when_factors_are_negative(self):
+    def test__multiply__when_factors_are_negative(self):
         # when
-        result = mult_mod(-3, -10, 0)
+        result = multiply(-3, -10)
         # then
         self.assertEqual(30, result)
 
-    def test__mult_mod__when_modulo_and_factors_are_positive(self):
+    def test__multiply__when_modulo_and_factors_are_positive(self):
         # when
-        result = mult_mod(547, 312, 10000)
+        result = multiply(547, 312, 10000)
         # then
         self.assertEqual(664, result)
 
-    def test__mult_mod__when_modulo_is_positive_and_first_factor_is_negative(self):
+    def test__multiply__when_modulo_is_positive_and_first_factor_is_negative(self):
         # when
-        result = mult_mod(-547, 312, 10000)
+        result = multiply(-547, 312, 10000)
         # then
         self.assertEqual(9336, result)
 
-    def test__mult_mod__when_modulo_is_positive_and_second_factor_is_negative(self):
+    def test__multiply__when_modulo_is_positive_and_second_factor_is_negative(self):
         # when
-        result = mult_mod(547, -312, 10000)
+        result = multiply(547, -312, 10000)
         # then
         self.assertEqual(9336, result)
 
-    def test__mult_mod__when_modulo_is_positive_and_factors_are_negative(self):
+    def test__multiply__when_modulo_is_positive_and_factors_are_negative(self):
         # when
-        result = mult_mod(-547, -312, 10000)
+        result = multiply(-547, -312, 10000)
         # then
         self.assertEqual(664, result)
 
-    def test__mult_mod__when_modulo_is_negative(self):
+    def test__multiply__when_modulo_is_negative(self):
         # then
         with self.assertRaises(ArithmeticError):
             # when
-            mult_mod(547, 312, -10000)
+            multiply(547, 312, -10000)
+
+    # endregion
+    # region power
+
+    def test__power__when_base_is_zero(self):
+        # when
+        result = power(0, 14)
+        # then
+        self.assertEqual(0, result)
+
+    def test__power__when_exponent_is_zero(self):
+        # when
+        result = power(14, 0)
+        # then
+        self.assertEqual(1, result)
+
+    def test__power__when_base_and_exponent_are_zero(self):
+        # when
+        result = power(0, 0)
+        # then
+        self.assertTrue(isnan(result))
+
+    def test__power__when_base_and_exponent_are_positive(self):
+        # when
+        result = power(3, 10)
+        # then
+        self.assertEqual(59049, result)
+
+    def test__power__when_base_is_negative_and_exponent_is_even(self):
+        # when
+        result = power(-3, 10)
+        # then
+        self.assertEqual(59049, result)
+
+    def test__power__when_base_is_negative_and_exponent_is_odd(self):
+        # when
+        result = power(-3, 9)
+        # then
+        self.assertEqual(-19683, result)
+
+    def test__power__when_exponent_is_negative(self):
+        # then
+        with self.assertRaises(ArithmeticError):
+            # when
+            power(3, -10)
+
+    def test__power__when_modulo_and_base_are_positive(self):
+        # when
+        result = power(5, 11, 10000)
+        # then
+        self.assertEqual(8125, result)
+
+    def test__power__when_modulo_is_positive_and_base_is_negative(self):
+        # when
+        result = power(-5, 11, 10000)
+        # then
+        self.assertEqual(1875, result)
+
+    def test__power__when_modulo_is_negative(self):
+        # then
+        with self.assertRaises(ArithmeticError):
+            # when
+            power(5, 11, -10000)
+
+    # endregion
