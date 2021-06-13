@@ -2,9 +2,8 @@
 """Algorithm for pair of closest points on a plane"""
 from typing import Iterable, Optional, Tuple
 
-from .geometry import distance
-from .point import Point2D
-from .points_sorting import sorted_by_x, sorted_by_y
+from .geometry_2d import distance, sorted_by_x, sorted_by_y
+from .point_2d import Point2D
 
 
 def find_closest_points(points: Iterable[Point2D]) -> Tuple[Point2D, Point2D]:

@@ -2,9 +2,9 @@
 """Algorithm for convex hull on a plane (monotone chain)"""
 from typing import List, Sequence
 
-from .point import Point2D
-from .points_sorting import sorted_by_x
-from .vector import Vector2D
+from .geometry_2d import sorted_by_x
+from .point_2d import Point2D
+from .vector_2d import Vector2D
 
 
 def find_convex_hull(points: Sequence[Point2D]) -> List[Point2D]:

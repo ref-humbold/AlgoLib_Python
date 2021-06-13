@@ -2,7 +2,7 @@
 """Tests: Algorithm for pair of closest points on a plane"""
 import unittest
 
-from algolib.geometry import Point2D, find_closest_points
+from algolib.geometry.plane import Point2D, find_closest_points
 
 
 class ClosestPointsTest(unittest.TestCase):
