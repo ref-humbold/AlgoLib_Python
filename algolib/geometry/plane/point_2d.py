@@ -2,11 +2,14 @@
 """Structure of point on a plane or in a space"""
 from math import atan2, pi, sqrt
 
+from ..geometry_object import GeometryObject
 
-class Point2D:
+
+class Point2D(GeometryObject):
     def __init__(self, x: float, y: float):
-        self._x = round(x, 6)
-        self._y = round(y, 6)
+        super().__init__()
+        self._x = x
+        self._y = y
 
     @property
     def x(self) -> float:
@@ -41,7 +44,7 @@ class Point2D:
         return f"({self._x}, {self._y})"
 
     def __eq__(self, pt: "Point2D"):
-        return (self._x, self._y) == (pt.x, pt.y)
+        return self._equal(self._x, pt.x) and self._equal(self._y, pt.y)
 
     def __ne__(self, pt: "Point2D"):
         return not self == pt

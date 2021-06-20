@@ -2,12 +2,15 @@
 """Structure of point on a plane or in a space"""
 from math import sqrt
 
+from ..geometry_object import GeometryObject
 
-class Point3D:
+
+class Point3D(GeometryObject):
     def __init__(self, x: float, y: float, z: float):
-        self._x = round(x, 6)
-        self._y = round(y, 6)
-        self._z = round(z, 6)
+        super().__init__()
+        self._x = x
+        self._y = y
+        self._z = z
 
     @property
     def x(self) -> float:
@@ -36,7 +39,8 @@ class Point3D:
         return f"({self._x}, {self._y}, {self._z})"
 
     def __eq__(self, pt: "Point3D"):
-        return (self._x, self._y, self._z) == (pt.x, pt.y, pt.z)
+        return self._equal(self._x, pt.x) and self._equal(self._y, pt.y) \
+               and self._equal(self._z, pt.z)
 
     def __ne__(self, pt: "Point3D"):
         return not self == pt

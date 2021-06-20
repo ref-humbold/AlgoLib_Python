@@ -3,13 +3,15 @@
 from math import sqrt
 
 from .point_3d import Point3D
+from ..geometry_object import GeometryObject
 
 
-class Vector3D:
+class Vector3D(GeometryObject):
     def __init__(self, x: float, y: float, z: float):
-        self._x = round(x, 6)
-        self._y = round(y, 6)
-        self._z = round(z, 6)
+        super().__init__()
+        self._x = x
+        self._y = y
+        self._z = z
 
     @property
     def x(self) -> float:
@@ -37,7 +39,8 @@ class Vector3D:
         return f"[{self._x}, {self._y}, {self._z}]"
 
     def __eq__(self, vec: "Vector3D"):
-        return (self._x, self._y, self._z) == (vec.x, vec.y, vec.z)
+        return self._equal(self._x, vec.x) and self._equal(self._y, vec.y) \
+               and self._equal(self._z, vec.z)
 
     def __ne__(self, vec: "Vector3D"):
         return not self == vec
