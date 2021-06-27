@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Tests: Algorithms for points sorting"""
+"""Tests: Algorithms for basic geometrical computations in 2D"""
 import unittest
 
-from algolib.geometry.plane import Point2D, sorted_by_angle, sorted_by_x, sorted_by_y
+from algolib.geometry.dim2 import Point2D, sorted_by_angle, sorted_by_x, sorted_by_y
 
 
 class SortingTest(unittest.TestCase):

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Tests: Algorithm for convex hull on a plane (monotone chain)"""
+"""Tests: Algorithm for convex hull in 2D (monotone chain)"""
 import unittest
 
-from algolib.geometry.plane import Point2D, find_convex_hull
+from algolib.geometry.dim2 import Point2D, find_convex_hull
 
 
 class ConvexHullTest(unittest.TestCase):

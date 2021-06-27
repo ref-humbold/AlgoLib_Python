@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Tests: Algorithms for points sorting"""
+"""Tests: Algorithms for basic geometrical computations in 3D"""
 import unittest
 
-from algolib.geometry.space import Point3D, sorted_by_x, sorted_by_y, sorted_by_z
+from algolib.geometry.dim3 import Point3D, sorted_by_x, sorted_by_y, sorted_by_z
 
 
 class SortingTest(unittest.TestCase):
@@ -13,9 +13,8 @@ class SortingTest(unittest.TestCase):
             self):
         # given
         sequence = (Point3D(0.0, 0.0, 0.0), Point3D(2.0, 3.0, -5.0), Point3D(-2.0, -3.0, 5.0),
-                    Point3D(2.0, -3.0, -5.0), Point3D(-2.0, -3.0,
-                                                      -5.0), Point3D(3.0, 2.0,
-                                                                     5.0), Point3D(-3.0, 2.0, 5.0))
+                    Point3D(2.0, -3.0, -5.0), Point3D(-2.0, -3.0, -5.0), Point3D(3.0, 2.0, 5.0),
+                    Point3D(-3.0, 2.0, 5.0))
         # when
         result = sorted_by_x(sequence)
 

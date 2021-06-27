@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structure of vector on a plane or in a space"""
+"""Structure of vector in 2D"""
 from math import sqrt
 
 from .point_2d import Point2D

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Algorithm for convex hull on a plane (monotone chain)"""
+"""Algorithm for convex hull in 2D (monotone chain)"""
 from typing import List, Sequence
 
 from .geometry_2d import sorted_by_x

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structure of point on a plane or in a space"""
+"""Structure of point in 2D"""
 from math import atan2, pi, sqrt
 
 from ..geometry_object import GeometryObject

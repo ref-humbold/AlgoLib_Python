@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Algorithms for basic geometrical computations in 2D"""
 from math import sqrt
 from typing import Iterable, List
 

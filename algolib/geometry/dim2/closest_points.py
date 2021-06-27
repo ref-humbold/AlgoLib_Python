@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Algorithm for pair of closest points on a plane"""
+"""Algorithm for pair of closest points in 2D"""
 from typing import Iterable, Optional, Tuple
 
 from .geometry_2d import distance, sorted_by_x, sorted_by_y
