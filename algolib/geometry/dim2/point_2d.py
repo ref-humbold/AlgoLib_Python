@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Structure of point in 2D"""
 from math import atan2, pi, sqrt
+from typing import Tuple
 
 from ..geometry_object import GeometryObject
 
@@ -18,6 +19,10 @@ class Point2D(GeometryObject):
     @property
     def y(self) -> float:
         return self._y
+
+    @property
+    def coordinates(self) -> Tuple[float, ...]:
+        return self._x, self._y
 
     @property
     def angle_rad(self) -> float:
@@ -44,7 +49,7 @@ class Point2D(GeometryObject):
         return f"({self._x}, {self._y})"
 
     def __eq__(self, pt: "Point2D"):
-        return self._equal(self._x, pt.x) and self._equal(self._y, pt.y)
+        return self._are_equal(self._x, pt.x) and self._are_equal(self._y, pt.y)
 
     def __ne__(self, pt: "Point2D"):
         return not self == pt

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Structure of vector in 2D"""
 from math import sqrt
+from typing import Tuple
 
 from .point_2d import Point2D
 from ..geometry_object import GeometryObject
@@ -21,6 +22,10 @@ class Vector2D(GeometryObject):
         return self._y
 
     @property
+    def coordinates(self) -> Tuple[float, ...]:
+        return self._x, self._y
+
+    @property
     def length(self) -> float:
         return sqrt(self._x * self._x + self._y * self._y)
 
@@ -34,7 +39,7 @@ class Vector2D(GeometryObject):
         return f"[{self._x}, {self._y}]"
 
     def __eq__(self, vec: "Vector2D"):
-        return self._equal(self._x, vec.x) and self._equal(self._y, vec.y)
+        return self._are_equal(self._x, vec.x) and self._are_equal(self._y, vec.y)
 
     def __ne__(self, vec: "Vector2D"):
         return not self == vec
