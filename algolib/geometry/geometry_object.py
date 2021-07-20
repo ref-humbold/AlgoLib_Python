@@ -4,7 +4,7 @@ from typing import Tuple
 
 
 class GeometryObject(metaclass=ABCMeta):
-    _EPSILON = 1e-15
+    EPSILON = 1e-12
 
     @property
     @abstractmethod
@@ -13,4 +13,4 @@ class GeometryObject(metaclass=ABCMeta):
 
     @staticmethod
     def _are_equal(ft1: float, ft2: float) -> bool:
-        return abs(ft1 - ft2) < GeometryObject._EPSILON
+        return abs(ft1 - ft2) < GeometryObject.EPSILON

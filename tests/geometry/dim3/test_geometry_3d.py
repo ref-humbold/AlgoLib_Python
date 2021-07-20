@@ -5,7 +5,7 @@ import unittest
 from algolib.geometry.dim3 import Point3D, sorted_by_x, sorted_by_y, sorted_by_z
 
 
-class SortingTest(unittest.TestCase):
+class Geometry3DTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

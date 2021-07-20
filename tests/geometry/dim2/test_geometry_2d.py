@@ -5,7 +5,7 @@ import unittest
 from algolib.geometry.dim2 import Point2D, sorted_by_angle, sorted_by_x, sorted_by_y
 
 
-class SortingTest(unittest.TestCase):
+class Geometry2DTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
