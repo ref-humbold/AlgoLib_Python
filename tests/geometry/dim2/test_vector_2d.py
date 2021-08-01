@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import unittest
 
 from algolib.geometry.dim2 import Point2D, Vector2D
@@ -20,25 +21,25 @@ class Vector2DTest(unittest.TestCase):
 
     def test__dot__then_scalar_product(self):
         # when
-        result = Vector2D.dot(Vector2D(1.5, -4.0), (Vector2D(9.0, -2.5)))
+        result = Vector2D.dot(Vector2D(1.5, -4.0), Vector2D(9.0, -2.5))
         # then
         self.assertAlmostEqual(23.5, result, delta=self.OFFSET)
 
     def test__dot__when_orthogonal__then_zero(self):
         # when
-        result = Vector2D.dot(Vector2D(1.0, 0.0), (Vector2D(0.0, -2.0)))
+        result = Vector2D.dot(Vector2D(1.0, 0.0), Vector2D(0.0, -2.0))
         # then
         self.assertAlmostEqual(0.0, result, delta=self.OFFSET)
 
     def test__area__then_length_of_cross_product(self):
         # when
-        result = Vector2D.area(Vector2D(1.5, -4.0), (Vector2D(9.0, -2.5)))
+        result = Vector2D.area(Vector2D(1.5, -4.0), Vector2D(9.0, -2.5))
         # then
         self.assertAlmostEqual(32.25, result, delta=self.OFFSET)
 
     def test__area__when_parallel__then_zero(self):
         # when
-        result = Vector2D.area(Vector2D(3.0, 3.0), (Vector2D(-8.0, -8.0)))
+        result = Vector2D.area(Vector2D(3.0, 3.0), Vector2D(-8.0, -8.0))
         # then
         self.assertAlmostEqual(0.0, result, delta=self.OFFSET)
 
