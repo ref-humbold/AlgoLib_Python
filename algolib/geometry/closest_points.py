@@ -33,8 +33,8 @@ def _search_closest(points_x, points_y, index_begin, index_end):
     middle_x = (points_x[index_middle].x + points_x[index_middle + 1].x) // 2
     closest_left = _search_closest(points_x, (p for p in points_y if p.x <= middle_x), index_begin,
                                    index_middle + 1)
-    closest_right = _search_closest(points_x, (p for p in points_y if p.x > middle_x),
-                                    index_middle, index_end)
+    closest_right = _search_closest(points_x, (p for p in points_y if p.x > middle_x), index_middle,
+                                    index_end)
     closest_points = \
         closest_left if distance(*closest_left) <= distance(*closest_right) else closest_right
     belt_points = _check_belt(points_y, middle_x, distance(closest_points[0], closest_points[1]))

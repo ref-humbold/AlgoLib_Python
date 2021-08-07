@@ -14,8 +14,11 @@ class AVLTree(MutableSet):
         for i in elements:
             self.add(i)
 
+    def __repr__(self):
+        return f"AVLTree({', '.join(repr(x) for x in self)})"
+
     def __str__(self):
-        return f"{{|{', '.join(str(x) for x in self)}|}}"
+        return f"{{|{', '.join(repr(x) for x in self)}|}}"
 
     def __len__(self):
         """:return: number of elements in the tree"""

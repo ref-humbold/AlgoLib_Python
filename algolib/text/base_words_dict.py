@@ -13,8 +13,10 @@ class BaseWordsDict:
     def text(self) -> str:
         return self._text
 
-    def __str__(self):
-        return f"BaseWordsDict({self._text}, {self._factors})"
+    def __repr__(self):
+        return f"BaseWordsDict({self._text!r})"
+
+    __str__ = __repr__
 
     def __getitem__(self, slice_: slice) -> Tuple[int, int]:
         """Retrieves code of a substring denoted by slice.
