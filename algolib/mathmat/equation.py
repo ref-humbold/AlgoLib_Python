@@ -25,7 +25,7 @@ class Equation:
         return self.coefficients[i]
 
     def __add__(self, equation: "Equation") -> "Equation":
-        if len(equation) != self.__len__():
+        if len(equation) != len(self):
             raise ValueError("Equation has different number of variables")
 
         return Equation((c1 + c2 for (c1, c2) in zip(self.coefficients, equation.coefficients)),
@@ -36,7 +36,7 @@ class Equation:
 
         :param equation: equation to be added
         :raises ValueError: if equations sizes differ"""
-        if len(equation) != self.__len__():
+        if len(equation) != len(self):
             raise ValueError("Equation has different number of variables")
 
         for i in range(len(self)):
@@ -46,7 +46,7 @@ class Equation:
         return self
 
     def __sub__(self, equation: "Equation") -> "Equation":
-        if len(equation) != self.__len__():
+        if len(equation) != len(self):
             raise ValueError("Equation has different number of variables")
 
         return Equation((c1 - c2 for (c1, c2) in zip(self.coefficients, equation.coefficients)),
@@ -57,7 +57,7 @@ class Equation:
 
         :param equation: equation to be subtracted
         :raises ValueError: if equations sizes differ"""
-        if len(equation) != self.__len__():
+        if len(equation) != len(self):
             raise ValueError("Equation has different number of variables")
 
         for i in range(len(self)):
@@ -116,7 +116,7 @@ class Equation:
         :param equation: equation
         :param constant: linear combination constant
         :raises ValueError: if the constant is equal to zero or equations sizes differ"""
-        if len(equation) != self.__len__():
+        if len(equation) != len(self):
             raise ValueError("Equation has different number of variables")
 
         if constant == 0:
