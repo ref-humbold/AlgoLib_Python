@@ -95,6 +95,9 @@ class Fraction:
         self._normalize()
         return self
 
+    def __pos__(self):
+        return Fraction(+self._numerator, +self._denominator)
+
     def __neg__(self) -> "Fraction":
         return Fraction(-self._numerator, self._denominator)
 

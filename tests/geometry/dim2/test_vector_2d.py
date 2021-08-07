@@ -43,43 +43,49 @@ class Vector2DTest(unittest.TestCase):
         # then
         self.assertAlmostEqual(0.0, result, delta=self.OFFSET)
 
-    def test__length__then_length_of_vector(self):
+    def test__op_len__then_length_of_vector(self):
         # when
         result = Vector2D(8.0, -6.0).length
         # then
         self.assertAlmostEqual(10.0, result, delta=self.OFFSET)
 
-    def test__add__then_add_each_coordinate(self):
+    def test__op_add__then_add_each_coordinate(self):
         # when
         result = Vector2D(5.4, 9.0) + Vector2D(7.9, -8.1)
         # then
         self.assertEqual(Vector2D(13.3, 0.9), result)
 
-    def test__sub__then_subtract_each_coordinate(self):
+    def test__op_sub__then_subtract_each_coordinate(self):
         # when
         result = Vector2D(5.4, 9.0) - Vector2D(7.9, -8.1)
         # then
         self.assertEqual(Vector2D(-2.5, 17.1), result)
 
-    def test__mul__then_multiply_each_coordinate(self):
+    def test__op_mul__then_multiply_each_coordinate(self):
         # when
         result = Vector2D(5.4, 9.0) * 3
         # then
         self.assertEqual(Vector2D(16.2, 27.0), result)
 
-    def test__mul__when_multiplication_by_zero__then_zero_vector(self):
+    def test__op_mul__when_multiplication_by_zero__then_zero_vector(self):
         # when
         result = Vector2D(5.4, 9.0) * 0
         # then
         self.assertEqual(Vector2D(0, 0), result)
 
-    def test__truediv__then_divide_each_coordinate(self):
+    def test__op_truediv__then_divide_each_coordinate(self):
         # when
         result = Vector2D(5.4, 9.0) / 3
         # then
         self.assertEqual(Vector2D(1.8, 3.0), result)
 
-    def test__truediv__when_division_by_zero__then_zero_division_error(self):
+    def test__op_truediv__when_division_by_zero__then_zero_division_error(self):
         # then
         with self.assertRaises(ZeroDivisionError):
             _ = Vector2D(1.0, 1.0) / 0
+
+    def test__op_neg__then_negate_each_coordinate(self):
+        # when
+        result = -Vector2D(5.4, 9.0)
+        # then
+        self.assertEqual(Vector2D(-5.4, -9.0), result)

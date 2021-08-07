@@ -84,6 +84,12 @@ class Vector2D(GeometryObject):
         self._y /= constant
         return self
 
+    def __pos__(self):
+        return Vector2D(+self._x, +self._y)
+
+    def __neg__(self):
+        return Vector2D(-self._x, -self._y)
+
     @staticmethod
     def between(begin: Point2D, end: Point2D) -> "Vector2D":
         return Vector2D(end.x - begin.x, end.y - begin.y)

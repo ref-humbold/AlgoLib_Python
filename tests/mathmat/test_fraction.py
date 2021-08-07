@@ -30,7 +30,7 @@ class FractionTest(TestCase):
         # then
         self.assertEqual(Fraction(45, 28), result)
 
-    def test__op_div__when_zero__then_arithmetic_error(self):
+    def test__op_truediv__when_zero__then_arithmetic_error(self):
         # then
         with self.assertRaises(ArithmeticError):
             # when

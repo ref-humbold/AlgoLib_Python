@@ -94,6 +94,12 @@ class Vector3D(GeometryObject):
         self._z /= constant
         return self
 
+    def __pos__(self):
+        return Vector3D(+self._x, +self._y, +self._z)
+
+    def __neg__(self):
+        return Vector3D(-self._x, -self._y, -self._z)
+
     @staticmethod
     def between(begin: Point3D, end: Point3D) -> "Vector3D":
         return Vector3D(end.x - begin.x, end.y - begin.y, end.z - begin.z)
