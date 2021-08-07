@@ -4,7 +4,7 @@ from math import sqrt
 from random import randint
 from typing import Iterable
 
-from algolib.mathmat.maths import gcd, power_mod
+from algolib.mathmat.maths import gcd, power
 
 
 def find_primes(*numbers: int) -> Iterable[int]:
@@ -37,7 +37,7 @@ def test_fermat(number: int) -> bool:
     for _ in range(17):
         witness = randint(1, number - 1)
 
-        if gcd(witness, number) > 1 and power_mod(witness, number - 1, number) != 1:
+        if gcd(witness, number) > 1 and power(witness, number - 1, number) != 1:
             return False
 
     return True
@@ -64,7 +64,7 @@ def test_miller(number: int) -> bool:
     for _ in range(17):
         witness = randint(1, number - 1)
 
-        if power_mod(witness, multiplicand, number) != 1:
+        if power(witness, multiplicand, number) != 1:
             exponents = []
             exp = multiplicand
 
@@ -72,7 +72,7 @@ def test_miller(number: int) -> bool:
                 exponents.append(exp)
                 exp *= 2
 
-            if all(map(lambda d, wit=witness: power_mod(wit, d, number) != number - 1, exponents)):
+            if all(map(lambda d, wit=witness: power(wit, d, number) != number - 1, exponents)):
                 return False
 
     return True

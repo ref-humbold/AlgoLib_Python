@@ -55,21 +55,21 @@ class EquationSystem:
         if self[-1][-1] == 0 and self[-1].free != 0:
             raise NoSolutionError("Equation system has no solution")
 
-        solution = [0.0] * self.__len__()
+        solution = [0.0] * len(self)
         solution[-1] = self[-1].free / self[-1][-1]
 
-        for i in range(-2, -self.__len__() - 1, -1):
-            solution[i] = sum((-self[i][j] * solution[j]
-                               for j in range(-1, i, -1)), self[i].free) / self[i][i]
+        for i in range(-2, -len(self) - 1, -1):
+            solution[i] = (self[i].free + sum(-self[i][j] * solution[j]
+                                              for j in range(-1, i, -1))) / self[i][i]
 
         return solution
 
     def gaussian_reduce(self):
         """Runs the Gauss elimination algorithm on the equation system."""
-        for i in range(self.__len__() - 1):
+        for i in range(len(self) - 1):
             index_min = i
 
-            for j in range(i + 1, self.__len__()):
+            for j in range(i + 1, len(self)):
                 min_coef = self[index_min][i]
                 act_coef = self[j][i]
 
@@ -79,7 +79,7 @@ class EquationSystem:
             if self[index_min][i] != 0:
                 self.swap(index_min, i)
 
-                for j in range(i + 1, self.__len__()):
+                for j in range(i + 1, len(self)):
                     param = self[j][i] / self[i][i]
 
                     if param != 0:
