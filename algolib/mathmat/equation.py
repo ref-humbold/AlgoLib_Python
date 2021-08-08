@@ -32,10 +32,6 @@ class Equation:
                         self.free + equation.free)
 
     def __iadd__(self, equation: "Equation"):
-        """Adds another equation to the equation.
-
-        :param equation: equation to be added
-        :raises ValueError: if equations sizes differ"""
         if len(equation) != len(self):
             raise ValueError("Equation has different number of variables")
 
@@ -53,10 +49,6 @@ class Equation:
                         self.free - equation.free)
 
     def __isub__(self, equation: "Equation"):
-        """Subtracts another equation from the equation.
-
-        :param equation: equation to be subtracted
-        :raises ValueError: if equations sizes differ"""
         if len(equation) != len(self):
             raise ValueError("Equation has different number of variables")
 
@@ -75,10 +67,6 @@ class Equation:
     __rmul__ = __mul__
 
     def __imul__(self, constant: float):
-        """Multiplies equation by a constant.
-
-        :param constant: constant
-        :raises ValueError: if the constant is equal to zero"""
         if constant == 0:
             raise ValueError("Constant cannot be equal to zero")
 
@@ -97,10 +85,6 @@ class Equation:
     __rtruediv__ = __truediv__
 
     def __itruediv__(self, constant: float):
-        """Divides equation by a constant.
-
-        :param constant: constant
-        :raises ValueError: if the constant is equal to zero"""
         if constant == 0:
             raise ValueError("Constant cannot be equal to zero")
 
@@ -133,4 +117,4 @@ class Equation:
         :param solution: values to check
         :return: ``true`` if solution is correct, otherwise ``false``"""
         return len(solution) == len(self) and sum(
-                map(lambda c, s: c * s, self.coefficients, solution)) == self.free
+            map(lambda c, s: c * s, self.coefficients, solution)) == self.free

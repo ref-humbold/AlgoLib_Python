@@ -32,17 +32,23 @@ class Vector2D(GeometryObject):
     def __hash__(self):
         return hash((self._x, self._y))
 
+    def __eq__(self, vec: "Vector2D"):
+        return self._are_equal(self._x, vec.x) and self._are_equal(self._y, vec.y)
+
+    def __ne__(self, vec: "Vector2D"):
+        return not self == vec
+
     def __repr__(self):
         return f"Vector2D({self._x}, {self._y})"
 
     def __str__(self):
         return f"[{self._x}, {self._y}]"
 
-    def __eq__(self, vec: "Vector2D"):
-        return self._are_equal(self._x, vec.x) and self._are_equal(self._y, vec.y)
+    def __pos__(self):
+        return Vector2D(+self._x, +self._y)
 
-    def __ne__(self, vec: "Vector2D"):
-        return not self == vec
+    def __neg__(self):
+        return Vector2D(-self._x, -self._y)
 
     def __add__(self, vec: "Vector2D") -> "Vector2D":
         return Vector2D(self._x + vec.x, self._y + vec.y)
@@ -83,12 +89,6 @@ class Vector2D(GeometryObject):
         self._x /= constant
         self._y /= constant
         return self
-
-    def __pos__(self):
-        return Vector2D(+self._x, +self._y)
-
-    def __neg__(self):
-        return Vector2D(-self._x, -self._y)
 
     @staticmethod
     def between(begin: Point2D, end: Point2D) -> "Vector2D":

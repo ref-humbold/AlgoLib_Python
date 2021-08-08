@@ -50,6 +50,12 @@ class Vector3D(GeometryObject):
     def __ne__(self, vec: "Vector3D"):
         return not self == vec
 
+    def __pos__(self):
+        return Vector3D(+self._x, +self._y, +self._z)
+
+    def __neg__(self):
+        return Vector3D(-self._x, -self._y, -self._z)
+
     def __add__(self, vec: "Vector3D") -> "Vector3D":
         return Vector3D(self._x + vec.x, self._y + vec.y, self._z + vec.z)
 
@@ -93,12 +99,6 @@ class Vector3D(GeometryObject):
         self._y /= constant
         self._z /= constant
         return self
-
-    def __pos__(self):
-        return Vector3D(+self._x, +self._y, +self._z)
-
-    def __neg__(self):
-        return Vector3D(-self._x, -self._y, -self._z)
 
     @staticmethod
     def between(begin: Point3D, end: Point3D) -> "Vector3D":
