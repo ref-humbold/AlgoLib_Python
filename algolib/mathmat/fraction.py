@@ -17,21 +17,6 @@ class Fraction:
     def __hash__(self):
         return hash((self._numerator, self._denominator))
 
-    def __repr__(self):
-        return f"Fraction({self._numerator}, {self._denominator})"
-
-    def __str__(self):
-        return f"{self._numerator}/{self._denominator}"
-
-    def __bool__(self):
-        return self._numerator != 0
-
-    def __int__(self):
-        return self._numerator // self._denominator
-
-    def __float__(self):
-        return self._numerator / self._denominator
-
     def __eq__(self, frac: "Fraction"):
         return self._numerator == frac._numerator and self._denominator == frac._denominator
 
@@ -53,6 +38,36 @@ class Fraction:
     def __ge__(self, frac: "Fraction"):
         num1, num2 = self._common(frac)
         return num1 >= num2
+
+    def __repr__(self):
+        return f"Fraction({self._numerator}, {self._denominator})"
+
+    def __str__(self):
+        return f"{self._numerator}/{self._denominator}"
+
+    def __bool__(self):
+        return self._numerator != 0
+
+    def __int__(self):
+        return self._numerator // self._denominator
+
+    def __float__(self):
+        return self._numerator / self._denominator
+
+    def __pos__(self):
+        return Fraction(+self._numerator, +self._denominator)
+
+    def __neg__(self) -> "Fraction":
+        return Fraction(-self._numerator, self._denominator)
+
+    def __abs__(self) -> "Fraction":
+        return Fraction(abs(self._numerator), self._denominator)
+
+    def __invert__(self) -> "Fraction":
+        if self._numerator == 0:
+            raise ArithmeticError("Inverting zero")
+
+        return Fraction(self._denominator, self._numerator)
 
     def __add__(self, frac: "Fraction") -> "Fraction":
         return Fraction(self._numerator * frac._denominator + frac._numerator * self._denominator,
@@ -95,18 +110,6 @@ class Fraction:
         self._normalize()
         return self
 
-    def __neg__(self) -> "Fraction":
-        return Fraction(-self._numerator, self._denominator)
-
-    def __abs__(self) -> "Fraction":
-        return Fraction(abs(self._numerator), self._denominator)
-
-    def __invert__(self) -> "Fraction":
-        if self._numerator == 0:
-            raise ArithmeticError("Inverting zero")
-
-        return Fraction(self._denominator, self._numerator)
-
     def _normalize(self):
         if self._denominator < 0:
             self._numerator = -self._numerator
@@ -114,8 +117,8 @@ class Fraction:
 
         gcd_val = gcd(self._numerator, self._denominator)
 
-        self._numerator /= gcd_val
-        self._denominator /= gcd_val
+        self._numerator //= gcd_val
+        self._denominator //= gcd_val
 
     def _common(self, frac: "Fraction") -> Tuple[int, int]:
         common_denominator = lcm(self._denominator, frac._denominator)
