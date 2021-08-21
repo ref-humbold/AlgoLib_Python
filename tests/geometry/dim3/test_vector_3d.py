@@ -7,7 +7,7 @@ from algolib.geometry.dim3 import Point3D, Vector3D
 class Vector3DTest(unittest.TestCase):
     OFFSET = Vector3D.EPSILON
 
-    def test__coordinates__then_array(self):
+    def test__coordinates__then_triple_of_coordinates(self):
         # when
         result = Vector3D(5.0, -19.0, 14.2).coordinates
         # then
