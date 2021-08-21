@@ -7,7 +7,7 @@ from algolib.geometry.dim2 import Point2D, Vector2D
 class Vector2DTest(unittest.TestCase):
     OFFSET = Vector2D.EPSILON
 
-    def test__coordinates__then_array(self):
+    def test__coordinates__then_pair_of_coordinates(self):
         # when
         result = Vector2D(5.0, -19.0).coordinates
         # then
@@ -19,7 +19,7 @@ class Vector2DTest(unittest.TestCase):
         # then
         self.assertAlmostEqual(10.0, result, delta=self.OFFSET)
 
-    def test__op_posg__then_copied(self):
+    def test__op_pos__then_copied(self):
         # given
         vector = Vector2D(5.4, 9.0)
         # when
