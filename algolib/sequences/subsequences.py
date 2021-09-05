@@ -5,7 +5,7 @@ from typing import Iterable, Iterator, List, Sequence, TypeVar
 _T = TypeVar("_T")
 
 
-def longest_ordered(sequence: Sequence[_T], key=lambda x: x) -> Iterator[_T]:
+def longest_increasing(sequence: Sequence[_T], key=lambda x: x) -> Iterator[_T]:
     """Constructs longest ordered subsequence.
 
     :param sequence: a sequence of elements
@@ -19,7 +19,7 @@ def longest_ordered(sequence: Sequence[_T], key=lambda x: x) -> Iterator[_T]:
             previous_elem.append(subseq_last[-1])
             subseq_last.append(i)
         else:
-            index = _search_ord(key, sequence, subseq_last, 0, len(subseq_last) - 1, i)
+            index = _search_index(sequence, key, subseq_last, i, 0, len(subseq_last) - 1)
             subseq_last[index] = i
             previous_elem.append(subseq_last[index - 1] if index > 0 else None)
 
@@ -33,16 +33,16 @@ def longest_ordered(sequence: Sequence[_T], key=lambda x: x) -> Iterator[_T]:
     return reversed(longest_subseq)
 
 
-def _search_ord(key, sequence, subseq_last, index_begin, index_end, index_elem):
+def _search_index(sequence, key, subseq_last, index_elem, index_begin, index_end):
     if index_begin == index_end:
         return index_begin
 
     index_middle = (index_begin + index_end) // 2
 
     if key(sequence[index_elem]) < key(sequence[subseq_last[index_middle]]):
-        return _search_ord(key, sequence, subseq_last, index_middle + 1, index_end, index_elem)
+        return _search_index(sequence, key, subseq_last, index_elem, index_middle + 1, index_end)
 
-    return _search_ord(key, sequence, subseq_last, index_begin, index_middle, index_elem)
+    return _search_index(sequence, key, subseq_last, index_elem, index_begin, index_middle)
 
 
 def maximum_subarray(iterable: Iterable[float]) -> List[float]:

@@ -5,9 +5,7 @@ import math
 
 
 class Paths:
-    @property
-    def infinity(self):
-        return math.inf
+    INFINITY = math.inf
 
 
 def bellman_ford(graph, source):
@@ -16,7 +14,7 @@ def bellman_ford(graph, source):
     :param graph: a directed graph with weighted edges
     :param source: source vertex
     :return: dictionary of vertices' distances"""
-    distances = {v: Paths.infinity for v in graph.vertices}
+    distances = {v: Paths.INFINITY for v in graph.vertices}
     distances[source] = 0.0
 
     for _ in range(graph.vertices_count - 1):
@@ -25,7 +23,7 @@ def bellman_ford(graph, source):
                                               distances[edge.source] + graph[edge].weight)
 
     for edge in graph.edges:
-        if distances[edge.source] < Paths.infinity \
+        if distances[edge.source] < Paths.INFINITY \
                 and distances[edge.source] + graph[edge].weight < distances[edge.destination]:
             raise ValueError("Graph contains a negative cycle")
 
