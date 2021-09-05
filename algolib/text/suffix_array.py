@@ -187,12 +187,12 @@ class SuffixArray:
         j = 0
 
         for i in indices:
-            v = SuffixArray._get(values, i + shift)
+            val = SuffixArray._get(values, i + shift)
 
-            if v not in buckets:
-                buckets[v] = deque()
+            if val not in buckets:
+                buckets[val] = deque()
 
-            buckets[v].append(i)
+            buckets[val].append(i)
 
         for _, bucket in sorted(buckets.items(), key=lambda p: p[0]):
             while len(bucket) > 0:
