@@ -184,7 +184,7 @@ never-returning-functions=sys.exit
 
 # Format style used to check logging format string. `old` means using % formatting,
 # `new` is for `{}` formatting,and `fstr` is for f-strings.
-logging-format-style=fstr
+logging-format-style=new
 
 # Logging modules to check that the string format arguments are in logging function parameter format.
 logging-modules=logging
@@ -429,9 +429,8 @@ variable-naming-style=snake_case
 
 [STRING]
 
-# This flag controls whether the implicit-str-concat-in-sequence should
-generate a warning on implicit string concatenation in sequences defined over
-# several lines.
+# This flag controls whether the implicit-str-concat-in-sequence should generate a warning
+# on implicit string concatenation in sequences defined over several lines.
 check-str-concat-over-line-jumps=no
 
 

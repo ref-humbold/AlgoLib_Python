@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=too-many-public-methods
 import unittest
 
 from algolib.geometry.dim3 import Point3D, Vector3D
