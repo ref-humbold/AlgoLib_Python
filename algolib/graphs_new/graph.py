@@ -32,11 +32,16 @@ class Graph(metaclass=ABCMeta):
 
     @abstractmethod
     def get_vertex(self, vertex_id) -> "Vertex":
-        pass
+        """:param vertex_id: vertex identifier
+        :return: vertex from this graph
+        :raise KeyError: if no such vertex"""
 
     @abstractmethod
     def get_edge(self, source, destination) -> "Edge":
-        pass
+        """:param source: source vertex or its identifier
+        :param destination: destination vertex or its identifier
+        :return: edge from this graph between the vertices
+        :raise KeyError: if no such edge"""
 
     @abstractmethod
     def adjacent_edges(self, vertex: "Vertex") -> Iterable["Edge"]:
@@ -73,35 +78,35 @@ class Graph(metaclass=ABCMeta):
 
 
 class Vertex:
-    def __init__(self, identifier):
-        self.identifier = identifier
+    def __init__(self, id_):
+        self.id = id_
 
     def __hash__(self):
-        return hash(self.identifier)
+        return hash(self.id)
 
     def __repr__(self):
-        return f"Vertex({self.identifier!r})"
+        return f"Vertex({self.id!r})"
 
     def __str__(self):
-        return f"Vertex({self.identifier})"
+        return f"Vertex({self.id})"
 
     def __eq__(self, vertex: "Vertex"):
-        return self.identifier == vertex.identifier
+        return self.id == vertex.id
 
     def __ne__(self, vertex: "Vertex"):
-        return self.identifier != vertex.identifier
+        return self.id != vertex.id
 
     def __lt__(self, vertex: "Vertex"):
-        return self.identifier < vertex.identifier
+        return self.id < vertex.id
 
     def __le__(self, vertex: "Vertex"):
-        return self.identifier <= vertex.identifier
+        return self.id <= vertex.id
 
     def __gt__(self, vertex: "Vertex"):
-        return self.identifier > vertex.identifier
+        return self.id > vertex.id
 
     def __ge__(self, vertex: "Vertex"):
-        return self.identifier >= vertex.identifier
+        return self.id >= vertex.id
 
 
 class Edge:
