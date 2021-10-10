@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Structure of undirected graph"""
-from abc import ABCMeta
+from abc import ABCMeta, abstractmethod
 
 from .directed_graph import DirectedGraph, DirectedSimpleGraph
 from .graph import Graph
@@ -8,12 +8,14 @@ from .simple_graph import SimpleGraph
 
 
 class UndirectedGraph(Graph, metaclass=ABCMeta):
-    pass
+    @abstractmethod
+    def as_directed(self) -> DirectedGraph:
+        pass
 
 
 class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
-    def __init__(self, vertices=None):
-        super().__init__(vertices)
+    def __init__(self, vertex_ids=None):
+        super().__init__(vertex_ids)
 
     @property
     def edges_count(self):
@@ -40,7 +42,7 @@ class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
         else:
             raise ValueError(f"Edge {existing_edge} already exists")
 
-    def as_directed(self) -> DirectedGraph:
+    def as_directed(self) -> DirectedSimpleGraph:
         graph = DirectedSimpleGraph((v.id for v in self.vertices))
 
         for vertex in self.vertices:
