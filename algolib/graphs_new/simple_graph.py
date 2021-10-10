@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Structure of simple graph"""
 from abc import ABCMeta, abstractmethod
-from typing import Iterable, Union
+from typing import Any, Iterable, Optional, Union
 
 from .graph import Edge, Graph, Vertex
 
@@ -93,34 +93,34 @@ class _GraphRepresentation:
 
 
 class SimpleGraph(Graph, metaclass=ABCMeta):
-    def __init__(self, vertex_ids=None):
+    def __init__(self, vertex_ids: Optional[Iterable[Any]] = None):
         self._representation = _GraphRepresentation(vertex_ids)
         self._properties = self._GraphPropertiesImpl(self)
 
     @property
-    def properties(self) -> Graph.GraphProperties:
+    def properties(self):
         return self._properties
 
     @property
-    def vertices_count(self) -> int:
+    def vertices_count(self):
         return len(self._representation)
 
     @property
-    def vertices(self) -> Iterable[Vertex]:
+    def vertices(self):
         return self._representation.vertices
 
-    def get_vertex(self, vertex_id) -> Vertex:
+    def get_vertex(self, vertex_id):
         return self._representation.get_vertex(vertex_id)
 
-    def get_edge(self, source, destination) -> Edge:
+    def get_edge(self, source, destination):
         return self._representation.get_edge(source.id, destination.id) \
             if isinstance(source, Vertex) and isinstance(destination, Vertex) else \
             self._representation.get_edge(source, destination)
 
-    def adjacent_edges(self, vertex: Vertex) -> Iterable[Edge]:
+    def adjacent_edges(self, vertex: Vertex):
         return self._representation.get_adjacent_edges(vertex)
 
-    def neighbours(self, vertex: Vertex) -> Iterable[Vertex]:
+    def neighbours(self, vertex: Vertex):
         return set(edge.get_neighbour(vertex)
                    for edge in self._representation.get_adjacent_edges(vertex))
 

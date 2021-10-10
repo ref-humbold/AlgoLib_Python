@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Structure of basic graph"""
 from abc import ABCMeta, abstractmethod
-from typing import Iterable, Union
+from typing import Any, Iterable, Union
 
 
 class Graph(metaclass=ABCMeta):
@@ -31,13 +31,13 @@ class Graph(metaclass=ABCMeta):
         """:return: iterable of edges"""
 
     @abstractmethod
-    def get_vertex(self, vertex_id) -> "Vertex":
+    def get_vertex(self, vertex_id: Any) -> "Vertex":
         """:param vertex_id: vertex identifier
         :return: vertex from this graph
         :raise KeyError: if no such vertex"""
 
     @abstractmethod
-    def get_edge(self, source, destination) -> "Edge":
+    def get_edge(self, source: Union["Vertex", Any], destination: Union["Vertex", Any]) -> "Edge":
         """:param source: source vertex or its identifier
         :param destination: destination vertex or its identifier
         :return: edge from this graph between the vertices
@@ -78,7 +78,7 @@ class Graph(metaclass=ABCMeta):
 
 
 class Vertex:
-    def __init__(self, id_):
+    def __init__(self, id_: Any):
         self.id = id_
 
     def __hash__(self):
@@ -110,7 +110,7 @@ class Vertex:
 
 
 class Edge:
-    def __init__(self, source, destination):
+    def __init__(self, source: Vertex, destination: Vertex):
         self.source = source
         self.destination = destination
 
@@ -141,7 +141,7 @@ class Edge:
     def __ge__(self, edge: "Edge"):
         return (self.source, self.destination) >= (edge.source, edge.destination)
 
-    def get_neighbour(self, vertex):
+    def get_neighbour(self, vertex: Vertex):
         if vertex is self.source:
             return self.destination
 
