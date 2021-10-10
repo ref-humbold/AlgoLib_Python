@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 """Structure of basic graph"""
 from abc import ABCMeta, abstractmethod
+from typing import Iterable, Union
 
 
 class Graph(metaclass=ABCMeta):
     @property
     @abstractmethod
-    def properties(self):
+    def properties(self) -> "GraphProperties":
         pass
 
     @property
@@ -21,49 +22,53 @@ class Graph(metaclass=ABCMeta):
 
     @property
     @abstractmethod
-    def vertices(self):
-        """:return: sorted list of vertices"""
+    def vertices(self) -> Iterable["Vertex"]:
+        """:return: iterable of vertices"""
 
     @property
     @abstractmethod
-    def edges(self):
-        """:return: sorted list of edges"""
+    def edges(self) -> Iterable["Edge"]:
+        """:return: iterable of edges"""
 
     @abstractmethod
-    def __getitem__(self, items):
+    def get_vertex(self, vertex_id) -> "Vertex":
         pass
 
     @abstractmethod
-    def adjacent_edges(self, vertex):
-        """:param vertex: a vertex from the graph
-        :return: generator of edges adjacent to the vertex"""
+    def get_edge(self, source, destination) -> "Edge":
+        pass
 
     @abstractmethod
-    def neighbours(self, vertex):
-        """:param vertex: a vertex from the graph
-        :return: generator of neighbouring vertices"""
+    def adjacent_edges(self, vertex: "Vertex") -> Iterable["Edge"]:
+        """:param vertex: vertex from the graph
+        :return: iterable of edges adjacent to the vertex"""
 
     @abstractmethod
-    def output_degree(self, vertex) -> int:
+    def neighbours(self, vertex: "Vertex") -> Iterable["Vertex"]:
         """:param vertex: a vertex from the graph
-        :return: the output degree of the vertex"""
+        :return: iterable of neighbouring vertices"""
 
     @abstractmethod
-    def input_degree(self, vertex) -> int:
-        """:param vertex: a vertex from the graph
-        :return: the input degree of the vertex"""
+    def output_degree(self, vertex: "Vertex") -> int:
+        """:param vertex: vertex from the graph
+        :return: output degree of the vertex"""
+
+    @abstractmethod
+    def input_degree(self, vertex: "Vertex") -> int:
+        """:param vertex: vertex from the graph
+        :return: input degree of the vertex"""
 
     class GraphProperties(metaclass=ABCMeta):
         @abstractmethod
-        def __getitem__(self, item):
+        def __getitem__(self, item: Union["Vertex", "Edge"]):
             pass
 
         @abstractmethod
-        def __setitem__(self, item, value):
+        def __setitem__(self, item: Union["Vertex", "Edge"], value):
             pass
 
         @abstractmethod
-        def __delitem__(self, item):
+        def __delitem__(self, item: Union["Vertex", "Edge"]):
             pass
 
 
