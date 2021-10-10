@@ -6,6 +6,6 @@ from .simple_graph import SimpleGraph
 from .tree_graph import TreeGraph
 from .undirected_graph import UndirectedGraph, UndirectedSimpleGraph
 
-__all__ = ["DirectedGraph", "DirectedSimpleGraph", "Graph", "Edge", "GraphPartitionError",
+__all__ = ["DirectedGraph", "DirectedSimpleGraph", "Edge", "Graph", "GraphPartitionError",
            "MultipartiteGraph", "SimpleGraph", "UndirectedSimpleGraph", "UndirectedGraph",
            "TreeGraph"]
