@@ -124,7 +124,7 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
         return set(edge.get_neighbour(vertex)
                    for edge in self._representation.get_adjacent_edges(vertex))
 
-    def add_vertex(self, vertex, property_=None) -> Vertex:
+    def add_vertex(self, vertex: Union[Vertex, Any], property_: Any = None) -> Vertex:
         """Adds new vertex with given property to this graph.
 
         :param vertex: new vertex or its identifier
@@ -142,7 +142,7 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
 
         raise ValueError(f"Vertex {the_vertex} already exists")
 
-    def add_edge_between(self, source: Vertex, destination: Vertex, property_=None):
+    def add_edge_between(self, source: Vertex, destination: Vertex, property_: Any = None):
         """Adds new edge with given property to this graph.
 
         :param source: source vertex
@@ -153,7 +153,7 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
         return self.add_edge(Edge(source, destination), property_)
 
     @abstractmethod
-    def add_edge(self, edge: Edge, property_=None):
+    def add_edge(self, edge: Edge, property_: Any = None):
         """Adds a new edge with given property to this graph.
 
         :param edge: a new edge
