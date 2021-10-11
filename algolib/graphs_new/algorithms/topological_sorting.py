@@ -44,7 +44,7 @@ def sort_topological_using_inputs(graph: DirectedGraph) -> List[Vertex]:
     if len(order) != graph.vertices_count:
         raise DirectedCyclicGraphError("Given graph contains a cycle")
 
-    return list(order)
+    return order
 
 
 def sort_topological_using_dfs(graph: DirectedGraph) -> List[Vertex]:
