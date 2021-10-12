@@ -1,15 +1,19 @@
 # -*- coding: utf-8 -*-
 """Algorithms for topological sorting"""
 import queue
+from typing import List
 
 from .searching import dfs_recursive
+from .searching_strategy import DFSStrategy
+from ..directed_graph import DirectedGraph
+from ..graph import Vertex
 
 
 class DirectedCyclicGraphError(ValueError):
     pass
 
 
-def sort_topological_using_inputs(graph):
+def sort_topological_using_inputs(graph: DirectedGraph) -> List[Vertex]:
     """Topological sorting algorithm using predecessors counting.
 
     :param graph: a directed graph
@@ -40,10 +44,10 @@ def sort_topological_using_inputs(graph):
     if len(order) != graph.vertices_count:
         raise DirectedCyclicGraphError("Given graph contains a cycle")
 
-    return iter(order)
+    return order
 
 
-def sort_topological_using_dfs(graph):
+def sort_topological_using_dfs(graph: DirectedGraph) -> List[Vertex]:
     """Topological sorting algorithm using DFS.
 
     :param graph: a directed graph
@@ -57,7 +61,7 @@ def sort_topological_using_dfs(graph):
     return list(reversed(strategy.order))
 
 
-class _TopologicalStrategy:
+class _TopologicalStrategy(DFSStrategy):
     def __init__(self):
         self.order = []
 

@@ -2,8 +2,9 @@
 """Tests: Structure of tree graph """
 import unittest
 
-from algolib.graphs import TreeGraph
-from algolib.graphs.graph import Edge
+from assertpy import assert_that
+
+from algolib.graphs import Edge, TreeGraph, Vertex
 
 
 class TreeGraphTest(unittest.TestCase):
@@ -13,120 +14,122 @@ class TreeGraphTest(unittest.TestCase):
 
     def setUp(self):
         self.test_object = TreeGraph(0)
+        self.test_object.add_vertex(1, Vertex(0))
+        self.test_object.add_vertex(2, Vertex(0))
+        self.test_object.add_vertex(3, Vertex(0))
+        self.test_object.add_vertex(4, Vertex(1))
+        self.test_object.add_vertex(5, Vertex(1))
+        self.test_object.add_vertex(6, Vertex(2))
+        self.test_object.add_vertex(7, Vertex(2))
 
-        self.test_object.add_vertex(1, 0)
-        self.test_object.add_vertex(2, 0)
-        self.test_object.add_vertex(3, 0)
-        self.test_object.add_vertex(4, 1)
-        self.test_object.add_vertex(5, 1)
-        self.test_object.add_vertex(6, 2)
-        self.test_object.add_vertex(7, 2)
-
-    def test__setitem_getitem__when_setting_property__then_property(self):
+    def test__properties_setitem_getitem__when_setting_property__then_property(self):
         # given
+        vertex = Vertex(2)
+        edge = self.test_object.get_edge(6, 2)
         vertex_property = "x"
         edge_property = "y"
-        vertex = 2
-        edge = self.test_object.get_edge(6, 2)
         # when
-        self.test_object[vertex] = vertex_property
-        self.test_object[edge] = edge_property
+        self.test_object.properties[vertex] = vertex_property
+        self.test_object.properties[edge] = edge_property
 
-        result_vertex = self.test_object[vertex]
-        result_edge = self.test_object[edge]
+        result_vertex = self.test_object.properties[vertex]
+        result_edge = self.test_object.properties[edge]
         # then
-        self.assertEqual(vertex_property, result_vertex)
-        self.assertEqual(edge_property, result_edge)
+        assert_that(result_vertex).is_equal_to(vertex_property)
+        assert_that(result_edge).is_equal_to(edge_property)
 
     def test__vertices_count__then_number_of_vertices(self):
         # when
         result = self.test_object.vertices_count
         # then
-        self.assertEqual(8, result)
-
-    def test__vertices__then_all_vertices(self):
-        # when
-        result = self.test_object.vertices
-        # then
-        self.assertListEqual(list(range(8)), sorted(result))
-
-    def test__add_vertex__when_new_vertex__then_created_edge(self):
-        # given
-        new_vertex = 13
-        neighbour = 5
-        vertex_property = "qwerty"
-        edge_property = "asdfg"
-        # when
-        result = self.test_object.add_vertex(new_vertex, neighbour, vertex_property, edge_property)
-        # then
-        self.assertEqual(new_vertex, result.source)
-        self.assertEqual(neighbour, result.destination)
-        self.assertEqual(9, self.test_object.vertices_count)
-        self.assertListEqual([5], list(self.test_object.neighbours(new_vertex)))
-        self.assertEqual(vertex_property, self.test_object[new_vertex])
-        self.assertEqual(edge_property, self.test_object[result])
-
-    def test__add_vertex__when_existing_vertex__then_none(self):
-        # given
-        vertex = 6
-        vertex_property = "qwerty"
-        self.test_object[vertex] = vertex_property
-        # when
-        result = self.test_object.add_vertex(vertex, 3, "abcdefg", "xyz")
-        # then
-        self.assertIsNone(result)
-        self.assertEqual(8, self.test_object.vertices_count)
-        self.assertEqual(vertex_property, self.test_object[vertex])
+        assert_that(result).is_equal_to(8)
 
     def test__edges_count__then_number_of_edges(self):
         # when
         result = self.test_object.edges_count
         # then
-        self.assertEqual(7, result)
+        assert_that(result).is_equal_to(7)
+
+    def test__vertices__then_all_vertices(self):
+        # when
+        result = self.test_object.vertices
+        # then
+        assert_that(sorted(result)).is_equal_to(
+            [Vertex(0), Vertex(1), Vertex(2), Vertex(3), Vertex(4), Vertex(5), Vertex(6),
+             Vertex(7)])
 
     def test__edges__then_all_edges(self):
         # when
         result = self.test_object.edges
         # then
-        self.assertListEqual([
-            Edge(1, 0),
-            Edge(2, 0),
-            Edge(3, 0),
-            Edge(4, 1),
-            Edge(5, 1),
-            Edge(6, 2),
-            Edge(7, 2)], sorted(result))
+        assert_that(sorted(result)).is_equal_to(
+            [Edge(Vertex(1), Vertex(0)), Edge(Vertex(2), Vertex(0)), Edge(Vertex(3), Vertex(0)),
+             Edge(Vertex(4), Vertex(1)), Edge(Vertex(5), Vertex(1)), Edge(Vertex(6), Vertex(2)),
+             Edge(Vertex(7), Vertex(2))])
 
     def test__get_edge__when_in_direction__then_edge(self):
         # given
-        source = 7
-        destination = 2
+        source = Vertex(7)
+        destination = Vertex(2)
         # when
         result = self.test_object.get_edge(source, destination)
         # then
-        self.assertEqual(source, result.source)
-        self.assertEqual(destination, result.destination)
+        assert_that(result.source).is_equal_to(source)
+        assert_that(result.destination).is_equal_to(destination)
 
     def test__neighbours__then_destination_vertices_of_outgoing_edges(self):
         # when
-        result = self.test_object.neighbours(1)
+        result = self.test_object.neighbours(Vertex(1))
         # then
-        self.assertListEqual([0, 4, 5], sorted(result))
+        assert_that(sorted(result)).is_equal_to([Vertex(0), Vertex(4), Vertex(5)])
 
     def test__adjacent_edges__then_outgoing_edges(self):
         # when
-        result = self.test_object.adjacent_edges(1)
+        result = self.test_object.adjacent_edges(Vertex(1))
         # then
-        self.assertListEqual([Edge(1, 0), Edge(4, 1), Edge(5, 1)], sorted(result))
+        assert_that(sorted(result)).is_equal_to(
+            [Edge(Vertex(1), Vertex(0)), Edge(Vertex(4), Vertex(1)), Edge(Vertex(5), Vertex(1))])
 
     def test__output_degree__then_number_of_outgoing_edges(self):
         # when
-        result = self.test_object.output_degree(1)
+        result = self.test_object.output_degree(Vertex(1))
         # then
-        self.assertEqual(3, result)
+        assert_that(result).is_equal_to(3)
 
     def test__input_degree__then_number_of_incoming_edges(self):
         # when
-        result = self.test_object.input_degree(1)
+        result = self.test_object.input_degree(Vertex(1))
         # then
-        self.assertEqual(3, result)
+        assert_that(result).is_equal_to(3)
+
+    def test__add_vertex__when_new_vertex__then_created_edge(self):
+        # given
+        new_vertex_id = 13
+        neighbour = Vertex(5)
+        vertex_property = "qwerty"
+        edge_property = "asdfg"
+        # when
+        result = self.test_object.add_vertex(new_vertex_id, neighbour, vertex_property,
+                                             edge_property)
+        # then
+        assert_that(result.source.id).is_equal_to(new_vertex_id)
+        assert_that(result.destination).is_equal_to(neighbour)
+        assert_that(self.test_object.vertices_count).is_equal_to(9)
+        assert_that(list(self.test_object.neighbours(result.source))).is_equal_to([neighbour])
+        assert_that(self.test_object.properties[result.source]).is_equal_to(vertex_property)
+        assert_that(self.test_object.properties[result]).is_equal_to(edge_property)
+
+    def test__add_vertex__when_existing_vertex__then_value_error(self):
+        # given
+        vertex = Vertex(6)
+        vertex_property = "qwerty"
+        self.test_object.properties[vertex] = vertex_property
+
+        # when
+        def function(vertex_):
+            return self.test_object.add_vertex(vertex_, Vertex(3), "abcdefg", "xyz")
+
+        # then
+        assert_that(function).raises(ValueError).when_called_with(vertex)
+        assert_that(self.test_object.vertices_count).is_equal_to(8)
+        assert_that(self.test_object.properties[vertex]).is_equal_to(vertex_property)

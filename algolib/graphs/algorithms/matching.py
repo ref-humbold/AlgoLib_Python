@@ -2,9 +2,13 @@
 """Hopcroft-Karp algorithm for matching in bipartite graph"""
 from collections import deque
 import math
+from typing import Dict
+
+from ..graph import Vertex
+from ..multipartite_graph import MultipartiteGraph
 
 
-def match(graph):
+def match(graph: MultipartiteGraph) -> Dict[Vertex, Vertex]:
     """Finds maximal matching in given bipartite graph.
 
     :param graph: a bipartite graph

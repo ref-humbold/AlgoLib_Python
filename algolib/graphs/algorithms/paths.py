@@ -2,13 +2,17 @@
 """Algorithms for shortest paths"""
 from collections import deque
 import math
+from typing import Dict, Tuple
+
+from ..directed_graph import DirectedGraph
+from ..graph import Graph, Vertex
 
 
 class Paths:
     INFINITY = math.inf
 
 
-def bellman_ford(graph, source):
+def bellman_ford(graph: DirectedGraph, source: Vertex) -> Dict[Vertex, float]:
     """Bellman-Ford algorithm.
 
     :param graph: a directed graph with weighted edges
@@ -19,24 +23,26 @@ def bellman_ford(graph, source):
 
     for _ in range(graph.vertices_count - 1):
         for edge in graph.edges:
-            distances[edge.destination] = min(distances[edge.destination],
-                                              distances[edge.source] + graph[edge].weight)
+            distances[edge.destination] = \
+                min(distances[edge.destination],
+                    distances[edge.source] + graph.properties[edge].weight)
 
     for edge in graph.edges:
         if distances[edge.source] < Paths.INFINITY \
-                and distances[edge.source] + graph[edge].weight < distances[edge.destination]:
+                and distances[edge.source] + graph.properties[edge].weight \
+                < distances[edge.destination]:
             raise ValueError("Graph contains a negative cycle")
 
     return distances
 
 
-def dijkstra(graph, source):
+def dijkstra(graph: Graph, source: Vertex) -> Dict[Vertex, float]:
     """Dijkstra algorithm.
 
     :param graph: a graph with weighted edges (weights are not negative)
     :param source: source vertex
     :return: dictionary of vertices' distances"""
-    if any(graph[e].weight < 0.0 for e in graph.edges):
+    if any(graph.properties[edge].weight < 0.0 for edge in graph.edges):
         raise ValueError("Graph contains an edge with negative weight")
 
     vertex_queue = deque()
@@ -54,23 +60,23 @@ def dijkstra(graph, source):
             for edge in graph.adjacent_edges(vertex):
                 neighbour = edge.get_neighbour(vertex)
 
-                if distances[vertex] + graph[edge].weight < distances[neighbour]:
-                    distances[neighbour] = distances[vertex] + graph[edge].weight
+                if distances[vertex] + graph.properties[edge].weight < distances[neighbour]:
+                    distances[neighbour] = distances[vertex] + graph.properties[edge].weight
                     vertex_queue.append((distances[neighbour], neighbour))
 
     return distances
 
 
-def floyd_warshall(graph):
+def floyd_warshall(graph: DirectedGraph) -> Dict[Tuple[Vertex, Vertex], float]:
     """Floyd-Warshall algorithm.
 
     :param graph: a directed graph with weighted edges
-    :return: map of distances between all pairs of vertices"""
+    :return: dictionary of distances between all pairs of vertices"""
     distances = {(v, u): 0.0 if v == u else Paths.INFINITY for v in graph.vertices
                  for u in graph.vertices}
 
     for edge in graph.edges:
-        distances[(edge.source, edge.destination)] = graph[edge].weight
+        distances[(edge.source, edge.destination)] = graph.properties[edge].weight
 
     for vertex0 in graph.vertices:
         for vertex1 in graph.vertices:
