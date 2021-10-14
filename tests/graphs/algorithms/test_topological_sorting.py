@@ -2,6 +2,8 @@
 """Tests: Algorithms for topological sorting"""
 import unittest
 
+from assertpy import assert_that
+
 from algolib.graphs import DirectedSimpleGraph
 from algolib.graphs.algorithms import DirectedCyclicGraphError, sort_topological_using_dfs, \
     sort_topological_using_inputs
@@ -11,93 +13,130 @@ class TopologicalSortingTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def test__sort_topological_using_inputs__when_acyclic_graph__then_topological_order(self):
+    @staticmethod
+    def test__sort_topological_using_inputs__when_acyclic_graph__then_topological_order():
         # given
         graph = DirectedSimpleGraph(range(6))
-        graph.add_edge_between(0, 2)
-        graph.add_edge_between(0, 4)
-        graph.add_edge_between(1, 0)
-        graph.add_edge_between(1, 4)
-        graph.add_edge_between(3, 1)
-        graph.add_edge_between(3, 0)
-        graph.add_edge_between(3, 2)
-        graph.add_edge_between(5, 1)
-        graph.add_edge_between(5, 2)
-        graph.add_edge_between(5, 4)
+        graph.add_edge_between(graph.get_vertex(0), graph.get_vertex(2))
+        graph.add_edge_between(graph.get_vertex(0), graph.get_vertex(4))
+        graph.add_edge_between(graph.get_vertex(1), graph.get_vertex(0))
+        graph.add_edge_between(graph.get_vertex(1), graph.get_vertex(4))
+        graph.add_edge_between(graph.get_vertex(3), graph.get_vertex(1))
+        graph.add_edge_between(graph.get_vertex(3), graph.get_vertex(0))
+        graph.add_edge_between(graph.get_vertex(3), graph.get_vertex(2))
+        graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(1))
+        graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(2))
+        graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(4))
         # when
         result = sort_topological_using_inputs(graph)
         # then
-        self.assertListEqual([3, 5, 1, 0, 2, 4], list(result))
+        assert_that(result).is_instance_of(list)
+        assert_that(result).is_equal_to(
+            [graph.get_vertex(3), graph.get_vertex(5), graph.get_vertex(1), graph.get_vertex(0),
+             graph.get_vertex(2), graph.get_vertex(4)])
 
-    def test__sort_topological_using_inputs__when_cyclic_graph__then_directed_cyclic_graph_error(
-            self):
+    @staticmethod
+    def test__sort_topological_using_inputs__when_cyclic_graph__then_directed_cyclic_graph_error():
         # given
         graph = DirectedSimpleGraph(range(6))
-        graph.add_edge_between(0, 2)
-        graph.add_edge_between(0, 4)
-        graph.add_edge_between(1, 0)
-        graph.add_edge_between(1, 4)
-        graph.add_edge_between(2, 1)
-        graph.add_edge_between(3, 1)
-        graph.add_edge_between(3, 0)
-        graph.add_edge_between(3, 2)
-        graph.add_edge_between(5, 1)
-        graph.add_edge_between(5, 2)
-        graph.add_edge_between(5, 4)
-        # then
-        with self.assertRaises(DirectedCyclicGraphError):
-            sort_topological_using_inputs(graph)
+        graph.add_edge_between(graph.get_vertex(0), graph.get_vertex(2))
+        graph.add_edge_between(graph.get_vertex(0), graph.get_vertex(4))
+        graph.add_edge_between(graph.get_vertex(1), graph.get_vertex(0))
+        graph.add_edge_between(graph.get_vertex(1), graph.get_vertex(4))
+        graph.add_edge_between(graph.get_vertex(2), graph.get_vertex(1))
+        graph.add_edge_between(graph.get_vertex(3), graph.get_vertex(1))
+        graph.add_edge_between(graph.get_vertex(3), graph.get_vertex(0))
+        graph.add_edge_between(graph.get_vertex(3), graph.get_vertex(2))
+        graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(1))
+        graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(2))
+        graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(4))
 
-    def test__sort_topological_using_inputs__when_empty_graph__then_vertices(self):
+        # when
+        def function(graph_):
+            sort_topological_using_inputs(graph_)
+
+        # then
+        assert_that(function).raises(DirectedCyclicGraphError).when_called_with(graph)
+
+    @staticmethod
+    def test__sort_topological_using_inputs__when_empty_graph__then_vertices():
         # given
         graph = DirectedSimpleGraph(range(6))
         # when
         result = sort_topological_using_inputs(graph)
         # then
-        self.assertListEqual([0, 1, 2, 3, 4, 5], list(result))
+        assert_that(result).is_instance_of(list)
+        assert_that(result).is_equal_to(sorted(graph.vertices))
 
-    def test__sort_topological_using_dfs__when_acyclic_graph__then_topological_order(self):
+    @staticmethod
+    def test__sort_topological_using_dfs__when_acyclic_graph__then_topological_order():
         # given
         graph = DirectedSimpleGraph(range(6))
-        graph.add_edge_between(0, 2)
-        graph.add_edge_between(0, 4)
-        graph.add_edge_between(1, 0)
-        graph.add_edge_between(1, 4)
-        graph.add_edge_between(3, 1)
-        graph.add_edge_between(3, 0)
-        graph.add_edge_between(3, 2)
-        graph.add_edge_between(5, 1)
-        graph.add_edge_between(5, 2)
-        graph.add_edge_between(5, 4)
+        graph.add_edge_between(graph.get_vertex(0), graph.get_vertex(2))
+        graph.add_edge_between(graph.get_vertex(0), graph.get_vertex(4))
+        graph.add_edge_between(graph.get_vertex(1), graph.get_vertex(0))
+        graph.add_edge_between(graph.get_vertex(1), graph.get_vertex(4))
+        graph.add_edge_between(graph.get_vertex(3), graph.get_vertex(1))
+        graph.add_edge_between(graph.get_vertex(3), graph.get_vertex(0))
+        graph.add_edge_between(graph.get_vertex(3), graph.get_vertex(2))
+        graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(1))
+        graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(2))
+        graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(4))
         # when
         result = sort_topological_using_dfs(graph)
         # then
-        self.assertIn(list(result), [[3, 5, 1, 0, 2, 4], [5, 3, 1, 0, 2, 4], [3, 5, 1, 0, 4, 2],
-                                     [5, 3, 1, 0, 4, 2]])
+        assert_that(result).is_instance_of(list)
 
-    def test__sort_topological_using_dfs__when_cyclic_graph__then_directed_cyclic_graph_error(self):
+        print(result in [
+            [graph.get_vertex(5), graph.get_vertex(3), graph.get_vertex(1), graph.get_vertex(0),
+             graph.get_vertex(4), graph.get_vertex(2)],
+            [graph.get_vertex(3), graph.get_vertex(5), graph.get_vertex(1), graph.get_vertex(0),
+             graph.get_vertex(2), graph.get_vertex(4)],
+            [graph.get_vertex(5), graph.get_vertex(3), graph.get_vertex(1), graph.get_vertex(0),
+             graph.get_vertex(2), graph.get_vertex(4)],
+            [graph.get_vertex(3), graph.get_vertex(5), graph.get_vertex(1), graph.get_vertex(0),
+             graph.get_vertex(4), graph.get_vertex(2)]])
+
+        assert_that(result).is_in(
+            [graph.get_vertex(5), graph.get_vertex(3), graph.get_vertex(1), graph.get_vertex(0),
+             graph.get_vertex(4), graph.get_vertex(2)],
+            [graph.get_vertex(3), graph.get_vertex(5), graph.get_vertex(1), graph.get_vertex(0),
+             graph.get_vertex(2), graph.get_vertex(4)],
+            [graph.get_vertex(5), graph.get_vertex(3), graph.get_vertex(1), graph.get_vertex(0),
+             graph.get_vertex(2), graph.get_vertex(4)],
+            [graph.get_vertex(3), graph.get_vertex(5), graph.get_vertex(1), graph.get_vertex(0),
+             graph.get_vertex(4), graph.get_vertex(2)])
+
+    @staticmethod
+    def test__sort_topological_using_dfs__when_cyclic_graph__then_directed_cyclic_graph_error(
+    ):
         # given
         graph = DirectedSimpleGraph(range(6))
-        graph.add_edge_between(0, 2)
-        graph.add_edge_between(0, 4)
-        graph.add_edge_between(1, 0)
-        graph.add_edge_between(1, 4)
-        graph.add_edge_between(2, 1)
-        graph.add_edge_between(3, 1)
-        graph.add_edge_between(3, 0)
-        graph.add_edge_between(3, 2)
-        graph.add_edge_between(5, 1)
-        graph.add_edge_between(5, 2)
-        graph.add_edge_between(5, 4)
-        # then
-        with self.assertRaises(DirectedCyclicGraphError):
-            # when
-            sort_topological_using_dfs(graph)
+        graph.add_edge_between(graph.get_vertex(0), graph.get_vertex(2))
+        graph.add_edge_between(graph.get_vertex(0), graph.get_vertex(4))
+        graph.add_edge_between(graph.get_vertex(1), graph.get_vertex(0))
+        graph.add_edge_between(graph.get_vertex(1), graph.get_vertex(4))
+        graph.add_edge_between(graph.get_vertex(2), graph.get_vertex(1))
+        graph.add_edge_between(graph.get_vertex(3), graph.get_vertex(1))
+        graph.add_edge_between(graph.get_vertex(3), graph.get_vertex(0))
+        graph.add_edge_between(graph.get_vertex(3), graph.get_vertex(2))
+        graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(1))
+        graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(2))
+        graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(4))
 
-    def test__sort_topological_using_dfs__when_empty_graph__then_vertices(self):
+        # when
+        def function(graph_):
+            sort_topological_using_dfs(graph_)
+
+        # then
+        assert_that(function).raises(DirectedCyclicGraphError).when_called_with(graph)
+
+    @staticmethod
+    def test__sort_topological_using_dfs__when_empty_graph__then_vertices():
         # given
         graph = DirectedSimpleGraph(range(6))
         # when
         result = sort_topological_using_dfs(graph)
         # then
-        self.assertListEqual([0, 1, 2, 3, 4, 5], list(result))
+        assert_that(result).is_instance_of(list)
+        assert_that(result).is_equal_to(sorted(graph.vertices))

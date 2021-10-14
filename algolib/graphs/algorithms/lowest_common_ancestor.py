@@ -9,8 +9,8 @@ from ..tree_graph import TreeGraph
 
 
 class LowestCommonAncestor:
-    def __init__(self, graph: TreeGraph, root: Vertex):
-        self.graph = graph
+    def __init__(self, tree: TreeGraph, root: Vertex):
+        self.tree = tree
         self.root = root
         self._empty = True
         self._paths = {}
@@ -41,13 +41,13 @@ class LowestCommonAncestor:
         return self._do_find(self._paths[vertex1][0], vertex2)
 
     def _initialize(self):
-        dfs_recursive(self.graph, self._strategy, [self.root])
+        dfs_recursive(self.tree, self._strategy, [self.root])
 
-        for vertex in self.graph.vertices:
+        for vertex in self.tree.vertices:
             self._paths[vertex] = [self._strategy.parents[vertex]]
 
-        for i in range(int(math.log(self.graph.vertices_count, 2)) + 3):
-            for vertex in self.graph.vertices:
+        for i in range(int(math.log(self.tree.vertices_count, 2)) + 3):
+            for vertex in self.tree.vertices:
                 self._paths[vertex].append(self._paths[self._paths[vertex][i]][i])
 
         self._empty = False

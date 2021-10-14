@@ -12,7 +12,7 @@ def kruskal(graph: UndirectedGraph) -> UndirectedGraph:
 
     :param graph: an undirected graph with weighted edges
     :return: the minimal spanning tree"""
-    mst = UndirectedSimpleGraph(graph.vertices)
+    mst = UndirectedSimpleGraph([v.id for v in graph.vertices])
     edge_queue = queue.PriorityQueue()
     vertex_sets = DisjointSets(graph.vertices)
 
@@ -35,7 +35,7 @@ def prim(graph: UndirectedGraph, source: Vertex) -> UndirectedGraph:
     :param graph: an undirected graph with weighted edges
     :param source: source vertex
     :return: the minimal spanning tree"""
-    mst = UndirectedSimpleGraph(graph.vertices)
+    mst = UndirectedSimpleGraph([v.id for v in graph.vertices])
     visited = {source}
     edge_queue = queue.PriorityQueue()
 

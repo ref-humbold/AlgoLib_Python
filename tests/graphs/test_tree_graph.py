@@ -67,6 +67,14 @@ class TreeGraphTest(unittest.TestCase):
              Edge(Vertex(4), Vertex(1)), Edge(Vertex(5), Vertex(1)), Edge(Vertex(6), Vertex(2)),
              Edge(Vertex(7), Vertex(2))])
 
+    def test__get_vertex__when_exists__then_vertex(self):
+        # given
+        vertex_id = 3
+        # when
+        result = self.test_object.get_vertex(vertex_id)
+        # then
+        assert_that(result.id).is_equal_to(vertex_id)
+
     def test__get_edge__when_in_direction__then_edge(self):
         # given
         source = Vertex(7)

@@ -64,6 +64,14 @@ class MultipartiteGraphTest(unittest.TestCase):
             [Edge(Vertex(0), Vertex(3)), Edge(Vertex(1), Vertex(5)), Edge(Vertex(2), Vertex(9)),
              Edge(Vertex(4), Vertex(6)), Edge(Vertex(7), Vertex(9))])
 
+    def test__get_vertex__when_exists__then_vertex(self):
+        # given
+        vertex_id = 6
+        # when
+        result = self.test_object.get_vertex(vertex_id)
+        # then
+        assert_that(result.id).is_equal_to(vertex_id)
+
     def test__get_edge__when_exists__then_edge(self):
         # given
         source = Vertex(2)
