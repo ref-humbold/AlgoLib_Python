@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Structure of multipartite graph"""
-from typing import Any, Iterable, Union
+from typing import Any, Collection, Iterable, Optional, Union
 
 from .graph import Edge, Vertex
 from .undirected_graph import UndirectedGraph, UndirectedSimpleGraph
@@ -11,7 +11,7 @@ class GraphPartitionError(BaseException):
 
 
 class MultipartiteGraph(UndirectedGraph):
-    def __init__(self, groups_count, vertex_ids=None):
+    def __init__(self, groups_count: int, vertex_ids: Optional[Collection[Any]] = None):
         super().__init__()
 
         if groups_count < 0:

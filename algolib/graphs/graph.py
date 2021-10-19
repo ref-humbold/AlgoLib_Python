@@ -69,7 +69,7 @@ class Graph(metaclass=ABCMeta):
             pass
 
         @abstractmethod
-        def __setitem__(self, item: Union["Vertex", "Edge"], value):
+        def __setitem__(self, item: Union["Vertex", "Edge"], value: Any):
             pass
 
         @abstractmethod

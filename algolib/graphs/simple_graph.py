@@ -94,7 +94,7 @@ class _GraphRepresentation:
 
 
 class SimpleGraph(Graph, metaclass=ABCMeta):
-    def __init__(self, vertex_ids: Optional[Iterable[Any]] = None):
+    def __init__(self, vertex_ids: Optional[Iterable[Any]]):
         self._representation = _GraphRepresentation(vertex_ids)
         self._properties = self._GraphPropertiesImpl(self)
 

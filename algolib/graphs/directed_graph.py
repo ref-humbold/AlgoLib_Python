@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Structure of directed graph"""
 from abc import ABCMeta, abstractmethod
+from typing import Any, Iterable, Optional
 
 from .graph import Graph
 from .simple_graph import SimpleGraph, _GraphRepresentation
@@ -12,12 +13,12 @@ class DirectedGraph(Graph, metaclass=ABCMeta):
         """Reverses directions of edges in the graph."""
 
     @abstractmethod
-    def reversed_copy(self):
+    def reversed_copy(self) -> "DirectedGraph":
         """:return: the copy of the graph with reversed directions of edges"""
 
 
 class DirectedSimpleGraph(SimpleGraph, DirectedGraph):
-    def __init__(self, vertex_ids=None):
+    def __init__(self, vertex_ids: Optional[Iterable[Any]] = None):
         super().__init__(vertex_ids)
 
     @property
@@ -61,7 +62,7 @@ class DirectedSimpleGraph(SimpleGraph, DirectedGraph):
 
         self._representation = new_representation
 
-    def reversed_copy(self):
+    def reversed_copy(self) -> "DirectedSimpleGraph":
         reversed_graph = DirectedSimpleGraph((v.id for v in self.vertices))
 
         for vertex in self.vertices:

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Structure of undirected graph"""
 from abc import ABCMeta, abstractmethod
+from typing import Any, Iterable, Optional
 
 from .directed_graph import DirectedGraph, DirectedSimpleGraph
 from .graph import Graph
@@ -14,7 +15,7 @@ class UndirectedGraph(Graph, metaclass=ABCMeta):
 
 
 class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
-    def __init__(self, vertex_ids=None):
+    def __init__(self, vertex_ids: Optional[Iterable[Any]] = None):
         super().__init__(vertex_ids)
 
     @property

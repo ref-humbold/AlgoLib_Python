@@ -7,7 +7,7 @@ from .undirected_graph import UndirectedGraph, UndirectedSimpleGraph
 
 
 class TreeGraph(UndirectedGraph):
-    def __init__(self, vertex_id):
+    def __init__(self, vertex_id: Any):
         super().__init__()
         self._graph = UndirectedSimpleGraph([vertex_id])
 
