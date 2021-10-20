@@ -2,6 +2,8 @@
 """Tests: Structure of double heap"""
 import unittest
 
+from assertpy import assert_that
+
 from algolib.structures import DoubleHeap
 
 
@@ -19,35 +21,37 @@ class DoubleHeapTest(unittest.TestCase):
         # when
         result = len(self.test_object)
         # then
-        self.assertEqual(0, result)
+        assert_that(result).is_equal_to(0)
 
     def test__len__when_not_empty__then_number_of_elements(self):
         # when
         result = len(self.test_object)
         # then
-        self.assertEqual(len(self._numbers), result)
+        assert_that(result).is_equal_to(len(self._numbers))
 
-    def test__left__when_empty__then_key_error(self):
-        # given
-        self.test_object = DoubleHeap()
+    @staticmethod
+    def test__left__when_empty__then_key_error():
+        # when
+        def function(heap):
+            return heap.left
+
         # then
-        with self.assertRaises(KeyError):
-            # when
-            _ = self.test_object.left
+        assert_that(function).raises(KeyError).when_called_with(DoubleHeap())
 
     def test__left__when_not_empty__then_minimal_element(self):
         # when
         result = self.test_object.left
         # then
-        self.assertEqual(min(self._numbers), result)
+        assert_that(result).is_equal_to(min(self._numbers))
 
-    def test__right__when_empty__then_key_error(self):
-        # given
-        self.test_object = DoubleHeap()
+    @staticmethod
+    def test__right__when_empty__then_key_error():
+        # when
+        def function(heap):
+            return heap.right
+
         # then
-        with self.assertRaises(KeyError):
-            # when
-            _ = self.test_object.right
+        assert_that(function).raises(KeyError).when_called_with(DoubleHeap())
 
     def test__right__when_single_element__then_this_element(self):
         # given
@@ -56,13 +60,13 @@ class DoubleHeapTest(unittest.TestCase):
         # when
         result = self.test_object.right
         # then
-        self.assertEqual(element, result)
+        assert_that(result).is_equal_to(element)
 
     def test__right__when_multiple_elements__then_maximal_element(self):
         # when
         result = self.test_object.right
         # then
-        self.assertEqual(max(self._numbers), result)
+        assert_that(result).is_equal_to(max(self._numbers))
 
     def test__push__when_empty__then_added(self):
         # given
@@ -71,9 +75,9 @@ class DoubleHeapTest(unittest.TestCase):
         # when
         self.test_object.push(element)
         # then
-        self.assertEqual(1, len(self.test_object))
-        self.assertEqual(element, self.test_object.left)
-        self.assertEqual(element, self.test_object.right)
+        assert_that(self.test_object).is_length(1)
+        assert_that(self.test_object.left).is_equal_to(element)
+        assert_that(self.test_object.right).is_equal_to(element)
 
     def test__push__when_new_element_is_less__then_added_to_left(self):
         # given
@@ -81,8 +85,8 @@ class DoubleHeapTest(unittest.TestCase):
         # when
         self.test_object.push(element)
         # then
-        self.assertEqual(len(self._numbers) + 1, len(self.test_object))
-        self.assertEqual(element, self.test_object.left)
+        assert_that(self.test_object).is_length(len(self._numbers) + 1)
+        assert_that(self.test_object.left).is_equal_to(element)
 
     def test__push__when_new_element_is_greater__then_added_to_right(self):
         # given
@@ -90,31 +94,25 @@ class DoubleHeapTest(unittest.TestCase):
         # when
         self.test_object.push(element)
         # then
-        self.assertEqual(len(self._numbers) + 1, len(self.test_object))
-        self.assertEqual(element, self.test_object.right)
+        assert_that(self.test_object).is_length(len(self._numbers) + 1)
+        assert_that(self.test_object.right).is_equal_to(element)
 
     def test__push__when_new_element__then_added(self):
         # when
         self.test_object.push(46)
         # then
-        self.assertEqual(len(self._numbers) + 1, len(self.test_object))
-        self.assertEqual(min(self._numbers), self.test_object.left)
-        self.assertEqual(max(self._numbers), self.test_object.right)
+        assert_that(self.test_object).is_length(len(self._numbers) + 1)
+        assert_that(self.test_object.left).is_equal_to(min(self._numbers))
+        assert_that(self.test_object.right).is_equal_to(max(self._numbers))
 
-    def test__popleft__when_empty__then_key_error(self):
-        # given
-        self.test_object = DoubleHeap()
-        # then
-        with self.assertRaises(KeyError):
-            # when
-            _ = self.test_object.popleft()
-
-    def test__popleft__when_not_empty__then_minimal_element_removed(self):
+    @staticmethod
+    def test__popleft__when_empty__then_key_error():
         # when
-        result = self.test_object.popleft()
+        def function(heap):
+            return heap.popleft()
+
         # then
-        self.assertEqual(len(self._numbers) - 1, len(self.test_object))
-        self.assertEqual(min(self._numbers), result)
+        assert_that(function).raises(KeyError).when_called_with(DoubleHeap())
 
     def test__popleft__when_single_element__then_this_element_removed(self):
         # given
@@ -123,16 +121,15 @@ class DoubleHeapTest(unittest.TestCase):
         # when
         result = self.test_object.popleft()
         # then
-        self.assertEqual(0, len(self.test_object))
-        self.assertEqual(element, result)
+        assert_that(self.test_object).is_empty()
+        assert_that(result).is_equal_to(element)
 
-    def test__popright__when_empty__then_key_error(self):
-        # given
-        self.test_object = DoubleHeap()
+    def test__popleft__when_multiple_elements__then_minimal_element_removed(self):
+        # when
+        result = self.test_object.popleft()
         # then
-        with self.assertRaises(KeyError):
-            # when
-            _ = self.test_object.popright()
+        assert_that(self.test_object).is_length(len(self._numbers) - 1)
+        assert_that(result).is_equal_to(min(self._numbers))
 
     def test__popleft__when_multiple_calls__then_sorted_ascending(self):
         # when
@@ -142,7 +139,17 @@ class DoubleHeapTest(unittest.TestCase):
             result.append(self.test_object.popleft())
 
         # then
-        self.assertListEqual(sorted(self._numbers), result)
+        assert_that(result).is_sorted()
+        assert_that(result).is_equal_to(sorted(self._numbers))
+
+    @staticmethod
+    def test__popright__when_empty__then_key_error():
+        # when
+        def function(heap):
+            return heap.popright()
+
+        # then
+        assert_that(function).raises(KeyError).when_called_with(DoubleHeap())
 
     def test__popright__when_single_element__then_this_element_removed(self):
         # given
@@ -151,15 +158,15 @@ class DoubleHeapTest(unittest.TestCase):
         # when
         result = self.test_object.popright()
         # then
-        self.assertEqual(0, len(self.test_object))
-        self.assertEqual(element, result)
+        assert_that(self.test_object).is_empty()
+        assert_that(result).is_equal_to(element)
 
     def test__popright__when_multiple_elements__then_maximal_element_removed(self):
         # when
         result = self.test_object.popright()
         # then
-        self.assertEqual(len(self._numbers) - 1, len(self.test_object))
-        self.assertEqual(max(self._numbers), result)
+        assert_that(self.test_object).is_length(len(self._numbers) - 1)
+        assert_that(result).is_equal_to(max(self._numbers))
 
     def test__popright__when_multiple_calls__then_sorted_descending(self):
         # when
@@ -169,10 +176,11 @@ class DoubleHeapTest(unittest.TestCase):
             result.append(self.test_object.popright())
 
         # then
-        self.assertListEqual(sorted(self._numbers, key=lambda x: -x), result)
+        assert_that(result).is_sorted(key=lambda x: -x)
+        assert_that(result).is_equal_to(sorted(self._numbers, key=lambda x: -x))
 
     def test__clear__when_not_empty__then_empty(self):
         # when
         self.test_object.clear()
         # then
-        self.assertEqual(0, len(self.test_object))
+        assert_that(self.test_object).is_empty()
