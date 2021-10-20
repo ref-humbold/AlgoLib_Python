@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 """Structure of simple graph"""
 from abc import ABCMeta, abstractmethod
+from typing import Any, Iterable, Optional, Union
 
-from .graph import Edge, Graph
+from .graph import Edge, Graph, Vertex
 
 
 class _GraphRepresentation:
-    def __init__(self, vertices=None):
+    def __init__(self, vertex_ids=None):
         self._properties = {}
 
-        if vertices is not None:
-            self._graph_dict = {v: set() for v in vertices}
+        if vertex_ids is not None:
+            self._graph_dict = {Vertex(vertex_id): set() for vertex_id in vertex_ids}
         else:
             self._graph_dict = {}
 
@@ -34,21 +35,35 @@ class _GraphRepresentation:
     def __len__(self):
         return len(self._graph_dict)
 
-    def __getitem__(self, item):
-        self._validate(item, existing_edge=True)
-        return self._properties.get(item, None)
+    def get_vertex(self, vertex_id):
+        try:
+            return next(v for v in self._graph_dict.keys() if v.id == vertex_id)
+        except StopIteration:
+            raise KeyError(f"Vertex not found : {vertex_id}") from None
 
-    def __setitem__(self, item, value):
-        self._validate(item, existing_edge=True)
-
-        if value is not None:
-            self._properties[item] = value
-        elif item in self._properties:
-            del self._properties[item]
+    def get_edge(self, source_id, destination_id):
+        try:
+            source, edges = next((v, edges) for v, edges in self._graph_dict.items()
+                                 if v.id == source_id)
+            return next(edge for edge in edges if edge.get_neighbour(source).id == destination_id)
+        except StopIteration:
+            raise KeyError(f"Edge not found: {source_id}, {destination_id}") from None
 
     def get_adjacent_edges(self, vertex):
         self._validate(vertex)
         return self._graph_dict[vertex]
+
+    def get_property(self, item):
+        self._validate(item, existing_edge=True)
+        return self._properties.get(item, None)
+
+    def set_property(self, item, value):
+        self._validate(item, existing_edge=True)
+        self._properties[item] = value
+
+    def del_property(self, item):
+        self._validate(item, existing_edge=True)
+        del self._properties[item]
 
     def add_vertex(self, vertex):
         if vertex in self._graph_dict:
@@ -79,8 +94,13 @@ class _GraphRepresentation:
 
 
 class SimpleGraph(Graph, metaclass=ABCMeta):
-    def __init__(self, vertices=None):
-        self._representation = _GraphRepresentation(vertices)
+    def __init__(self, vertex_ids: Optional[Iterable[Any]]):
+        self._representation = _GraphRepresentation(vertex_ids)
+        self._properties = self._GraphPropertiesImpl(self)
+
+    @property
+    def properties(self):
+        return self._properties
 
     @property
     def vertices_count(self):
@@ -88,54 +108,69 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
 
     @property
     def vertices(self):
-        return sorted(self._representation.vertices)
+        return self._representation.vertices
 
-    def __getitem__(self, item):
-        return self._representation[item]
+    def get_vertex(self, vertex_id):
+        return self._representation.get_vertex(vertex_id)
 
-    def __setitem__(self, item, value):
-        self._representation[item] = value
+    def get_edge(self, source, destination):
+        return self._representation.get_edge(source.id, destination.id) \
+            if isinstance(source, Vertex) and isinstance(destination, Vertex) else \
+            self._representation.get_edge(source, destination)
 
-    def adjacent_edges(self, vertex):
+    def adjacent_edges(self, vertex: Vertex):
         return self._representation.get_adjacent_edges(vertex)
 
-    def neighbours(self, vertex):
+    def neighbours(self, vertex: Vertex):
         return set(edge.get_neighbour(vertex)
                    for edge in self._representation.get_adjacent_edges(vertex))
 
-    def get_edge(self, source, destination):
-        try:
-            return [edge for edge in self._representation.get_adjacent_edges(source)
-                    if edge.get_neighbour(source) == destination][0]
-        except IndexError as ex:
-            raise KeyError(f"No edge between the vertices {source} and {destination}") from ex
+    def add_vertex(self, vertex: Union[Vertex, Any], property_: Any = None) -> Vertex:
+        """Adds new vertex with given property to this graph.
 
-    def add_vertex(self, vertex, vertex_property=None):
-        """Adds a new vertex with given property to the graph.
-
-         :param vertex: a new vertex
-         :param vertex_property: vertex property
-         :return: ``true`` if the vertex was added, otherwise ``false``"""
-        was_added = self._representation.add_vertex(vertex)
+        :param vertex: new vertex or its identifier
+        :param property_: vertex property
+        :return: the new vertex
+        :raise ValueError: if the vertex exists"""
+        the_vertex = vertex if isinstance(vertex, Vertex) else Vertex(vertex)
+        was_added = self._representation.add_vertex(the_vertex)
 
         if was_added:
-            self[vertex] = vertex_property
+            if property_ is not None:
+                self._representation.set_property(the_vertex, property_)
 
-        return was_added
+            return the_vertex
 
-    def add_edge_between(self, source, destination, edge_property=None):
-        """Adds a new edge with given property to the graph.
+        raise ValueError(f"Vertex {the_vertex} already exists")
 
-        :param source: a source vertex
-        :param destination: a destination vertex
-        :param edge_property: edge property
-        :return: the new edge if added, or the existing edge"""
-        return self.add_edge(Edge(source, destination), edge_property)
+    def add_edge_between(self, source: Vertex, destination: Vertex, property_: Any = None):
+        """Adds new edge with given property to this graph.
+
+        :param source: source vertex
+        :param destination: destination vertex
+        :param property_: edge property
+        :return: the new edge
+        :raise ValueError: if the edge exists"""
+        return self.add_edge(Edge(source, destination), property_)
 
     @abstractmethod
-    def add_edge(self, edge, edge_property=None):
-        """Adds a new edge with given property to the graph.
+    def add_edge(self, edge: Edge, property_: Any = None):
+        """Adds a new edge with given property to this graph.
 
         :param edge: a new edge
-        :param edge_property: edge property
-        :return: the new edge if added, or the existing edge"""
+        :param property_: edge property
+        :return: the new edge
+        :raise ValueError: if the edge exists"""
+
+    class _GraphPropertiesImpl(Graph.GraphProperties):
+        def __init__(self, graph: "SimpleGraph"):
+            self._graph = graph
+
+        def __getitem__(self, item: Union["Vertex", "Edge"]) -> Any:
+            return self._graph._representation.get_property(item)
+
+        def __setitem__(self, item: Union["Vertex", "Edge"], value: Any):
+            self._graph._representation.set_property(item, value)
+
+        def __delitem__(self, item: Union["Vertex", "Edge"]):
+            self._graph._representation.del_property(item)

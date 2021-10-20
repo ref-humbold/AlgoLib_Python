@@ -1,27 +1,22 @@
 # -*- coding: utf-8 -*-
 """Lowest common ancestor algorithm"""
-from math import log
+import math
 
 from .searching import dfs_recursive
+from .searching_strategy import DFSStrategy
+from ..graph import Vertex
+from ..tree_graph import TreeGraph
 
 
 class LowestCommonAncestor:
-    def __init__(self, graph, root):
-        self._graph = graph
-        self._root = root
+    def __init__(self, tree: TreeGraph, root: Vertex):
+        self.tree = tree
+        self.root = root
         self._empty = True
         self._paths = {}
         self._strategy = self._LCAStrategy()
 
-    @property
-    def graph(self):
-        return self._graph
-
-    @property
-    def root(self):
-        return self._root
-
-    def find(self, vertex1, vertex2):
+    def find(self, vertex1: Vertex, vertex2: Vertex) -> Vertex:
         """Finds a lowest common ancestor of two vertices in a rooted tree.
 
         :param vertex1: first vertex
@@ -46,13 +41,13 @@ class LowestCommonAncestor:
         return self._do_find(self._paths[vertex1][0], vertex2)
 
     def _initialize(self):
-        dfs_recursive(self._graph, self._strategy, [self._root])
+        dfs_recursive(self.tree, self._strategy, [self.root])
 
-        for vertex in self._graph.vertices:
+        for vertex in self.tree.vertices:
             self._paths[vertex] = [self._strategy.parents[vertex]]
 
-        for i in range(int(log(self._graph.vertices_count, 2)) + 3):
-            for vertex in self._graph.vertices:
+        for i in range(int(math.log(self.tree.vertices_count, 2)) + 3):
+            for vertex in self.tree.vertices:
                 self._paths[vertex].append(self._paths[self._paths[vertex][i]][i])
 
         self._empty = False
@@ -61,7 +56,7 @@ class LowestCommonAncestor:
         return self._strategy.pre_times[vertex1] >= self._strategy.pre_times[vertex2] \
                and self._strategy.post_times[vertex1] <= self._strategy.post_times[vertex2]
 
-    class _LCAStrategy:
+    class _LCAStrategy(DFSStrategy):
         def __init__(self):
             self.parents = {}
             self.pre_times = {}

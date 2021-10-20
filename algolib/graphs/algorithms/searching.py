@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 """Algorithms for graph searching"""
 from collections import deque
+from typing import Iterable
+
+from .searching_strategy import BFSStrategy, DFSStrategy
+from ..graph import Graph, Vertex
 
 
-def bfs(graph, strategy, roots):
+def bfs(graph: Graph, strategy: BFSStrategy, roots: Iterable[Vertex]) -> Iterable[Vertex]:
     """Breadth-first search algorithm.
 
     :param graph: a graph
@@ -31,10 +35,10 @@ def bfs(graph, strategy, roots):
 
                 strategy.on_exit(vertex)
 
-    return reached
+    return iter(reached)
 
 
-def dfs_iterative(graph, strategy, roots):
+def dfs_iterative(graph: Graph, strategy: DFSStrategy, roots: Iterable[Vertex]) -> Iterable[Vertex]:
     """Iterative depth-first search algorithm.
 
     :param graph: a graph
@@ -69,10 +73,10 @@ def dfs_iterative(graph, strategy, roots):
 
             iteration += 1
 
-    return reached.keys()
+    return iter(reached.keys())
 
 
-def dfs_recursive(graph, strategy, roots):
+def dfs_recursive(graph: Graph, strategy: DFSStrategy, roots: Iterable[Vertex]) -> Iterable[Vertex]:
     """Recursive depth-first search algorithm.
 
     :param graph: a graph
@@ -88,7 +92,7 @@ def dfs_recursive(graph, strategy, roots):
             _dfs_recursive_step(graph, strategy, state)
             state.iteration += 1
 
-    return state.reached.keys()
+    return iter(state.reached.keys())
 
 
 def _dfs_recursive_step(graph, strategy, state):

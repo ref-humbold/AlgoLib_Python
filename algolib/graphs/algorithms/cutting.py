@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
 """Algorithms for graph cutting (edge cut and vertex cut)"""
+from typing import Iterable
+
 from .searching import dfs_recursive
+from .searching_strategy import DFSStrategy
+from ..graph import Edge, Vertex
+from ..undirected_graph import UndirectedGraph
 
 
-def find_edge_cut(graph):
+def find_edge_cut(graph: UndirectedGraph) -> Iterable[Edge]:
     """Finds an edge cut of given graph.
 
     :param graph: an undirected graph
@@ -11,12 +16,11 @@ def find_edge_cut(graph):
     strategy = _CuttingStrategy()
     dfs_recursive(graph, strategy, graph.vertices)
 
-    for vertex in graph.vertices:
-        if strategy.has_bridge(vertex):
-            yield graph.get_edge(vertex, strategy.dfs_parents[vertex])
+    return (graph.get_edge(vertex, strategy.dfs_parents[vertex])
+            for vertex in graph.vertices if strategy.has_bridge(vertex))
 
 
-def find_vertex_cut(graph):
+def find_vertex_cut(graph: UndirectedGraph) -> Iterable[Vertex]:
     """Finds a vertex cut of given graph.
 
     param graph: an undirected graph
@@ -24,12 +28,10 @@ def find_vertex_cut(graph):
     strategy = _CuttingStrategy()
     dfs_recursive(graph, strategy, graph.vertices)
 
-    for vertex in graph.vertices:
-        if strategy.is_separator(vertex):
-            yield vertex
+    return (vertex for vertex in graph.vertices if strategy.is_separator(vertex))
 
 
-class _CuttingStrategy:
+class _CuttingStrategy(DFSStrategy):
     def __init__(self):
         self.depth = 0
         self.dfs_parents = {}

@@ -1,25 +1,29 @@
 # -*- coding: utf-8 -*-
 """Algorithm for strongly connected components"""
+from typing import Iterable, Set
+
 from .searching import dfs_recursive
+from .searching_strategy import DFSStrategy
+from ..directed_graph import DirectedGraph
+from ..graph import Vertex
 
 
-def find_scc(graph):
+def find_scc(graph: DirectedGraph) -> Iterable[Set[Vertex]]:
     """Finds strongly connected components in given directed graph.
 
     :param graph: a directed graph
     :return: list of vertices in strongly connected components"""
     post_order_strategy = _PostOrderStrategy()
     dfs_recursive(graph, post_order_strategy, graph.vertices)
-    vertices = map(lambda item: item[0],
-                   sorted(post_order_strategy.post_times.items(), key=lambda item: item[1],
-                          reverse=True))
+    vertices = [vertex for vertex, _ in sorted(post_order_strategy.post_times.items(),
+                                               key=lambda item: item[1], reverse=True)]
     reversed_graph = graph.reversed_copy()
     scc_strategy = _SCCStrategy()
     dfs_recursive(reversed_graph, scc_strategy, vertices)
-    return scc_strategy.components
+    return iter(scc_strategy.components)
 
 
-class _PostOrderStrategy:
+class _PostOrderStrategy(DFSStrategy):
     def __init__(self):
         self.post_times = {}
         self._timer = 0
@@ -41,7 +45,7 @@ class _PostOrderStrategy:
         pass
 
 
-class _SCCStrategy:
+class _SCCStrategy(DFSStrategy):
     def __init__(self):
         self.components = []
 

@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
 """Structure of tree graph"""
-from algolib.graphs.undirected_graph import UndirectedGraph, UndirectedSimpleGraph
+from typing import Any, Union
+
+from .graph import Edge, Vertex
+from .undirected_graph import UndirectedGraph, UndirectedSimpleGraph
 
 
 class TreeGraph(UndirectedGraph):
-    def __init__(self, vertex):
+    def __init__(self, vertex_id: Any):
         super().__init__()
-        self._graph = UndirectedSimpleGraph([vertex])
+        self._graph = UndirectedSimpleGraph([vertex_id])
 
-    def __getitem__(self, item):
-        return self._graph[item]
-
-    def __setitem__(self, item, value):
-        self._graph[item] = value
+    @property
+    def properties(self):
+        return self._graph.properties
 
     @property
     def vertices_count(self):
@@ -29,6 +30,9 @@ class TreeGraph(UndirectedGraph):
     @property
     def edges(self):
         return self._graph.edges
+
+    def get_vertex(self, vertex_id):
+        return self._graph.get_vertex(vertex_id)
 
     def get_edge(self, source, destination):
         return self._graph.get_edge(source, destination)
@@ -48,6 +52,16 @@ class TreeGraph(UndirectedGraph):
     def as_directed(self):
         return self._graph.as_directed()
 
-    def add_vertex(self, vertex, neighbour, vertex_property=None, edge_property=None):
-        was_added = self._graph.add_vertex(vertex, vertex_property)
-        return self._graph.add_edge_between(vertex, neighbour, edge_property) if was_added else None
+    def add_vertex(self, vertex: Union[Vertex, Any], neighbour: Vertex, vertex_property: Any = None,
+                   edge_property: Any = None) -> Edge:
+        """Adds new vertex to this graph and creates an edge from the new vertex to
+        an existing vertex.
+
+        :param vertex: new vertex ot its identifier
+        :param neighbour: existing vertex from the graph
+        :param vertex_property: vertex property
+        :param edge_property: edge property
+        :return: new edge between the new vertex and the existing vertex
+        :raise ValueError: if the vertex exists"""
+        new_vertex = self._graph.add_vertex(vertex, vertex_property)
+        return self._graph.add_edge_between(new_vertex, neighbour, edge_property)
