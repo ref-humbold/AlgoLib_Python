@@ -2,6 +2,8 @@
 """Tests: Structure of disjoint sets  (union-find)"""
 import unittest
 
+from assertpy import assert_that
+
 from algolib.structures import DisjointSets
 
 
@@ -17,34 +19,38 @@ class DisjointSetsTest(unittest.TestCase):
         # when
         result = len(self.test_object)
         # then
-        self.assertEqual(10, result)
+        assert_that(result).is_equal_to(10)
 
-    def test__in__when_present__then_true(self):
+    def test__contains__when_present__then_true(self):
         # when
         result = 4 in self.test_object
         # then
-        self.assertTrue(result)
+        assert_that(result).is_true()
 
-    def test__in__when_absent__then_false(self):
+    def test__contains__when_absent__then_false(self):
         # when
         result = 17 in self.test_object
         # then
-        self.assertFalse(result)
+        assert_that(result).is_false()
 
     def test__iadd__when_new_elements__then_singleton_sets(self):
         # given
-        elems = [14, 18, 23]
+        elements = [14, 18, 23]
         # when
-        self.test_object += elems
+        self.test_object += elements
         # then
-        for elem in elems:
-            self.assertIn(elem, self.test_object)
-            self.assertEqual(elem, self.test_object.find_set(elem))
+        assert_that(self.test_object).contains(*elements)
+
+        for elem in elements:
+            assert_that(self.test_object.find_set(elem)).is_equal_to(elem)
 
     def test__iadd__when_present_element__then_value_error(self):
-        # when - then
-        with self.assertRaises(ValueError):
-            self.test_object += [11, 7, 15]
+        # when
+        def function(elements):
+            self.test_object += elements
+
+        # then
+        assert_that(function).raises(ValueError).when_called_with([11, 7, 15])
 
     def test__getitem__when_present_element__then_represent(self):
         # given
@@ -52,12 +58,15 @@ class DisjointSetsTest(unittest.TestCase):
         # when
         result = self.test_object[elem]
         # then
-        self.assertEqual(elem, result)
+        assert_that(result).is_equal_to(elem)
 
     def test__getitem__when_absent_element__then_key_error(self):
-        # when - then
-        with self.assertRaises(KeyError):
-            _ = self.test_object[18]
+        # when
+        def function(element):
+            return self.test_object[element]
+
+        # then
+        assert_that(function).raises(KeyError).when_called_with(18)
 
     def test__find_set__when_present_element__then_represent(self):
         # given
@@ -65,7 +74,7 @@ class DisjointSetsTest(unittest.TestCase):
         # when
         result = self.test_object.find_set(elem, 10)
         # then
-        self.assertEqual(elem, result)
+        assert_that(result).is_equal_to(elem)
 
     def test__find_set__when_absent_element__then_default(self):
         # given
@@ -73,13 +82,13 @@ class DisjointSetsTest(unittest.TestCase):
         # when
         result = self.test_object.find_set(22, default)
         # then
-        self.assertEqual(default, result)
+        assert_that(result).is_equal_to(default)
 
     def test__find_set__when_absent_element_and_no_default__then_none(self):
         # when
         result = self.test_object.find_set(12)
         # then
-        self.assertEqual(None, result)
+        assert_that(result).is_none()
 
     def test__union_set__when_different_sets__then_same_represent(self):
         # given
@@ -88,8 +97,8 @@ class DisjointSetsTest(unittest.TestCase):
         # when
         self.test_object.union_set(elem1, elem2)
         # then
-        self.assertTrue(self.test_object.is_same_set(elem1, elem2))
-        self.assertEqual(self.test_object[elem1], self.test_object[elem2])
+        assert_that(self.test_object.is_same_set(elem1, elem2)).is_true()
+        assert_that(self.test_object[elem2]).is_equal_to(self.test_object[elem1])
 
     def test__union_set__when_same_element__then_same_represent(self):
         # given
@@ -97,8 +106,8 @@ class DisjointSetsTest(unittest.TestCase):
         # when
         self.test_object.union_set(elem, elem)
         # then
-        self.assertTrue(self.test_object.is_same_set(elem, elem))
-        self.assertEqual(self.test_object[elem], self.test_object[elem])
+        assert_that(self.test_object.is_same_set(elem, elem)).is_true()
+        assert_that(self.test_object[elem]).is_equal_to(self.test_object[elem])
 
     def test__union_set__when_elements_in_one_set__then_same_represent(self):
         # given
@@ -108,34 +117,38 @@ class DisjointSetsTest(unittest.TestCase):
         # when
         self.test_object.union_set(elem2, elem1)
         # then
-        self.assertTrue(self.test_object.is_same_set(elem1, elem2))
-        self.assertEqual(self.test_object[elem1], self.test_object[elem2])
+        assert_that(self.test_object.is_same_set(elem1, elem2)).is_true()
+        assert_that(self.test_object[elem2]).is_equal_to(self.test_object[elem1])
 
     def test__union_set__when_absent_element__then_key_error(self):
-        # when - then
-        with self.assertRaises(KeyError):
-            self.test_object.union_set(15, 6)
+        def function(elem1, elem2):
+            self.test_object.union_set(elem1, elem2)
+
+        # then
+        assert_that(function).raises(KeyError).when_called_with(15, 6)
 
     def test__union_set__when_new_elements_in_chain__then_same_represent(self):
         # given
-        elems = [20, 17, 35]
+        elements = [20, 17, 35]
         # when
-        self.test_object.add(*elems).union_set(elems[0], elems[1]).union_set(elems[1], elems[2])
+        self.test_object.add(*elements) \
+            .union_set(elements[0], elements[1]) \
+            .union_set(elements[1], elements[2])
         # then
-        self.assertTrue(self.test_object.is_same_set(elems[0], elems[2]))
-        self.assertEqual(self.test_object[elems[0]], self.test_object[elems[2]])
+        assert_that(self.test_object.is_same_set(elements[0], elements[2])).is_true()
+        assert_that(self.test_object[elements[2]]).is_equal_to(self.test_object[elements[0]])
 
     def test__is_same_set__when_different_sets__then_false(self):
         # when
         result = self.test_object.is_same_set(4, 6)
         # then
-        self.assertFalse(result)
+        assert_that(result).is_false()
 
     def test__is_same_set__when_same_element__then_true(self):
         # when
         result = self.test_object.is_same_set(4, 4)
         # then
-        self.assertTrue(result)
+        assert_that(result).is_true()
 
     def test__is_same_set__when_same_set__then_true(self):
         # given
@@ -145,10 +158,11 @@ class DisjointSetsTest(unittest.TestCase):
         # when
         result = self.test_object.is_same_set(elem1, elem2)
         # then
-        self.assertTrue(result)
+        assert_that(result).is_true()
 
     def test__is_same_set__when_absent__then_key_error(self):
+        def function(elem1, elem2):
+            return self.test_object.is_same_set(elem1, elem2)
+
         # then
-        with self.assertRaises(KeyError):
-            # when
-            self.test_object.is_same_set(15, 6)
+        assert_that(function).raises(KeyError).when_called_with(15, 6)

@@ -2,6 +2,8 @@
 """Tests: Structure of trie tree"""
 from unittest import TestCase
 
+from assertpy import assert_that
+
 from algolib.text import Trie
 
 
@@ -18,37 +20,39 @@ class TestTrie(TestCase):
         # when
         result = len(self.test_object)
         # then
-        self.assertEqual(0, result)
+        assert_that(result).is_equal_to(0)
 
     def test__len__when_not_empty__then_number_of_texts(self):
         # when
         result = len(self.test_object)
         # then
-        self.assertEqual(len(self.texts), result)
+        assert_that(result).is_equal_to(len(self.texts))
 
     def test__contains__when_present__then_true(self):
         # when
         result = "abcd" in self.test_object
         # then
-        self.assertTrue(result)
+        assert_that(result).is_true()
 
     def test__contains__when_absent__then_false(self):
         # when
         result = "abxx" in self.test_object
         # then
-        self.assertFalse(result)
+        assert_that(result).is_false()
 
     def test__contains__when_absent_prefix__then_false(self):
         # when
         result = "xy" in self.test_object
         # then
-        self.assertFalse(result)
+        assert_that(result).is_false()
 
     def test__contains__when_wrong_type__then_type_error(self):
+        # when
+        def function(element):
+            return element in self.test_object
+
         # then
-        with self.assertRaises(TypeError):
-            # when
-            _ = 123 in self.test_object
+        assert_that(function).raises(TypeError).when_called_with(123)
 
     def test__add__when_present__then_nothing(self):
         # given
@@ -56,8 +60,8 @@ class TestTrie(TestCase):
         # when
         self.test_object.add(text)
         # then
-        self.assertTrue(text in self.test_object)
-        self.assertEqual(len(self.texts), len(self.test_object))
+        assert_that(self.test_object).contains(text)
+        assert_that(self.test_object).is_length(len(self.texts))
 
     def test__add__when_absent__then_added(self):
         # given
@@ -65,8 +69,8 @@ class TestTrie(TestCase):
         # when
         self.test_object.add(text)
         # then
-        self.assertTrue(text in self.test_object)
-        self.assertEqual(len(self.texts) + 1, len(self.test_object))
+        assert_that(self.test_object).contains(text)
+        assert_that(self.test_object).is_length(len(self.texts) + 1)
 
     def test__add__when_absent_prefix__then_added(self):
         # given
@@ -74,8 +78,8 @@ class TestTrie(TestCase):
         # when
         self.test_object.add(text)
         # then
-        self.assertTrue(text in self.test_object)
-        self.assertEqual(len(self.texts) + 1, len(self.test_object))
+        assert_that(text in self.test_object).is_true()
+        assert_that(self.test_object).is_length(len(self.texts) + 1)
 
     def test__remove__when_present__then_removed(self):
         # given
@@ -83,20 +87,24 @@ class TestTrie(TestCase):
         # when
         self.test_object.remove(text)
         # then
-        self.assertFalse(text in self.test_object)
-        self.assertEqual(len(self.texts) - 1, len(self.test_object))
+        assert_that(text in self.test_object).is_false()
+        assert_that(self.test_object).is_length(len(self.texts) - 1)
 
     def test__remove__when_absent__then_key_error(self):
+        # when
+        def function(element):
+            self.test_object.remove(element)
+
         # then
-        with self.assertRaises(KeyError):
-            # when
-            self.test_object.remove("abxx")
+        assert_that(function).raises(KeyError).when_called_with("abxx")
 
     def test__remove__when_absent_prefix__then_key_error(self):
+        # when
+        def function(element):
+            self.test_object.remove(element)
+
         # then
-        with self.assertRaises(KeyError):
-            # when
-            self.test_object.remove("xy")
+        assert_that(function).raises(KeyError).when_called_with("xy")
 
     def test__discard__when_present__then_removed(self):
         # given
@@ -104,8 +112,8 @@ class TestTrie(TestCase):
         # when
         self.test_object.discard(text)
         # then
-        self.assertFalse(text in self.test_object)
-        self.assertEqual(len(self.texts) - 1, len(self.test_object))
+        assert_that(self.test_object).does_not_contain(text)
+        assert_that(self.test_object).is_length(len(self.texts) - 1)
 
     def test__discard__when_absent__then_nothing(self):
         # given
@@ -113,8 +121,8 @@ class TestTrie(TestCase):
         # when
         self.test_object.discard(text)
         # then
-        self.assertFalse(text in self.test_object)
-        self.assertEqual(len(self.texts), len(self.test_object))
+        assert_that(self.test_object).does_not_contain(text)
+        assert_that(self.test_object).is_length(len(self.texts))
 
     def test__discard__when_absent_prefix__then_nothing(self):
         # given
@@ -122,12 +130,12 @@ class TestTrie(TestCase):
         # when
         self.test_object.discard(text)
         # then
-        self.assertTrue("xyz" in self.test_object)
-        self.assertFalse(text in self.test_object)
-        self.assertEqual(len(self.texts), len(self.test_object))
+        assert_that(self.test_object).contains("xyz")
+        assert_that(self.test_object).does_not_contain(text)
+        assert_that(self.test_object).is_length(len(self.texts))
 
     def test__clear__when_not_empty__then_empty(self):
         # when
         self.test_object.clear()
         # then
-        self.assertEqual(0, len(self.test_object))
+        assert_that(self.test_object).is_empty()
