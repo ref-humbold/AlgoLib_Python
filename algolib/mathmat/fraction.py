@@ -105,6 +105,9 @@ class Fraction:
         return Fraction(self._numerator * frac._denominator, self._denominator * frac._numerator)
 
     def __itruediv__(self, frac: "Fraction"):
+        if frac._numerator == 0:
+            raise ZeroDivisionError()
+
         self._numerator *= frac._denominator
         self._denominator *= frac._numerator
         self._normalize()

@@ -60,7 +60,7 @@ class Equation:
 
     def __mul__(self, constant: float) -> "Equation":
         if constant == 0:
-            raise ValueError("Constant cannot be equal to zero")
+            raise ArithmeticError("Constant cannot be equal to zero")
 
         return Equation((c * constant for c in self.coefficients), self.free * constant)
 
@@ -68,7 +68,7 @@ class Equation:
 
     def __imul__(self, constant: float):
         if constant == 0:
-            raise ValueError("Constant cannot be equal to zero")
+            raise ArithmeticError("Constant cannot be equal to zero")
 
         for i in range(len(self)):
             self.coefficients[i] *= constant
@@ -78,7 +78,7 @@ class Equation:
 
     def __truediv__(self, constant: float) -> "Equation":
         if constant == 0:
-            raise ValueError("Constant cannot be equal to zero")
+            raise ZeroDivisionError("Constant cannot be equal to zero")
 
         return Equation((c / constant for c in self.coefficients), self.free / constant)
 
@@ -86,7 +86,7 @@ class Equation:
 
     def __itruediv__(self, constant: float):
         if constant == 0:
-            raise ValueError("Constant cannot be equal to zero")
+            raise ZeroDivisionError("Constant cannot be equal to zero")
 
         for i in range(len(self)):
             self.coefficients[i] /= constant
@@ -99,12 +99,13 @@ class Equation:
 
         :param equation: equation
         :param constant: linear combination constant
-        :raises ValueError: if the constant is equal to zero or equations sizes differ"""
+        :raises ValueError: if equations sizes differ
+        :raises ArithmeticError: if the constant is equal to zero"""
         if len(equation) != len(self):
             raise ValueError("Equation has different number of variables")
 
         if constant == 0:
-            raise ValueError("Constant cannot be equal to zero")
+            raise ArithmeticError("Constant cannot be equal to zero")
 
         for i in range(len(self)):
             self.coefficients[i] += constant * equation[i]

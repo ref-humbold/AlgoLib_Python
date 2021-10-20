@@ -27,7 +27,7 @@ class DisjointSets(Sized, Container):
         :return: represent of the element
         :raises KeyError: if element is not in the structure"""
         if self._represents[element] != element:
-            self._represents[element] = self.__getitem__(self._represents[element])
+            self._represents[element] = self[self._represents[element]]
 
         return self._represents[element]
 
@@ -55,7 +55,14 @@ class DisjointSets(Sized, Container):
         :param elements: elements to be added
         :raises ValueError: if any of the elements is already in the structure
         :return: ``self`` for method chaining"""
-        self.__iadd__(elements)
+        for elem in elements:
+            if elem in self:
+                raise ValueError(f"Value {elem} already present.")
+
+        for elem in elements:
+            self._represents[elem] = elem
+            self._sets += 1
+
         return self
 
     def find_set(self, element: _T, default: Optional[_T] = None) -> Optional[_T]:
@@ -65,7 +72,7 @@ class DisjointSets(Sized, Container):
         :param default: a value to return if the element not inside
         :return: represent of the element"""
         try:
-            return self.__getitem__(element)
+            return self[element]
         except KeyError:
             return default
 
@@ -77,7 +84,7 @@ class DisjointSets(Sized, Container):
         :return: ``self`` for method chaining
         :raises KeyError: if either element is not in the structure"""
         if not self.is_same_set(element1, element2):
-            self._represents[self.__getitem__(element2)] = self.__getitem__(element1)
+            self._represents[self[element2]] = self[element1]
             self._sets -= 1
 
         return self
@@ -89,4 +96,4 @@ class DisjointSets(Sized, Container):
         :param element2: a second element
         :return: ``true`` if both elements are in the same set, otherwise ``false``
         :raises KeyError: if either element is not in the structure"""
-        return self.__getitem__(element1) == self.__getitem__(element2)
+        return self[element1] == self[element2]

@@ -2,6 +2,8 @@
 """Tests: Structure of linear equation"""
 import unittest
 
+from assertpy import assert_that
+
 from algolib.mathmat import Equation
 
 
@@ -17,64 +19,70 @@ class EquationTest(unittest.TestCase):
         # when
         result = str(self.test_object)
         # then
-        self.assertEqual("2 x_0 + 3 x_1 + -2 x_3 = 15", result)
+        assert_that(result).is_equal_to("2 x_0 + 3 x_1 + -2 x_3 = 15")
 
     def test__op_mul__then_multiplying_each_coefficient(self):
         # when
         result = self.test_object * 2
         # then
-        self.assertListEqual([4, 6, 0, -4], result.coefficients)
-        self.assertEqual(30, result.free)
+        assert_that(result.coefficients).is_equal_to([4, 6, 0, -4])
+        assert_that(result.free).is_equal_to(30)
 
-    def test__op_mul__when_zero__then_value_error(self):
+    def test__op_mul__when_zero__then_arithmetic_error(self):
+        # when
+        def function(constant):
+            return self.test_object * constant
+
         # then
-        with self.assertRaises(ValueError):
-            # when
-            _ = self.test_object * 0
+        assert_that(function).raises(ArithmeticError).when_called_with(0)
 
     def test__op_rmul__then_multiplying_each_coefficient(self):
         # when
         result = 2 * self.test_object
         # then
-        self.assertListEqual([4, 6, 0, -4], result.coefficients)
-        self.assertEqual(30, result.free)
+        assert_that(result.coefficients).is_equal_to([4, 6, 0, -4])
+        assert_that(result.free).is_equal_to(30)
 
     def test__op_imul__then_multiplying_each_coefficient(self):
         # when
         self.test_object *= 2
         # then
-        self.assertListEqual([4, 6, 0, -4], self.test_object.coefficients)
-        self.assertEqual(30, self.test_object.free)
+        assert_that(self.test_object.coefficients).is_equal_to([4, 6, 0, -4])
+        assert_that(self.test_object.free).is_equal_to(30)
 
     def test__op_truediv__then_dividing_each_coefficient(self):
         # when
         result = self.test_object / -2
         # then
-        self.assertListEqual([-1, -1.5, 0, 1], result.coefficients)
-        self.assertEqual(-7.5, result.free)
+        assert_that(result.coefficients).is_equal_to([-1, -1.5, 0, 1])
+        assert_that(result.free).is_equal_to(-7.5)
 
-    def test__op_truediv__when_zero__then_value_error(self):
+    def test__op_truediv__when_zero__then_zero_division_error(self):
+        # when
+        def function(constant):
+            return self.test_object / constant
+
         # then
-        with self.assertRaises(ValueError):
-            # when
-            _ = self.test_object / 0
+        assert_that(function).raises(ZeroDivisionError).when_called_with(0)
 
     def test__op_itruediv__then_dividing_each_coefficient(self):
         # when
         self.test_object /= -2
         # then
-        self.assertListEqual([-1, -1.5, 0, 1], self.test_object.coefficients)
-        self.assertEqual(-7.5, self.test_object.free)
+        assert_that(self.test_object.coefficients).is_equal_to([-1, -1.5, 0, 1])
+        assert_that(self.test_object.free).is_equal_to(-7.5)
 
     def test__combine__when_constant_is_non_zero__then_combined(self):
         # when
         self.test_object.combine(Equation([1, -1, 4, 10], 5), -2)
         # then
-        self.assertListEqual([0, 5, -8, -22], self.test_object.coefficients)
-        self.assertEqual(5, self.test_object.free)
+        assert_that(self.test_object.coefficients).is_equal_to([0, 5, -8, -22])
+        assert_that(self.test_object.free).is_equal_to(5)
 
-    def test__combine__when_constant_is_zero__then_value_error(self):
+    def test__combine__when_constant_is_zero__then_arithmetic_error(self):
+        # when
+        def function(constant):
+            return self.test_object.combine(Equation([1, -1, 10, 7], 5), constant)
+
         # then
-        with self.assertRaises(ValueError):
-            # when
-            self.test_object.combine(Equation([1, -1, 10, 7], 5), 0)
+        assert_that(function).raises(ArithmeticError).when_called_with(0)

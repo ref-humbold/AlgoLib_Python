@@ -2,190 +2,239 @@
 """Tests: Structure of AVL tree"""
 import unittest
 
+from assertpy import assert_that
+
 from algolib.structures import AVLTree
 
 
 class AVLTreeTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._numbers = [10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26]
+        self.numbers = [10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26]
         self.test_object = None
 
     def setUp(self):
-        self.test_object = AVLTree(self._numbers)
+        self.test_object = AVLTree(self.numbers)
 
     def test__str__then_text_representation(self):
+        # when
         result = str(self.test_object)
-
-        self.assertEqual("{|2, 6, 10, 14, 18, 24, 26, 30, 37, 45, 51, 68, 71, 97|}", result)
+        # then
+        assert_that(result).is_equal_to("{|2, 6, 10, 14, 18, 24, 26, 30, 37, 45, 51, 68, 71, 97|}")
 
     def test__len__when_empty__then_zero(self):
+        # given
         self.test_object = AVLTree()
+        # when
         result = len(self.test_object)
-
-        self.assertEqual(0, result)
+        # then
+        assert_that(result).is_equal_to(0)
 
     def test__len__when_not_empty__then_number_of_elements(self):
+        # when
         result = len(self.test_object)
-
-        self.assertEqual(len(self._numbers), result)
+        # then
+        assert_that(result).is_equal_to(len(self.numbers))
 
     def test__in__when_present_element__then_true(self):
-        for i in self._numbers:
-            result = i in self.test_object
-
-            self.assertTrue(result)
+        for e in self.numbers:
+            # when
+            result = e in self.test_object
+            # then
+            assert_that(result).is_true()
 
     def test__in__when_outer_element(self):
-        for i in [111, 140, 187]:
-            result = i in self.test_object
-
-            self.assertFalse(result)
+        for e in [111, 140, 187]:
+            # when
+            result = e in self.test_object
+            # then
+            assert_that(result).is_false()
 
     def test__iterator__when_not_empty__then_ordered_elements(self):
-        result = []
+        # when
         iterator = iter(self.test_object)
+        result = []
 
         while True:
             try:
                 result.append(next(iterator))
             except StopIteration:
                 break
-
-        self.assertListEqual(sorted(self._numbers), result)
+        # then
+        assert_that(result).is_sorted()
+        assert_that(result).is_equal_to(sorted(self.numbers))
 
     def test__iterator__when_empty__then_no_elements(self):
+        # given
         self.test_object = AVLTree()
-        result = []
+        # when
         iterator = iter(self.test_object)
+        result = []
 
         while True:
             try:
                 result.append(next(iterator))
             except StopIteration:
                 break
-
-        self.assertListEqual([], result)
+        # then
+        assert_that(result).is_empty()
 
     def test__reversed__when_not_empty__then_reverse_ordered_elements(self):
-        result = []
+        # when
         iterator = reversed(self.test_object)
+        result = []
 
         while True:
             try:
                 result.append(next(iterator))
             except StopIteration:
                 break
-
-        self.assertListEqual(sorted(self._numbers, reverse=True), result)
+        # then
+        assert_that(result).is_sorted(reverse=True)
+        assert_that(result).is_equal_to(sorted(self.numbers, reverse=True))
 
     def test__reversed__when_empty__then_no_elements(self):
+        # given
         self.test_object = AVLTree()
-        result = []
+        # when
         iterator = reversed(self.test_object)
+        result = []
 
         while True:
             try:
                 result.append(next(iterator))
             except StopIteration:
                 break
-
-        self.assertListEqual([], result)
+        # then
+        assert_that(result).is_empty()
 
     def test__add__when_new_element__then_increase_length(self):
+        # given
         for i, e in enumerate([111, 140, 187], start=1):
+            # when
             self.test_object.add(e)
-
-            self.assertIn(e, self.test_object)
-            self.assertEqual(len(self._numbers) + i, len(self.test_object))
+            # then
+            assert_that(self.test_object).contains(e)
+            assert_that(self.test_object).is_length(len(self.numbers) + i)
 
     def test__add__when_present_element__then_same_length(self):
-        for e in [14, 24, 30, 45]:
+        # given
+        elements = [14, 24, 30, 45]
+        # when
+        for e in elements:
             self.test_object.add(e)
-
-            self.assertIn(e, self.test_object)
-            self.assertEqual(len(self._numbers), len(self.test_object))
+        # then
+        assert_that(self.test_object).contains(*elements)
+        assert_that(self.test_object).is_length(len(self.numbers))
 
     def test__remove__when_present_element__then_not_in(self):
-        for i in [14, 24, 30, 45]:
-            self.test_object.remove(i)
+        # given
+        elements = [14, 24, 30, 45]
+        # when
+        for e in [14, 24, 30, 45]:
+            self.test_object.remove(e)
+        # then
+        assert_that(self.test_object).does_not_contain(*elements)
 
-            self.assertNotIn(i, self.test_object)
-
-    def test__remove_root__when_two_elements__then_root_not_in__1(self):
+    def test__remove__when_two_elements_with_root__then_root_not_in__1(self):
+        # given
         root = 27
         elem = 11
         self.test_object = AVLTree([root, elem])
+        # when
         self.test_object.remove(root)
+        # then
+        assert_that(self.test_object).does_not_contain(root)
+        assert_that(self.test_object).contains(elem)
 
-        self.assertNotIn(root, self.test_object)
-        self.assertIn(elem, self.test_object)
-
-    def test__remove_root__when_two_elements__then_root_not_in__2(self):
+    def test__remove__when_two_elements_with_root__then_root_not_in__2(self):
+        # given
         root = 11
         elem = 27
         self.test_object = AVLTree([root, elem])
+        # when
         self.test_object.remove(root)
+        # then
+        assert_that(self.test_object).does_not_contain(root)
+        assert_that(self.test_object).contains(elem)
 
-        self.assertNotIn(root, self.test_object)
-        self.assertIn(elem, self.test_object)
-
-    def test__remove_root__when_one_element__then_empty(self):
+    def test__remove__when_one_element_with_root__then_empty(self):
+        # given
         root = 0
         self.test_object = AVLTree([root])
+        # when
         self.test_object.remove(root)
-
-        self.assertNotIn(root, self.test_object)
-        self.assertTrue(len(self.test_object) == 0)
+        # then
+        assert_that(self.test_object).does_not_contain(root)
+        assert_that(self.test_object).is_empty()
 
     def test__remove__when_empty__then_key_error(self):
+        # given
         self.test_object = AVLTree()
 
-        with self.assertRaises(KeyError):
-            self.test_object.remove(0)
+        # when
+        def function(element):
+            self.test_object.remove(element)
 
-        self.assertTrue(len(self.test_object) == 0)
+        # then
+        assert_that(function).raises(KeyError).when_called_with(0)
+        assert_that(self.test_object).is_empty()
 
     def test__remove__when_outer_element__then_key_error(self):
-        for e in [111, 140, 187]:
-            with self.assertRaises(KeyError):
-                self.test_object.remove(e)
+        # when
+        def function(element):
+            self.test_object.remove(element)
 
-            self.assertNotIn(e, self.test_object)
+        # then
+        for e in [111, 140, 187]:
+            assert_that(function).raises(KeyError).when_called_with(e)
+            assert_that(self.test_object).does_not_contain(e)
 
     def test__discard__when_present_element__then_not_in(self):
-        for i in [14, 24, 30, 45]:
-            self.test_object.discard(i)
-
-            self.assertNotIn(i, self.test_object)
+        # given
+        elements = [14, 24, 30, 45]
+        # when
+        for e in elements:
+            self.test_object.discard(e)
+        # then
+        assert_that(self.test_object).does_not_contain(*elements)
 
     def test__discard__when_outer_element__then_nothing(self):
-        for e in [111, 140, 187]:
+        # given
+        elements = [111, 140, 187]
+        # when
+        for e in elements:
             self.test_object.discard(e)
-
-            self.assertNotIn(e, self.test_object)
+        # then
+        assert_that(self.test_object).does_not_contain(*elements)
 
     def test__discard__when_empty__then_nothing(self):
+        # given
         self.test_object = AVLTree()
-
+        # when
         self.test_object.discard(0)
-
-        self.assertEqual(0, len(self.test_object))
+        # then
+        assert_that(self.test_object).is_empty()
 
     def test__pop__when_not_empty__then_remove_and_return_element(self):
+        # when
         result = self.test_object.pop()
+        # then
+        assert_that(self.test_object).does_not_contain(result)
+        assert_that(result).is_in(*self.numbers)
+        assert_that(self.test_object).is_length(len(self.numbers) - 1)
 
-        self.assertNotIn(result, self.test_object)
-        self.assertIn(result, self._numbers)
-        self.assertEqual(len(self._numbers) - 1, len(self.test_object))
+    @staticmethod
+    def test__pop__when_empty__then_key_error():
+        # when
+        def function(tree):
+            tree.pop()
 
-    def test__pop__when_empty__then_key_error(self):
-        self.test_object = AVLTree()
-
-        with self.assertRaises(KeyError):
-            self.test_object.pop()
+        # then
+        assert_that(function).raises(KeyError).when_called_with(AVLTree())
 
     def test__clear__when_not_empty__then_empty(self):
+        # when
         self.test_object.clear()
-
-        self.assertEqual(0, len(self.test_object))
+        # then
+        assert_that(self.test_object).is_empty()
