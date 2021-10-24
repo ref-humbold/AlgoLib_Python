@@ -6,43 +6,45 @@ _T = TypeVar("_T")
 
 
 def longest_increasing(sequence: Sequence[_T], key=lambda x: x) -> Iterator[_T]:
-    """Constructs longest ordered subsequence.
+    """Constructs the longest increasing subsequence.
 
     :param sequence: a sequence of elements
-    :param key: key function for elements in subsequence
-    :return: least lexicographically longest ordered subsequence"""
+    :param key: key function for elements in sequence
+    :return: the longest increasing subsequence (least lexicographically)"""
     previous_elem = [None]
-    subseq_last = [0]
+    subsequence = [0]
 
     for (i, elem) in enumerate(sequence[1:], start=1):
-        if key(elem) < key(sequence[subseq_last[-1]]):
-            previous_elem.append(subseq_last[-1])
-            subseq_last.append(i)
+        if key(elem) > key(sequence[subsequence[-1]]):
+            previous_elem.append(subsequence[-1])
+            subsequence.append(i)
         else:
-            index = _search_index(sequence, key, subseq_last, i, 0, len(subseq_last) - 1)
-            subseq_last[index] = i
-            previous_elem.append(subseq_last[index - 1] if index > 0 else None)
+            index = _search_index(sequence, key, subsequence, 0, len(subsequence), i)
+            subsequence[index] = i
+            previous_elem.append(subsequence[index - 1] if index > 0 else None)
 
-    longest_subseq = []
-    j = subseq_last[-1]
+    longest_subsequence = []
+    subsequence_index = subsequence[-1]
 
-    while j is not None:
-        longest_subseq.append(sequence[j])
-        j = previous_elem[j]
+    while subsequence_index is not None:
+        longest_subsequence.append(sequence[subsequence_index])
+        subsequence_index = previous_elem[subsequence_index]
 
-    return reversed(longest_subseq)
+    return reversed(longest_subsequence)
 
 
-def _search_index(sequence, key, subseq_last, index_elem, index_begin, index_end):
-    if index_begin == index_end:
+def _search_index(sequence, key, subsequence, index_begin, index_end, index_elem):
+    # Searches for place of element in list of subsequences.
+    # (index_begin inclusive, index_end exclusive)
+    if index_end - index_begin <= 1:
         return index_begin
 
-    index_middle = (index_begin + index_end) // 2
+    index_middle = (index_begin + index_end - 1) // 2
 
-    if key(sequence[index_elem]) < key(sequence[subseq_last[index_middle]]):
-        return _search_index(sequence, key, subseq_last, index_elem, index_middle + 1, index_end)
+    if key(sequence[index_elem]) > key(sequence[subsequence[index_middle]]):
+        return _search_index(sequence, key, subsequence, index_middle + 1, index_end, index_elem)
 
-    return _search_index(sequence, key, subseq_last, index_elem, index_begin, index_middle)
+    return _search_index(sequence, key, subsequence, index_begin, index_middle + 1, index_elem)
 
 
 def maximum_subarray(iterable: Iterable[float]) -> List[float]:
