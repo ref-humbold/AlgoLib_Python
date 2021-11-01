@@ -14,7 +14,7 @@ class DirectedGraph(Graph, metaclass=ABCMeta):
 
     @abstractmethod
     def reversed_copy(self) -> "DirectedGraph":
-        """:return: the copy of the graph with reversed directions of edges"""
+        """:return: copy of this graph with reversed directions of edges"""
 
 
 class DirectedSimpleGraph(SimpleGraph, DirectedGraph):

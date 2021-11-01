@@ -130,8 +130,8 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
 
         :param vertex: new vertex or its identifier
         :param property_: vertex property
-        :return: the new vertex
-        :raise ValueError: if the vertex exists"""
+        :return: new vertex
+        :raise ValueError: if vertex already exists"""
         the_vertex = vertex if isinstance(vertex, Vertex) else Vertex(vertex)
         was_added = self._representation.add_vertex(the_vertex)
 
@@ -149,18 +149,18 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
         :param source: source vertex
         :param destination: destination vertex
         :param property_: edge property
-        :return: the new edge
-        :raise ValueError: if the edge exists"""
+        :return: new edge
+        :raise ValueError: if edge already exists"""
         return self.add_edge(Edge(source, destination), property_)
 
     @abstractmethod
     def add_edge(self, edge: Edge, property_: Any = None):
-        """Adds a new edge with given property to this graph.
+        """Adds new edge with given property to this graph.
 
-        :param edge: a new edge
+        :param edge: new edge
         :param property_: edge property
-        :return: the new edge
-        :raise ValueError: if the edge exists"""
+        :return: new edge
+        :raise ValueError: if edge already exists"""
 
     class _GraphPropertiesImpl(Graph.GraphProperties):
         def __init__(self, graph: "SimpleGraph"):
@@ -169,8 +169,8 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
         def __getitem__(self, item: Union["Vertex", "Edge"]) -> Any:
             return self._graph._representation.get_property(item)
 
-        def __setitem__(self, item: Union["Vertex", "Edge"], value: Any):
-            self._graph._representation.set_property(item, value)
+        def __setitem__(self, item: Union["Vertex", "Edge"], property_: Any):
+            self._graph._representation.set_property(item, property_)
 
         def __delitem__(self, item: Union["Vertex", "Edge"]):
             self._graph._representation.del_property(item)

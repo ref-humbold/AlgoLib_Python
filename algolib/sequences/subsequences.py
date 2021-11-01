@@ -34,17 +34,16 @@ def longest_increasing(sequence: Sequence[_T], key=lambda x: x) -> Iterator[_T]:
 
 
 def _search_index(sequence, key, subsequence, index_begin, index_end, index_elem):
-    # Searches for place of element in list of subsequences.
+    # Searches for index of element in list of subsequences.
     # (index_begin inclusive, index_end exclusive)
     if index_end - index_begin <= 1:
         return index_begin
 
     index_middle = (index_begin + index_end - 1) // 2
 
-    if key(sequence[index_elem]) > key(sequence[subsequence[index_middle]]):
-        return _search_index(sequence, key, subsequence, index_middle + 1, index_end, index_elem)
-
-    return _search_index(sequence, key, subsequence, index_begin, index_middle + 1, index_elem)
+    return _search_index(sequence, key, subsequence, index_middle + 1, index_end, index_elem) \
+        if key(sequence[index_elem]) > key(sequence[subsequence[index_middle]]) else \
+        _search_index(sequence, key, subsequence, index_begin, index_middle + 1, index_elem)
 
 
 def maximum_subarray(iterable: Iterable[float]) -> List[float]:

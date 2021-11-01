@@ -59,7 +59,7 @@ class SubseqsTest(unittest.TestCase):
     # region maximum_subarray
 
     @staticmethod
-    def test__maximum_subarray__when_negative_less_than_sum__then_negative_included():
+    def test__maximum_subarray__when_negative_less_than_subsum__then_include_negative():
         # given
         sequence = [3.5, 4.8, -1.6, 7.7, 2.1, -9.3, 0.8]
         # when
@@ -68,7 +68,7 @@ class SubseqsTest(unittest.TestCase):
         assert_that(result).is_equal_to([3.5, 4.8, -1.6, 7.7, 2.1])
 
     @staticmethod
-    def test__maximum_subarray__when_negative_greater_than_sum__then_check_new_subarray():
+    def test__maximum_subarray__when_negative_greater_than_subsum__then_exclude_negative():
         # given
         sequence = [-9.3, -1.2, 3.5, 4.8, -10.6, 7.7, 2.1, 0.8, 4.0]
         # when
@@ -89,7 +89,7 @@ class SubseqsTest(unittest.TestCase):
     # region maximum_subsum
 
     @staticmethod
-    def test__maximal_subsum__when_negative_less_than_sum__then_negative_included():
+    def test__maximal_subsum__when_negative_less_than_subsum__then_include_negative():
         # given
         sequence = [3.5, 4.8, -1.6, 7.7, 2.1, -9.3, 0.8]
         # when
@@ -98,7 +98,7 @@ class SubseqsTest(unittest.TestCase):
         assert_that(result).is_close_to(16.5, 0.000001)
 
     @staticmethod
-    def test__maximal_subsum__when_negative_greater_than_sum__then_check_new_subsum():
+    def test__maximal_subsum__when_negative_greater_than_subsum__then_exclude_negative():
         # given
         sequence = [-9.3, -1.2, 3.5, 4.8, -10.6, 7.7, 2.1, 0.8, 4.0]
         # when

@@ -11,7 +11,8 @@ from .simple_graph import SimpleGraph
 class UndirectedGraph(Graph, metaclass=ABCMeta):
     @abstractmethod
     def as_directed(self) -> DirectedGraph:
-        pass
+        """Converts this graph to a directed graph with the same vertices.
+        :return: directed graph"""
 
 
 class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):

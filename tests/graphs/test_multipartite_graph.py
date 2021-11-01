@@ -187,3 +187,11 @@ class MultipartiteGraphTest(unittest.TestCase):
 
         # then
         assert_that(function).raises(GraphPartitionError).when_called_with(Vertex(5), Vertex(8))
+
+    def test__add_edge_between__when_invalid_vertex__then_value_error(self):
+        # when
+        def function(source, destination):
+            return self.test_object.add_edge_between(source, destination)
+
+        # then
+        assert_that(function).raises(ValueError).when_called_with(Vertex(15), Vertex(18))

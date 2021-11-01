@@ -54,14 +54,13 @@ class TreeGraph(UndirectedGraph):
 
     def add_vertex(self, vertex: Union[Vertex, Any], neighbour: Vertex, vertex_property: Any = None,
                    edge_property: Any = None) -> Edge:
-        """Adds new vertex to this graph and creates an edge from the new vertex to
-        an existing vertex.
+        """Adds new vertex to this graph and creates an edge to given existing vertex.
 
         :param vertex: new vertex ot its identifier
-        :param neighbour: existing vertex from the graph
+        :param neighbour: existing vertex
         :param vertex_property: vertex property
         :param edge_property: edge property
-        :return: new edge between the new vertex and the existing vertex
-        :raise ValueError: if the vertex exists"""
+        :return: new edge between the vertices
+        :raise ValueError: if vertex already exists"""
         new_vertex = self._graph.add_vertex(vertex, vertex_property)
         return self._graph.add_edge_between(new_vertex, neighbour, edge_property)
