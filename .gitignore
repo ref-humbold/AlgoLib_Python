@@ -11,5 +11,9 @@ docs/build
 docs/source/*.rst
 !docs/source/index.rst
 
+# Visual Studio Code
+.vscode
+*.code-workspace
+
 # PyCharm
 .idea
