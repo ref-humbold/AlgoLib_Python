@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Algorithms for subsequences"""
-from typing import Iterable, Iterator, List, Sequence, TypeVar
+from typing import Iterable, Iterator, Sequence, TypeVar
 
 _T = TypeVar("_T")
 
@@ -46,7 +46,7 @@ def _search_index(sequence, key, subsequence, index_begin, index_end, index_elem
         _search_index(sequence, key, subsequence, index_begin, index_middle + 1, index_elem)
 
 
-def maximum_subarray(iterable: Iterable[float]) -> List[float]:
+def maximum_subarray(iterable: Iterable[float]) -> Iterable[float]:
     """Dynamically constructs coherent subarray with maximal sum.
 
     :param iterable: sequence of numbers
@@ -64,7 +64,7 @@ def maximum_subarray(iterable: Iterable[float]) -> List[float]:
         if actual[0] > maximal[0]:
             maximal = (actual[0], actual[1][:])
 
-    return maximal[1]
+    return iter(maximal[1])
 
 
 def maximal_subsum(sequence: Sequence[float]) -> float:
