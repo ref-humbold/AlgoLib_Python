@@ -12,48 +12,45 @@ class SubseqsTest(unittest.TestCase):
 
     @staticmethod
     def test__longest_increasing__when_increasing__then_all_elements():
-        # given
-        sequence = [1, 3, 5, 7, 9, 11, 13, 15]
         # when
-        result = longest_increasing(sequence)
+        result = longest_increasing([1, 3, 5, 7, 9, 11, 13, 15])
         # then
-        assert_that(list(result)).is_equal_to(sequence)
+        assert_that(list(result)).is_equal_to([1, 3, 5, 7, 9, 11, 13, 15])
 
     @staticmethod
     def test__longest_increasing__when_decreasing__then_last_element_only():
-        # given
-        sequence = [12, 10, 8, 6, 4, 2]
         # when
-        result = longest_increasing(sequence)
+        result = longest_increasing([12, 10, 8, 6, 4, 2])
         # then
         assert_that(list(result)).is_equal_to([2])
 
     @staticmethod
     def test__longest_increasing__when_multiple_subsequences__then_least_lexicographically():
-        # given
-        sequence = [2, 1, 4, 3, 6, 5, 8, 7, 10]
         # when
-        result = longest_increasing(sequence)
+        result = longest_increasing([2, 1, 4, 3, 6, 5, 8, 7, 10])
         # then
         assert_that(list(result)).is_equal_to([1, 3, 5, 7, 10])
 
     @staticmethod
-    def test__longest_increasing__when_increasing_and_reversed_comparator__then_last_element_only():
-        # given
-        sequence = [1, 3, 5, 7, 9, 11, 13, 15]
+    def test__longest_increasing__when_search_in_middle__then_least_lexicographically():
         # when
-        result = longest_increasing(sequence, key=lambda x: -x)
+        result = longest_increasing([0, 2, 4, 6, 8, 3, 5, 7, 8])
+        # then
+        assert_that(list(result)).is_equal_to([0, 2, 3, 5, 7, 8])
+
+    @staticmethod
+    def test__longest_increasing__when_increasing_and_reversed_comparator__then_last_element_only():
+        # when
+        result = longest_increasing([1, 3, 5, 7, 9, 11, 13, 15], key=lambda x: -x)
         # then
         assert_that(list(result)).is_equal_to([15])
 
     @staticmethod
     def test__longest_increasing__when_decreasing_and_reversed_comparator__then_all_elements():
-        # given
-        sequence = [12, 10, 8, 6, 4, 2]
         # when
-        result = longest_increasing(sequence, key=lambda x: -x)
+        result = longest_increasing([12, 10, 8, 6, 4, 2], key=lambda x: -x)
         # then
-        assert_that(list(result)).is_equal_to(sequence)
+        assert_that(list(result)).is_equal_to([12, 10, 8, 6, 4, 2])
 
     # endregion
     # region maximum_subarray

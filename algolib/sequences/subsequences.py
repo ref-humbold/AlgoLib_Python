@@ -19,7 +19,7 @@ def longest_increasing(sequence: Sequence[_T], key=lambda x: x) -> Iterator[_T]:
             previous_elem.append(subsequence[-1])
             subsequence.append(i)
         else:
-            index = _search_index(sequence, key, subsequence, 0, len(subsequence), i)
+            index = _search_index(sequence, key, subsequence, i, 0, len(subsequence))
             subsequence[index] = i
             previous_elem.append(subsequence[index - 1] if index > 0 else None)
 
@@ -33,7 +33,7 @@ def longest_increasing(sequence: Sequence[_T], key=lambda x: x) -> Iterator[_T]:
     return reversed(longest_subsequence)
 
 
-def _search_index(sequence, key, subsequence, index_begin, index_end, index_elem):
+def _search_index(sequence, key, subsequence, index_elem, index_begin, index_end):
     # Searches for index of element in list of subsequences.
     # (index_begin inclusive, index_end exclusive)
     if index_end - index_begin <= 1:
@@ -41,9 +41,9 @@ def _search_index(sequence, key, subsequence, index_begin, index_end, index_elem
 
     index_middle = (index_begin + index_end - 1) // 2
 
-    return _search_index(sequence, key, subsequence, index_middle + 1, index_end, index_elem) \
+    return _search_index(sequence, key, subsequence, index_elem, index_middle + 1, index_end) \
         if key(sequence[index_elem]) > key(sequence[subsequence[index_middle]]) else \
-        _search_index(sequence, key, subsequence, index_begin, index_middle + 1, index_elem)
+        _search_index(sequence, key, subsequence, index_elem, index_begin, index_middle + 1)
 
 
 def maximum_subarray(iterable: Iterable[float]) -> Iterable[float]:
