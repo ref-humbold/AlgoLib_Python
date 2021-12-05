@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
+from .longest_increasing_subsequence import find_lis
+from .maximum_subarray import count_maximal_subsum, find_maximum_subarray
 from .sorting import bottom_up_merge_sorted, heap_sorted, quick_sorted, top_down_merge_sorted
-from .subsequences import longest_increasing, maximal_subsum, maximum_subarray
 
-__all__ = ["longest_increasing", "maximum_subarray", "maximal_subsum", "heap_sorted",
+__all__ = ["find_lis", "find_maximum_subarray", "count_maximal_subsum", "heap_sorted",
            "top_down_merge_sorted", "bottom_up_merge_sorted", "quick_sorted"]
