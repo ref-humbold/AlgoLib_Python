@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-"""Knuth-Morris-Pratt algorithm"""
+"""Knuth-Morris-Pratt algorithm for pattern searching"""
 from typing import Iterable
 
 
 def kmp(text: str, pattern: str) -> Iterable[int]:
-    """Searches for pattern occurrences in specified text using Knuth-Morris-Pratt algorithm.
+    """Searches for pattern occurrences in given text using Knuth-Morris-Pratt algorithm.
 
-    :param text: text to be searched in
-    :param pattern: pattern to be searched for
-    :return: generator of pattern occurrence positions"""
+    :param text: a text
+    :param pattern: a pattern
+    :return: generator of indices with pattern occurrences"""
     if pattern == "":
         return
 
@@ -28,7 +28,7 @@ def kmp(text: str, pattern: str) -> Iterable[int]:
 
 
 def _prefix(pattern):
-    # Counts values of Knuth's PI prefix function for specified pattern.
+    # Computes Knuth's PI prefix function values for specified pattern.
     pi_values = [0]
     pos = 0
 
