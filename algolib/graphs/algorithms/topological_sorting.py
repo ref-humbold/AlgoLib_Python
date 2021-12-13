@@ -13,7 +13,7 @@ class DirectedCyclicGraphError(ValueError):
     pass
 
 
-def sort_topological_using_inputs(graph: DirectedGraph) -> List[Vertex]:
+def inputs_topological_sort(graph: DirectedGraph) -> List[Vertex]:
     """Topological sorting algorithm using predecessors counting.
 
     :param graph: a directed graph
@@ -47,7 +47,7 @@ def sort_topological_using_inputs(graph: DirectedGraph) -> List[Vertex]:
     return order
 
 
-def sort_topological_using_dfs(graph: DirectedGraph) -> List[Vertex]:
+def dfs_topological_sort(graph: DirectedGraph) -> List[Vertex]:
     """Topological sorting algorithm using DFS.
 
     :param graph: a directed graph

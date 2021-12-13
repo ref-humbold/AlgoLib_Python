@@ -3,7 +3,7 @@
 from typing import Iterable
 
 
-def kmp(text: str, pattern: str) -> Iterable[int]:
+def kmp_search(text: str, pattern: str) -> Iterable[int]:
     """Searches for pattern occurrences in given text using Knuth-Morris-Pratt algorithm.
 
     :param text: a text

@@ -5,16 +5,18 @@ import unittest
 from assertpy import assert_that
 
 from algolib.graphs import DirectedSimpleGraph
-from algolib.graphs.algorithms import DirectedCyclicGraphError, sort_topological_using_dfs, \
-    sort_topological_using_inputs
+from algolib.graphs.algorithms import DirectedCyclicGraphError, dfs_topological_sort, \
+    inputs_topological_sort
 
 
 class TopologicalSortingTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+    # region inputs_topological_sort
+
     @staticmethod
-    def test__sort_topological_using_inputs__when_acyclic_graph__then_topological_order():
+    def test__inputs_topological_sort__when_acyclic_graph__then_topological_order():
         # given
         graph = DirectedSimpleGraph(range(6))
         graph.add_edge_between(graph.get_vertex(0), graph.get_vertex(2))
@@ -28,7 +30,7 @@ class TopologicalSortingTest(unittest.TestCase):
         graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(2))
         graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(4))
         # when
-        result = sort_topological_using_inputs(graph)
+        result = inputs_topological_sort(graph)
         # then
         assert_that(result).is_instance_of(list)
         assert_that(result).is_equal_to(
@@ -36,7 +38,7 @@ class TopologicalSortingTest(unittest.TestCase):
              graph.get_vertex(2), graph.get_vertex(4)])
 
     @staticmethod
-    def test__sort_topological_using_inputs__when_cyclic_graph__then_directed_cyclic_graph_error():
+    def test__inputs_topological_sort__when_cyclic_graph__then_directed_cyclic_graph_error():
         # given
         graph = DirectedSimpleGraph(range(6))
         graph.add_edge_between(graph.get_vertex(0), graph.get_vertex(2))
@@ -53,23 +55,26 @@ class TopologicalSortingTest(unittest.TestCase):
 
         # when
         def function(graph_):
-            sort_topological_using_inputs(graph_)
+            inputs_topological_sort(graph_)
 
         # then
         assert_that(function).raises(DirectedCyclicGraphError).when_called_with(graph)
 
     @staticmethod
-    def test__sort_topological_using_inputs__when_empty_graph__then_vertices():
+    def test__inputs_topological_sort__when_empty_graph__then_vertices():
         # given
         graph = DirectedSimpleGraph(range(6))
         # when
-        result = sort_topological_using_inputs(graph)
+        result = inputs_topological_sort(graph)
         # then
         assert_that(result).is_instance_of(list)
         assert_that(result).is_equal_to(sorted(graph.vertices))
 
+    # endregion
+    # region dfs_topological_sort
+
     @staticmethod
-    def test__sort_topological_using_dfs__when_acyclic_graph__then_topological_order():
+    def test__dfs_topological_sort__when_acyclic_graph__then_topological_order():
         # given
         graph = DirectedSimpleGraph(range(6))
         graph.add_edge_between(graph.get_vertex(0), graph.get_vertex(2))
@@ -83,7 +88,7 @@ class TopologicalSortingTest(unittest.TestCase):
         graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(2))
         graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(4))
         # when
-        result = sort_topological_using_dfs(graph)
+        result = dfs_topological_sort(graph)
         # then
         assert_that(result).is_instance_of(list)
 
@@ -108,8 +113,7 @@ class TopologicalSortingTest(unittest.TestCase):
              graph.get_vertex(4), graph.get_vertex(2)])
 
     @staticmethod
-    def test__sort_topological_using_dfs__when_cyclic_graph__then_directed_cyclic_graph_error(
-    ):
+    def test__dfs_topological_sort__when_cyclic_graph__then_directed_cyclic_graph_error():
         # given
         graph = DirectedSimpleGraph(range(6))
         graph.add_edge_between(graph.get_vertex(0), graph.get_vertex(2))
@@ -126,17 +130,19 @@ class TopologicalSortingTest(unittest.TestCase):
 
         # when
         def function(graph_):
-            sort_topological_using_dfs(graph_)
+            dfs_topological_sort(graph_)
 
         # then
         assert_that(function).raises(DirectedCyclicGraphError).when_called_with(graph)
 
     @staticmethod
-    def test__sort_topological_using_dfs__when_empty_graph__then_vertices():
+    def test__dfs_topological_sort__when_empty_graph__then_vertices():
         # given
         graph = DirectedSimpleGraph(range(6))
         # when
-        result = sort_topological_using_dfs(graph)
+        result = dfs_topological_sort(graph)
         # then
         assert_that(result).is_instance_of(list)
         assert_that(result).is_equal_to(sorted(graph.vertices))
+
+    # endregion

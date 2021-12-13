@@ -8,7 +8,7 @@ from algolib.graphs import DirectedSimpleGraph
 from algolib.graphs.algorithms import find_scc
 
 
-class SCCTest(unittest.TestCase):
+class StronglyConnectedComponentsTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

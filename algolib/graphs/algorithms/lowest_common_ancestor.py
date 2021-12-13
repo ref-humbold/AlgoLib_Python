@@ -16,7 +16,7 @@ class LowestCommonAncestor:
         self._paths = {}
         self._strategy = self._LCAStrategy()
 
-    def find(self, vertex1: Vertex, vertex2: Vertex) -> Vertex:
+    def find_lca(self, vertex1: Vertex, vertex2: Vertex) -> Vertex:
         """Finds a lowest common ancestor of two vertices in a rooted tree.
 
         :param vertex1: first vertex
