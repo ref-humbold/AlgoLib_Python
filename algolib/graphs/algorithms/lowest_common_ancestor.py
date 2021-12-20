@@ -25,9 +25,9 @@ class LowestCommonAncestor:
         if self._empty:
             self._initialize()
 
-        return self._do_find(vertex1, vertex2)
+        return self._find(vertex1, vertex2)
 
-    def _do_find(self, vertex1, vertex2):
+    def _find(self, vertex1, vertex2):
         if self._is_offspring(vertex1, vertex2):
             return vertex2
 
@@ -36,9 +36,9 @@ class LowestCommonAncestor:
 
         for candidate in reversed(self._paths[vertex1]):
             if not self._is_offspring(vertex2, candidate):
-                return self._do_find(candidate, vertex2)
+                return self._find(candidate, vertex2)
 
-        return self._do_find(self._paths[vertex1][0], vertex2)
+        return self._find(self._paths[vertex1][0], vertex2)
 
     def _initialize(self):
         dfs_recursive(self.tree, self._strategy, [self.root])
