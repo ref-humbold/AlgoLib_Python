@@ -6,6 +6,11 @@ _T = TypeVar("_T")
 
 
 def count_lcs_length(sequence1: Sequence[_T], sequence2: Sequence[_T]):
+    """Computes length of the longest common subsequence of given sequences.
+
+    :param sequence1: first sequence
+    :param sequence2: second sequence
+    :return: length of the longest common subsequence"""
     short_seq, long_seq = \
         (sequence1, sequence2) if len(sequence1) <= len(sequence2) else (sequence2, sequence1)
     lcs = [0] * (len(short_seq) + 1)
