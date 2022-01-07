@@ -13,7 +13,7 @@ def heap_sorted(iterable: Iterable[_T]) -> List[_T]:
     :return: list of sorted elements"""
     sequence_list = list(iterable)
 
-    if sequence_list == []:
+    if not sequence_list:
         return []
 
     index_begin = 0
@@ -60,7 +60,7 @@ def top_down_merge_sorted(iterable: Iterable[_T]) -> List[_T]:
     :return: list of sorted elements"""
     sequence_list = list(iterable)
 
-    if sequence_list == []:
+    if not sequence_list:
         return []
 
     _do_merge_sort(sequence_list, 0, len(sequence_list))
@@ -74,7 +74,7 @@ def bottom_up_merge_sorted(iterable: Iterable[_T]) -> List[_T]:
     :return: list of sorted elements"""
     sequence_list = list(iterable)
 
-    if sequence_list == []:
+    if not sequence_list:
         return []
 
     half_step = 1
@@ -127,7 +127,7 @@ def quick_sorted(iterable: Iterable[_T]) -> List[_T]:
     :return: list of sorted elements"""
     sequence_list = list(iterable)
 
-    if sequence_list == []:
+    if not sequence_list:
         return []
 
     _do_quick_sort(sequence_list, 0, len(sequence_list))

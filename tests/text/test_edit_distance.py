@@ -20,7 +20,7 @@ class EditDistanceTest(unittest.TestCase):
         assert_that(result).is_zero()
 
     @staticmethod
-    def count_levenshtein__when_empty_source__then_sum_of_insertions(self):
+    def count_levenshtein__when_empty_source__then_sum_of_insertions():
         # given
         text = "qwertyuiop"
         insertion_cost = 2
@@ -30,7 +30,7 @@ class EditDistanceTest(unittest.TestCase):
         assert_that(result).is_equal_to(len(text) * insertion_cost)
 
     @staticmethod
-    def count_levenshtein__when_empty_destination__then_sum_of_deletions(self):
+    def count_levenshtein__when_empty_destination__then_sum_of_deletions():
         # given
         text = "qwertyuiop"
         deletion_cost = 2
@@ -61,7 +61,7 @@ class EditDistanceTest(unittest.TestCase):
         assert_that(result).is_zero()
 
     @staticmethod
-    def count_lcs__when_empty_source__then_sum_of_insertions(self):
+    def count_lcs__when_empty_source__then_sum_of_insertions():
         # given
         text = "qwertyuiop"
         insertion_cost = 2
@@ -71,7 +71,7 @@ class EditDistanceTest(unittest.TestCase):
         assert_that(result).is_equal_to(len(text) * insertion_cost)
 
     @staticmethod
-    def count_lcs__when_empty_destination__then_sum_of_deletions(self):
+    def count_lcs__when_empty_destination__then_sum_of_deletions():
         # given
         text = "qwertyuiop"
         deletion_cost = 2
