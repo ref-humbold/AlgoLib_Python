@@ -4,14 +4,14 @@ import unittest
 
 from assertpy import assert_that
 
-from algolib.text import count_lcs, count_levenshtein
+from algolib.text import count_hamming, count_lcs, count_levenshtein
 
 
 class EditDistanceTest(unittest.TestCase):
     # region count_levenshtein
 
     @staticmethod
-    def count_levenshtein__when_same_text__then_zero():
+    def test__count_levenshtein__when_same_text__then_zero():
         # given
         text = "qwertyuiop"
         # when
@@ -20,7 +20,7 @@ class EditDistanceTest(unittest.TestCase):
         assert_that(result).is_zero()
 
     @staticmethod
-    def count_levenshtein__when_empty_source__then_sum_of_insertions():
+    def test__count_levenshtein__when_empty_source__then_sum_of_insertions():
         # given
         text = "qwertyuiop"
         insertion_cost = 2
@@ -30,7 +30,7 @@ class EditDistanceTest(unittest.TestCase):
         assert_that(result).is_equal_to(len(text) * insertion_cost)
 
     @staticmethod
-    def count_levenshtein__when_empty_destination__then_sum_of_deletions():
+    def test__count_levenshtein__when_empty_destination__then_sum_of_deletions():
         # given
         text = "qwertyuiop"
         deletion_cost = 2
@@ -40,7 +40,7 @@ class EditDistanceTest(unittest.TestCase):
         assert_that(result).is_equal_to(len(text) * deletion_cost)
 
     @staticmethod
-    def count_levenshtein__when_negative_cost__then_value_error():
+    def test__count_levenshtein__when_negative_cost__then_value_error():
         # when
         def function(cost):
             count_levenshtein("a", "b", substitution_cost=cost)
@@ -52,7 +52,7 @@ class EditDistanceTest(unittest.TestCase):
     # region count_lcs
 
     @staticmethod
-    def count_lcs__when_same_text__then_zero():
+    def test__count_lcs__when_same_text__then_zero():
         # given
         text = "qwertyuiop"
         # when
@@ -61,7 +61,7 @@ class EditDistanceTest(unittest.TestCase):
         assert_that(result).is_zero()
 
     @staticmethod
-    def count_lcs__when_empty_source__then_sum_of_insertions():
+    def test__count_lcs__when_empty_source__then_sum_of_insertions():
         # given
         text = "qwertyuiop"
         insertion_cost = 2
@@ -71,7 +71,7 @@ class EditDistanceTest(unittest.TestCase):
         assert_that(result).is_equal_to(len(text) * insertion_cost)
 
     @staticmethod
-    def count_lcs__when_empty_destination__then_sum_of_deletions():
+    def test__count_lcs__when_empty_destination__then_sum_of_deletions():
         # given
         text = "qwertyuiop"
         deletion_cost = 2
@@ -81,10 +81,47 @@ class EditDistanceTest(unittest.TestCase):
         assert_that(result).is_equal_to(len(text) * deletion_cost)
 
     @staticmethod
-    def count_lcs__when_negative_cost__then_value_error():
+    def test__count_lcs__when_negative_cost__then_value_error():
         # when
         def function(cost):
             count_lcs("a", "b", deletion_cost=cost)
+
+        # then
+        assert_that(function).raises(ValueError).when_called_with(-1)
+
+    # endregion
+    # region count_hamming
+
+    @staticmethod
+    def test__count_hamming__when_empty__then_zero():
+        # when
+        result = count_hamming("", "")
+        # then
+        assert_that(result).is_zero()
+
+    @staticmethod
+    def test__count_hamming__when_same_text__then_zero():
+        # given
+        text = "qwertyuiop"
+        # when
+        result = count_hamming(text, text)
+        # then
+        assert_that(result).is_zero()
+
+    @staticmethod
+    def test__count_hamming__when_different_length__then_value_error():
+        # when
+        def function():
+            count_hamming("qwerty", "asdf")
+
+        # then
+        assert_that(function).raises(ValueError)
+
+    @staticmethod
+    def test__count_hamming__when_negative_cost__then_value_error():
+        # when
+        def function(cost):
+            count_hamming("a", "b", substitution_cost=cost)
 
         # then
         assert_that(function).raises(ValueError).when_called_with(-1)

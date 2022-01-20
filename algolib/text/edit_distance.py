@@ -56,3 +56,13 @@ def count_lcs(source: str, destination: str, insertion_cost: float = 1.0,
                 previous_above + deletion_cost, distance[i] + insertion_cost)
 
     return distance[-1]
+
+
+def count_hamming(source: str, destination: str, substitution_cost: float = 1.0) -> float:
+    if substitution_cost < 0:
+        raise ValueError("Cost cannot be negative")
+
+    if len(source) != len(destination):
+        raise ValueError("Texts should have equal length")
+
+    return sum(substitution_cost for sc, dc in zip(source, destination) if sc != dc)

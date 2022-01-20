@@ -92,16 +92,6 @@ class TopologicalSortingTest(unittest.TestCase):
         # then
         assert_that(result).is_instance_of(list)
 
-        print(result in [
-            [graph.get_vertex(5), graph.get_vertex(3), graph.get_vertex(1), graph.get_vertex(0),
-             graph.get_vertex(4), graph.get_vertex(2)],
-            [graph.get_vertex(3), graph.get_vertex(5), graph.get_vertex(1), graph.get_vertex(0),
-             graph.get_vertex(2), graph.get_vertex(4)],
-            [graph.get_vertex(5), graph.get_vertex(3), graph.get_vertex(1), graph.get_vertex(0),
-             graph.get_vertex(2), graph.get_vertex(4)],
-            [graph.get_vertex(3), graph.get_vertex(5), graph.get_vertex(1), graph.get_vertex(0),
-             graph.get_vertex(4), graph.get_vertex(2)]])
-
         assert_that(result).is_in(
             [graph.get_vertex(5), graph.get_vertex(3), graph.get_vertex(1), graph.get_vertex(0),
              graph.get_vertex(4), graph.get_vertex(2)],
