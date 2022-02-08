@@ -59,6 +59,12 @@ def count_lcs(source: str, destination: str, insertion_cost: float = 1.0,
 
 
 def count_hamming(source: str, destination: str, substitution_cost: float = 1.0) -> float:
+    """Computes cost of Hamming edit distance between given texts of equal length.
+
+    :param source: initial text
+    :param destination: final text
+    :param substitution_cost: cost of substitution operation
+    :return: cost of edit distance"""
     if substitution_cost < 0:
         raise ValueError("Cost cannot be negative")
 

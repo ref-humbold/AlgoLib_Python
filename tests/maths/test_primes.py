@@ -4,7 +4,7 @@ import unittest
 
 from assertpy import assert_that
 
-from algolib.mathmat import find_primes, test_fermat, test_miller
+from algolib.maths import find_primes, test_fermat, test_miller
 
 
 class PrimesTest(unittest.TestCase):

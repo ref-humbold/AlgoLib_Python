@@ -4,7 +4,7 @@ from unittest import TestCase
 
 from assertpy import assert_that
 
-from algolib.mathmat import Fraction
+from algolib.maths import Fraction
 
 
 class FractionTest(TestCase):

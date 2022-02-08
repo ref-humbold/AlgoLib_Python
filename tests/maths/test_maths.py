@@ -4,7 +4,7 @@ import unittest
 
 from assertpy import assert_that
 
-from algolib.mathmat import gcd, lcm, multiply, power
+from algolib.maths import gcd, lcm, multiply, power
 
 
 class MathsTest(unittest.TestCase):

@@ -4,7 +4,7 @@ import unittest
 
 from assertpy import assert_that
 
-from algolib.mathmat import Equation, EquationSystem, InfiniteSolutionsError, NoSolutionError
+from algolib.maths import Equation, EquationSystem, InfiniteSolutionsError, NoSolutionError
 
 
 class EquationSystemTest(unittest.TestCase):

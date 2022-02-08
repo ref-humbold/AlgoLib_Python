@@ -4,7 +4,7 @@ import unittest
 
 from assertpy import assert_that
 
-from algolib.mathmat import Equation
+from algolib.maths import Equation
 
 
 class EquationTest(unittest.TestCase):

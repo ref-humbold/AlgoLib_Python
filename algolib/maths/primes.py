@@ -4,7 +4,7 @@ from math import sqrt
 from random import randint
 from typing import Iterable
 
-from algolib.mathmat.maths import gcd, power
+from algolib.maths.maths import gcd, power
 
 
 def find_primes(*numbers: int) -> Iterable[int]:
