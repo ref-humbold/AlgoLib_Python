@@ -18,12 +18,16 @@ class DoubleHeap(Sized):
             self.append(e)
 
     def __len__(self):
-        """:return: number of elements in the heap"""
+        """:return: number of elements in this double heap"""
         return len(self._heap)
+
+    def clear(self):
+        """Removes all elements from this double heap."""
+        self._heap = []
 
     @property
     def left(self) -> _T:
-        """Retrieves minimal element from the double heap.
+        """Retrieves minimal element from this double heap.
 
         :return: minimal element
         :raise KeyError: if double heap is empty"""
@@ -34,7 +38,7 @@ class DoubleHeap(Sized):
 
     @property
     def right(self) -> _T:
-        """Retrieves maximal element from the double heap.
+        """Retrieves maximal element from this double heap.
 
         :return: maximal element
         :raise KeyError: if double heap is empty"""
@@ -45,10 +49,9 @@ class DoubleHeap(Sized):
             self._heap[self._INDEX_FRONT]
 
     def append(self, element: _T):
-        """Adds new value to the double heap.
+        """Adds new value to this double heap.
 
-        :param element: value to be added
-        """
+        :param element: the value"""
         self._heap.append(element)
 
         if len(self) == 1:
@@ -72,11 +75,10 @@ class DoubleHeap(Sized):
                 self._move_to_left(index)
 
     def popleft(self) -> _T:
-        """Retrieves and removes minimal element from the double heap.
+        """Retrieves and removes minimal element from this double heap.
 
         :return: removed minimal element
-        :raise KeyError: if double heap is empty
-        """
+        :raise KeyError: if double heap is empty"""
         minimal = self.left
 
         self._heap[self._INDEX_FRONT] = self._heap[-1]
@@ -86,11 +88,10 @@ class DoubleHeap(Sized):
         return minimal
 
     def popright(self) -> _T:
-        """Retrieves and removes maximal element from the double heap.
+        """Retrieves and removes maximal element from this double heap.
 
         :return: removed maximal element
-        :raise KeyError: if double heap is empty
-        """
+        :raise KeyError: if double heap is empty"""
         if len(self) == 1:
             return self.popleft()
 
@@ -100,10 +101,6 @@ class DoubleHeap(Sized):
         self._move_to_left(self._INDEX_BACK)
 
         return maximal
-
-    def clear(self):
-        """Removes all elements from the double heap."""
-        self._heap = []
 
     def _move_to_left(self, index):
         if index == self._INDEX_FRONT:

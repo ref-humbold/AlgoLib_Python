@@ -24,6 +24,11 @@ class AVLTree(MutableSet):
         """:return: number of elements in this tree"""
         return self._count
 
+    def clear(self):
+        """Removes all elements from this tree."""
+        self._root = None
+        self._count = 0
+
     def __iter__(self):
         """:return: the forward iterator object"""
         return self._AVLIterator(self._tree and self._tree.minimum)
@@ -94,11 +99,6 @@ class AVLTree(MutableSet):
         self._delete_node(removed)
 
         return removed.element
-
-    def clear(self):
-        """Removes all elements from this tree."""
-        self._root = None
-        self._count = 0
 
     @property
     def _root(self):
