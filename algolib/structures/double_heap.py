@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Structure of double heap"""
 from collections.abc import Sized
-from typing import Iterable, Optional, TypeVar
+from typing import Iterable, TypeVar
 
 _T = TypeVar("_T")
 
@@ -10,13 +10,12 @@ class DoubleHeap(Sized):
     _INDEX_FRONT = 0
     _INDEX_BACK = 1
 
-    def __init__(self, elements: Optional[Iterable[_T]] = None, key=None):
+    def __init__(self, elements: Iterable[_T] = (), key=None):
         self._heap = []
         self._key = key if key is not None else lambda x: x
 
-        if elements is not None:
-            for e in elements:
-                self.push(e)
+        for e in elements:
+            self.append(e)
 
     def __len__(self):
         """:return: number of elements in the heap"""
@@ -45,7 +44,7 @@ class DoubleHeap(Sized):
         return self._heap[self._INDEX_BACK] if len(self._heap) > 1 else \
             self._heap[self._INDEX_FRONT]
 
-    def push(self, element: _T):
+    def append(self, element: _T):
         """Adds new value to the double heap.
 
         :param element: value to be added

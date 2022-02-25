@@ -11,8 +11,8 @@ class AVLTree(MutableSet):
         self._tree = None
         self._count = 0
 
-        for i in elements:
-            self.add(i)
+        for element in elements:
+            self.add(element)
 
     def __repr__(self):
         return f"AVLTree({', '.join(repr(x) for x in self)})"
@@ -21,26 +21,26 @@ class AVLTree(MutableSet):
         return f"{{|{', '.join(repr(x) for x in self)}|}}"
 
     def __len__(self):
-        """:return: number of elements in the tree"""
+        """:return: number of elements in this tree"""
         return self._count
 
     def __iter__(self):
-        """:return: a forward iterator object"""
+        """:return: the forward iterator object"""
         return self._AVLIterator(self._tree and self._tree.minimum)
 
     def __reversed__(self):
-        """:return: a reversed iterator object"""
+        """:return: the reversed iterator object"""
         return self._AVLReverseIterator(self._tree and self._tree.maximum)
 
     def __contains__(self, element: _T):
         """:param element: element to be checked
-        :return: ``True`` if value is present in the tree, otherwise ``False``"""
+        :return: ``True`` if value is present, otherwise ``False``"""
         return len(self) > 0 and self._find_node(element, lambda n, e: n.element == e) is not None
 
     def add(self, value: _T):
-        """Adds a new value to the tree.
+        """Adds new value to this tree.
 
-        :param value: value to be added"""
+        :param value: new value"""
         node_parent = self._find_node(
             value, lambda n, e: self._search(n, e) is None or self._search(n, e).element == e)
 
@@ -63,7 +63,7 @@ class AVLTree(MutableSet):
                 self._count += 1
 
     def remove(self, value: _T):
-        """Removes specified element from the tree.
+        """Removes specified element from this tree.
 
         :param value: element to be removed
         :raises KeyError: if the element is not present"""
@@ -75,7 +75,7 @@ class AVLTree(MutableSet):
         self._delete_node(the_node)
 
     def discard(self, value: _T):
-        """Removes specified element from the tree if present.
+        """Removes specified element from this tree if present.
 
         :param value: element to be removed"""
         try:
@@ -83,8 +83,8 @@ class AVLTree(MutableSet):
         except KeyError:
             pass
 
-    def pop(self):
-        """Removes and returns an arbitrary element from the tree.
+    def pop(self) -> _T:
+        """Removes and returns an arbitrary element from this tree.
 
         :raises KeyError: if the tree is empty"""
         if self._tree is None:
@@ -96,7 +96,7 @@ class AVLTree(MutableSet):
         return removed.element
 
     def clear(self):
-        """Removes all elements from the tree."""
+        """Removes all elements from this tree."""
         self._root = None
         self._count = 0
 
