@@ -171,6 +171,21 @@ class PairingHeapTest(unittest.TestCase):
         assert_that(len(result)).is_equal_to(len(self.test_object) + len(other))
         assert_that(result.head).is_equal_to(other.head)
 
+    def test__or__when_shared_inner_heap__then_changed_only_merging_heap(self):
+        # given
+        self.test_object = PairingHeap()
+        first = PairingHeap([10, 20])
+        second = PairingHeap([4, 8])
+        # when
+        result1 = self.test_object | first
+        result2 = result1 | second
+        # then
+        assert_that(result1.head).is_equal_to(10)
+        assert_that(result2.head).is_equal_to(4)
+        assert_that(lambda h: h.head).raises(KeyError).when_called_with(self.test_object)
+        assert_that(first.head).is_equal_to(10)
+        assert_that(second.head).is_equal_to(4)
+
     # endregion
     # region ior
 
@@ -210,5 +225,18 @@ class PairingHeapTest(unittest.TestCase):
         # then
         assert_that(len(self.test_object)).is_equal_to(len(self.numbers) + len(other))
         assert_that(self.test_object.head).is_equal_to(other.head)
+
+    def test__ior__when_shared_inner_heap__then_changed_only_merging_heap(self):
+        # given
+        self.test_object = PairingHeap()
+        first = PairingHeap([10, 20])
+        second = PairingHeap([4, 8])
+        # when
+        self.test_object |= first
+        self.test_object |= second
+        # then
+        assert_that(self.test_object.head).is_equal_to(4)
+        assert_that(first.head).is_equal_to(10)
+        assert_that(second.head).is_equal_to(4)
 
     # endregion
