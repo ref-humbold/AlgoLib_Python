@@ -9,6 +9,7 @@ from .shortest_paths import Paths, bellman_ford, dijkstra, floyd_warshall
 from .strongly_connected_components import find_scc
 from .topological_sorting import DirectedCyclicGraphError, dfs_topological_sort, \
     inputs_topological_sort
+from .tree_diameter import count_diameter
 
 __all__ = [
     "find_edge_cut", "find_vertex_cut",
@@ -19,5 +20,6 @@ __all__ = [
     "BFSStrategy", "DFSStrategy", "EmptyStrategy",
     "Paths", "bellman_ford", "dijkstra", "floyd_warshall",
     "find_scc",
-    "DirectedCyclicGraphError", "inputs_topological_sort", "dfs_topological_sort"
+    "DirectedCyclicGraphError", "inputs_topological_sort", "dfs_topological_sort",
+    "count_diameter"
 ]
