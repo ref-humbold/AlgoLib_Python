@@ -23,11 +23,8 @@ def _dfs(tree: TreeGraph, vertex: Vertex, parent: Vertex) -> Tuple[float, float]
             weight = tree.properties[edge].weight
             result_from, result_subtree = _dfs(tree, neighbour, vertex)
 
-            if result_from + weight > path_from:
-                path_through = path_from + result_from + weight
-                path_from = result_from + weight
-            else:
-                path_through = max(path_through, path_from + result_from + weight)
-                path_subtree = max(path_subtree, result_subtree)
+            path_through = max(path_through, path_from + result_from + weight)
+            path_subtree = max(path_subtree, result_subtree)
+            path_from = max(path_from, result_from + weight)
 
     return path_from, max(path_through, path_subtree)
