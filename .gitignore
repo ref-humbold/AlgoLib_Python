@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
 
+.venv/
 venv/
 
 nose2-junit.xml
