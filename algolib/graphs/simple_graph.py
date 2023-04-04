@@ -43,8 +43,8 @@ class _GraphRepresentation:
 
     def get_edge(self, source_id, destination_id):
         try:
-            source, edges = next((v, edges) for v, edges in self._graph_dict.items()
-                                 if v.id == source_id)
+            source, edges = next(
+                    (v, edges) for v, edges in self._graph_dict.items() if v.id == source_id)
             return next(edge for edge in edges if edge.get_neighbour(source).id == destination_id)
         except StopIteration:
             raise KeyError(f"Edge not found: {source_id}, {destination_id}") from None

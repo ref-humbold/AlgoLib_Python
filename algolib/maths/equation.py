@@ -118,4 +118,4 @@ class Equation:
         :param solution: values to check
         :return: ``true`` if solution is correct, otherwise ``false``"""
         return len(solution) == len(self) and sum(
-            map(lambda c, s: c * s, self.coefficients, solution)) == self.free
+                map(lambda c, s: c * s, self.coefficients, solution)) == self.free

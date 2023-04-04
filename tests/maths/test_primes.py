@@ -60,8 +60,9 @@ class PrimesTest(unittest.TestCase):
         # when
         result = find_primes(67)
         # then
-        assert_that(list(result)).is_equal_to(
-            [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61])
+        assert_that(list(
+                result
+        )).is_equal_to([2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61])
 
     @staticmethod
     def test__find_primes__when_at_most_two():
@@ -89,8 +90,7 @@ class PrimesTest(unittest.TestCase):
              89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149])
 
     @staticmethod
-    def test__find_primes__when_min_and_max_are_primes__then_primes_between_with_min_inclusive(
-    ):
+    def test__find_primes__when_min_and_max_are_primes__then_primes_between_with_min_inclusive():
         # when
         result = find_primes(137, 317)
         # then

@@ -57,6 +57,6 @@ def prim(graph: UndirectedGraph, source: Vertex) -> UndirectedGraph:
 
                 if neighbour not in visited:
                     edge_queue.put(
-                        (graph.properties[adjacent_edge].weight, adjacent_edge, neighbour))
+                            (graph.properties[adjacent_edge].weight, adjacent_edge, neighbour))
 
     return mst

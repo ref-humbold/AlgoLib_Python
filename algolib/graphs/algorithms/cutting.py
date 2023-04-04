@@ -16,8 +16,8 @@ def find_edge_cut(graph: UndirectedGraph) -> Iterable[Edge]:
     strategy = _CuttingStrategy()
     dfs_recursive(graph, strategy, graph.vertices)
 
-    return (graph.get_edge(vertex, strategy.dfs_parents[vertex])
-            for vertex in graph.vertices if strategy.has_bridge(vertex))
+    return (graph.get_edge(vertex, strategy.dfs_parents[vertex]) for vertex in graph.vertices
+            if strategy.has_bridge(vertex))
 
 
 def find_vertex_cut(graph: UndirectedGraph) -> Iterable[Vertex]:

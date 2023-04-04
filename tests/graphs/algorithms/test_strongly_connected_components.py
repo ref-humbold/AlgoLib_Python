@@ -34,11 +34,15 @@ class StronglyConnectedComponentsTest(unittest.TestCase):
         result = list(find_scc(graph))
         # then
         assert_that(result).is_length(4)
-        assert_that(result).contains_only(
-            {graph.get_vertex(5)},
-            {graph.get_vertex(2)},
-            {graph.get_vertex(0), graph.get_vertex(1), graph.get_vertex(3), graph.get_vertex(4)},
-            {graph.get_vertex(6), graph.get_vertex(7), graph.get_vertex(8), graph.get_vertex(9)})
+        assert_that(result).contains_only({graph.get_vertex(5)}, {graph.get_vertex(2)}, {
+                graph.get_vertex(0),
+                graph.get_vertex(1),
+                graph.get_vertex(3),
+                graph.get_vertex(4)}, {
+                        graph.get_vertex(6),
+                        graph.get_vertex(7),
+                        graph.get_vertex(8),
+                        graph.get_vertex(9)})
 
     @staticmethod
     def test__find_scc__when_single_component__then_all_vertices():

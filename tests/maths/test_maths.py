@@ -124,14 +124,16 @@ class MathsTest(unittest.TestCase):
         assert_that(result).is_equal_to(30)
 
     @staticmethod
-    def test__multiply__when_first_factor_is_negative_and_second_factor_is_positive__then_result_is_negative():
+    def test__multiply__when_first_factor_is_negative_and_second_factor_is_positive__then_result_is_negative(
+    ):
         # when
         result = multiply(-3, 10)
         # then
         assert_that(result).is_equal_to(-30)
 
     @staticmethod
-    def test__multiply__when_first_factor_is_positive_and_second_factor_is_negative__then_result_is_negative():
+    def test__multiply__when_first_factor_is_positive_and_second_factor_is_negative__then_result_is_negative(
+    ):
         # when
         result = multiply(3, -10)
         # then

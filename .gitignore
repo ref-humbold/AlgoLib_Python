@@ -1,19 +1,15 @@
-# [ Python ]
-# Python output
 __pycache__/
 *.pyc
 
-# PyTest / Nose2 output
+venv/
+
 nose2-junit.xml
 
-# Sphinx output
 docs/build
 docs/source/*.rst
 !docs/source/index.rst
 
-# Visual Studio Code
 .vscode
 *.code-workspace
 
-# PyCharm
 .idea

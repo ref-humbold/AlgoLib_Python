@@ -208,8 +208,7 @@ class PairingHeapTest(unittest.TestCase):
 
     def test__ior__when_other_has_greater_minimum__then_minimum_remains(self):
         # given
-        other = PairingHeap(
-            [min(self.numbers) + 5, min(self.numbers) + 13, min(self.numbers) + 20])
+        other = PairingHeap([min(self.numbers) + 5, min(self.numbers) + 13, min(self.numbers) + 20])
         # when
         self.test_object |= other
         # then

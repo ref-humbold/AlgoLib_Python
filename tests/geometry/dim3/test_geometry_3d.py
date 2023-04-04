@@ -16,8 +16,9 @@ class Geometry3DTest(unittest.TestCase):
     def test__sorted_by_x__when_tuple__then_new_list_sorted_stably_ascending():
         # given
         sequence = (Point3D(0.0, 0.0, 0.0), Point3D(2.0, 3.0, -5.0), Point3D(-2.0, -3.0, 5.0),
-                    Point3D(2.0, -3.0, -5.0), Point3D(-2.0, -3.0, -5.0), Point3D(3.0, 2.0, 5.0),
-                    Point3D(-3.0, 2.0, 5.0))
+                    Point3D(2.0, -3.0, -5.0), Point3D(-2.0, -3.0,
+                                                      -5.0), Point3D(3.0, 2.0,
+                                                                     5.0), Point3D(-3.0, 2.0, 5.0))
         # when
         result = sorted_by_x(sequence)
         # then

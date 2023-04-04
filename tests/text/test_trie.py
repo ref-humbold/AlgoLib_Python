@@ -8,7 +8,6 @@ from algolib.text import Trie
 
 
 class TestTrie(TestCase):
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.texts = ["abcd", "ab", "xyz"]

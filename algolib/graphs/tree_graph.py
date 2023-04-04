@@ -52,7 +52,10 @@ class TreeGraph(UndirectedGraph):
     def as_directed(self):
         return self._graph.as_directed()
 
-    def add_vertex(self, vertex: Union[Vertex, Any], neighbour: Vertex, vertex_property: Any = None,
+    def add_vertex(self,
+                   vertex: Union[Vertex, Any],
+                   neighbour: Vertex,
+                   vertex_property: Any = None,
                    edge_property: Any = None) -> Edge:
         """Adds new vertex to this graph and creates an edge to given existing vertex.
 

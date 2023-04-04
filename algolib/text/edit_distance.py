@@ -2,8 +2,11 @@
 """Algorithms for edit distance"""
 
 
-def count_levenshtein(source: str, destination: str, insertion_cost: float = 1.0,
-                      deletion_cost: float = 1.0, substitution_cost: float = 1.0) -> float:
+def count_levenshtein(source: str,
+                      destination: str,
+                      insertion_cost: float = 1.0,
+                      deletion_cost: float = 1.0,
+                      substitution_cost: float = 1.0) -> float:
     """Computes cost of Levenshtein edit distance between given texts.
 
     :param source: initial text
@@ -25,13 +28,15 @@ def count_levenshtein(source: str, destination: str, insertion_cost: float = 1.0
             previous_diagonal = previous_above
             previous_above = distance[i + 1]
             distance[i + 1] = previous_diagonal if element1 == element2 else min(
-                previous_above + deletion_cost, distance[i] + insertion_cost,
-                previous_diagonal + substitution_cost)
+                    previous_above + deletion_cost, distance[i] + insertion_cost, previous_diagonal
+                    + substitution_cost)
 
     return distance[-1]
 
 
-def count_lcs(source: str, destination: str, insertion_cost: float = 1.0,
+def count_lcs(source: str,
+              destination: str,
+              insertion_cost: float = 1.0,
               deletion_cost: float = 1.0) -> float:
     """Computes cost of LCS edit distance between given texts.
 
@@ -53,7 +58,7 @@ def count_lcs(source: str, destination: str, insertion_cost: float = 1.0,
             previous_diagonal = previous_above
             previous_above = distance[i + 1]
             distance[i + 1] = previous_diagonal if element1 == element2 else min(
-                previous_above + deletion_cost, distance[i] + insertion_cost)
+                    previous_above + deletion_cost, distance[i] + insertion_cost)
 
     return distance[-1]
 
