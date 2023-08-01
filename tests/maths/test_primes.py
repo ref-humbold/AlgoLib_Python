@@ -32,14 +32,14 @@ class PrimesTest(unittest.TestCase):
         assert_that(function).raises(TypeError)
 
     @staticmethod
-    def test__find_primes__when_two_args_descending__then_empty_generator():
+    def test__find_primes__when_min_greater_than_max__then_empty():
         # when
         result = find_primes(100, 30)
         # then
         assert_that(list(result)).is_empty()
 
     @staticmethod
-    def test__find_primes__when_one_arg__then_same_as_two_args_with_zero_as_min():
+    def test__find_primes__when_single_argument__then_min_is_zero():
         # when
         result1 = find_primes(100)
         result2 = find_primes(0, 100)
@@ -47,32 +47,46 @@ class PrimesTest(unittest.TestCase):
         assert_that(list(result1)).is_equal_to(list(result2))
 
     @staticmethod
-    def test__find_primes__when_one_arg__then_primes_less_than_arg():
+    def test__find_primes__when_max_is_composite__then_all_primes():
         # when
         result = find_primes(100)
         # then
         assert_that(list(result)).is_equal_to(
-            [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79,
-             83, 89, 97])
+            [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83,
+             89, 97])
 
     @staticmethod
-    def test__find_primes__when_max_is_prime__then_primes_less_than_arg():
+    def test__find_primes__when_max_is_prime__then_max_exclusive():
         # when
         result = find_primes(67)
         # then
         assert_that(list(
-                result
+            result
         )).is_equal_to([2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61])
 
     @staticmethod
-    def test__find_primes__when_at_most_two():
+    def test__find_primes__when_max_is_two__then_empty():
         # when
         result = find_primes(2)
         # then
         assert_that(list(result)).is_empty()
 
     @staticmethod
-    def test__find_primes__when_two_args__then_primes_between():
+    def test__find_primes__when_max_is_three__then_single_element():
+        # when
+        result = find_primes(3)
+        # then
+        assert_that(list(result)).is_equal_to([2])
+
+    @staticmethod
+    def test__find_primes__when_max_is_four__then_all_primes():
+        # when
+        result = find_primes(4)
+        # then
+        assert_that(list(result)).is_equal_to([2, 3])
+
+    @staticmethod
+    def test__find_primes__when_range__then_primes_between():
         # when
         result = find_primes(30, 200)
         # then
@@ -81,16 +95,39 @@ class PrimesTest(unittest.TestCase):
              127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199])
 
     @staticmethod
-    def test__find_primes__when_min_less_than_sqrt_of_max__then_primes_between():
+    def test__find_primes__when_min_is_two__then_two_included():
+        # when
+        result = find_primes(2, 30)
+        # then
+        assert_that(list(result)).is_equal_to([2, 3, 5, 7, 11, 13, 17, 19, 23, 29])
+
+    @staticmethod
+    def test__find_primes__when_min_is_three__then_two_not_included():
+        # when
+        result = find_primes(3, 30)
+        # then
+        assert_that(list(result)).is_equal_to([3, 5, 7, 11, 13, 17, 19, 23, 29])
+
+    @staticmethod
+    def test__find_primes__when_max_is_fourth_power_of_prime__then_all_primes_between():
+        # when
+        result = find_primes(9, 81)
+        # then
+        assert_that(list(
+            result
+        )).is_equal_to([11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79])
+
+    @staticmethod
+    def test__find_primes__when_min_is_less_than_square_root_of_max__then_primes_between():
         # when
         result = find_primes(5, 150)
         # then
         assert_that(list(result)).is_equal_to(
-            [5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83,
-             89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149])
+            [5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89,
+             97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149])
 
     @staticmethod
-    def test__find_primes__when_min_and_max_are_primes__then_primes_between_with_min_inclusive():
+    def test__find_primes__when_min_and_max_are_primes__then_min_inclusive_and_max_exclusive():
         # when
         result = find_primes(137, 317)
         # then
@@ -99,7 +136,7 @@ class PrimesTest(unittest.TestCase):
              229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313])
 
     @staticmethod
-    def test__find_primes__when_min_equals_max_and_prime__then_empty_list():
+    def test__find_primes__when_min_equals_max_and_prime__then_empty():
         # when
         result = find_primes(41, 41)
         # then

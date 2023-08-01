@@ -78,23 +78,45 @@ def test_miller(number: int) -> bool:
     return True
 
 
-def _find_primes_range(min_number, max_number):
+def _find_primes_range(minimum, maximum):
     # Finds prime numbers inside a specified range (minimum inclusive, maximum exclusive)
-    if max_number <= min_number or max_number <= 2:
+    if maximum <= minimum or maximum <= 2:
         return
 
-    is_prime = [i == 2 or (i > 2 and i % 2 == 1) for i in range(min_number, max_number)]
-    base_primes = [True] * int(sqrt(max_number) / 2)
+    segment_size = int(sqrt(maximum))
+    base_primes = _get_base_primes(segment_size)
 
-    for i, prime in enumerate(base_primes):
-        if prime:
-            num = 2 * i + 3
-            begin = num * num - min_number if min_number < num * num else -min_number % num
+    if minimum < segment_size:
+        yield from (p for p in [2, *base_primes] if p >= minimum)
 
-            for j in range((num * num - 3) // 2, len(base_primes), num):
-                base_primes[j] = False
+    for i in range(max(minimum, segment_size), maximum, segment_size):
+        yield from _get_segment_primes(i, min(i + segment_size, maximum), base_primes)
 
-            for j in range(begin, len(is_prime), num):
-                is_prime[j] = False
 
-    yield from (min_number + i for i, prime in enumerate(is_prime) if prime)
+def _get_base_primes(base_maximum):
+    # Extracts prime numbers between 0 and given maximum value
+    is_prime = [True] * ((base_maximum - 1) // 2)
+
+    for i in range(0, int(sqrt(base_maximum) / 2)):
+        if is_prime[i]:
+            prime_value = 2 * i + 3
+
+            for j in range(prime_value * prime_value, base_maximum, 2 * prime_value):
+                is_prime[(j - 3) // 2] = False
+
+    return [2 * index + 3 for index, flag in enumerate(is_prime) if flag]
+
+
+def _get_segment_primes(segment_start, segment_end, base_primes):
+    # Extracts prime numbers from given range using given basic prime numbers
+    segment_begin = segment_start + 1 - segment_start % 2
+    is_prime = [i > 2 for i in range(segment_begin, segment_end, 2)]
+
+    for p in base_primes:
+        prime_multiple = (segment_begin + p - 1) // p * p
+        multiple_start = prime_multiple + p if prime_multiple % 2 == 0 else prime_multiple
+
+        for i in range(multiple_start, segment_end, 2 * p):
+            is_prime[(i - segment_begin) // 2] = False
+
+    return (segment_begin + 2 * index for index, flag in enumerate(is_prime) if flag)
