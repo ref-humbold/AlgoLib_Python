@@ -12,6 +12,13 @@ class ClosestPointsTest(unittest.TestCase):
         super().__init__(*args, **kwargs)
 
     @staticmethod
+    def test__find_closest_points__when_no_points__then_value_error():
+        # when
+        function = find_closest_points
+        # then
+        assert_that(function).raises(ValueError).when_called_with([])
+
+    @staticmethod
     def test__find_closest_points__when_one_point__then_this_point():
         # when
         result = find_closest_points([Point2D(2, 2)])

@@ -83,7 +83,7 @@ class EquationSystem:
                     param = self[j][i] / self[i][i]
 
                     if param != 0:
-                        self[j].combine(self[i], -param)
+                        self._equations[j] += self[i] * -param
 
     def swap(self, i: int, j: int):
         """Swaps two equations in the system.
@@ -92,9 +92,9 @@ class EquationSystem:
         :param j: index of second equation"""
         self._equations[i], self._equations[j] = self._equations[j], self._equations[i]
 
-    def is_solution(self, solution: Sequence[float]) -> bool:
+    def has_solution(self, solution: Sequence[float]) -> bool:
         """Checks whether given values solve the equation system.
 
         :param solution: values to check
         :return: ``true`` if solution is correct, otherwise ``false``"""
-        return all(eq.is_solution(solution) for eq in self._equations)
+        return all(eq.has_solution(solution) for eq in self._equations)
