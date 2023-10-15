@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
-"""Algorithms for sequence sorting"""
+"""Algorithms for sequence sorting."""
 from random import randint
 from typing import Iterable, List, TypeVar
 
 _T = TypeVar("_T")
 
 
-def heap_sorted(iterable: Iterable[_T]) -> List[_T]:
-    """Immutably sorts specified iterable using a heap.
+def heap_sorted(sequence: Iterable[_T]) -> List[_T]:
+    """Immutably sorts given sequence using heap.
 
-    :param iterable: an iterable of elements
-    :return: list of sorted elements"""
-    sequence_list = list(iterable)
+    :param sequence: the sequence of elements
+    :return: the sorted sequence"""
+    sequence_list = list(sequence)
 
     if not sequence_list:
         return []
@@ -33,7 +33,61 @@ def heap_sorted(iterable: Iterable[_T]) -> List[_T]:
     return sequence_list
 
 
+def top_down_merge_sorted(sequence: Iterable[_T]) -> List[_T]:
+    """Immutably sorts given sequence using top-down merge-sort algorithm.
+    Sorting is guaranteed to be stable.
+
+    :param sequence: the sequence of elements
+    :return: the sorted sequence"""
+    sequence_list = list(sequence)
+
+    if not sequence_list:
+        return []
+
+    _do_merge_sort(sequence_list, 0, len(sequence_list))
+    return sequence_list
+
+
+def bottom_up_merge_sorted(sequence: Iterable[_T]) -> List[_T]:
+    """Immutably sorts given sequence using bottom-up merge-sort algorithm.
+    Sorting is guaranteed to be stable.
+
+    :param sequence: the sequence of elements
+    :return: the sorted sequence"""
+    sequence_list = list(sequence)
+
+    if not sequence_list:
+        return []
+
+    half_step = 1
+
+    while half_step < len(sequence_list):
+        for i in range(0, len(sequence_list), half_step + half_step):
+            index_middle = min(i + half_step, len(sequence_list))
+            index_end = min(i + half_step + half_step, len(sequence_list))
+            _merge(sequence_list, i, index_middle, index_end)
+
+        half_step *= 2
+
+    return sequence_list
+
+
+def quick_sorted(sequence: Iterable[_T]) -> List[_T]:
+    """Immutably sorts given sequence using quick-sort algorithm.
+
+    :param sequence: the sequence of elements
+    :return: the sorted sequence"""
+    sequence_list = list(sequence)
+
+    if not sequence_list:
+        return []
+
+    _do_quick_sort(sequence_list, 0, len(sequence_list))
+    return sequence_list
+
+
 def _move_down(heap, vertex, index_begin, index_end):
+    # Move element down inside given heap.
     next_vertex = None
     left_vertex = vertex + vertex - index_begin + 1
     right_vertex = vertex + vertex - index_begin + 2
@@ -53,45 +107,8 @@ def _move_down(heap, vertex, index_begin, index_end):
     _move_down(heap, next_vertex, index_begin, index_end)
 
 
-def top_down_merge_sorted(iterable: Iterable[_T]) -> List[_T]:
-    """Immutably sorts specified iterable using a top-down merge-sort algorithm.
-
-    :param iterable: an iterable of elements
-    :return: list of sorted elements"""
-    sequence_list = list(iterable)
-
-    if not sequence_list:
-        return []
-
-    _do_merge_sort(sequence_list, 0, len(sequence_list))
-    return sequence_list
-
-
-def bottom_up_merge_sorted(iterable: Iterable[_T]) -> List[_T]:
-    """Immutably sorts specified iterable using a bottom-up merge-sort algorithm.
-
-    :param iterable: an iterable of elements
-    :return: list of sorted elements"""
-    sequence_list = list(iterable)
-
-    if not sequence_list:
-        return []
-
-    half_step = 1
-
-    while half_step < len(sequence_list):
-        for i in range(0, len(sequence_list), half_step + half_step):
-            index_middle = min(i + half_step, len(sequence_list))
-            index_end = min(i + half_step + half_step, len(sequence_list))
-            _merge(sequence_list, i, index_middle, index_end)
-
-        half_step *= 2
-
-    return sequence_list
-
-
 def _do_merge_sort(sequence, index_begin, index_end):
-    # Mutably sorts specified sequence using a recursive merge-sort algorithm.
+    # Mutably sorts given sequence using recursive merge-sort algorithm.
     if index_end - index_begin <= 1:
         return
 
@@ -102,7 +119,7 @@ def _do_merge_sort(sequence, index_begin, index_end):
 
 
 def _merge(sequence, index_begin, index_middle, index_end):
-    # Merges two sorted fragments of a sequence.
+    # Merges two sorted fragments of given sequence. Guaranteed to be stable.
     ordered = []
     iter1 = index_begin
     iter2 = index_middle
@@ -120,30 +137,12 @@ def _merge(sequence, index_begin, index_middle, index_end):
     sequence[index_begin:index_begin + len(ordered)] = ordered
 
 
-def quick_sorted(iterable: Iterable[_T]) -> List[_T]:
-    """Immutably sorts specified iterable using a quick-sort algorithm.
-
-    :param iterable: an iterable of elements
-    :return: list of sorted elements"""
-    sequence_list = list(iterable)
-
-    if not sequence_list:
-        return []
-
-    _do_quick_sort(sequence_list, 0, len(sequence_list))
-    return sequence_list
-
-
 def _do_quick_sort(sequence, index_begin, index_end):
-    # Mutably sorts specified sequence using a quick-sort algorithm.
+    # Mutably sorts given sequence using quick-sort algorithm.
     if index_end - index_begin <= 1:
         return
 
-    index_pivot = sorted([
-        randint(index_begin, index_end - 1),
-        randint(index_begin, index_end - 1),
-        randint(index_begin, index_end - 1)
-    ])[1]
+    index_pivot = _choose_pivot(index_begin, index_end)
     sequence[index_pivot], sequence[index_begin] = sequence[index_begin], sequence[index_pivot]
     index_pivot = index_begin
     index_front = index_begin + 1
@@ -162,3 +161,12 @@ def _do_quick_sort(sequence, index_begin, index_end):
 
     _do_quick_sort(sequence, index_begin, index_pivot)
     _do_quick_sort(sequence, index_pivot + 1, index_end)
+
+
+def _choose_pivot(index_begin, index_end):
+    # Randomly chooses pivot for quick-sort algorithm.
+    return sorted([
+        randint(index_begin, index_end - 1),
+        randint(index_begin, index_end - 1),
+        randint(index_begin, index_end - 1)
+    ])[1]

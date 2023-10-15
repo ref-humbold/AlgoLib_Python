@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structure of vector in 2D"""
+"""Structure of vector in 2D."""
 from math import sqrt
 from typing import Tuple
 

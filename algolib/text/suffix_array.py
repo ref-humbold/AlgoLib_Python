@@ -1,56 +1,63 @@
 # -*- coding: utf-8 -*-
-"""Structure of suffix array"""
+"""Structure of suffix array."""
 from collections import deque
 from math import inf
 
 
 class SuffixArray:
     def __init__(self, text: str):
-        self._length = len(text)  # length of suffix array
-        self._text = text  # text
-        self._suf_array = self._init_array()  # suffix array
-        self._inv_array = self._init_inv()  # inverted suffix array
-        self._lcp_array = self._init_lcp()  # longest common prefixes array
+        self._length = len(text)
+        self._text = text
+        self._suf_array = self._init_array()
+        self._inv_array = self._init_inv()
+        self._lcp_array = self._init_lcp()
 
     @property
     def text(self) -> str:
-        """:return: text for the suffix array"""
         return self._text
 
     def __len__(self):
-        """:return: length of the suffix array"""
+        """Gets the length of this suffix array.
+
+        :return: the length of suffix array"""
         return self._length
 
-    def __getitem__(self, i: int) -> str:
-        """:param i: an index in the suffix array
-        :return: suffix"""
-        if i < 0 or i >= self._length:
+    def __getitem__(self, index: int) -> str:
+        """Gets the text suffix at given index.
+
+        :param index: the index in this suffix array
+        :return: the text suffix at the index"""
+        if index < 0 or index >= self._length:
             raise IndexError("Suffix array index out of range")
 
-        return self._text[self._suf_array[i]:]
+        return self._text[self._suf_array[index]:]
 
-    def index_at(self, i: int) -> int:
-        """:param i: an index in the suffix array
-        :return: index in text where the suffix begins"""
-        if i < 0 or i >= self._length:
+    def index_at(self, index: int) -> int:
+        """Searches for suffix in text for given index in this suffix array.
+
+        :param index: the index in this suffix array
+        :return: the index in text where suffix begins"""
+        if index < 0 or index >= self._length:
             raise IndexError("Suffix array index out of range")
 
-        return self._suf_array[i]
+        return self._suf_array[index]
 
-    def index_of(self, suf: int) -> int:
-        """:param suf: an index in text denoting a suffix
-        :return: index of suffix in the array"""
-        if suf < 0 or suf >= self._length:
+    def index_of(self, index: int) -> int:
+        """Searches for index in this suffix array for given text suffix.
+
+        :param index: the index in text where suffix begins
+        :return: the index of suffix in suffix array"""
+        if index < 0 or index >= self._length:
             raise IndexError("Text index out of range")
 
-        return self._inv_array[suf]
+        return self._inv_array[index]
 
     def lcp(self, suf1: int, suf2: int) -> int:
-        """Counts longest common prefix of two suffixes.
+        """Computes length of the longest common prefix of given suffixes.
 
-        :param suf1: an index in text denoting first suffix
-        :param suf2: an index in text denoting second suffix
-        :return: length of longest common prefix"""
+        :param suf1: the index in text where the first suffix begins
+        :param suf2: the index in text where the second suffix begins
+        :return: the length of longest common prefix"""
         if suf1 < 0 or suf1 >= self._length or suf2 < 0 or suf2 >= self._length:
             raise IndexError("Text index out of range")
 
@@ -62,11 +69,11 @@ class SuffixArray:
         return min(self._lcp_array[i] for i in range(ix1 + 1, ix2 + 1))
 
     def _init_array(self):
-        # Builds a suffix array.
+        # Builds suffix array.
         return self._create_array(list(map(ord, self._text)))
 
     def _init_inv(self):
-        # Builds an inverted suffix array.
+        # Builds inverted suffix array.
         arr = [0] * self._length
 
         for i in range(0, self._length):
@@ -75,7 +82,7 @@ class SuffixArray:
         return arr
 
     def _init_lcp(self):
-        # Builds the LCP array.
+        # Builds LCP array.
         arr = [0] * self._length
         length = 0
 
@@ -93,7 +100,7 @@ class SuffixArray:
         return arr
 
     def _create_array(self, txt):
-        # Creates a suffix array assuming a sized alphabet.
+        # Creates suffix array assuming sized alphabet.
         if len(txt) < 2:
             return [0]
 
@@ -110,11 +117,11 @@ class SuffixArray:
         text12 = [0] * length02
 
         for i in indices12:
-            elems = (self._get(txt, i), self._get(txt, i + 1), self._get(txt, i + 2))
+            elements = (self._get(txt, i), self._get(txt, i + 1), self._get(txt, i + 2))
 
-            if last != elems:
+            if last != elements:
                 code += 1
-                last = elems
+                last = elements
 
             if i % 3 == 1:
                 text12[i // 3] = code
@@ -182,7 +189,7 @@ class SuffixArray:
 
     @staticmethod
     def _sort_indices(indices, values, shift):
-        # Sorts specified array of shifted indices of specified keys from a sized alphabet.
+        # Sorts specified array of shifted indices of specified keys from sized alphabet.
         buckets = {}
         j = 0
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structure of trie tree"""
+"""Structure of trie tree."""
 from collections.abc import Container, Sized
 from typing import Iterable, Optional
 
@@ -14,12 +14,16 @@ class Trie(Sized, Container):
                 self.add(text)
 
     def __len__(self):
-        """:return: number of texts in the trie"""
+        """Gets number of texts in this tree.
+
+        :return: the number of texts"""
         return self._size
 
     def __contains__(self, text: object):
-        """:param text: text to be checked
-        :return: ``True`` if text is present in the trie, otherwise ``False``"""
+        """Checks whether given text belongs to this tree.
+
+        :param text: the text
+        :return: ``True`` if text is present in the trie tree, otherwise ``False``"""
         if not isinstance(text, str):
             raise TypeError(f"Type should be 'str', not '{type(text)}'")
 
@@ -34,9 +38,9 @@ class Trie(Sized, Container):
         return node.terminus
 
     def add(self, text: str):
-        """Adds a new text to the trie.
+        """Adds new text to this tree.
 
-        :param text: text to be added"""
+        :param text: the new text """
         node = self._tree
 
         for character in text:
@@ -48,28 +52,28 @@ class Trie(Sized, Container):
             node.terminus = True
 
     def remove(self, text: str):
-        """Removes specified text from the trie.
+        """Removes given text from this tree.
 
-        :param text: text to be removed
+        :param text: the text
         :raises KeyError: if the text is not present"""
         self._remove_node(text, self._tree, 0)
 
     def discard(self, text: str):
-        """Removes specified text from the trie if present.
+        """Removes given text from this tree, if present.
 
-        :param text: text to be removed"""
+        :param text: the text"""
         try:
             self.remove(text)
         except KeyError:
             pass
 
     def clear(self):
-        """Removes all texts from the trie."""
+        """Removes all texts from this tree."""
         self._tree = self._TrieNode()
         self._size = 0
 
     def _remove_node(self, text: str, node: "Trie._TrieNode", i: int) -> bool:
-        # Removes node for a character in text at specified index.
+        # Removes node for character in text at specified index.
         if i == len(text):
             if not node.terminus:
                 raise KeyError

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structure of point in 2D"""
+"""Structure of point in 2D."""
 from math import atan2, pi, sqrt
 from typing import Tuple
 

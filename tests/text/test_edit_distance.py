@@ -25,7 +25,8 @@ class EditDistanceTest(unittest.TestCase):
         text = "qwertyuiop"
         insertion_cost = 2
         # when
-        result = count_levenshtein("", text, insertion_cost, 1, 1)
+        result = count_levenshtein("", text, insertion_cost=insertion_cost, deletion_cost=1,
+                                   substitution_cost=1)
         # then
         assert_that(result).is_equal_to(len(text) * insertion_cost)
 
@@ -35,7 +36,8 @@ class EditDistanceTest(unittest.TestCase):
         text = "qwertyuiop"
         deletion_cost = 2
         # when
-        result = count_levenshtein(text, "", 1, deletion_cost, 1)
+        result = count_levenshtein(text, "", insertion_cost=1, deletion_cost=deletion_cost,
+                                   substitution_cost=1)
         # then
         assert_that(result).is_equal_to(len(text) * deletion_cost)
 
@@ -66,7 +68,7 @@ class EditDistanceTest(unittest.TestCase):
         text = "qwertyuiop"
         insertion_cost = 2
         # when
-        result = count_lcs("", text, insertion_cost, 1)
+        result = count_lcs("", text, insertion_cost=insertion_cost, deletion_cost=1)
         # then
         assert_that(result).is_equal_to(len(text) * insertion_cost)
 
@@ -76,7 +78,7 @@ class EditDistanceTest(unittest.TestCase):
         text = "qwertyuiop"
         deletion_cost = 2
         # when
-        result = count_lcs(text, "", 1, deletion_cost)
+        result = count_lcs(text, "", insertion_cost=1, deletion_cost=deletion_cost)
         # then
         assert_that(result).is_equal_to(len(text) * deletion_cost)
 

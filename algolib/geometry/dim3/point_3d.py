@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structure of point in 3D"""
+"""Structure of point in 3D."""
 from math import sqrt
 from typing import Tuple
 
@@ -45,7 +45,7 @@ class Point3D(GeometryObject):
 
     def __eq__(self, pt: "Point3D"):
         return self._are_equal(self._x, pt.x) and self._are_equal(self._y, pt.y) \
-               and self._are_equal(self._z, pt.z)
+            and self._are_equal(self._z, pt.z)
 
     def __ne__(self, pt: "Point3D"):
         return not self == pt

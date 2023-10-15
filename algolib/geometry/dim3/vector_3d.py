@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structure of vector in 3D"""
+"""Structure of vector in 3D."""
 from math import sqrt
 from typing import Tuple
 
@@ -45,7 +45,7 @@ class Vector3D(GeometryObject):
 
     def __eq__(self, vec: "Vector3D"):
         return self._are_equal(self._x, vec.x) and self._are_equal(self._y, vec.y) \
-               and self._are_equal(self._z, vec.z)
+            and self._are_equal(self._z, vec.z)
 
     def __ne__(self, vec: "Vector3D"):
         return not self == vec

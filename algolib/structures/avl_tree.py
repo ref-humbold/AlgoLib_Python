@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structure of AVL tree"""
+"""Structure of AVL tree."""
 from collections.abc import MutableSet
 from typing import Iterable, TypeVar
 
@@ -21,7 +21,9 @@ class AVLTree(MutableSet):
         return f"{{|{', '.join(repr(x) for x in self)}|}}"
 
     def __len__(self):
-        """:return: number of elements in this tree"""
+        """Get the number of elements in this tree.
+
+        :return: the number of elements"""
         return self._count
 
     def clear(self):
@@ -38,28 +40,30 @@ class AVLTree(MutableSet):
         return self._AVLReverseIterator(self._tree and self._tree.maximum)
 
     def __contains__(self, element: _T):
-        """:param element: element to be checked
-        :return: ``True`` if value is present, otherwise ``False``"""
+        """Checks whether given element belongs to this tree.
+
+        :param element: the element
+        :return: ``True`` if the element is present, otherwise ``False``"""
         return len(self) > 0 and self._find_node(element, lambda n, e: n.element == e) is not None
 
-    def add(self, value: _T):
-        """Adds new value to this tree.
+    def add(self, element: _T):
+        """Adds new element to this tree.
 
-        :param value: new value"""
+        :param element: the new element"""
         node_parent = self._find_node(
-            value, lambda n, e: self._search(n, e) is None or self._search(n, e).element == e)
+            element, lambda n, e: self._search(n, e) is None or self._search(n, e).element == e)
 
         if node_parent is None:
-            new_node = self._AVLNode(value)
+            new_node = self._AVLNode(element)
             self._root = new_node
             self._count += 1
         else:
-            the_node = self._search(node_parent, value)
+            the_node = self._search(node_parent, element)
 
             if the_node is None:
-                new_node = self._AVLNode(value)
+                new_node = self._AVLNode(element)
 
-                if value < node_parent.element:
+                if element < node_parent.element:
                     node_parent.left = new_node
                 else:
                     node_parent.right = new_node
@@ -67,33 +71,33 @@ class AVLTree(MutableSet):
                 self._balance(new_node)
                 self._count += 1
 
-    def remove(self, value: _T):
-        """Removes specified element from this tree.
+    def remove(self, element: _T):
+        """Removes given element from this tree.
 
-        :param value: element to be removed
+        :param element: the element
         :raises KeyError: if the element is not present"""
-        the_node = self._find_node(value, lambda n, e: n.element == e)
+        the_node = self._find_node(element, lambda n, e: n.element == e)
 
         if the_node is None:
-            raise KeyError(value)
+            raise KeyError(element)
 
         self._delete_node(the_node)
 
-    def discard(self, value: _T):
-        """Removes specified element from this tree if present.
+    def discard(self, element: _T):
+        """Removes given element from this tree, if present.
 
-        :param value: element to be removed"""
+        :param element: the element"""
         try:
-            self.remove(value)
+            self.remove(element)
         except KeyError:
             pass
 
     def pop(self) -> _T:
         """Removes and returns an arbitrary element from this tree.
 
-        :raises KeyError: if the tree is empty"""
+        :raises KeyError: if this tree is empty"""
         if self._tree is None:
-            raise KeyError("pop from an empty tree")
+            raise KeyError("The tree is empty")
 
         removed = self._tree.minimum
         self._delete_node(removed)

@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
-"""Algorithm for longest increasing subsequence"""
+"""Algorithm for longest increasing subsequence."""
 from typing import Iterable, Sequence, TypeVar
 
 _T = TypeVar("_T")
 
 
 def find_lis(sequence: Sequence[_T], key=lambda x: x) -> Iterable[_T]:
-    """Constructs the longest increasing subsequence.
+    """Computes longest increasing subsequence according to given key function.
 
-    :param sequence: sequence of elements
-    :param key: key function for elements in sequence
+    :param sequence: the sequence of elements
+    :param key: the key function for elements in sequence
     :return: the longest increasing subsequence (least lexicographically)"""
     previous_elem = [None]
     subsequence = [0]
@@ -34,8 +34,7 @@ def find_lis(sequence: Sequence[_T], key=lambda x: x) -> Iterable[_T]:
 
 
 def _search_index(sequence, key, subsequence, index_elem, index_begin, index_end):
-    # Searches for index of element in list of subsequences.
-    # (index_begin inclusive, index_end exclusive)
+    # Searches for place of element in list of subsequences.
     if index_end - index_begin <= 1:
         return index_begin
 

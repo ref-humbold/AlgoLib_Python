@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structure of pairing heap"""
+"""Structure of pairing heap."""
 from typing import Optional, Sized, TypeVar
 
 _T = TypeVar("_T")
@@ -14,7 +14,9 @@ class PairingHeap(Sized):
             self.append(e)
 
     def __len__(self):
-        """:return: number of elements in this pairing heap"""
+        """Gets the number of elements in this pairing heap.
+
+        :return: the number of elements"""
         return self._size
 
     def clear(self):
@@ -26,17 +28,17 @@ class PairingHeap(Sized):
     def head(self) -> _T:
         """Retrieves minimal element from this pairing heap.
 
-        :return: minimal element
-        :raise KeyError: if pairing heap is empty"""
+        :return: the minimal element
+        :raise KeyError: if this pairing heap is empty"""
         if self._heap is None:
             raise KeyError("Pairing heap is empty")
 
         return self._heap.element
 
     def append(self, element: _T):
-        """Adds new value to this pairing heap.
+        """Adds new element to this pairing heap.
 
-        :param element: the value"""
+        :param element: the new element"""
         if self._heap is None:
             self._heap = self._heap = self._HeapNode(element, None)
         else:
@@ -49,8 +51,8 @@ class PairingHeap(Sized):
     def pop(self) -> _T:
         """Retrieves and removes minimal element from this pairing heap.
 
-        :return: removed minimal element
-        :raise KeyError: if pairing heap is empty"""
+        :return: the removed minimal element
+        :raise KeyError: if this pairing heap is empty"""
         if self._heap is None:
             raise KeyError("Pairing heap is empty")
 

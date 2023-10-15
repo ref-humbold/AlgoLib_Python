@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Algorithm for pair of closest points in 2D"""
+"""Algorithm for searching pair of closest points in 2D."""
 from typing import Iterable, Tuple
 
 from .geometry_2d import distance, sorted_by_x, sorted_by_y
@@ -7,15 +7,15 @@ from .point_2d import Point2D
 
 
 def find_closest_points(points: Iterable[Point2D]) -> Tuple[Point2D, Point2D]:
-    """Searches for closest points among specified points.
+    """Searches for the pair of closest points among given points.
 
-    :param points: an iterable of points
-    :return: pair of the closest points
+    :param points: the points
+    :return: the pair of closest points
     :exception ValueError: if no points specified"""
     points = list(points)
 
     if len(points) == 0:
-        raise ValueError("No points specified")
+        raise ValueError("Sequence contains no points")
 
     points_x = sorted_by_x(points)
     points_y = sorted_by_y(points)
@@ -23,8 +23,8 @@ def find_closest_points(points: Iterable[Point2D]) -> Tuple[Point2D, Point2D]:
 
 
 def _search_closest(points_x, points_y, index_begin, index_end):
-    # Searches for a pair of closest points in specified sublist of points.
-    # Points are specified sorted by X coordinate and by Y coordinate.
+    # Searches for closest points in given sublist of points.
+    # Points are given sorted by X coordinate and by Y coordinate.
     if index_end - index_begin <= 2:
         return points_x[index_begin], points_x[index_end - 1]
 
@@ -45,7 +45,7 @@ def _search_closest(points_x, points_y, index_begin, index_end):
 
 
 def _check_belt(points_y, middle_x, width):
-    # Finds closest pair inside a belt of specified width.
+    # Searches for closest points inside a belt of given width.
     # The resulting distance should not be less than belt width.
     closest_points = None
     min_distance = width
@@ -69,7 +69,7 @@ def _check_belt(points_y, middle_x, width):
 
 
 def _search_three(point1, point2, point3):
-    # Finds closest pair of points among three of them.
+    # Searches for closest points among three of them.
     distance12 = distance(point1, point2)
     distance23 = distance(point2, point3)
     distance31 = distance(point3, point1)

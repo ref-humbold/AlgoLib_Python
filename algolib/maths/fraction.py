@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structure of fraction"""
+"""Structure of fraction."""
 from typing import Tuple
 
 from .maths import gcd, lcm

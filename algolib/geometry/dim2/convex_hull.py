@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Algorithm for convex hull in 2D (monotone chain)"""
+"""Algorithm for convex hull in 2D (monotone chain)."""
 from typing import List, Sequence
 
 from .geometry_2d import sorted_by_x
@@ -8,10 +8,10 @@ from .vector_2d import Vector2D
 
 
 def find_convex_hull(points: Sequence[Point2D]) -> List[Point2D]:
-    """Constructs a convex hull of specified points.
+    """Computes convex hull of given points.
 
-    :param points: a sequence of points
-    :return: list of hull points"""
+    :param points: the points
+    :return: the points in the convex hull"""
     if len(points) < 3:
         return []
 

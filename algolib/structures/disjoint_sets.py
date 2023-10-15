@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structure of disjoint sets (union-find)"""
+"""Structure of disjoint sets (union-find)."""
 from collections.abc import Container, Sized
 from typing import Iterable, Optional, TypeVar
 
@@ -12,31 +12,35 @@ class DisjointSets(Sized, Container):
         self._sets = len(self._represents)  # Number of sets
 
     def __len__(self):
-        """:return: number of sets"""
+        """Gets the number of sets in this structure.
+
+        :return: the number of sets"""
         return self._sets
 
     def __contains__(self, element: _T):
-        """:param element: element to be checked
-        :return: ``true`` if the element is included in one of sets, otherwise ``false``"""
+        """Checks whether given element belongs to any set.
+
+        :param element: the element
+        :return: ``True`` if the element is included in one of sets, otherwise ``False``"""
         return element in self._represents
 
     def __getitem__(self, element: _T) -> _T:
-        """Finds a represent of an element from the sets.
+        """Searches for represent of given element.
 
-        :param element: an element
-        :return: represent of the element
-        :raises KeyError: if element is not in the structure"""
+        :param element: the element
+        :return: the represent of the element
+        :raises KeyError: if element is not present"""
         if self._represents[element] != element:
             self._represents[element] = self[self._represents[element]]
 
         return self._represents[element]
 
     def __iadd__(self, elements: Iterable[_T]):
-        """Adds elements as singleton sets.
+        """Adds new elements as singleton sets.
 
-        :param elements: an iterable of elements
+        :param elements: the new elements
         :return: ``self``
-        :raises ValueError: if any of the elements is already in the structure"""
+        :raises ValueError: if any of the elements is already present"""
         elements = tuple(elements)
 
         for elem in elements:
@@ -50,10 +54,10 @@ class DisjointSets(Sized, Container):
         return self
 
     def add(self, *elements: _T):
-        """Adds elements as singleton sets.
+        """Adds new elements as singleton sets.
 
-        :param elements: elements to be added
-        :raises ValueError: if any of the elements is already in the structure
+        :param elements: the new elements
+        :raises ValueError: if any of the elements is already present
         :return: ``self`` for method chaining"""
         for elem in elements:
             if elem in self:
@@ -66,11 +70,11 @@ class DisjointSets(Sized, Container):
         return self
 
     def find_set(self, element: _T, default: Optional[_T] = None) -> Optional[_T]:
-        """Finds a represent of the element.
+        """Searches for represent of given element.
 
-        :param element: an element
-        :param default: a value to return if the element not inside
-        :return: represent of the element"""
+        :param element: the element
+        :param default: the value to return if element not present
+        :return: the represent of the element, if present, otherwise the default value"""
         try:
             return self[element]
         except KeyError:
@@ -79,10 +83,10 @@ class DisjointSets(Sized, Container):
     def union_set(self, element1: _T, element2: _T):
         """Joins two sets together.
 
-        :param element1: element from the first set
-        :param element2: element from the second set
+        :param element1: the element from the first set
+        :param element2: the element from the second set
         :return: ``self`` for method chaining
-        :raises KeyError: if either element is not in the structure"""
+        :raises KeyError: if either element is not present"""
         if not self.is_same_set(element1, element2):
             self._represents[self[element2]] = self[element1]
             self._sets -= 1
@@ -90,10 +94,10 @@ class DisjointSets(Sized, Container):
         return self
 
     def is_same_set(self, element1: _T, element2: _T) -> bool:
-        """Checks whether two elements belong to the same set.
+        """Checks whether given elements belong to the same set.
 
-        :param element1: a first element
-        :param element2: a second element
-        :return: ``true`` if both elements are in the same set, otherwise ``false``
-        :raises KeyError: if either element is not in the structure"""
+        :param element1: the element from the first set
+        :param element2: the element from the second set
+        :return: ``True`` if elements are in the same set, otherwise ``False``
+        :raises KeyError: if either element is not present"""
         return self[element1] == self[element2]

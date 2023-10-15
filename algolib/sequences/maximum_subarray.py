@@ -1,33 +1,37 @@
 # -*- coding: utf-8 -*-
-"""Algorithms for maximum subarray"""
+"""Algorithms for maximum subarray."""
 from typing import Iterable, Sequence
 
 
-def find_maximum_subarray(iterable: Iterable[float]) -> Iterable[float]:
-    """Dynamically constructs coherent subarray with maximal sum.
+def find_maximum_subarray(sequence: Iterable[float]) -> Iterable[float]:
+    """Dynamically computes coherent subarray with maximal sum.
 
-    :param iterable: sequence of numbers
-    :return: maximum subarray"""
-    actual = [0, []]
-    maximal = (0, [])
+    :param sequence: the sequence of numbers
+    :return: the maximum subarray"""
+    actual_sum = 0
+    actual_subarray = []
+    maximal_sum = 0
+    maximal_subarray = []
 
-    for elem in iterable:
-        if actual[0] < 0.0:
-            actual = [0, []]
+    for elem in sequence:
+        if actual_sum < 0.0:
+            actual_sum = 0
+            actual_subarray = []
 
-        actual[0] += elem
-        actual[1].append(elem)
+        actual_sum += elem
+        actual_subarray.append(elem)
 
-        if actual[0] > maximal[0]:
-            maximal = (actual[0], actual[1][:])
+        if actual_sum > maximal_sum:
+            maximal_sum = actual_sum
+            maximal_subarray = actual_subarray[:]
 
-    return iter(maximal[1])
+    return iter(maximal_subarray)
 
 
 def count_maximal_subsum(sequence: Sequence[float]) -> float:
-    """Counts maximal sum from all coherent subarrays using interval tree.
+    """Computes maximal sum from all coherent subarrays using interval tree.
 
-    :param sequence: sequence of numbers
+    :param sequence: the sequence of numbers
     :return: the sum of maximum subarray"""
     size = 1
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Algorithms for prime numbers"""
+"""Algorithms for prime numbers."""
 from math import sqrt
 from random import randint
 from typing import Iterable
@@ -8,10 +8,10 @@ from algolib.maths.maths import gcd, power
 
 
 def find_primes(*numbers: int) -> Iterable[int]:
-    """Finds prime numbers inside a range of integers.
+    """Searches for prime numbers inside given range of numbers.
 
-    :param numbers: range borders; beginning inclusive (defaults to 0), ending exclusive
-    :return: generator of prime numbers"""
+    :param numbers: the range borders; the minimum inclusive (defaults to 0), the maximum exclusive
+    :return: the prime numbers"""
     if len(numbers) == 1:
         return _find_primes_range(0, numbers[0])
 
@@ -22,10 +22,10 @@ def find_primes(*numbers: int) -> Iterable[int]:
 
 
 def test_fermat(number: int) -> bool:
-    """Checks whether specified number is prime running Fermat's prime test.
+    """Checks whether given number is prime using Fermat prime test.
 
-    :param number: number to check
-    :return: ``true`` if the number is probably prime, otherwise ``false``"""
+    :param number: the number
+    :return: ``True`` if the number is probably prime, otherwise ``False``"""
     number = abs(number)
 
     if number in {2, 3}:
@@ -44,10 +44,10 @@ def test_fermat(number: int) -> bool:
 
 
 def test_miller(number: int) -> bool:
-    """Checks whether specified number is prime running Miller-Rabin's prime test.
+    """Checks whether given number is prime using Miller-Rabin prime test.
 
-    :param number: number to check
-    :return: ``true`` if the number is probably prime, otherwise ``false``"""
+    :param number: the number
+    :return: ``True`` if the number is probably prime, otherwise ``False``"""
     number = abs(number)
 
     if number in {2, 3}:
@@ -79,7 +79,7 @@ def test_miller(number: int) -> bool:
 
 
 def _find_primes_range(minimum, maximum):
-    # Finds prime numbers inside a specified range (minimum inclusive, maximum exclusive)
+    # Searches for prime numbers inside given range (minimum inclusive, maximum exclusive)
     if maximum <= minimum or maximum <= 2:
         return
 
@@ -94,7 +94,7 @@ def _find_primes_range(minimum, maximum):
 
 
 def _get_base_primes(base_maximum):
-    # Extracts prime numbers between 0 and given maximum value
+    # Extracts prime numbers between zero and given maximum value.
     is_prime = [True] * ((base_maximum - 1) // 2)
 
     for i in range(0, int(sqrt(base_maximum) / 2)):
@@ -108,15 +108,15 @@ def _get_base_primes(base_maximum):
 
 
 def _get_segment_primes(segment_start, segment_end, base_primes):
-    # Extracts prime numbers from given range using given basic prime numbers
+    # Extracts prime numbers from given range using given basic prime numbers.
     segment_begin = segment_start + 1 - segment_start % 2
     is_prime = [i > 2 for i in range(segment_begin, segment_end, 2)]
 
-    for p in base_primes:
-        prime_multiple = (segment_begin + p - 1) // p * p
-        multiple_start = prime_multiple + p if prime_multiple % 2 == 0 else prime_multiple
+    for prime in base_primes:
+        prime_multiple = (segment_begin + prime - 1) // prime * prime
+        multiple_start = prime_multiple + prime if prime_multiple % 2 == 0 else prime_multiple
 
-        for i in range(multiple_start, segment_end, 2 * p):
+        for i in range(multiple_start, segment_end, 2 * prime):
             is_prime[(i - segment_begin) // 2] = False
 
     return (segment_begin + 2 * index for index, flag in enumerate(is_prime) if flag)

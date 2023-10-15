@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structure of base words dictionary using Karp-Miller-Rosenberg algorithm"""
+"""Structure of base words dictionary using Karp-Miller-Rosenberg algorithm."""
 from typing import Tuple
 
 
@@ -19,9 +19,9 @@ class BaseWordsDict:
     __str__ = __repr__
 
     def __getitem__(self, slice_: slice) -> Tuple[int, int]:
-        """Retrieves code of a substring denoted by slice.
+        """Retrieves code of substring denoted by given slice.
 
-        :param slice_: slice indices
+        :param slice_: the slice of indices
         :return: the code of the substring"""
         if slice_.step is not None:
             raise IndexError("Slice step must be None")
@@ -39,7 +39,7 @@ class BaseWordsDict:
             return self._factors[start, start + n], self._factors[stop - n, stop]
 
     def _create(self):
-        # Builds a base words dictionary using Karp-Miller-Rosenberg algorithm
+        # Builds base words dictionary using Karp-Miller-Rosenberg algorithm.
         current_length = 2
         code_value = self._extend(1, 0,
                                   lambda i, length: (ord(self._text[i]), 1 + ord(self._text[i]),
@@ -53,7 +53,7 @@ class BaseWordsDict:
             current_length *= 2
 
     def _extend(self, length, code_value, func):
-        # Encodes substring of specified length using already counted factors
+        # Encodes substring of given length using already counted factors.
         previous_code = (0, 0)
         codes = sorted(func(i, length) for i in range(len(self._text) - length + 1))
 

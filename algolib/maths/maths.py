@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-"""Algorithms for basic mathematical computations"""
+"""Algorithms for basic mathematical operations."""
 from typing import Optional, Union
 
 
 def gcd(number1: int, number2: int) -> int:
-    """Counts a greatest common divisor of two numbers.
+    """Calculates greatest common divisor of given numbers.
 
-    :param number1: a first number
-    :param number2: a second number
-    :return: greatest common divisor"""
+    :param number1: the first number
+    :param number2: the second number
+    :return: the greatest common divisor"""
     number_pair = (min(abs(number1), abs(number2)), max(abs(number1), abs(number2)))
 
     while number_pair[0] > 0:
@@ -18,23 +18,24 @@ def gcd(number1: int, number2: int) -> int:
 
 
 def lcm(number1: int, number2: int) -> int:
-    """Counts a lowest common multiple of two numbers.
+    """Calculates lowest common multiple of given numbers.
 
-    :param number1: a first number
-    :param number2: a second number
-    :return: lowest common multiple"""
+    :param number1: the first number
+    :param number2: the second number
+    :return: the lowest common multiple"""
     min_number = min(abs(number1), abs(number2))
     max_number = max(abs(number1), abs(number2))
     return max_number // gcd(number1, number2) * min_number
 
 
 def multiply(factor1: int, factor2: int, modulo: Optional[int] = None) -> int:
-    """Performs a fast multiplication of two numbers.
+    """Performs fast multiplication of given numbers with modulo taken.
 
-    :param factor1: a first factor
-    :param factor2: a second factor
-    :param modulo: a modulo value
-    :return: multiplication result"""
+    :param factor1: the first factor
+    :param factor2: the second factor
+    :param modulo: the modulo
+    :return: the multiplication result with modulo taken
+    :raise ArithmeticError: if modulo is not positive"""
     result = 0
 
     if modulo is not None and modulo <= 0:
@@ -62,12 +63,13 @@ def multiply(factor1: int, factor2: int, modulo: Optional[int] = None) -> int:
 
 
 def power(base: int, exponent: int, modulo: Optional[int] = None) -> Union[int, float]:
-    """Performs a fast exponentiation of two numbers.
+    """Performs fast exponentiation of given numbers with modulo taken.
 
-    :param base: a base value
-    :param exponent: an exponent value
-    :param modulo: a modulo value
-    :return: exponentiation result"""
+    :param base: the base
+    :param exponent: the exponent
+    :param modulo: the modulo
+    :return: the exponentiation result with modulo taken
+    :raise ArithmeticError: if modulo is not positive, or the exponent is negative"""
     result = 1
 
     if modulo is not None and modulo <= 0:
