@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
-"""Algorithm for strongly connected components"""
+"""Algorithm for strongly connected components."""
 from typing import Iterable, Set
 
 from .searching import dfs_recursive
 from .searching_strategy import DFSStrategy
 from ..directed_graph import DirectedGraph
-from ..graph import Vertex
+from ..vertex import Vertex
 
 
 def find_scc(graph: DirectedGraph) -> Iterable[Set[Vertex]]:
-    """Finds strongly connected components in given directed graph.
+    """Computes strongly connected components in given directed graph.
 
-    :param graph: a directed graph
-    :return: list of vertices in strongly connected components"""
+    :param graph: the directed graph
+    :return: the vertices in strongly connected components"""
     post_order_strategy = _PostOrderStrategy()
     dfs_recursive(graph, post_order_strategy, graph.vertices)
     vertices = [vertex for vertex, _ in sorted(post_order_strategy.post_times.items(),

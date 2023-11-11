@@ -2,8 +2,9 @@
 """Structure of tree graph"""
 from typing import Any, Union
 
-from .graph import Edge, Vertex
+from .edge import Edge
 from .undirected_graph import UndirectedGraph, UndirectedSimpleGraph
+from .vertex import Vertex
 
 
 class TreeGraph(UndirectedGraph):
@@ -59,11 +60,11 @@ class TreeGraph(UndirectedGraph):
                    edge_property: Any = None) -> Edge:
         """Adds new vertex to this graph and creates an edge to given existing vertex.
 
-        :param vertex: new vertex ot its identifier
-        :param neighbour: existing vertex
-        :param vertex_property: vertex property
-        :param edge_property: edge property
-        :return: new edge between the vertices
-        :raise ValueError: if vertex already exists"""
+        :param vertex: the new vertex ot its identifier
+        :param neighbour: the existing vertex
+        :param vertex_property: the vertex property
+        :param edge_property: the edge property
+        :return: the created edge between the vertices
+        :raise ValueError: if the vertex already exists"""
         new_vertex = self._graph.add_vertex(vertex, vertex_property)
         return self._graph.add_edge_between(new_vertex, neighbour, edge_property)

@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-"""Algorithms for topological sorting"""
+"""Algorithms for topological sorting of a directed acyclic graph."""
 import queue
 from typing import List
 
 from .searching import dfs_recursive
 from .searching_strategy import DFSStrategy
 from ..directed_graph import DirectedGraph
-from ..graph import Vertex
+from ..vertex import Vertex
 
 
 class DirectedCyclicGraphError(ValueError):
@@ -14,11 +14,11 @@ class DirectedCyclicGraphError(ValueError):
 
 
 def inputs_topological_sort(graph: DirectedGraph) -> List[Vertex]:
-    """Topological sorting algorithm using predecessors counting.
+    """Topologically sorts the vertices of given directed acyclic graph using predecessors counting.
 
-    :param graph: a directed graph
-    :return: topological order of vertices
-    :raise ValueError: if given graph contains a cycle"""
+    :param graph: the directed acyclic graph
+    :return: the topological order of vertices
+    :raise ValueError: if the graph contains a cycle"""
     if graph.edges_count == 0:
         return list(graph.vertices)
 
@@ -48,11 +48,11 @@ def inputs_topological_sort(graph: DirectedGraph) -> List[Vertex]:
 
 
 def dfs_topological_sort(graph: DirectedGraph) -> List[Vertex]:
-    """Topological sorting algorithm using DFS.
+    """Topologically sorts the vertices of given directed acyclic graph using depth-first search.
 
-    :param graph: a directed graph
-    :return: topological order of vertices
-    :raise ValueError: if given graph contains a cycle"""
+    :param graph: the directed acyclic graph
+    :return: the topological order of vertices
+    :raise ValueError: if the graph contains a cycle"""
     if graph.edges_count == 0:
         return list(graph.vertices)
 

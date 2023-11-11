@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
-"""Algorithms for minimal spanning tree"""
+"""Algorithms for minimal spanning tree."""
 import queue
 
 from algolib.structures.disjoint_sets import DisjointSets
-from ..graph import Vertex
 from ..undirected_graph import UndirectedGraph, UndirectedSimpleGraph
+from ..vertex import Vertex
 
 
 def kruskal(graph: UndirectedGraph) -> UndirectedGraph:
-    """Kruskal algorithm.
+    """Computes minimal spanning tree of given undirected graph using Kruskal algorithm.
 
-    :param graph: an undirected graph with weighted edges
+    :param graph: the undirected weighted graph
     :return: the minimal spanning tree"""
     mst = UndirectedSimpleGraph([v.id for v in graph.vertices])
     edge_queue = queue.PriorityQueue()
@@ -30,10 +30,10 @@ def kruskal(graph: UndirectedGraph) -> UndirectedGraph:
 
 
 def prim(graph: UndirectedGraph, source: Vertex) -> UndirectedGraph:
-    """Prim algorithm.
+    """Computes minimal spanning tree of given undirected graph using Prim algorithm.
 
-    :param graph: an undirected graph with weighted edges
-    :param source: source vertex
+    :param graph: the undirected weighted graph.
+    :param source: the starting vertex
     :return: the minimal spanning tree"""
     mst = UndirectedSimpleGraph([v.id for v in graph.vertices])
     visited = {source}
@@ -57,6 +57,6 @@ def prim(graph: UndirectedGraph, source: Vertex) -> UndirectedGraph:
 
                 if neighbour not in visited:
                     edge_queue.put(
-                            (graph.properties[adjacent_edge].weight, adjacent_edge, neighbour))
+                        (graph.properties[adjacent_edge].weight, adjacent_edge, neighbour))
 
     return mst

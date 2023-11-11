@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-"""Lowest common ancestor algorithm"""
+"""Algorithm for lowest common ancestors in a rooted tree."""
 import math
 
 from .searching import dfs_recursive
 from .searching_strategy import DFSStrategy
-from ..graph import Vertex
 from ..tree_graph import TreeGraph
+from ..vertex import Vertex
 
 
 class LowestCommonAncestor:
@@ -17,11 +17,11 @@ class LowestCommonAncestor:
         self._strategy = self._LCAStrategy()
 
     def find_lca(self, vertex1: Vertex, vertex2: Vertex) -> Vertex:
-        """Finds a lowest common ancestor of two vertices in a rooted tree.
+        """Searches for lowest common ancestor of given vertices in this rooted tree.
 
-        :param vertex1: first vertex
-        :param vertex2: second vertex
-        :return: lowest common ancestor of given vertices"""
+        :param vertex1: the first vertex
+        :param vertex2: the second vertex
+        :return: the lowest common ancestor of the vertices"""
         if self._empty:
             self._initialize()
 
@@ -54,7 +54,7 @@ class LowestCommonAncestor:
 
     def _is_offspring(self, vertex1, vertex2):
         return self._strategy.pre_times[vertex1] >= self._strategy.pre_times[vertex2] \
-               and self._strategy.post_times[vertex1] <= self._strategy.post_times[vertex2]
+            and self._strategy.post_times[vertex1] <= self._strategy.post_times[vertex2]
 
     class _LCAStrategy(DFSStrategy):
         def __init__(self):

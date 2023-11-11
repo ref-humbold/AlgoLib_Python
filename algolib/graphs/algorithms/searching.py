@@ -1,19 +1,20 @@
 # -*- coding: utf-8 -*-
-"""Algorithms for graph searching"""
+"""Algorithms for graph searching."""
 from collections import deque
 from typing import Iterable
 
 from .searching_strategy import BFSStrategy, DFSStrategy
-from ..graph import Graph, Vertex
+from ..graph import Graph
+from ..vertex import Vertex
 
 
 def bfs(graph: Graph, strategy: BFSStrategy, roots: Iterable[Vertex]) -> Iterable[Vertex]:
-    """Breadth-first search algorithm.
+    """Breadth-first-search algorithm.
 
-    :param graph: a graph
-    :param strategy: a searching strategy
-    :param roots: starting vertices
-    :return: iterable object of visited vertices"""
+    :param graph: the graph
+    :param strategy: the searching strategy
+    :param roots: the starting vertices
+    :return: the visited vertices"""
     reached = set()
     vertex_queue = deque()
 
@@ -41,10 +42,10 @@ def bfs(graph: Graph, strategy: BFSStrategy, roots: Iterable[Vertex]) -> Iterabl
 def dfs_iterative(graph: Graph, strategy: DFSStrategy, roots: Iterable[Vertex]) -> Iterable[Vertex]:
     """Iterative depth-first search algorithm.
 
-    :param graph: a graph
-    :param strategy: a searching strategy
-    :param roots: starting vertices
-    :return: iterable object of visited vertices"""
+    :param graph: the graph
+    :param strategy: the searching strategy
+    :param roots: the starting vertices
+    :return: the visited vertices"""
     reached = {}
     vertex_stack = deque()
     iteration = 1
@@ -79,10 +80,10 @@ def dfs_iterative(graph: Graph, strategy: DFSStrategy, roots: Iterable[Vertex]) 
 def dfs_recursive(graph: Graph, strategy: DFSStrategy, roots: Iterable[Vertex]) -> Iterable[Vertex]:
     """Recursive depth-first search algorithm.
 
-    :param graph: a graph
-    :param strategy: a searching strategy
-    :param roots: starting vertices
-    :return: iterable object of visited vertices"""
+    :param graph: the graph
+    :param strategy: the searching strategy
+    :param roots: the starting vertices
+    :return: the visited vertices"""
     state = _DfsRecursiveState()
 
     for root in roots:

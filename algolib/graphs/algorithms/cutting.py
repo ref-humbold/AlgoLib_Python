@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
-"""Algorithms for graph cutting (edge cut and vertex cut)"""
+"""Algorithms for graph cutting (edge cut and vertex cut)."""
 from typing import Iterable
 
 from .searching import dfs_recursive
 from .searching_strategy import DFSStrategy
-from ..graph import Edge, Vertex
+from ..edge import Edge
 from ..undirected_graph import UndirectedGraph
+from ..vertex import Vertex
 
 
 def find_edge_cut(graph: UndirectedGraph) -> Iterable[Edge]:
-    """Finds an edge cut of given graph.
+    """Computes edge cut of given undirected graph.
 
-    :param graph: an undirected graph
-    :return: generator of edges in the edge cut"""
+    :param graph: the undirected graph
+    :return: the edges in the edge cut"""
     strategy = _CuttingStrategy()
     dfs_recursive(graph, strategy, graph.vertices)
 
@@ -21,10 +22,10 @@ def find_edge_cut(graph: UndirectedGraph) -> Iterable[Edge]:
 
 
 def find_vertex_cut(graph: UndirectedGraph) -> Iterable[Vertex]:
-    """Finds a vertex cut of given graph.
+    """Computes vertex cut of given undirected graph.
 
-    param graph: an undirected graph
-    :return: generator of vertices in the vertex cut"""
+    :param graph: the undirected graph
+    :return: the vertices in the vertex cut"""
     strategy = _CuttingStrategy()
     dfs_recursive(graph, strategy, graph.vertices)
 

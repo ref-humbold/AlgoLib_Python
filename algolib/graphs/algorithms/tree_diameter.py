@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
+"""Algorithm for computing diameter of a tree."""
 from typing import Tuple
 
-from ..graph import Vertex
 from ..tree_graph import TreeGraph
+from ..vertex import Vertex
 
 
 def count_diameter(tree: TreeGraph) -> float:
+    """Computes length of diameter of given tree graph.
+
+    :param tree: the tree graph
+    :return: the length of the tree diameter"""
     root = max(tree.vertices, key=tree.output_degree, default=None)
 
     return 0.0 if root is None else _dfs(tree, root, root)[1]

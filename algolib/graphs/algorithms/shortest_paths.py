@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-"""Algorithms for shortest paths"""
+"""Algorithms for shortest paths in a weighted graph."""
 from collections import deque
 import math
 from typing import Dict, Tuple
 
 from ..directed_graph import DirectedGraph
-from ..graph import Graph, Vertex
+from ..graph import Graph
+from ..vertex import Vertex
 
 
 class Paths:
@@ -13,11 +14,12 @@ class Paths:
 
 
 def bellman_ford(graph: DirectedGraph, source: Vertex) -> Dict[Vertex, float]:
-    """Bellman-Ford algorithm.
+    """Computes shortest paths in given directed graph from given vertex using Bellman-Ford
+    algorithm.
 
-    :param graph: a directed graph with weighted edges
-    :param source: source vertex
-    :return: dictionary of vertices' distances"""
+    :param graph: the directed weighted graph
+    :param source: the source vertex
+    :return: the dictionary of distances to each vertex"""
     distances = {v: Paths.INFINITY for v in graph.vertices}
     distances[source] = 0.0
 
@@ -37,11 +39,12 @@ def bellman_ford(graph: DirectedGraph, source: Vertex) -> Dict[Vertex, float]:
 
 
 def dijkstra(graph: Graph, source: Vertex) -> Dict[Vertex, float]:
-    """Dijkstra algorithm.
+    """Computes shortest paths in given graph from given vertex using Dijkstra algorithm.
 
-    :param graph: a graph with weighted edges (weights are not negative)
-    :param source: source vertex
-    :return: dictionary of vertices' distances"""
+    :param graph: the weighted graph with non-negative weights
+    :param source: the source vertex
+    :return: The dictionary of distances to each vertex
+    :raise ValueError: if the graph contains an edge with negative weight"""
     if any(graph.properties[edge].weight < 0.0 for edge in graph.edges):
         raise ValueError("Graph contains an edge with negative weight")
 
@@ -68,10 +71,11 @@ def dijkstra(graph: Graph, source: Vertex) -> Dict[Vertex, float]:
 
 
 def floyd_warshall(graph: DirectedGraph) -> Dict[Tuple[Vertex, Vertex], float]:
-    """Floyd-Warshall algorithm.
+    """Computes shortest paths in given directed graph between all vertices using Floyd-Warshall
+    algorithm.
 
-    :param graph: a directed graph with weighted edges
-    :return: dictionary of distances between all pairs of vertices"""
+    :param graph: the directed weighted graph
+    :return: the dictionary of distances between each pair of vertices"""
     distances = {(v, u): 0.0 if v == u else Paths.INFINITY for v in graph.vertices
                  for u in graph.vertices}
 

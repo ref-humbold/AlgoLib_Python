@@ -187,11 +187,11 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         result = self.test_object.neighbours(Vertex(1))
         # then
         assert_that(sorted(
-                result)).is_equal_to([Vertex(1),
-                                      Vertex(3),
-                                      Vertex(4),
-                                      Vertex(7),
-                                      Vertex(9)])
+            result)).is_equal_to([Vertex(1),
+                                  Vertex(3),
+                                  Vertex(4),
+                                  Vertex(7),
+                                  Vertex(9)])
 
     def test__output_degree__then_number_of_outgoing_edges(self):
         # given

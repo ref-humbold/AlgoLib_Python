@@ -2,8 +2,9 @@
 """Structure of multipartite graph"""
 from typing import Any, Collection, Iterable, Optional, Union
 
-from .graph import Edge, Vertex
+from .edge import Edge
 from .undirected_graph import UndirectedGraph, UndirectedSimpleGraph
+from .vertex import Vertex
 
 
 class GraphPartitionError(BaseException):
@@ -72,20 +73,22 @@ class MultipartiteGraph(UndirectedGraph):
         return self._graph.as_directed()
 
     def vertices_from_group(self, group_number: int) -> Iterable[Vertex]:
-        """:param group_number: group number
-        :return: vertices that belong to the group"""
+        """Gets the vertices of given group.
+
+        :param group_number: the group number
+        :return: the vertices that belong to the group"""
         self._validate_group(group_number)
         return (vertex for vertex, group in self._vertex_group_dict.items()
                 if group == group_number)
 
     def add_vertex(self, group_number: int, vertex: Union[Vertex, Any], property_: Any = None):
-        """ Adds new vertex with given property to given group in this graph.
+        """Adds new vertex with given property to given group in this graph.
 
-        :param group_number: group number
-        :param vertex: new vertex or its identifier
-        :param property_: vertex property
-        :return: new vertex
-        :raise ValueError: if vertex already exists"""
+        :param group_number: the group number
+        :param vertex: the new vertex or its identifier
+        :param property_: the vertex property
+        :return: the created vertex
+        :raise ValueError: if the vertex already exists"""
         self._validate_group(group_number)
         the_vertex = self._graph.add_vertex(vertex, property_)
         self._vertex_group_dict[the_vertex] = group_number
@@ -94,22 +97,22 @@ class MultipartiteGraph(UndirectedGraph):
     def add_edge_between(self, source: Vertex, destination: Vertex, property_: Any = None):
         """Adds new edge between given vertices with given property to this graph.
 
-        :param source: source vertex
-        :param destination: destination vertex
-        :param property_: edge property
-        :return: new edge
-        :raise ValueError: if edge already exists
-        :raise GraphPartitionError: if the edge connects vertices that belong to same group"""
+        :param source: thw source vertex
+        :param destination: the destination vertex
+        :param property_: the edge property
+        :return: the created edge
+        :raise ValueError: if the edge already exists
+        :raise GraphPartitionError: if the vertices belong to the same group"""
         return self.add_edge(Edge(source, destination), property_)
 
     def add_edge(self, edge: Edge, property_: Any = None):
-        """Adds new edge between given vertices with given property to this graph.
+        """Adds new edge with given property to this graph.
 
-        :param edge: new edge
-        :param property_: edge property
-        :return: new edge
-        :raise ValueError: if edge already exists
-        :raise GraphPartitionError: if the edge connects vertices that belong to same group"""
+        :param edge: the new edge
+        :param property_: the edge property
+        :return: the created edge
+        :raise ValueError: if the edge already exists
+        :raise GraphPartitionError: if the edge connects vertices from the same group"""
         if self._are_in_same_group(edge.source, edge.destination):
             raise GraphPartitionError("Cannot create an edge between vertices in the same group")
 

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Strategies for graph searching"""
+"""Strategies for graph searching."""
 from abc import ABCMeta, abstractmethod
 
-from ..graph import Vertex
+from ..vertex import Vertex
 
 
 class BFSStrategy(metaclass=ABCMeta):

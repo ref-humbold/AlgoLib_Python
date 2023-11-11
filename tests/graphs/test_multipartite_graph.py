@@ -93,8 +93,8 @@ class MultipartiteGraphTest(unittest.TestCase):
         result = self.test_object.adjacent_edges(Vertex(9))
         # then
         assert_that(sorted(
-                result)).is_equal_to([Edge(Vertex(2), Vertex(9)),
-                                      Edge(Vertex(7), Vertex(9))])
+            result)).is_equal_to([Edge(Vertex(2), Vertex(9)),
+                                  Edge(Vertex(7), Vertex(9))])
 
     def test__output_degree__then_number_of_outgoing_edges(self):
         # when

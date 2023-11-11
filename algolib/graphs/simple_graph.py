@@ -3,7 +3,9 @@
 from abc import ABCMeta, abstractmethod
 from typing import Any, Iterable, Optional, Union
 
-from .graph import Edge, Graph, Vertex
+from .edge import Edge
+from .graph import Graph
+from .vertex import Vertex
 
 
 class _GraphRepresentation:
@@ -44,7 +46,7 @@ class _GraphRepresentation:
     def get_edge(self, source_id, destination_id):
         try:
             source, edges = next(
-                    (v, edges) for v, edges in self._graph_dict.items() if v.id == source_id)
+                (v, edges) for v, edges in self._graph_dict.items() if v.id == source_id)
             return next(edge for edge in edges if edge.get_neighbour(source).id == destination_id)
         except StopIteration:
             raise KeyError(f"Edge not found: {source_id}, {destination_id}") from None
@@ -128,10 +130,10 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
     def add_vertex(self, vertex: Union[Vertex, Any], property_: Any = None) -> Vertex:
         """Adds new vertex with given property to this graph.
 
-        :param vertex: new vertex or its identifier
-        :param property_: vertex property
-        :return: new vertex
-        :raise ValueError: if vertex already exists"""
+        :param vertex: the new vertex or its identifier
+        :param property_: the vertex property
+        :return: the created vertex
+        :raise ValueError: if the vertex already exists"""
         the_vertex = vertex if isinstance(vertex, Vertex) else Vertex(vertex)
         was_added = self._representation.add_vertex(the_vertex)
 
@@ -144,23 +146,23 @@ class SimpleGraph(Graph, metaclass=ABCMeta):
         raise ValueError(f"Vertex {the_vertex} already exists")
 
     def add_edge_between(self, source: Vertex, destination: Vertex, property_: Any = None):
-        """Adds new edge with given property to this graph.
+        """Adds new edge between given vertices with given property to this graph.
 
-        :param source: source vertex
-        :param destination: destination vertex
-        :param property_: edge property
-        :return: new edge
-        :raise ValueError: if edge already exists"""
+        :param source: the source vertex
+        :param destination: the destination vertex
+        :param property_: the edge property
+        :return: the created edge
+        :raise ValueError: if the edge already exists"""
         return self.add_edge(Edge(source, destination), property_)
 
     @abstractmethod
     def add_edge(self, edge: Edge, property_: Any = None):
         """Adds new edge with given property to this graph.
 
-        :param edge: new edge
-        :param property_: edge property
-        :return: new edge
-        :raise ValueError: if edge already exists"""
+        :param edge: the new edge
+        :param property_: the edge property
+        :return: the created edge
+        :raise ValueError: if the edge already exists"""
 
     class _GraphPropertiesImpl(Graph.GraphProperties):
         def __init__(self, graph: "SimpleGraph"):

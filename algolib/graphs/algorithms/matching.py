@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
-"""Hopcroft-Karp algorithm for matching in bipartite graph"""
+"""Hopcroft-Karp algorithm for matching in a bipartite graph."""
 from collections import deque
 import math
 from typing import Dict
 
-from ..graph import Vertex
 from ..multipartite_graph import MultipartiteGraph
+from ..vertex import Vertex
 
 
 def match(graph: MultipartiteGraph) -> Dict[Vertex, Vertex]:
-    """Finds maximal matching in given bipartite graph.
+    """Computes maximal matching in given bipartite graph.
 
-    :param graph: a bipartite graph
-    :return: dictionary of matched vertices"""
+    :param graph: the bipartite graph
+    :return: the dictionary of matched vertices"""
     augmenter = _MatchAugmenter(graph)
     was_augmented = True
 
