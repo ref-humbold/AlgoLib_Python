@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
-"""Tests: Algorithms for prime numbers"""
+"""Tests: Algorithms for searching for prime numbers"""
 import unittest
 
 from assertpy import assert_that
 
-from algolib.maths import find_primes, test_fermat, test_miller
+from algolib.maths import find_primes
 
 
 class PrimesTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-    # region test_find_primes
 
     @staticmethod
     def test__find_primes__when_zero_args__then_type_error():
@@ -148,95 +146,3 @@ class PrimesTest(unittest.TestCase):
         result = find_primes(91, 91)
         # then
         assert_that(list(result)).is_empty()
-
-    # endregion
-    # region test_test_fermat
-
-    @staticmethod
-    def test__test_fermat__when_zero__then_false():
-        # when
-        result = test_fermat(0)
-        # then
-        assert_that(result).is_false()
-
-    @staticmethod
-    def test__test_fermat__when_one__then_false():
-        # when
-        result = test_fermat(1)
-        # then
-        assert_that(result).is_false()
-
-    @staticmethod
-    def test__test_fermat__when_two__then_true():
-        # when
-        result = test_fermat(2)
-        # then
-        assert_that(result).is_true()
-
-    @staticmethod
-    def test__test_fermat__when_prime__then_true():
-        # when
-        result = test_fermat(1013)
-        # then
-        assert_that(result).is_true()
-
-    @staticmethod
-    def test__test_fermat__when_composite__then_false():
-        # when
-        result = test_fermat(1001)
-        # then
-        assert_that(result).is_false()
-
-    @staticmethod
-    def test__test_fermat__when_carmichael_number__then_false():
-        # when
-        result = test_fermat(1105)  # 1105 = 5 * 13 * 17 is a Carmichael number
-        # then
-        assert_that(result).is_false()
-
-    # endregion
-    # region test_test_miller
-
-    @staticmethod
-    def test__test_miller__when_zero__then_false():
-        # when
-        result = test_miller(0)
-        # then
-        assert_that(result).is_false()
-
-    @staticmethod
-    def test__test_miller__when_one__then_false():
-        # when
-        result = test_miller(1)
-        # then
-        assert_that(result).is_false()
-
-    @staticmethod
-    def test__test_miller__when_two__then_true():
-        # when
-        result = test_miller(2)
-        # then
-        assert_that(result).is_true()
-
-    @staticmethod
-    def test__test_miller__when_prime__then_true():
-        # when
-        result = test_miller(1013)
-        # then
-        assert_that(result).is_true()
-
-    @staticmethod
-    def test__test_miller__when_composite__then_false():
-        # when
-        result = test_miller(1001)
-        # then
-        assert_that(result).is_false()
-
-    @staticmethod
-    def test__test_miller__when_carmichael_number__then_false():
-        # when
-        result = test_miller(1105)
-        # then
-        assert_that(result).is_false()
-
-    # endregion
