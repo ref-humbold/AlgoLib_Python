@@ -21,7 +21,7 @@ def test_prime_fermat(number: int) -> bool:
     for _ in range(17):
         witness = randint(1, number - 1)
 
-        if gcd(witness, number) > 1 and power(witness, number - 1, number) != 1:
+        if gcd(witness, number) > 1 or power(witness, number - 1, number) != 1:
             return False
 
     return True
@@ -56,7 +56,7 @@ def test_prime_miller(number: int) -> bool:
                 exponents.append(exp)
                 exp *= 2
 
-            if all(map(lambda d, wit=witness: power(wit, d, number) != number - 1, exponents)):
+            if all(power(witness, d, number) != number - 1 for d in exponents):
                 return False
 
     return True
