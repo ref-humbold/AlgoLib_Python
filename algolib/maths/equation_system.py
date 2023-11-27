@@ -53,38 +53,32 @@ class EquationSystem:
         :raises NoSolutionError: if there is no solution"""
         self.gaussian_reduce()
 
-        if self[-1][-1] == 0 and self[-1].free == 0:
+        if self[-1].coefficients[-1] == 0 and self[-1].free_term == 0:
             raise InfiniteSolutionsError("Equation system has an infinite number of solutions")
 
-        if self[-1][-1] == 0 and self[-1].free != 0:
+        if self[-1].coefficients[-1] == 0 and self[-1].free_term != 0:
             raise NoSolutionError("Equation system has no solution")
 
         solution = [0.0] * len(self)
-        solution[-1] = self[-1].free / self[-1][-1]
+        solution[-1] = self[-1].free_term / self[-1].coefficients[-1]
 
         for i in range(-2, -len(self) - 1, -1):
-            solution[i] = (self[i].free + sum(-self[i][j] * solution[j]
-                                              for j in range(-1, i, -1))) / self[i][i]
+            solution[i] = (self[i].free_term + sum(-self[i].coefficients[j] * solution[j]
+                                                   for j in range(-1, i, -1))) / \
+                          self[i].coefficients[i]
 
         return solution
 
     def gaussian_reduce(self):
         """Runs the Gaussian elimination algorithm on this equation system."""
         for i in range(len(self) - 1):
-            index_min = i
+            index_min = self._min_coefficient_index(i)
 
-            for j in range(i + 1, len(self)):
-                min_coef = self[index_min][i]
-                act_coef = self[j][i]
-
-                if act_coef != 0 and (min_coef == 0 or abs(act_coef) < abs(min_coef)):
-                    index_min = j
-
-            if self[index_min][i] != 0:
+            if self[index_min].coefficients[i] != 0:
                 self.swap(index_min, i)
 
                 for j in range(i + 1, len(self)):
-                    param = self[j][i] / self[i][i]
+                    param = self[j].coefficients[i] / self[i].coefficients[i]
 
                     if param != 0:
                         self._equations[j] += self[i] * -param
@@ -102,3 +96,14 @@ class EquationSystem:
         :param solution: the values
         :return: ``True`` if the solution is correct, otherwise ``False``"""
         return all(eq.has_solution(solution) for eq in self._equations)
+
+    def _min_coefficient_index(self, starting_index):
+        index_min = starting_index
+        for j in range(starting_index + 1, len(self)):
+            min_coefficient = self[index_min].coefficients[starting_index]
+            current_coefficient = self[j].coefficients[starting_index]
+
+            if current_coefficient != 0 and (min_coefficient == 0
+                                             or abs(current_coefficient) < abs(min_coefficient)):
+                index_min = j
+        return index_min

@@ -15,10 +15,6 @@ class EquationTest(unittest.TestCase):
     def setUp(self):
         self.test_object = Equation([2, 3, 0, -2.5], 15)
 
-    @staticmethod
-    def coefficients(eq):
-        return [eq[i] for i in range(len(eq))]
-
     def test__op_repr__then_string_representation(self):
         # when
         result = repr(self.test_object)
@@ -36,50 +32,50 @@ class EquationTest(unittest.TestCase):
         result = +self.test_object
         # then
         assert_that(result).is_not_same_as(self.test_object)
-        assert_that(self.coefficients(result)).is_equal_to(self.coefficients(self.test_object))
-        assert_that(result.free).is_equal_to(self.test_object.free)
+        assert_that(result.coefficients).is_equal_to(self.test_object.coefficients)
+        assert_that(result.free_term).is_equal_to(self.test_object.free_term)
 
     def test__op_neg__then_negated(self):
         # when
         result = -self.test_object
         # then
-        assert_that(self.coefficients(result)).is_equal_to([-2, -3, 0, 2.5])
-        assert_that(result.free).is_equal_to(-15)
+        assert_that(result.coefficients).is_equal_to([-2, -3, 0, 2.5])
+        assert_that(result.free_term).is_equal_to(-15)
 
     def test__op_add__then_adding_equations(self):
         # when
         result = self.test_object + Equation([1, -1, 4, 10], 5)
         # then
-        assert_that(self.coefficients(result)).is_equal_to([3, 2, 4, 7.5])
-        assert_that(result.free).is_equal_to(20)
+        assert_that(result.coefficients).is_equal_to([3, 2, 4, 7.5])
+        assert_that(result.free_term).is_equal_to(20)
 
     def test__op_iadd__then_adding_equations(self):
         # when
         self.test_object += Equation([1, -1, 4, 10], 5)
         # then
-        assert_that(self.coefficients(self.test_object)).is_equal_to([3, 2, 4, 7.5])
-        assert_that(self.test_object.free).is_equal_to(20)
+        assert_that(self.test_object.coefficients).is_equal_to([3, 2, 4, 7.5])
+        assert_that(self.test_object.free_term).is_equal_to(20)
 
     def test__op_sub__then_subtracting_equation(self):
         # when
         result = self.test_object - Equation([1, -1, 4, 10], 5)
         # then
-        assert_that(self.coefficients(result)).is_equal_to([1, 4, -4, -12.5])
-        assert_that(result.free).is_equal_to(10)
+        assert_that(result.coefficients).is_equal_to([1, 4, -4, -12.5])
+        assert_that(result.free_term).is_equal_to(10)
 
     def test__op_isub__then_subtracting_equation(self):
         # when
         self.test_object -= Equation([1, -1, 4, 10], 5)
         # then
-        assert_that(self.coefficients(self.test_object)).is_equal_to([1, 4, -4, -12.5])
-        assert_that(self.test_object.free).is_equal_to(10)
+        assert_that(self.test_object.coefficients).is_equal_to([1, 4, -4, -12.5])
+        assert_that(self.test_object.free_term).is_equal_to(10)
 
     def test__op_mul__then_multiplying_each_coefficient(self):
         # when
         result = self.test_object * 2
         # then
-        assert_that(self.coefficients(result)).is_equal_to([4, 6, 0, -5])
-        assert_that(result.free).is_equal_to(30)
+        assert_that(result.coefficients).is_equal_to([4, 6, 0, -5])
+        assert_that(result.free_term).is_equal_to(30)
 
     def test__op_mul__when_zero__then_arithmetic_error(self):
         # when
@@ -93,22 +89,22 @@ class EquationTest(unittest.TestCase):
         # when
         result = 2 * self.test_object
         # then
-        assert_that(self.coefficients(result)).is_equal_to([4, 6, 0, -5])
-        assert_that(result.free).is_equal_to(30)
+        assert_that(result.coefficients).is_equal_to([4, 6, 0, -5])
+        assert_that(result.free_term).is_equal_to(30)
 
     def test__op_imul__then_multiplying_each_coefficient(self):
         # when
         self.test_object *= 2
         # then
-        assert_that(self.coefficients(self.test_object)).is_equal_to([4, 6, 0, -5])
-        assert_that(self.test_object.free).is_equal_to(30)
+        assert_that(self.test_object.coefficients).is_equal_to([4, 6, 0, -5])
+        assert_that(self.test_object.free_term).is_equal_to(30)
 
     def test__op_truediv__then_dividing_each_coefficient(self):
         # when
         result = self.test_object / -2
         # then
-        assert_that(self.coefficients(result)).is_equal_to([-1, -1.5, 0, 1.25])
-        assert_that(result.free).is_equal_to(-7.5)
+        assert_that(result.coefficients).is_equal_to([-1, -1.5, 0, 1.25])
+        assert_that(result.free_term).is_equal_to(-7.5)
 
     def test__op_truediv__when_zero__then_zero_division_error(self):
         # when
@@ -122,8 +118,8 @@ class EquationTest(unittest.TestCase):
         # when
         self.test_object /= -2
         # then
-        assert_that(self.coefficients(self.test_object)).is_equal_to([-1, -1.5, 0, 1.25])
-        assert_that(self.test_object.free).is_equal_to(-7.5)
+        assert_that(self.test_object.coefficients).is_equal_to([-1, -1.5, 0, 1.25])
+        assert_that(self.test_object.free_term).is_equal_to(-7.5)
 
     def test__has_solution__when_solution__then_true(self):
         # when

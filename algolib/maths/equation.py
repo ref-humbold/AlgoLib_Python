@@ -4,20 +4,24 @@ from typing import Iterable, Sequence
 
 
 class Equation:
-    def __init__(self, coefficients: Iterable[float], free: float):
+    def __init__(self, coefficients: Iterable[float], free_term: float):
         self._coefficients = list(coefficients)
-        self._free = free
+        self._free_term = free_term
 
     @property
-    def free(self):
-        return self._free
+    def coefficients(self):
+        return self._coefficients
+
+    @property
+    def free_term(self):
+        return self._free_term
 
     def __repr__(self):
-        return f"Equation({self._coefficients!r}, {self._free!r})"
+        return f"Equation({self._coefficients!r}, {self._free_term!r})"
 
     def __str__(self):
         terms = [f"{c} x_{i}" for i, c in enumerate(self._coefficients) if c != 0]
-        return f"{' + '.join(terms)} = {self._free}"
+        return f"{' + '.join(terms)} = {self._free_term}"
 
     def __len__(self):
         """Gets the number of variables in this equation.
@@ -25,24 +29,17 @@ class Equation:
         :return: the number of variables"""
         return len(self._coefficients)
 
-    def __getitem__(self, i: int) -> float:
-        """Gets the coefficient by the variable at given index.
-
-        :param i: the index of variable
-        :return: the coefficient specified by the index"""
-        return self._coefficients[i]
-
     def __pos__(self):
         """Copies this equation
 
         :return: the copy of equation"""
-        return Equation([+c for c in self._coefficients], +self._free)
+        return Equation([+c for c in self._coefficients], +self._free_term)
 
     def __neg__(self):
         """Negates this equation.
 
         :return: the equation with all coefficients negated"""
-        return Equation([-c for c in self._coefficients], -self._free)
+        return Equation([-c for c in self._coefficients], -self._free_term)
 
     def __add__(self, equation: "Equation") -> "Equation":
         """Adds given equation to this equation.
@@ -54,7 +51,7 @@ class Equation:
             raise ValueError("Equation has different number of variables")
 
         return Equation((c1 + c2 for (c1, c2) in zip(self._coefficients, equation._coefficients)),
-                        self._free + equation.free)
+                        self._free_term + equation.free_term)
 
     def __iadd__(self, equation: "Equation"):
         """Adds given equation to this equation.
@@ -66,9 +63,9 @@ class Equation:
             raise ValueError("Equation has different number of variables")
 
         for i in range(len(self)):
-            self._coefficients[i] += equation[i]
+            self._coefficients[i] += equation._coefficients[i]
 
-        self._free += equation.free
+        self._free_term += equation.free_term
         return self
 
     def __sub__(self, equation: "Equation") -> "Equation":
@@ -81,7 +78,7 @@ class Equation:
             raise ValueError("Equation has different number of variables")
 
         return Equation((c1 - c2 for (c1, c2) in zip(self._coefficients, equation._coefficients)),
-                        self._free - equation.free)
+                        self._free_term - equation.free_term)
 
     def __isub__(self, equation: "Equation"):
         """Subtracts given equation from this equation.
@@ -93,9 +90,9 @@ class Equation:
             raise ValueError("Equation has different number of variables")
 
         for i in range(len(self)):
-            self._coefficients[i] -= equation[i]
+            self._coefficients[i] -= equation._coefficients[i]
 
-        self._free -= equation.free
+        self._free_term -= equation.free_term
         return self
 
     def __mul__(self, constant: float) -> "Equation":
@@ -107,7 +104,7 @@ class Equation:
         if constant == 0:
             raise ArithmeticError("Constant cannot be equal to zero")
 
-        return Equation((c * constant for c in self._coefficients), self._free * constant)
+        return Equation((c * constant for c in self._coefficients), self._free_term * constant)
 
     __rmul__ = __mul__
 
@@ -123,7 +120,7 @@ class Equation:
         for i in range(len(self)):
             self._coefficients[i] *= constant
 
-        self._free *= constant
+        self._free_term *= constant
         return self
 
     def __truediv__(self, constant: float) -> "Equation":
@@ -135,7 +132,7 @@ class Equation:
         if constant == 0:
             raise ZeroDivisionError("Constant cannot be equal to zero")
 
-        return Equation((c / constant for c in self._coefficients), self._free / constant)
+        return Equation((c / constant for c in self._coefficients), self._free_term / constant)
 
     __rtruediv__ = __truediv__
 
@@ -151,7 +148,7 @@ class Equation:
         for i in range(len(self)):
             self._coefficients[i] /= constant
 
-        self._free /= constant
+        self._free_term /= constant
         return self
 
     def has_solution(self, solution: Sequence[float]) -> bool:
@@ -160,4 +157,4 @@ class Equation:
         :param solution: the values
         :return: ``True`` if the solution is correct, otherwise ``False``"""
         return len(solution) == len(self) and \
-            sum(map(lambda c, s: c * s, self._coefficients, solution)) == self._free
+            sum(map(lambda c, s: c * s, self._coefficients, solution)) == self._free_term

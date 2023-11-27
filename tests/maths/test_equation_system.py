@@ -9,6 +9,29 @@ from algolib.maths import Equation, EquationSystem, InfiniteSolutionsError, NoSo
 
 class EquationSystemTest(unittest.TestCase):
     @staticmethod
+    def test__op_repr__then_string_representation():
+        # given
+        test_object = EquationSystem(Equation([2, 3, -2], 15), Equation([7, -1, 0], 4),
+                                     Equation([-1, 6, 4], 9))
+        # when
+        result = repr(test_object)
+        # then
+        assert_that(result).is_equal_to(
+            "EquationSystem(Equation([2, 3, -2], 15), Equation([7, -1, 0], 4), "
+            "Equation([-1, 6, 4], 9))")
+
+    @staticmethod
+    def test__op_str__then_string_representation():
+        # given
+        test_object = EquationSystem(Equation([2, 3, -2], 15), Equation([7, -1, 0], 4),
+                                     Equation([-1, 6, 4], 9))
+        # when
+        result = str(test_object)
+        # then
+        assert_that(result).is_equal_to(
+            "{ 2 x_0 + 3 x_1 + -2 x_2 = 15 ; 7 x_0 + -1 x_1 = 4 ; -1 x_0 + 6 x_1 + 4 x_2 = 9 }")
+
+    @staticmethod
     def test__solve__when_single_solution__then_solution():
         # given
         test_object = EquationSystem(Equation([2, 3, -2], 15), Equation([7, -1, 0], 4),
