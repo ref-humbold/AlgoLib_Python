@@ -13,32 +13,32 @@ def kmp_search(text: str, pattern: str) -> Iterable[int]:
         return
 
     pi_values = _prefix(pattern)
-    pos = 0
+    position = 0
 
     for i, char in enumerate(text):
-        while pos > 0 and pattern[pos] != char:
-            pos = pi_values[pos - 1]
+        while position > 0 and pattern[position] != char:
+            position = pi_values[position - 1]
 
-        if pattern[pos] == char:
-            pos += 1
+        if pattern[position] == char:
+            position += 1
 
-        if pos == len(pattern):
+        if position == len(pattern):
             yield i - len(pattern) + 1
-            pos = pi_values[pos - 1]
+            position = pi_values[position - 1]
 
 
 def _prefix(pattern):
     # Computes Knuth's PI prefix function values for specified pattern.
     pi_values = [0]
-    pos = 0
+    position = 0
 
-    for char in pattern[1:]:
-        while pos > 0 and pattern[pos] != char:
-            pos = pi_values[pos - 1]
+    for letter in pattern[1:]:
+        while position > 0 and pattern[position] != letter:
+            position = pi_values[position - 1]
 
-        if pattern[pos] == char:
-            pos += 1
+        if pattern[position] == letter:
+            position += 1
 
-        pi_values.append(pos)
+        pi_values.append(position)
 
     return pi_values

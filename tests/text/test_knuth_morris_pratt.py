@@ -9,6 +9,13 @@ from algolib.text import kmp_search
 
 class KnuthMorrisPrattTest(unittest.TestCase):
     @staticmethod
+    def test__kmp_search__when_pattern_found__then_all_occurrences():
+        # when
+        result = kmp_search("abcdecdcdefgcdcdecdcdecdcdehijcdecdcdek", "cdecdcde")
+        # then
+        assert_that(list(result)).is_equal_to([2, 14, 19, 30])
+
+    @staticmethod
     def test__kmp_search__when_pattern_found_once__then_single_occurrence():
         # when
         result = kmp_search("abcde", "a")
@@ -25,7 +32,7 @@ class KnuthMorrisPrattTest(unittest.TestCase):
     @staticmethod
     def test__kmp_search__when_pattern_found_twice_and_intersects__then_two_occurrences():
         # when
-        result = kmp_search("aaabcde", "aa")
+        result = kmp_search("aaaabcde", "aaa")
         # then
         assert_that(list(result)).is_equal_to([0, 1])
 
