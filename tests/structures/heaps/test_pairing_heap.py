@@ -4,7 +4,7 @@ import unittest
 
 from assertpy import assert_that
 
-from algolib.structures import PairingHeap
+from algolib.structures.heaps import PairingHeap
 
 
 class PairingHeapTest(unittest.TestCase):

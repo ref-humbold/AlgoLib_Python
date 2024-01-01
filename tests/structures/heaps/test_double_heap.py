@@ -4,7 +4,7 @@ import unittest
 
 from assertpy import assert_that
 
-from algolib.structures import DoubleHeap
+from algolib.structures.heaps import DoubleHeap
 
 
 class DoubleHeapTest(unittest.TestCase):
