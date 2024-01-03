@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Algorithms for minimal spanning tree."""
-import queue
+from queue import PriorityQueue
 
 from algolib.structures.disjoint_sets import DisjointSets
 from ..undirected_graph import UndirectedGraph, UndirectedSimpleGraph
@@ -13,7 +13,7 @@ def kruskal(graph: UndirectedGraph) -> UndirectedGraph:
     :param graph: the undirected weighted graph
     :return: the minimal spanning tree"""
     mst = UndirectedSimpleGraph([v.id for v in graph.vertices])
-    edge_queue = queue.PriorityQueue()
+    edge_queue = PriorityQueue()
     vertex_sets = DisjointSets(graph.vertices)
 
     for edge in graph.edges:
@@ -37,7 +37,7 @@ def prim(graph: UndirectedGraph, source: Vertex) -> UndirectedGraph:
     :return: the minimal spanning tree"""
     mst = UndirectedSimpleGraph([v.id for v in graph.vertices])
     visited = {source}
-    edge_queue = queue.PriorityQueue()
+    edge_queue = PriorityQueue()
 
     for adjacent_edge in graph.adjacent_edges(source):
         neighbour = adjacent_edge.get_neighbour(source)

@@ -29,6 +29,60 @@ class DoubleHeapTest(unittest.TestCase):
         # then
         assert_that(result).is_equal_to(len(self.numbers))
 
+    def test__iter__when_empty__then_no_elements(self):
+        # given
+        self.test_object = DoubleHeap()
+        # when
+        result = list(self.test_object)
+        # then
+        assert_that(result).is_empty()
+
+    def test__iter__when_single_element__then_this_element_only(self):
+        # given
+        element = 17
+        self.test_object = DoubleHeap([element])
+        # when
+        iterator = iter(self.test_object)
+        # then
+        assert_that(next(iterator)).is_equal_to(element)
+        assert_that(next).raises(StopIteration).when_called_with(iterator)
+
+    def test__iter__when_multiple_elements__then_all_elements_minimum_first_maximum_last(self):
+        # when
+        result = list(self.test_object)
+        # then
+        assert_that(result).is_length(len(self.numbers))
+        assert_that(result).contains_only(*self.numbers)
+        assert_that(result[0]).is_equal_to(min(self.numbers))
+        assert_that(result[-1]).is_equal_to(max(self.numbers))
+
+    def test__reversed__when_empty__then_no_elements(self):
+        # given
+        self.test_object = DoubleHeap()
+        # when
+        result = list(reversed(self.test_object))
+        # then
+        assert_that(result).is_empty()
+
+    def test__reversed__when_single_element__then_this_element_only(self):
+        # given
+        element = 17
+        self.test_object = DoubleHeap([element])
+        # when
+        iterator = reversed(self.test_object)
+        # then
+        assert_that(next(iterator)).is_equal_to(element)
+        assert_that(next).raises(StopIteration).when_called_with(iterator)
+
+    def test__reversed__when_multiple_elements__then_all_elements_maximum_first_minimum_last(self):
+        # when
+        result = list(reversed(self.test_object))
+        # then
+        assert_that(result).is_length(len(self.numbers))
+        assert_that(result).contains_only(*self.numbers)
+        assert_that(result[0]).is_equal_to(max(self.numbers))
+        assert_that(result[-1]).is_equal_to(min(self.numbers))
+
     def test__clear__when_not_empty__then_empty(self):
         # when
         self.test_object.clear()

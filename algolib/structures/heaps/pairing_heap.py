@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 """Structure of pairing heap."""
-from typing import Optional, Sized, TypeVar
+from collections import deque
+from typing import Iterable, Optional, Sized, TypeVar
 
 _T = TypeVar("_T")
 
 
-class PairingHeap(Sized):
+class PairingHeap(Sized, Iterable):
     def __init__(self, elements=()):
         self._heap = None
         self._size = 0
@@ -18,6 +19,20 @@ class PairingHeap(Sized):
 
         :return: the number of elements"""
         return self._size
+
+    def __iter__(self):
+        """Get the iterator of this pairing heap.
+
+        :return: the iterator object"""
+        nodes_queue = deque()
+
+        if self._heap is not None:
+            nodes_queue.append(self._heap)
+
+        while len(nodes_queue) > 0:
+            node = nodes_queue.popleft()
+            yield node.element
+            nodes_queue.extend(node.children)
 
     def clear(self):
         """Removes all elements from this pairing heap."""
@@ -39,13 +54,7 @@ class PairingHeap(Sized):
         """Adds new element to this pairing heap.
 
         :param element: the new element"""
-        if self._heap is None:
-            self._heap = self._heap = self._HeapNode(element, None)
-        else:
-            self._heap = self._HeapNode(element, self._HeapNodeList(self._heap, None)) \
-                if element <= self._heap.element else \
-                self._heap.append(element)
-
+        self._heap = self._HeapNode(element) if self._heap is None else self._heap.append(element)
         self._size += 1
 
     def pop(self) -> _T:
@@ -79,42 +88,34 @@ class PairingHeap(Sized):
         self._size += len(other)
         return self
 
-    class _HeapNodeList:
-        def __init__(self, node: "PairingHeap._HeapNode",
-                     next_: Optional["PairingHeap._HeapNodeList"]):
-            self.node = node
-            self.next = next_
-
     class _HeapNode:
-        def __init__(self, element: _T, children: Optional["PairingHeap._HeapNodeList"]):
+        def __init__(self, element: _T, children: Iterable["PairingHeap._HeapNode"] = ()):
             self.element = element
-            self.children = children
+            self.children = list(children)
 
         def append(self, item: _T) -> "PairingHeap._HeapNode":
             return PairingHeap._HeapNode(self.element,
-                                         PairingHeap._HeapNodeList(
-                                             PairingHeap._HeapNode(item, None), self.children)) \
+                                         [PairingHeap._HeapNode(item), *self.children]) \
                 if self.element <= item else \
-                PairingHeap._HeapNode(item, PairingHeap._HeapNodeList(self, None))
+                PairingHeap._HeapNode(item, [self])
 
         def pop(self) -> "PairingHeap._HeapNode":
-            return self._merge_pairs(self.children)
+            return self._merge_pairs(0)
 
         def __or__(self, node: "PairingHeap._HeapNode") -> "PairingHeap._HeapNode":
             if node is None:
                 return self
 
-            return PairingHeap._HeapNode(self.element,
-                                         PairingHeap._HeapNodeList(node, self.children)) \
+            return PairingHeap._HeapNode(self.element, [node, *self.children]) \
                 if self.element <= node.element else \
-                PairingHeap._HeapNode(node.element, PairingHeap._HeapNodeList(self, node.children))
+                PairingHeap._HeapNode(node.element, [self, *node.children])
 
-        def _merge_pairs(self, list_: "PairingHeap._HeapNodeList") \
+        def _merge_pairs(self, index: int) \
                 -> Optional["PairingHeap._HeapNode"]:
-            if list_ is None:
+            if index >= len(self.children):
                 return None
 
-            if list_.next is None:
-                return list_.node
+            if index == len(self.children) - 1:
+                return self.children[index]
 
-            return list_.node | list_.next.node | self._merge_pairs(list_.next.next)
+            return self.children[index] | self.children[index + 1] | self._merge_pairs(index + 2)

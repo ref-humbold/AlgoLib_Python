@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """Structure of AVL tree."""
-from collections.abc import MutableSet
-from typing import Iterable, TypeVar
+from collections.abc import Iterable, Iterator, MutableSet, Reversible
+from typing import TypeVar
 
 _T = TypeVar("_T")
 
 
-class AVLTree(MutableSet):
+class AvlTree(MutableSet, Reversible):
     def __init__(self, elements: Iterable[_T] = ()):
         self._tree = None
         self._count = 0
@@ -32,12 +32,16 @@ class AVLTree(MutableSet):
         self._count = 0
 
     def __iter__(self):
-        """:return: the forward iterator object"""
-        return self._AVLIterator(self._tree and self._tree.minimum)
+        """Get the forward iterator of this tree.
+
+        :return: the forward iterator object"""
+        return self._AvlIterator(self._tree and self._tree.minimum)
 
     def __reversed__(self):
-        """:return: the reversed iterator object"""
-        return self._AVLReverseIterator(self._tree and self._tree.maximum)
+        """Get the reversed iterator of this tree.
+
+        :return: the reversed iterator object"""
+        return self._AvlReverseIterator(self._tree and self._tree.maximum)
 
     def __contains__(self, element: _T):
         """Checks whether given element belongs to this tree.
@@ -137,7 +141,7 @@ class AVLTree(MutableSet):
         node = self._tree
 
         while node and not predicate(node, value):
-            node = AVLTree._search(node, value)
+            node = AvlTree._search(node, value)
 
         return node
 
@@ -269,7 +273,7 @@ class AVLTree(MutableSet):
             right_height = 0 if self._right is None else self._right.height
             self._height = max(left_height, right_height) + 1
 
-    class _AVLIterator:
+    class _AvlIterator(Iterator):
         def __init__(self, node):
             self._current_node = node
 
@@ -290,7 +294,7 @@ class AVLTree(MutableSet):
 
             return return_value
 
-    class _AVLReverseIterator:
+    class _AvlReverseIterator(Iterator):
         def __init__(self, node):
             self._current_node = node
 
@@ -298,7 +302,7 @@ class AVLTree(MutableSet):
             if self._current_node is None:
                 raise StopIteration
 
-            ret_elem = self._current_node.element
+            return_value = self._current_node.element
 
             if self._current_node.left is not None:
                 self._current_node = self._current_node.left.maximum
@@ -309,4 +313,4 @@ class AVLTree(MutableSet):
 
                 self._current_node = self._current_node.parent
 
-            return ret_elem
+            return return_value

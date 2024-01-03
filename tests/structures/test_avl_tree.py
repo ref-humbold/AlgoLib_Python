@@ -4,7 +4,7 @@ import unittest
 
 from assertpy import assert_that
 
-from algolib.structures import AVLTree
+from algolib.structures import AvlTree
 
 
 class AVLTreeTest(unittest.TestCase):
@@ -14,7 +14,7 @@ class AVLTreeTest(unittest.TestCase):
         self.test_object = None
 
     def setUp(self):
-        self.test_object = AVLTree(self.numbers)
+        self.test_object = AvlTree(self.numbers)
 
     def test__str__then_text_representation(self):
         # when
@@ -24,7 +24,7 @@ class AVLTreeTest(unittest.TestCase):
 
     def test__len__when_empty__then_zero(self):
         # given
-        self.test_object = AVLTree()
+        self.test_object = AvlTree()
         # when
         result = len(self.test_object)
         # then
@@ -50,63 +50,55 @@ class AVLTreeTest(unittest.TestCase):
             # then
             assert_that(result).is_false()
 
-    def test__iterator__when_not_empty__then_ordered_elements(self):
+    def test__iter__when_empty__then_no_elements(self):
+        # given
+        self.test_object = AvlTree()
+        # when
+        result = list(self.test_object)
+        # then
+        assert_that(result).is_empty()
+
+    def test__iter__when_single_element__then_this_element_only(self):
+        # given
+        element = 17
+        self.test_object = AvlTree([element])
         # when
         iterator = iter(self.test_object)
-        result = []
+        # then
+        assert_that(next(iterator)).is_equal_to(element)
+        assert_that(next).raises(StopIteration).when_called_with(iterator)
 
-        while True:
-            try:
-                result.append(next(iterator))
-            except StopIteration:
-                break
+    def test__iter__when_multiple_elements__then_ordered_elements(self):
+        # when
+        result = list(self.test_object)
         # then
         assert_that(result).is_sorted()
         assert_that(result).is_equal_to(sorted(self.numbers))
 
-    def test__iterator__when_empty__then_no_elements(self):
+    def test__reversed__when_empty__then_no_elements(self):
         # given
-        self.test_object = AVLTree()
+        self.test_object = AvlTree()
         # when
-        iterator = iter(self.test_object)
-        result = []
-
-        while True:
-            try:
-                result.append(next(iterator))
-            except StopIteration:
-                break
+        result = list(reversed(self.test_object))
         # then
         assert_that(result).is_empty()
 
-    def test__reversed__when_not_empty__then_reverse_ordered_elements(self):
+    def test__reversed__when_single_element__then_this_element_only(self):
+        # given
+        element = 17
+        self.test_object = AvlTree([element])
         # when
         iterator = reversed(self.test_object)
-        result = []
+        # then
+        assert_that(next(iterator)).is_equal_to(element)
+        assert_that(next).raises(StopIteration).when_called_with(iterator)
 
-        while True:
-            try:
-                result.append(next(iterator))
-            except StopIteration:
-                break
+    def test__reversed__when_multiple_elements__then_reverse_ordered_elements(self):
+        # when
+        result = list(reversed(self.test_object))
         # then
         assert_that(result).is_sorted(reverse=True)
         assert_that(result).is_equal_to(sorted(self.numbers, reverse=True))
-
-    def test__reversed__when_empty__then_no_elements(self):
-        # given
-        self.test_object = AVLTree()
-        # when
-        iterator = reversed(self.test_object)
-        result = []
-
-        while True:
-            try:
-                result.append(next(iterator))
-            except StopIteration:
-                break
-        # then
-        assert_that(result).is_empty()
 
     def test__add__when_new_element__then_increase_length(self):
         # given
@@ -140,7 +132,7 @@ class AVLTreeTest(unittest.TestCase):
         # given
         root = 27
         elem = 11
-        self.test_object = AVLTree([root, elem])
+        self.test_object = AvlTree([root, elem])
         # when
         self.test_object.remove(root)
         # then
@@ -151,7 +143,7 @@ class AVLTreeTest(unittest.TestCase):
         # given
         root = 11
         elem = 27
-        self.test_object = AVLTree([root, elem])
+        self.test_object = AvlTree([root, elem])
         # when
         self.test_object.remove(root)
         # then
@@ -161,7 +153,7 @@ class AVLTreeTest(unittest.TestCase):
     def test__remove__when_one_element_with_root__then_empty(self):
         # given
         root = 0
-        self.test_object = AVLTree([root])
+        self.test_object = AvlTree([root])
         # when
         self.test_object.remove(root)
         # then
@@ -170,7 +162,7 @@ class AVLTreeTest(unittest.TestCase):
 
     def test__remove__when_empty__then_key_error(self):
         # given
-        self.test_object = AVLTree()
+        self.test_object = AvlTree()
 
         # when
         def function(element):
@@ -210,7 +202,7 @@ class AVLTreeTest(unittest.TestCase):
 
     def test__discard__when_empty__then_nothing(self):
         # given
-        self.test_object = AVLTree()
+        self.test_object = AvlTree()
         # when
         self.test_object.discard(0)
         # then
@@ -231,7 +223,7 @@ class AVLTreeTest(unittest.TestCase):
             tree.pop()
 
         # then
-        assert_that(function).raises(KeyError).when_called_with(AVLTree())
+        assert_that(function).raises(KeyError).when_called_with(AvlTree())
 
     def test__clear__when_not_empty__then_empty(self):
         # when

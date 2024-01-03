@@ -29,6 +29,32 @@ class PairingHeapTest(unittest.TestCase):
         # then
         assert_that(result).is_equal_to(len(self.numbers))
 
+    def test__iter__when_empty__then_no_elements(self):
+        # given
+        self.test_object = PairingHeap()
+        # when
+        result = list(self.test_object)
+        # then
+        assert_that(result).is_empty()
+
+    def test__iter__when_single_element__then_this_element_only(self):
+        # given
+        element = 17
+        self.test_object = PairingHeap([element])
+        # when
+        iterator = iter(self.test_object)
+        # then
+        assert_that(next(iterator)).is_equal_to(element)
+        assert_that(next).raises(StopIteration).when_called_with(iterator)
+
+    def test__iter__when_multiple_elements__then_all_elements_minimum_first(self):
+        # when
+        result = list(self.test_object)
+        # then
+        assert_that(result).is_length(len(self.numbers))
+        assert_that(result).contains_only(*self.numbers)
+        assert_that(result[0]).is_equal_to(min(self.numbers))
+
     def test__clear__when_not_empty__then_empty(self):
         # when
         self.test_object.clear()
@@ -171,7 +197,7 @@ class PairingHeapTest(unittest.TestCase):
         assert_that(len(result)).is_equal_to(len(self.test_object) + len(other))
         assert_that(result.head).is_equal_to(other.head)
 
-    def test__or__when_shared_inner_heap__then_changed_only_merging_heap(self):
+    def test__or__when_multiple_merges__then_changed_only_merging_heap(self):
         # given
         self.test_object = PairingHeap()
         first = PairingHeap([10, 20])
@@ -225,7 +251,7 @@ class PairingHeapTest(unittest.TestCase):
         assert_that(len(self.test_object)).is_equal_to(len(self.numbers) + len(other))
         assert_that(self.test_object.head).is_equal_to(other.head)
 
-    def test__ior__when_shared_inner_heap__then_changed_only_merging_heap(self):
+    def test__ior__when_multiple_merges__then_changed_only_merging_heap(self):
         # given
         self.test_object = PairingHeap()
         first = PairingHeap([10, 20])

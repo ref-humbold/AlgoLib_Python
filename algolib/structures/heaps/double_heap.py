@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 """Structure of double heap."""
-from collections.abc import Sized
-from typing import Iterable, TypeVar
+from abc import ABC, abstractmethod
+from collections import deque
+from collections.abc import Iterable, Iterator, Reversible, Sized
+from typing import List, TypeVar
 
 _T = TypeVar("_T")
 
 
-class DoubleHeap(Sized):
+class DoubleHeap(Sized, Reversible):
     _INDEX_MIN = 0
     _INDEX_MAX = 1
 
@@ -22,6 +24,18 @@ class DoubleHeap(Sized):
 
         :return: the number of elements"""
         return len(self._heap)
+
+    def __iter__(self):
+        """Get the forward iterator of this double heap.
+
+        :return: the forward iterator object"""
+        return self._HeapIterator(self._heap)
+
+    def __reversed__(self):
+        """Get the reversed iterator of this double heap.
+
+        :return: the reversed iterator object"""
+        return self._HeapReversedIterator(self._heap)
 
     def clear(self):
         """Removes all elements from this double heap."""
@@ -159,3 +173,75 @@ class DoubleHeap(Sized):
         if self._key(self._heap[index]) > self._key(self._heap[next_index]):
             self._heap[index], self._heap[next_index] = self._heap[next_index], self._heap[index]
             self._move_to_right(next_index)
+
+    class _AbstractHeapIterator(ABC, Iterator):
+        def __init__(self, heap):
+            self._order_queue = self._initialize(heap)
+
+        def __next__(self):
+            if len(self._order_queue) == 0:
+                raise StopIteration()
+
+            return self._order_queue.popleft()
+
+        @abstractmethod
+        def _initialize(self, heap: List[_T]):
+            pass
+
+        @staticmethod
+        def _create_ordered_minimal_list(heap: List[_T]):
+            indices = deque()
+            minimal_list = []
+
+            if len(heap) > 0:
+                indices.append(DoubleHeap._INDEX_MIN)
+
+            while len(indices) > 0:
+                index = indices.popleft()
+                minimal_list.append(heap[index])
+
+                if index + index + 2 < len(heap):
+                    indices.append(index + index + 2)
+
+                if index + index + 4 < len(heap):
+                    indices.append(index + index + 4)
+
+            return minimal_list
+
+        @staticmethod
+        def _create_ordered_maximal_list(heap: List[_T]):
+            indices = deque()
+            minimal_list = []
+
+            if len(heap) > DoubleHeap._INDEX_MAX:
+                indices.append(DoubleHeap._INDEX_MAX)
+
+            while len(indices) > 0:
+                index = indices.popleft()
+                minimal_list.append(heap[index])
+
+                if index + index + 1 < len(heap):
+                    indices.append(index + index + 1)
+
+                if index + index + 3 < len(heap):
+                    indices.append(index + index + 3)
+
+            return minimal_list
+
+    class _HeapIterator(_AbstractHeapIterator):
+        def _initialize(self, heap: List[_T]):
+            minimal_list = self._create_ordered_minimal_list(heap)
+            maximal_list = self._create_ordered_maximal_list(heap)
+            order_queue = deque()
+            order_queue.extend(minimal_list)
+            order_queue.extend(reversed(maximal_list))
+            return order_queue
+
+    class _HeapReversedIterator(_AbstractHeapIterator):
+        def _initialize(self, heap: List[_T]):
+            minimal_list = self._create_ordered_minimal_list(heap)
+            maximal_list = self._create_ordered_maximal_list(heap)
+            order_queue = deque()
+            order_queue.extend(maximal_list)
+            order_queue.extend(reversed(minimal_list))
+            return order_queue

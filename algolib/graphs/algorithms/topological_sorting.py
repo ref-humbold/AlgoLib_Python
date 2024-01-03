@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Algorithms for topological sorting of a directed acyclic graph."""
-import queue
+from queue import PriorityQueue
 from typing import List
 
 from .searching import dfs_recursive
@@ -22,7 +22,7 @@ def inputs_topological_sort(graph: DirectedGraph) -> List[Vertex]:
     if graph.edges_count == 0:
         return list(graph.vertices)
 
-    vertex_queue = queue.PriorityQueue()
+    vertex_queue = PriorityQueue()
     input_degrees = {v: graph.input_degree(v) for v in graph.vertices}
     order = []
 
