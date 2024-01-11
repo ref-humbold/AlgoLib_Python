@@ -159,52 +159,52 @@ class PairingHeapTest(unittest.TestCase):
         assert_that(result).is_sorted()
 
     # endregion
-    # region or
+    # region op_add
 
-    def test__or__when_empty_and_not_empty__then_same_as_other(self):
+    def test__op_add__when_empty_and_not_empty__then_same_as_other(self):
         # given
         self.test_object = PairingHeap()
         other = PairingHeap(self.numbers)
         # when
-        result = self.test_object | other
+        result = self.test_object + other
         # then
         assert_that(len(result)).is_equal_to(len(self.numbers))
         assert_that(result.head).is_equal_to(other.head)
 
-    def test__or__when_not_empty_and_empty__then_no_changes(self):
+    def test__op_add__when_not_empty_and_empty__then_no_changes(self):
         # when
-        result = self.test_object.__or__(PairingHeap())
+        result = self.test_object + PairingHeap()
         # then
         assert_that(len(result)).is_equal_to(len(self.numbers))
         assert_that(result.head).is_equal_to(min(self.numbers))
 
-    def test__or__when_other_has_greater_minimum__then_minimum_remains(self):
+    def test__op_add__when_other_has_greater_minimum__then_minimum_remains(self):
         # given
         other = PairingHeap([min(self.numbers) + 5, min(self.numbers) + 13, min(self.numbers) + 20])
         # when
-        result = self.test_object.__or__(other)
+        result = self.test_object + other
         # then
         assert_that(len(result)).is_equal_to(len(self.numbers) + len(other))
         assert_that(result.head).is_equal_to(self.test_object.head)
 
-    def test__or__when_other_has_less_minimum__then_new_minimum(self):
+    def test__op_add__when_other_has_less_minimum__then_new_minimum(self):
         # given
         other = PairingHeap([min(self.numbers) - 4, min(self.numbers) + 5, min(self.numbers) + 13,
                              min(self.numbers) + 20])
         # when
-        result = self.test_object.__or__(other)
+        result = self.test_object + other
         # then
         assert_that(len(result)).is_equal_to(len(self.test_object) + len(other))
         assert_that(result.head).is_equal_to(other.head)
 
-    def test__or__when_multiple_merges__then_changed_only_merging_heap(self):
+    def test__op_add__when_multiple_merges__then_changed_only_merging_heap(self):
         # given
         self.test_object = PairingHeap()
         first = PairingHeap([10, 20])
         second = PairingHeap([4, 8])
         # when
-        result1 = self.test_object | first
-        result2 = result1 | second
+        result1 = self.test_object + first
+        result2 = result1 + second
         # then
         assert_that(result1.head).is_equal_to(10)
         assert_that(result2.head).is_equal_to(4)
@@ -213,52 +213,52 @@ class PairingHeapTest(unittest.TestCase):
         assert_that(second.head).is_equal_to(4)
 
     # endregion
-    # region ior
+    # region op_iadd
 
-    def test__ior__when_empty_and_not_empty__then_same_as_other(self):
+    def test__op_iadd__when_empty_and_not_empty__then_same_as_other(self):
         # given
         self.test_object = PairingHeap()
         other = PairingHeap(self.numbers)
         # when
-        self.test_object |= other
+        self.test_object += other
         # then
         assert_that(len(self.test_object)).is_equal_to(len(self.numbers))
         assert_that(self.test_object.head).is_equal_to(other.head)
 
-    def test__ior__when_not_empty_and_empty__then_no_changes(self):
+    def test__op_iadd__when_not_empty_and_empty__then_no_changes(self):
         # when
-        self.test_object |= PairingHeap()
+        self.test_object += PairingHeap()
         # then
         assert_that(len(self.test_object)).is_equal_to(len(self.numbers))
         assert_that(self.test_object.head).is_equal_to(min(self.numbers))
 
-    def test__ior__when_other_has_greater_minimum__then_minimum_remains(self):
+    def test__op_iadd__when_other_has_greater_minimum__then_minimum_remains(self):
         # given
         other = PairingHeap([min(self.numbers) + 5, min(self.numbers) + 13, min(self.numbers) + 20])
         # when
-        self.test_object |= other
+        self.test_object += other
         # then
         assert_that(len(self.test_object)).is_equal_to(len(self.numbers) + len(other))
         assert_that(self.test_object.head).is_equal_to(min(self.numbers))
 
-    def test__ior__when_other_has_less_minimum__then_new_minimum(self):
+    def test__op_iadd__when_other_has_less_minimum__then_new_minimum(self):
         # given
         other = PairingHeap([min(self.numbers) - 4, min(self.numbers) + 5, min(self.numbers) + 13,
                              min(self.numbers) + 20])
         # when
-        self.test_object |= other
+        self.test_object += other
         # then
         assert_that(len(self.test_object)).is_equal_to(len(self.numbers) + len(other))
         assert_that(self.test_object.head).is_equal_to(other.head)
 
-    def test__ior__when_multiple_merges__then_changed_only_merging_heap(self):
+    def test__op_iadd__when_multiple_merges__then_changed_only_merging_heap(self):
         # given
         self.test_object = PairingHeap()
         first = PairingHeap([10, 20])
         second = PairingHeap([4, 8])
         # when
-        self.test_object |= first
-        self.test_object |= second
+        self.test_object += first
+        self.test_object += second
         # then
         assert_that(self.test_object.head).is_equal_to(4)
         assert_that(first.head).is_equal_to(10)

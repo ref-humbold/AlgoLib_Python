@@ -20,33 +20,33 @@ class DoubleHeap(Sized, Reversible):
             self.append(e)
 
     def __len__(self):
-        """Gets the number of elements in this double heap.
+        """Gets the number of elements in this heap.
 
         :return: the number of elements"""
         return len(self._heap)
 
     def __iter__(self):
-        """Get the forward iterator of this double heap.
+        """Get the forward iterator of this heap.
 
         :return: the forward iterator object"""
         return self._HeapIterator(self._heap)
 
     def __reversed__(self):
-        """Get the reversed iterator of this double heap.
+        """Get the reversed iterator of this heap.
 
         :return: the reversed iterator object"""
         return self._HeapReversedIterator(self._heap)
 
     def clear(self):
-        """Removes all elements from this double heap."""
+        """Removes all elements from this heap."""
         self._heap = []
 
     @property
     def left(self) -> _T:
-        """Retrieves minimal element from this double heap.
+        """Retrieves minimal element from this heap.
 
         :return: the minimal element
-        :raise KeyError: if this double heap is empty"""
+        :raise KeyError: if this heap is empty"""
         if len(self._heap) == 0:
             raise KeyError("Double heap is empty")
 
@@ -54,10 +54,10 @@ class DoubleHeap(Sized, Reversible):
 
     @property
     def right(self) -> _T:
-        """Retrieves maximal element from this double heap.
+        """Retrieves maximal element from this heap.
 
         :return: the maximal element
-        :raise KeyError: if this double heap is empty"""
+        :raise KeyError: if this heap is empty"""
         if len(self._heap) == 0:
             raise KeyError("Double heap is empty")
 
@@ -65,7 +65,7 @@ class DoubleHeap(Sized, Reversible):
             self._heap[self._INDEX_MIN]
 
     def append(self, element: _T):
-        """Adds new element to this double heap.
+        """Adds new element to this heap.
 
         :param element: the new element"""
         self._heap.append(element)
@@ -91,10 +91,10 @@ class DoubleHeap(Sized, Reversible):
                 self._move_to_left(index)
 
     def popleft(self) -> _T:
-        """Retrieves and removes minimal element from this double heap.
+        """Retrieves and removes minimal element from this heap.
 
         :return: the removed minimal element
-        :raise KeyError: if this double heap is empty"""
+        :raise KeyError: if this heap is empty"""
         minimal = self.left
 
         self._heap[self._INDEX_MIN] = self._heap[-1]
@@ -104,10 +104,10 @@ class DoubleHeap(Sized, Reversible):
         return minimal
 
     def popright(self) -> _T:
-        """Retrieves and removes maximal element from this double heap.
+        """Retrieves and removes maximal element from this heap.
 
         :return: the removed maximal element
-        :raise KeyError: if this double heap is empty"""
+        :raise KeyError: if this heap is empty"""
         if len(self) == 1:
             return self.popleft()
 
