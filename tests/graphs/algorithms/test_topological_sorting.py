@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Algorithms for topological sorting"""
+"""Tests: Algorithms for topological sorting."""
 import unittest
 
 from assertpy import assert_that
@@ -93,30 +93,30 @@ class TopologicalSortingTest(unittest.TestCase):
         assert_that(result).is_instance_of(list)
 
         assert_that(result).is_in([
-                graph.get_vertex(5),
-                graph.get_vertex(3),
-                graph.get_vertex(1),
-                graph.get_vertex(0),
-                graph.get_vertex(4),
-                graph.get_vertex(2)], [
-                        graph.get_vertex(3),
-                        graph.get_vertex(5),
-                        graph.get_vertex(1),
-                        graph.get_vertex(0),
-                        graph.get_vertex(2),
-                        graph.get_vertex(4)], [
-                                graph.get_vertex(5),
-                                graph.get_vertex(3),
-                                graph.get_vertex(1),
-                                graph.get_vertex(0),
-                                graph.get_vertex(2),
-                                graph.get_vertex(4)], [
-                                        graph.get_vertex(3),
-                                        graph.get_vertex(5),
-                                        graph.get_vertex(1),
-                                        graph.get_vertex(0),
-                                        graph.get_vertex(4),
-                                        graph.get_vertex(2)])
+            graph.get_vertex(5),
+            graph.get_vertex(3),
+            graph.get_vertex(1),
+            graph.get_vertex(0),
+            graph.get_vertex(4),
+            graph.get_vertex(2)], [
+            graph.get_vertex(3),
+            graph.get_vertex(5),
+            graph.get_vertex(1),
+            graph.get_vertex(0),
+            graph.get_vertex(2),
+            graph.get_vertex(4)], [
+            graph.get_vertex(5),
+            graph.get_vertex(3),
+            graph.get_vertex(1),
+            graph.get_vertex(0),
+            graph.get_vertex(2),
+            graph.get_vertex(4)], [
+            graph.get_vertex(3),
+            graph.get_vertex(5),
+            graph.get_vertex(1),
+            graph.get_vertex(0),
+            graph.get_vertex(4),
+            graph.get_vertex(2)])
 
     @staticmethod
     def test__dfs_topological_sort__when_cyclic_graph__then_directed_cyclic_graph_error():

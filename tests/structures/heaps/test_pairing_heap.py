@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Structure of pairing heap"""
+"""Tests: Structure of pairing heap."""
 import unittest
 
 from assertpy import assert_that

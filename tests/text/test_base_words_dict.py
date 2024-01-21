@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Structure of base words dictionary using Karp-Miller-Rosenberg algorithm"""
+"""Tests: Structure of base words dictionary using Karp-Miller-Rosenberg algorithm."""
 import unittest
 
 from assertpy import assert_that

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Structure of suffix array"""
+"""Tests: Structure of suffix array."""
 import unittest
 
 from assertpy import assert_that

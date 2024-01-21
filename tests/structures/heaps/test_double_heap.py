@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Structure of double heap"""
+"""Tests: Structure of double heap."""
 import unittest
 
 from assertpy import assert_that

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Algorithm for pair of closest points in 2D"""
+"""Tests: Algorithm for pair of closest points in 2D."""
 import unittest
 
 from assertpy import assert_that

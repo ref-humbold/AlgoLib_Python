@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Structure of linear equations system """
+"""Tests: Structure of linear equations system ."""
 import unittest
 
 from assertpy import assert_that
@@ -16,9 +16,10 @@ class EquationSystemTest(unittest.TestCase):
         # when
         result = repr(test_object)
         # then
-        assert_that(result).is_equal_to(
-            "EquationSystem(Equation([2, 3, -2], 15), Equation([7, -1, 0], 4), "
-            "Equation([-1, 6, 4], 9))")
+        assert_that(
+            result
+        ).is_equal_to("EquationSystem(Equation([2, 3, -2], 15), Equation([7, -1, 0], 4), "
+                      "Equation([-1, 6, 4], 9))")
 
     @staticmethod
     def test__op_str__then_string_representation():

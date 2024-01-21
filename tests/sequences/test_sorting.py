@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Algorithms for sequence sorting"""
+"""Tests: Algorithms for sequence sorting."""
 import unittest
 
 from assertpy import assert_that

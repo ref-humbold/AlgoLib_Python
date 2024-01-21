@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Structure of AVL tree"""
+"""Tests: Structure of AVL tree."""
 import unittest
 
 from assertpy import assert_that

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: lowest common ancestor algorithm"""
+"""Tests: lowest common ancestor algorithm."""
 import unittest
 
 from assertpy import assert_that

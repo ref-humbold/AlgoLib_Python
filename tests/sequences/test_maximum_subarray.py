@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Algorithms for maximum subarray"""
+"""Tests: Algorithms for maximum subarray."""
 import unittest
 
 from assertpy import assert_that

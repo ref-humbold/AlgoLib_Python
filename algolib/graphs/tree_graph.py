@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structure of tree graph"""
+"""Structure of tree graph."""
 from typing import Any, Union
 
 from .edge import Edge

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structure of multipartite graph"""
+"""Structure of multipartite graph."""
 from typing import Any, Collection, Iterable, Optional, Union
 
 from .edge import Edge

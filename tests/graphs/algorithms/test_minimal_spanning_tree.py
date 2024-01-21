@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Algorithms for minimal spanning tree"""
+"""Tests: Algorithms for minimal spanning tree."""
 import unittest
 
 from assertpy import assert_that

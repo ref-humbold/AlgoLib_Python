@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Structure of tree graph """
+"""Tests: Structure of tree graph ."""
 import unittest
 
 from assertpy import assert_that

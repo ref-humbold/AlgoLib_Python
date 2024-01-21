@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Algorithms for edit distance"""
+"""Tests: Algorithms for edit distance."""
 import unittest
 
 from assertpy import assert_that
@@ -37,7 +37,10 @@ class EditDistanceTest(unittest.TestCase):
         text = "qwertyuiop"
         insertion_cost = 2
         # when
-        result = count_levenshtein("", text, insertion_cost=insertion_cost, deletion_cost=1,
+        result = count_levenshtein("",
+                                   text,
+                                   insertion_cost=insertion_cost,
+                                   deletion_cost=1,
                                    substitution_cost=1)
         # then
         assert_that(result).is_close_to(len(text) * insertion_cost, cls._PRECISION)
@@ -48,7 +51,10 @@ class EditDistanceTest(unittest.TestCase):
         text = "qwertyuiop"
         deletion_cost = 2
         # when
-        result = count_levenshtein(text, "", insertion_cost=1, deletion_cost=deletion_cost,
+        result = count_levenshtein(text,
+                                   "",
+                                   insertion_cost=1,
+                                   deletion_cost=deletion_cost,
                                    substitution_cost=1)
         # then
         assert_that(result).is_close_to(len(text) * deletion_cost, cls._PRECISION)
