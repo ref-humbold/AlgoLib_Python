@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Algorithms for searching for prime numbers"""
+"""Tests: Algorithms for searching for prime numbers."""
 import unittest
 
 from assertpy import assert_that

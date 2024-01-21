@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Hopcroft-Karp algorithm for matching in bipartite graph"""
+"""Tests: Hopcroft-Karp algorithm for matching in bipartite graph."""
 import unittest
 
 from assertpy import assert_that

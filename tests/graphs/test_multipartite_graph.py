@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Structure of multipartite graph"""
+"""Tests: Structure of multipartite graph."""
 import unittest
 
 from assertpy import assert_that

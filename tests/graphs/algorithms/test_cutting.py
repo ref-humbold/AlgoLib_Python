@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Algorithms for graph cutting"""
+"""Tests: Algorithms for graph cutting."""
 import unittest
 
 from assertpy import assert_that

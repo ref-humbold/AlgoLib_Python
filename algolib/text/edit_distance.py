@@ -60,7 +60,7 @@ def count_lcs(source: str,
             previous_diagonal = previous_above
             previous_above = distance[i + 1]
             distance[i + 1] = previous_diagonal if element1 == element2 else min(
-                previous_above + deletion_cost, distance[i] + insertion_cost)
+                    previous_above + deletion_cost, distance[i] + insertion_cost)
 
     return distance[-1]
 

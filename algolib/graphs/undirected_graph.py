@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Structure of undirected graph"""
+"""Structure of undirected graph."""
 from abc import ABCMeta, abstractmethod
 from typing import Any, Iterable, Optional
 

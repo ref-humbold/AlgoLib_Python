@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Algorithm for longest common subsequence"""
+"""Tests: Algorithm for longest common subsequence."""
 import unittest
 
 from assertpy import assert_that

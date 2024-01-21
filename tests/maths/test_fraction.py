@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Structure of fraction"""
+"""Tests: Structure of fraction."""
 from unittest import TestCase
 
 from assertpy import assert_that

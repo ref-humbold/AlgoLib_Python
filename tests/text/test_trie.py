@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Structure of trie tree"""
+"""Tests: Structure of trie tree."""
 from unittest import TestCase
 
 from assertpy import assert_that

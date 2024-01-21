@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Algorithm for convex hull in 2D (monotone chain)"""
+"""Tests: Algorithm for convex hull in 2D (monotone chain)."""
 import unittest
 
 from assertpy import assert_that

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Structure of disjoint sets  (union-find)"""
+"""Tests: Structure of disjoint sets  (union-find)."""
 import unittest
 
 from assertpy import assert_that

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Structure of directed graph"""
+"""Tests: Structure of directed graph."""
 import unittest
 
 from assertpy import assert_that

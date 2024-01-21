@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Knuth-Morris-Pratt algorithm for pattern searching"""
+"""Tests: Knuth-Morris-Pratt algorithm for pattern searching."""
 import unittest
 
 from assertpy import assert_that

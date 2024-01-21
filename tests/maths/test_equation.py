@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Structure of linear equation"""
+"""Tests: Structure of linear equation."""
 import unittest
 
 from assertpy import assert_that

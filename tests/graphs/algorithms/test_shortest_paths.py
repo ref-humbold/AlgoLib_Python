@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Algorithms for shortest paths"""
+"""Tests: Algorithms for shortest paths."""
 import unittest
 
 from assertpy import assert_that
