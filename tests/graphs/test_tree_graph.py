@@ -22,7 +22,7 @@ class TreeGraphTest(unittest.TestCase):
         self.test_object.add_vertex(6, Vertex(2))
         self.test_object.add_vertex(7, Vertex(2))
 
-    def test__properties_setitem_getitem__when_setting_property__then_property(self):
+    def test__properties_op_setitem_op_getitem__when_setting_property__then_property(self):
         # given
         vertex = Vertex(2)
         edge = self.test_object.get_edge(6, 2)

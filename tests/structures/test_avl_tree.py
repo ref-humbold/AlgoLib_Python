@@ -16,13 +16,13 @@ class AVLTreeTest(unittest.TestCase):
     def setUp(self):
         self.test_object = AVLTree(self.numbers)
 
-    def test__str__then_text_representation(self):
+    def test__op_str__then_text_representation(self):
         # when
         result = str(self.test_object)
         # then
         assert_that(result).is_equal_to("{|2, 6, 10, 14, 18, 24, 26, 30, 37, 45, 51, 68, 71, 97|}")
 
-    def test__len__when_empty__then_zero(self):
+    def test__op_len__when_empty__then_zero(self):
         # given
         self.test_object = AVLTree()
         # when
@@ -30,27 +30,27 @@ class AVLTreeTest(unittest.TestCase):
         # then
         assert_that(result).is_equal_to(0)
 
-    def test__len__when_not_empty__then_number_of_elements(self):
+    def test__op_len__when_not_empty__then_number_of_elements(self):
         # when
         result = len(self.test_object)
         # then
         assert_that(result).is_equal_to(len(self.numbers))
 
-    def test__in__when_present_element__then_true(self):
+    def test__op_contains__when_present_element__then_true(self):
         for e in self.numbers:
             # when
             result = e in self.test_object
             # then
             assert_that(result).is_true()
 
-    def test__in__when_outer_element(self):
+    def test__op_contains__when_outer_element(self):
         for e in [111, 140, 187]:
             # when
             result = e in self.test_object
             # then
             assert_that(result).is_false()
 
-    def test__iterator__when_not_empty__then_ordered_elements(self):
+    def test__op_iter__when_not_empty__then_ordered_elements(self):
         # when
         iterator = iter(self.test_object)
         result = []
@@ -64,7 +64,7 @@ class AVLTreeTest(unittest.TestCase):
         assert_that(result).is_sorted()
         assert_that(result).is_equal_to(sorted(self.numbers))
 
-    def test__iterator__when_empty__then_no_elements(self):
+    def test__op_iter__when_empty__then_no_elements(self):
         # given
         self.test_object = AVLTree()
         # when
@@ -79,7 +79,7 @@ class AVLTreeTest(unittest.TestCase):
         # then
         assert_that(result).is_empty()
 
-    def test__reversed__when_not_empty__then_reverse_ordered_elements(self):
+    def test__op_reversed__when_not_empty__then_reverse_ordered_elements(self):
         # when
         iterator = reversed(self.test_object)
         result = []
@@ -93,7 +93,7 @@ class AVLTreeTest(unittest.TestCase):
         assert_that(result).is_sorted(reverse=True)
         assert_that(result).is_equal_to(sorted(self.numbers, reverse=True))
 
-    def test__reversed__when_empty__then_no_elements(self):
+    def test__op_reversed__when_empty__then_no_elements(self):
         # given
         self.test_object = AVLTree()
         # when

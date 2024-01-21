@@ -16,14 +16,14 @@ class DoubleHeapTest(unittest.TestCase):
     def setUp(self):
         self.test_object = DoubleHeap(self.numbers)
 
-    def test__len__when_empty__then_zero(self):
+    def test__op_len__when_empty__then_zero(self):
         self.test_object = DoubleHeap()
         # when
         result = len(self.test_object)
         # then
         assert_that(result).is_equal_to(0)
 
-    def test__len__when_not_empty__then_number_of_elements(self):
+    def test__op_len__when_not_empty__then_number_of_elements(self):
         # when
         result = len(self.test_object)
         # then
