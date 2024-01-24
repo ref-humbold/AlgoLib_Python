@@ -15,13 +15,13 @@ class SuffixArrayTest(unittest.TestCase):
     def setUp(self):
         self.test_object = SuffixArray("mississippi")
 
-    def test__len(self):
+    def test__op_len(self):
         # when
         result = len(self.test_object)
         # then
         assert_that(result).is_equal_to(11)
 
-    def test__getitem(self):
+    def test__op_getitem(self):
         # when
         result0 = self.test_object[0]
         result1 = self.test_object[3]
@@ -33,7 +33,7 @@ class SuffixArrayTest(unittest.TestCase):
         assert_that(result2).is_equal_to("ppi")
         assert_that(result3).is_equal_to("ssippi")
 
-    def test__getitem__when_out_of_range(self):
+    def test__op_getitem__when_out_of_range(self):
         # when
         def function(i):
             return self.test_object[i]

@@ -20,7 +20,7 @@ class MultipartiteGraphTest(unittest.TestCase):
         self.test_object.add_edge_between(Vertex(4), Vertex(6))
         self.test_object.add_edge_between(Vertex(7), Vertex(9))
 
-    def test__properties_setitem_getitem__when_setting_property__then_property(self):
+    def test__properties_op_setitem_op_getitem__when_setting_property__then_property(self):
         # given
         vertex = Vertex(2)
         edge = self.test_object.get_edge(0, 3)

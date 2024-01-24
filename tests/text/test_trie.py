@@ -13,7 +13,7 @@ class TestTrie(TestCase):
         self.texts = ["abcd", "ab", "xyz"]
         self.test_object = Trie(self.texts)
 
-    def test__len__when_empty__then_zero(self):
+    def test__op_len__when_empty__then_zero(self):
         # given
         self.test_object = Trie()
         # when
@@ -21,31 +21,37 @@ class TestTrie(TestCase):
         # then
         assert_that(result).is_equal_to(0)
 
-    def test__len__when_not_empty__then_number_of_texts(self):
+    def test__op_len__when_not_empty__then_number_of_texts(self):
         # when
         result = len(self.test_object)
         # then
         assert_that(result).is_equal_to(len(self.texts))
 
-    def test__contains__when_present__then_true(self):
+    def test__clear__when_not_empty__then_empty(self):
+        # when
+        self.test_object.clear()
+        # then
+        assert_that(self.test_object).is_empty()
+
+    def test__op_contains__when_present__then_true(self):
         # when
         result = "abcd" in self.test_object
         # then
         assert_that(result).is_true()
 
-    def test__contains__when_absent__then_false(self):
+    def test__op_contains__when_absent__then_false(self):
         # when
         result = "abxx" in self.test_object
         # then
         assert_that(result).is_false()
 
-    def test__contains__when_absent_prefix__then_false(self):
+    def test__op_contains__when_absent_prefix__then_false(self):
         # when
         result = "xy" in self.test_object
         # then
         assert_that(result).is_false()
 
-    def test__contains__when_wrong_type__then_type_error(self):
+    def test__op_contains__when_wrong_type__then_type_error(self):
         # when
         def function(element):
             return element in self.test_object
@@ -132,9 +138,3 @@ class TestTrie(TestCase):
         assert_that(self.test_object).contains("xyz")
         assert_that(self.test_object).does_not_contain(text)
         assert_that(self.test_object).is_length(len(self.texts))
-
-    def test__clear__when_not_empty__then_empty(self):
-        # when
-        self.test_object.clear()
-        # then
-        assert_that(self.test_object).is_empty()

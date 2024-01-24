@@ -15,25 +15,25 @@ class DisjointSetsTest(unittest.TestCase):
     def setUp(self):
         self.test_object = DisjointSets(range(10))
 
-    def test__len__then_sets_count(self):
+    def test__op_len__then_sets_count(self):
         # when
         result = len(self.test_object)
         # then
         assert_that(result).is_equal_to(10)
 
-    def test__contains__when_present__then_true(self):
+    def test__op_contains__when_present__then_true(self):
         # when
         result = 4 in self.test_object
         # then
         assert_that(result).is_true()
 
-    def test__contains__when_absent__then_false(self):
+    def test__op_contains__when_absent__then_false(self):
         # when
         result = 17 in self.test_object
         # then
         assert_that(result).is_false()
 
-    def test__iadd__when_new_elements__then_singleton_sets(self):
+    def test__op_iadd__when_new_elements__then_singleton_sets(self):
         # given
         elements = [14, 18, 23]
         # when
@@ -44,7 +44,7 @@ class DisjointSetsTest(unittest.TestCase):
         for elem in elements:
             assert_that(self.test_object.find_set(elem)).is_equal_to(elem)
 
-    def test__iadd__when_present_element__then_value_error(self):
+    def test__op_iadd__when_present_element__then_value_error(self):
         # when
         def function(elements):
             self.test_object += elements
@@ -52,7 +52,7 @@ class DisjointSetsTest(unittest.TestCase):
         # then
         assert_that(function).raises(ValueError).when_called_with([11, 7, 15])
 
-    def test__getitem__when_present_element__then_represent(self):
+    def test__op_getitem__when_present_element__then_represent(self):
         # given
         elem = 4
         # when
@@ -60,7 +60,7 @@ class DisjointSetsTest(unittest.TestCase):
         # then
         assert_that(result).is_equal_to(elem)
 
-    def test__getitem__when_absent_element__then_key_error(self):
+    def test__op_getitem__when_absent_element__then_key_error(self):
         # when
         def function(element):
             return self.test_object[element]

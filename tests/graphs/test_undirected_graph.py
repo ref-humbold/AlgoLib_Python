@@ -15,7 +15,7 @@ class UndirectedSimpleGraphTest(unittest.TestCase):
     def setUp(self):
         self.test_object = UndirectedSimpleGraph(range(10))
 
-    def test__properties_setitem_getitem__when_setting_property__then_property(self):
+    def test__properties_op_setitem_op_getitem__when_setting_property__then_property(self):
         # given
         vertex = Vertex(2)
         edge = self.test_object.add_edge_between(Vertex(0), Vertex(1))
@@ -31,7 +31,7 @@ class UndirectedSimpleGraphTest(unittest.TestCase):
         assert_that(result_vertex).is_equal_to(vertex_property)
         assert_that(result_edge).is_equal_to(edge_property)
 
-    def test__properties_getitem__when_no_property__then_none(self):
+    def test__properties_op_getitem__when_no_property__then_none(self):
         # given
         vertex = Vertex(4)
         edge = self.test_object.add_edge_between(Vertex(6), Vertex(7))
@@ -42,7 +42,7 @@ class UndirectedSimpleGraphTest(unittest.TestCase):
         assert_that(result_vertex).is_none()
         assert_that(result_edge).is_none()
 
-    def test__properties_getitem__when_not_existing__then_value_error(self):
+    def test__properties_op_getitem__when_not_existing__then_value_error(self):
         # when
         def function(item):
             return self.test_object.properties[item]
@@ -52,7 +52,7 @@ class UndirectedSimpleGraphTest(unittest.TestCase):
         assert_that(function).raises(ValueError).when_called_with(Edge(Vertex(2), Vertex(8)))
         assert_that(function).raises(ValueError).when_called_with(Edge(Vertex(0), Vertex(-1)))
 
-    def test__properties_delitem__then_none(self):
+    def test__properties_op_delitem__then_none(self):
         # given
         vertex = Vertex(4)
         edge = self.test_object.add_edge_between(Vertex(6), Vertex(7))

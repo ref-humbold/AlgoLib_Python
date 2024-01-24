@@ -15,19 +15,19 @@ class BaseWordsDictTest(unittest.TestCase):
     def setUp(self):
         self.test_object = BaseWordsDict("mississippi")
 
-    def test__getitem__when_empty_range__then_zero_and_zero(self):
+    def test__op_getitem__when_empty_range__then_zero_and_zero(self):
         # when
         result = self.test_object[4:4]
         # then
         assert_that(result).is_equal_to((0, 0))
 
-    def test__getitem__when_start_greater_than_end__then_zero_and_zero(self):
+    def test__op_getitem__when_start_greater_than_end__then_zero_and_zero(self):
         # when
         result = self.test_object[6:2]
         # then
         assert_that(result).is_equal_to((0, 0))
 
-    def test__getitem__when_single_character__then_code_and_zero(self):
+    def test__op_getitem__when_single_character__then_code_and_zero(self):
         # when
         result1 = self.test_object[1:2]  # i
         result2 = self.test_object[-11:-10]  # m
@@ -39,7 +39,7 @@ class BaseWordsDictTest(unittest.TestCase):
         assert_that(result3).is_equal_to((3, 0))
         assert_that(result4).is_equal_to((4, 0))
 
-    def test__getitem__when_base_word__then_code_and_zero(self):
+    def test__op_getitem__when_base_word__then_code_and_zero(self):
         # when
         result1 = self.test_object[:1]  # m
         result2 = self.test_object[4:6]  # is
@@ -53,7 +53,7 @@ class BaseWordsDictTest(unittest.TestCase):
         assert_that(result4).is_equal_to((12, 0))
         assert_that(result5).is_equal_to((16, 0))
 
-    def test__getitem__when_composed_word__then_code_and_code(self):
+    def test__op_getitem__when_composed_word__then_code_and_code(self):
         # when
         result1 = self.test_object[0:3]  # mis
         result2 = self.test_object[:]  # mississippi
@@ -61,7 +61,7 @@ class BaseWordsDictTest(unittest.TestCase):
         assert_that(result1).is_equal_to((7, 6))
         assert_that(result2).is_equal_to((20, 21))
 
-    def test__getitem__when_slice_has_step__then_index_error(self):
+    def test__op_getitem__when_slice_has_step__then_index_error(self):
         # when
         def function(i):
             return self.test_object[::i]

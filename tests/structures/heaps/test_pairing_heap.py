@@ -16,20 +16,26 @@ class PairingHeapTest(unittest.TestCase):
     def setUp(self):
         self.test_object = PairingHeap(self.numbers)
 
-    def test__len__when_empty__then_zero(self):
+    def test__op_len__when_empty__then_zero(self):
         self.test_object = PairingHeap()
         # when
         result = len(self.test_object)
         # then
         assert_that(result).is_equal_to(0)
 
-    def test__len__when_not_empty__then_number_of_elements(self):
+    def test__op_len__when_not_empty__then_number_of_elements(self):
         # when
         result = len(self.test_object)
         # then
         assert_that(result).is_equal_to(len(self.numbers))
 
-    def test__iter__when_empty__then_no_elements(self):
+    def test__clear__when_not_empty__then_empty(self):
+        # when
+        self.test_object.clear()
+        # then
+        assert_that(self.test_object).is_empty()
+
+    def test__op_iter__when_empty__then_no_elements(self):
         # given
         self.test_object = PairingHeap()
         # when
@@ -37,7 +43,7 @@ class PairingHeapTest(unittest.TestCase):
         # then
         assert_that(result).is_empty()
 
-    def test__iter__when_single_element__then_this_element_only(self):
+    def test__op_iter__when_single_element__then_this_element_only(self):
         # given
         element = 17
         self.test_object = PairingHeap([element])
@@ -47,19 +53,13 @@ class PairingHeapTest(unittest.TestCase):
         assert_that(next(iterator)).is_equal_to(element)
         assert_that(next).raises(StopIteration).when_called_with(iterator)
 
-    def test__iter__when_multiple_elements__then_all_elements_minimum_first(self):
+    def test__op_iter__when_multiple_elements__then_all_elements_minimum_first(self):
         # when
         result = list(self.test_object)
         # then
         assert_that(result).is_length(len(self.numbers))
         assert_that(result).contains_only(*self.numbers)
         assert_that(result[0]).is_equal_to(min(self.numbers))
-
-    def test__clear__when_not_empty__then_empty(self):
-        # when
-        self.test_object.clear()
-        # then
-        assert_that(self.test_object).is_empty()
 
     # region head
 
