@@ -17,6 +17,11 @@ class DisjointSets(Sized, Container):
         :return: the number of sets"""
         return self._sets
 
+    def clear(self):
+        """Removes all sets from this structure."""
+        self._represents = {}
+        self._sets = 0
+
     def __contains__(self, element: _T):
         """Checks whether given element belongs to any set.
 
