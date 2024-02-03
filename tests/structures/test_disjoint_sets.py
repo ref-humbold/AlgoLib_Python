@@ -62,31 +62,27 @@ class DisjointSetsTest(unittest.TestCase):
 
     def test__op_iadd__when_empty__then_new_singleton_sets(self):
         # given
-        elements = self.numbers
-
         self.test_object = DisjointSets()
         # when
-        self.test_object += elements
+        self.test_object += self.numbers
         # then
-        assert_that(self.test_object).contains(*elements)
+        assert_that(self.test_object).contains(*self.numbers)
 
-        for e in elements:
+        for e in self.numbers:
             assert_that(self.test_object.find_set(e)).is_equal_to(e)
 
-        assert_that(self.test_object).is_length(len(elements))
+        assert_that(self.test_object).is_length(len(self.numbers))
 
     def test__op_iadd__when_new_elements__then_singleton_sets(self):
-        # given
-        elements = self.absent
         # when
-        self.test_object += elements
+        self.test_object += self.absent
         # then
-        assert_that(self.test_object).contains(*elements)
+        assert_that(self.test_object).contains(*self.absent)
 
-        for e in elements:
+        for e in self.absent:
             assert_that(self.test_object.find_set(e)).is_equal_to(e)
 
-        assert_that(self.test_object).is_length(len(self.numbers) + len(elements))
+        assert_that(self.test_object).is_length(len(self.numbers) + len(self.absent))
 
     def test__op_iadd__when_present_elements__then_value_error(self):
         # when
@@ -167,6 +163,7 @@ class DisjointSetsTest(unittest.TestCase):
         # then
         assert_that(self.test_object.is_same_set(element1, element2)).is_true()
         assert_that(self.test_object[element2]).is_equal_to(self.test_object[element1])
+        assert_that(self.test_object).is_length(len(self.numbers) - 1)
 
     def test__union_set__when_single_element__then_same_represent(self):
         # given
@@ -174,8 +171,7 @@ class DisjointSetsTest(unittest.TestCase):
         # when
         self.test_object.union_set(element, element)
         # then
-        assert_that(self.test_object.is_same_set(element, element)).is_true()
-        assert_that(self.test_object[element]).is_equal_to(self.test_object[element])
+        assert_that(self.test_object).is_length(len(self.numbers))
 
     def test__union_set__when_same_set__then_same_represent(self):
         # given
@@ -187,6 +183,7 @@ class DisjointSetsTest(unittest.TestCase):
         # then
         assert_that(self.test_object.is_same_set(element1, element2)).is_true()
         assert_that(self.test_object[element2]).is_equal_to(self.test_object[element1])
+        assert_that(self.test_object).is_length(len(self.numbers) - 1)
 
     def test__union_set__when_new_elements_in_chain__then_same_represent(self):
         # given
@@ -198,6 +195,7 @@ class DisjointSetsTest(unittest.TestCase):
         # then
         assert_that(self.test_object.is_same_set(first, last)).is_true()
         assert_that(self.test_object[last]).is_equal_to(self.test_object[first])
+        assert_that(self.test_object).is_length(len(self.numbers) - len(self.present) + 1)
 
     # endregion
     # region is_same_set
