@@ -14,7 +14,7 @@ def kruskal(graph: UndirectedGraph) -> UndirectedGraph:
     :return: the minimal spanning tree"""
     mst = UndirectedSimpleGraph([v.id for v in graph.vertices])
     edge_queue = PriorityQueue()
-    vertex_sets = DisjointSets(graph.vertices)
+    vertex_sets = DisjointSets((v,) for v in graph.vertices)
 
     for edge in graph.edges:
         edge_queue.put((graph.properties[edge].weight, edge))

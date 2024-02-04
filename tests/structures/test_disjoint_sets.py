@@ -16,7 +16,24 @@ class DisjointSetsTest(unittest.TestCase):
         self.test_object = None
 
     def setUp(self):
-        self.test_object = DisjointSets(self.numbers)
+        self.test_object = DisjointSets((n,) for n in self.numbers)
+
+    @staticmethod
+    def test__op_init__when_duplicates_in_different_sets__then_value_error():
+        # when
+        def function(*sets):
+            DisjointSets(sets)
+
+        # then
+        assert_that(function).raises(ValueError).when_called_with([1, 2, 3], [1, 11, 21, 31])
+
+    def test__op_init__when_duplicates_in_same_set__then_constructed(self):
+        # given
+        sets = [[1, 2, 3], [10, 100, 10]]
+        # when
+        self.test_object = DisjointSets(sets)
+        # then
+        assert_that(self.test_object).is_length(len(sets))
 
     @staticmethod
     def test__op_len__when_empty__then_zero():
@@ -60,7 +77,7 @@ class DisjointSetsTest(unittest.TestCase):
     # endregion
     # region op_iadd
 
-    def test__op_iadd__when_empty__then_new_singleton_sets(self):
+    def test__op_iadd__when_empty__then_new_set(self):
         # given
         self.test_object = DisjointSets()
         # when
@@ -68,21 +85,21 @@ class DisjointSetsTest(unittest.TestCase):
         # then
         assert_that(self.test_object).contains(*self.numbers)
 
-        for e in self.numbers:
-            assert_that(self.test_object.find_set(e)).is_equal_to(e)
+        for element in self.numbers:
+            assert_that(self.test_object.find_set(element)).is_equal_to(self.numbers[0])
 
-        assert_that(self.test_object).is_length(len(self.numbers))
+        assert_that(self.test_object).is_length(1)
 
-    def test__op_iadd__when_new_elements__then_singleton_sets(self):
+    def test__op_iadd__when_new_elements__then_new_set(self):
         # when
         self.test_object += self.absent
         # then
         assert_that(self.test_object).contains(*self.absent)
 
-        for e in self.absent:
-            assert_that(self.test_object.find_set(e)).is_equal_to(e)
+        for element in self.absent:
+            assert_that(self.test_object.find_set(element)).is_equal_to(self.absent[0])
 
-        assert_that(self.test_object).is_length(len(self.numbers) + len(self.absent))
+        assert_that(self.test_object).is_length(len(self.numbers) + 1)
 
     def test__op_iadd__when_present_elements__then_value_error(self):
         # when
@@ -99,6 +116,38 @@ class DisjointSetsTest(unittest.TestCase):
 
         # then
         assert_that(function).raises(ValueError).when_called_with(self.absent + self.present)
+
+    # endregion
+    # region add
+
+    def test__add__when_new_elements_to_present_represent__then_added_to_existing_set(self):
+        # given
+        represent = self.present[0]
+        # when
+        self.test_object.add(self.absent, represent)
+        # then
+        assert_that(self.test_object).contains(*self.absent)
+
+        for element in self.absent:
+            assert_that(self.test_object[element]).is_equal_to(self.test_object[represent])
+
+        assert_that(self.test_object).is_length(len(self.numbers))
+
+    def test__add__when_new_elements_to_absent_represent__then_key_error(self):
+        # when
+        def function(represent):
+            self.test_object.add(self.absent, represent)
+
+        # then
+        assert_that(function).raises(KeyError).when_called_with(self.absent[0])
+
+    def test__add__when_present_elements_to_absent_represent__then_value_error(self):
+        # when
+        def function(represent):
+            self.test_object.add(self.present, represent)
+
+        # then
+        assert_that(function).raises(ValueError).when_called_with(self.absent[0])
 
     # endregion
     # region op_getitem & find_set
