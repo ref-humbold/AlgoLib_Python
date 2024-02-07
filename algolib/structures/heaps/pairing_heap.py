@@ -24,10 +24,7 @@ class PairingHeap(Sized, Iterable):
         """Gets the iterator of this heap.
 
         :return: the iterator object"""
-        nodes_queue = deque()
-
-        if self._heap is not None:
-            nodes_queue.append(self._heap)
+        nodes_queue = deque([self._heap] if self._heap is not None else [])
 
         while len(nodes_queue) > 0:
             node = nodes_queue.popleft()
@@ -35,6 +32,24 @@ class PairingHeap(Sized, Iterable):
 
             if node.children is not None:
                 nodes_queue.extend(node.children)
+
+    def __add__(self, other: "PairingHeap") -> "PairingHeap":
+        """Merges this heap and given heap to new heap.
+
+        :param other: the heap
+        :return: merged heap"""
+        new_heap = PairingHeap()
+        new_heap._heap = self._heap + other._heap
+        new_heap._size = len(self) + len(other)
+        return new_heap
+
+    def __iadd__(self, other: "PairingHeap"):
+        """Merges given heap to this heap.
+
+        :param other: the heap"""
+        self._heap += other._heap
+        self._size += len(other)
+        return self
 
     def clear(self):
         """Removes all elements from this heap."""
@@ -72,24 +87,6 @@ class PairingHeap(Sized, Iterable):
         self._size -= 1
         return value
 
-    def __add__(self, other: "PairingHeap") -> "PairingHeap":
-        """Merges given heaps to new heap.
-
-        :param other: the heap
-        :return: merged heap"""
-        new_heap = PairingHeap()
-        new_heap._heap = self._heap + other._heap
-        new_heap._size = len(self) + len(other)
-        return new_heap
-
-    def __iadd__(self, other: "PairingHeap"):
-        """Merges given heap to this heap.
-
-        :param other: the heap"""
-        self._heap = self._heap + other._heap
-        self._size += len(other)
-        return self
-
     class _HeapNodeList(Iterable):
         def __init__(self,
                      node: "PairingHeap._HeapNode",
@@ -108,16 +105,6 @@ class PairingHeap(Sized, Iterable):
             self.element = element
             self.children = children
 
-        def append(self, item: _T) -> "PairingHeap._HeapNode":
-            return PairingHeap._HeapNode(self.element,
-                                         PairingHeap._HeapNodeList(
-                                             PairingHeap._HeapNode(item), self.children)) \
-                if self.element <= item else \
-                PairingHeap._HeapNode(item, PairingHeap._HeapNodeList(self))
-
-        def pop(self) -> "PairingHeap._HeapNode":
-            return self._merge_pairs(self.children)
-
         def __add__(self, node: Optional["PairingHeap._HeapNode"]) \
                 -> Optional["PairingHeap._HeapNode"]:
             if node is None:
@@ -130,8 +117,18 @@ class PairingHeap(Sized, Iterable):
 
         __radd__ = __add__
 
-        def _merge_pairs(self, list_: "PairingHeap._HeapNodeList") \
+        def append(self, item: _T) -> "PairingHeap._HeapNode":
+            return PairingHeap._HeapNode(self.element,
+                                         PairingHeap._HeapNodeList(
+                                             PairingHeap._HeapNode(item), self.children)) \
+                if self.element <= item else \
+                PairingHeap._HeapNode(item, PairingHeap._HeapNodeList(self))
+
+        def pop(self) -> "PairingHeap._HeapNode":
+            return self.__merge_pairs(self.children)
+
+        def __merge_pairs(self, list_: "PairingHeap._HeapNodeList") \
                 -> Optional["PairingHeap._HeapNode"]:
             return None if list_ is None else \
                 list_.node if list_.next is None else \
-                    list_.node + list_.next.node + self._merge_pairs(list_.next.next)
+                    list_.node + list_.next.node + self.__merge_pairs(list_.next.next)
