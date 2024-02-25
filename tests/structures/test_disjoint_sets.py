@@ -90,6 +90,12 @@ class DisjointSetsTest(unittest.TestCase):
 
         assert_that(self.test_object).is_length(1)
 
+    def test__op_iadd__when_empty_new_elements__then_no_changes(self):
+        # when
+        self.test_object += []
+        # then
+        assert_that(self.test_object).is_length(len(self.numbers))
+
     def test__op_iadd__when_new_elements__then_new_set(self):
         # when
         self.test_object += self.absent
@@ -119,6 +125,12 @@ class DisjointSetsTest(unittest.TestCase):
 
     # endregion
     # region add
+
+    def test__add__when_empty_new_elements_to_present_represent__then_no_changes(self):
+        # when
+        self.test_object.add([], self.present[0])
+        # then
+        assert_that(self.test_object).is_length(len(self.numbers))
 
     def test__add__when_new_elements_to_present_represent__then_added_to_existing_set(self):
         # given

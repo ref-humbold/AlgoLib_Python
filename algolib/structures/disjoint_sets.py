@@ -66,13 +66,15 @@ class DisjointSets(Sized, Container):
             if element in self:
                 raise ValueError(f"Value {element} already present.")
 
-        set_represent = self._represents[represent] if represent is not None else elements_tuple[0]
+        if len(elements_tuple) > 0:
+            set_represent = self._represents[represent] if represent is not None else \
+                elements_tuple[0]
 
-        for element in elements_tuple:
-            self._represents[element] = set_represent
+            for element in elements_tuple:
+                self._represents[element] = set_represent
 
-        if represent is None:
-            self._count += 1
+            if represent is None:
+                self._count += 1
 
         return self
 
