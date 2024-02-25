@@ -128,16 +128,18 @@ class DisjointSetsTest(unittest.TestCase):
 
     def test__add__when_empty_new_elements_to_present_represent__then_no_changes(self):
         # when
-        self.test_object.add([], self.present[0])
+        result = self.test_object.add([], self.present[0])
         # then
+        assert_that(result).is_same_as(self.test_object)
         assert_that(self.test_object).is_length(len(self.numbers))
 
     def test__add__when_new_elements_to_present_represent__then_added_to_existing_set(self):
         # given
         represent = self.present[0]
         # when
-        self.test_object.add(self.absent, represent)
+        result = self.test_object.add(self.absent, represent)
         # then
+        assert_that(result).is_same_as(self.test_object)
         assert_that(self.test_object).contains(*self.absent)
 
         for element in self.absent:
@@ -220,8 +222,9 @@ class DisjointSetsTest(unittest.TestCase):
         element1 = self.present[0]
         element2 = self.present[1]
         # when
-        self.test_object.union_set(element1, element2)
+        result = self.test_object.union_set(element1, element2)
         # then
+        assert_that(result).is_same_as(self.test_object)
         assert_that(self.test_object.is_same_set(element1, element2)).is_true()
         assert_that(self.test_object[element2]).is_equal_to(self.test_object[element1])
         assert_that(self.test_object).is_length(len(self.numbers) - 1)
@@ -230,8 +233,9 @@ class DisjointSetsTest(unittest.TestCase):
         # given
         element = self.present[0]
         # when
-        self.test_object.union_set(element, element)
+        result = self.test_object.union_set(element, element)
         # then
+        assert_that(result).is_same_as(self.test_object)
         assert_that(self.test_object).is_length(len(self.numbers))
 
     def test__union_set__when_same_set__then_same_represent(self):
@@ -240,8 +244,9 @@ class DisjointSetsTest(unittest.TestCase):
         element2 = self.present[1]
         self.test_object.union_set(element1, element2)
         # when
-        self.test_object.union_set(element2, element1)
+        result = self.test_object.union_set(element2, element1)
         # then
+        assert_that(result).is_same_as(self.test_object)
         assert_that(self.test_object.is_same_set(element1, element2)).is_true()
         assert_that(self.test_object[element2]).is_equal_to(self.test_object[element1])
         assert_that(self.test_object).is_length(len(self.numbers) - 1)
