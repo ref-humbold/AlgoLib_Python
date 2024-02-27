@@ -229,7 +229,7 @@ class DisjointSetsTest(unittest.TestCase):
         assert_that(self.test_object[element2]).is_equal_to(self.test_object[element1])
         assert_that(self.test_object).is_length(len(self.numbers) - 1)
 
-    def test__union_set__when_single_element__then_same_represent(self):
+    def test__union_set__when_single_element__then_no_changes(self):
         # given
         element = self.present[0]
         # when
@@ -238,20 +238,19 @@ class DisjointSetsTest(unittest.TestCase):
         assert_that(result).is_same_as(self.test_object)
         assert_that(self.test_object).is_length(len(self.numbers))
 
-    def test__union_set__when_same_set__then_same_represent(self):
+    def test__union_set__when_same_set__then_no_changes(self):
         # given
         element1 = self.present[0]
         element2 = self.present[1]
-        self.test_object.union_set(element1, element2)
+        self.test_object = DisjointSets([self.absent, self.numbers])
         # when
-        result = self.test_object.union_set(element2, element1)
+        result = self.test_object.union_set(element1, element2)
         # then
         assert_that(result).is_same_as(self.test_object)
         assert_that(self.test_object.is_same_set(element1, element2)).is_true()
-        assert_that(self.test_object[element2]).is_equal_to(self.test_object[element1])
-        assert_that(self.test_object).is_length(len(self.numbers) - 1)
+        assert_that(self.test_object).is_length(2)
 
-    def test__union_set__when_new_elements_in_chain__then_same_represent(self):
+    def test__union_set__when_different_sets_in_chain__then_same_represent(self):
         # given
         first = self.present[0]
         last = self.present[-1]

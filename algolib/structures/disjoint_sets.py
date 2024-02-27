@@ -114,7 +114,7 @@ class DisjointSets(Sized, Container):
     @staticmethod
     def __validate_duplicates(sets_list):
         counter = Counter([e for s in sets_list for e in s])
-        duplicates = [k for k, v in counter.items() if v != 1]
+        duplicates = [k for k, v in counter.items() if v > 1]
 
         if duplicates:
             raise ValueError(f"Duplicate elements found: {', '.join(map(str, duplicates))}")
