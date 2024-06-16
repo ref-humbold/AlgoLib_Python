@@ -29,8 +29,10 @@ class TopologicalSortingTest(unittest.TestCase):
         graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(1))
         graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(2))
         graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(4))
+
         # when
         result = inputs_topological_sort(graph)
+
         # then
         assert_that(result).is_instance_of(list)
         assert_that(result).is_equal_to(
@@ -64,8 +66,10 @@ class TopologicalSortingTest(unittest.TestCase):
     def test__inputs_topological_sort__when_empty_graph__then_vertices():
         # given
         graph = DirectedSimpleGraph(range(6))
+
         # when
         result = inputs_topological_sort(graph)
+
         # then
         assert_that(result).is_instance_of(list)
         assert_that(result).is_equal_to(sorted(graph.vertices))
@@ -87,8 +91,10 @@ class TopologicalSortingTest(unittest.TestCase):
         graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(1))
         graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(2))
         graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(4))
+
         # when
         result = dfs_topological_sort(graph)
+
         # then
         assert_that(result).is_instance_of(list)
 
@@ -145,8 +151,10 @@ class TopologicalSortingTest(unittest.TestCase):
     def test__dfs_topological_sort__when_empty_graph__then_vertices():
         # given
         graph = DirectedSimpleGraph(range(6))
+
         # when
         result = dfs_topological_sort(graph)
+
         # then
         assert_that(result).is_instance_of(list)
         assert_that(result).is_equal_to(sorted(graph.vertices))

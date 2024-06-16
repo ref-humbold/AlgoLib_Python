@@ -18,6 +18,7 @@ class SuffixArrayTest(unittest.TestCase):
     def test__op_len(self):
         # when
         result = len(self.test_object)
+
         # then
         assert_that(result).is_equal_to(11)
 
@@ -27,6 +28,7 @@ class SuffixArrayTest(unittest.TestCase):
         result1 = self.test_object[3]
         result2 = self.test_object[6]
         result3 = self.test_object[9]
+
         # then
         assert_that(result0).is_equal_to("i")
         assert_that(result1).is_equal_to("ississippi")
@@ -47,6 +49,7 @@ class SuffixArrayTest(unittest.TestCase):
         result1 = self.test_object.index_at(3)
         result2 = self.test_object.index_at(6)
         result3 = self.test_object.index_at(9)
+
         # then
         assert_that(result0).is_equal_to(10)
         assert_that(result1).is_equal_to(1)
@@ -56,6 +59,7 @@ class SuffixArrayTest(unittest.TestCase):
     def test__index_at__when_out_of_range(self):
         # when
         function = self.test_object.index_at
+
         # then
         assert_that(function).raises(IndexError).when_called_with(20)
 
@@ -65,6 +69,7 @@ class SuffixArrayTest(unittest.TestCase):
         result1 = self.test_object.index_of(3)
         result2 = self.test_object.index_of(6)
         result3 = self.test_object.index_of(9)
+
         # then
         assert_that(result0).is_equal_to(4)
         assert_that(result1).is_equal_to(8)
@@ -74,24 +79,28 @@ class SuffixArrayTest(unittest.TestCase):
     def test__index_of__when_out_of_range(self):
         # when
         function = self.test_object.index_of
+
         # then
         assert_that(function).raises(IndexError).when_called_with(20)
 
     def test__lcp__when_same_suffix(self):
         # when
         result = self.test_object.lcp(4, 4)
+
         # then
         assert_that(result).is_equal_to(7)
 
     def test__lcp__when_different_suffix1(self):
         # when
         result = self.test_object.lcp(1, 10)
+
         # then
         assert_that(result).is_equal_to(1)
 
     def test__lcp__when_different_suffix2(self):
         # when
         result = self.test_object.lcp(9, 6)
+
         # then
         assert_that(result).is_equal_to(0)
 
@@ -99,6 +108,7 @@ class SuffixArrayTest(unittest.TestCase):
         # when
         result0 = self.test_object.lcp(2, 5)
         result1 = self.test_object.lcp(5, 2)
+
         # then
         assert_that(result0).is_equal_to(3)
         assert_that(result1).is_equal_to(result0)

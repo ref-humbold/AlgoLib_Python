@@ -32,8 +32,10 @@ class CuttingTest(unittest.TestCase):
         graph.add_edge_between(graph.get_vertex(9), graph.get_vertex(10))
         graph.add_edge_between(graph.get_vertex(9), graph.get_vertex(11))
         graph.add_edge_between(graph.get_vertex(10), graph.get_vertex(11))
+
         # when
         result = find_edge_cut(graph)
+
         # then
         assert_that(sorted(result)).is_equal_to([graph.get_edge(0, 7), graph.get_edge(5, 6)])
 
@@ -48,8 +50,10 @@ class CuttingTest(unittest.TestCase):
         graph.add_edge_between(graph.get_vertex(1), graph.get_vertex(4))
         graph.add_edge_between(graph.get_vertex(3), graph.get_vertex(5))
         graph.add_edge_between(graph.get_vertex(4), graph.get_vertex(5))
+
         # when
         result = find_edge_cut(graph)
+
         # then
         assert_that(list(result)).is_empty()
 
@@ -73,8 +77,10 @@ class CuttingTest(unittest.TestCase):
         graph.add_edge_between(graph.get_vertex(9), graph.get_vertex(10))
         graph.add_edge_between(graph.get_vertex(9), graph.get_vertex(11))
         graph.add_edge_between(graph.get_vertex(10), graph.get_vertex(11))
+
         # when
         result = find_vertex_cut(graph)
+
         # then
         assert_that(sorted(result)).is_equal_to(
             [graph.get_vertex(0), graph.get_vertex(1), graph.get_vertex(5), graph.get_vertex(7)])
@@ -91,7 +97,9 @@ class CuttingTest(unittest.TestCase):
         graph.add_edge_between(graph.get_vertex(2), graph.get_vertex(3))
         graph.add_edge_between(graph.get_vertex(3), graph.get_vertex(5))
         graph.add_edge_between(graph.get_vertex(4), graph.get_vertex(5))
+
         # when
         result = find_vertex_cut(graph)
+
         # then
         assert_that(list(result)).is_empty()

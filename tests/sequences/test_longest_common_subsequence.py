@@ -12,6 +12,7 @@ class LongestCommonSubsequenceTests(unittest.TestCase):
     def test__count_lcs_length__when_empty__then_zero():
         # when
         result = count_lcs_length("qwertyuiop", "")
+
         # then
         assert_that(result).is_equal_to(0)
 
@@ -20,8 +21,10 @@ class LongestCommonSubsequenceTests(unittest.TestCase):
         # given
         size = 4
         text = "x" * size
+
         # when
         result = count_lcs_length(text + text, text)
+
         # then
         assert_that(result).is_equal_to(size)
 
@@ -29,6 +32,7 @@ class LongestCommonSubsequenceTests(unittest.TestCase):
     def test__count_lcs_length__when_repeated_single_element__then_one():
         # when
         result = count_lcs_length("abcde", "eeee")
+
         # then
         assert_that(result).is_equal_to(1)
 
@@ -36,8 +40,10 @@ class LongestCommonSubsequenceTests(unittest.TestCase):
     def test__count_lcs_length__when_same_text__then_text_length():
         # given
         text = "qwertyuiop"
+
         # when
         result = count_lcs_length(text, text)
+
         # then
         assert_that(result).is_equal_to(len(text))
 
@@ -45,6 +51,7 @@ class LongestCommonSubsequenceTests(unittest.TestCase):
     def test__count_lcs_length__when_subtext__then_subtext_length():
         # when
         result = count_lcs_length("qwertyuiop", "zxqwertyasdfuiopcvb")
+
         # then
         assert_that(result).is_equal_to(len("qwertyuiop"))
 
@@ -52,6 +59,7 @@ class LongestCommonSubsequenceTests(unittest.TestCase):
     def test__count_lcs_length__when_different__then_zero():
         # when
         result = count_lcs_length("qwertyuiop", "asdfghjkl")
+
         # then
         assert_that(result).is_equal_to(0)
 
@@ -59,6 +67,7 @@ class LongestCommonSubsequenceTests(unittest.TestCase):
     def test__count_lcs_length__when_common_subtext__then_common_subtext_length():
         # when
         result = count_lcs_length("qwertyuiop", "zxrtyasdfuiopcvb")
+
         # then
         assert_that(result).is_equal_to(len("rtyuiop"))
 
@@ -67,8 +76,10 @@ class LongestCommonSubsequenceTests(unittest.TestCase):
         # given
         size = 25
         sequence = [11] * size
+
         # when
         result = count_lcs_length(sequence, sequence + sequence)
+
         # then
         assert_that(result).is_equal_to(size)
 
@@ -76,8 +87,10 @@ class LongestCommonSubsequenceTests(unittest.TestCase):
     def test__count_lcs_length__when_same_sequence__then_sequence_length():
         # given
         sequence = list(map(ord, "qwertyuiop"))
+
         # when
         result = count_lcs_length(sequence, sequence)
+
         # then
         assert_that(result).is_equal_to(len(sequence))
 
@@ -85,5 +98,6 @@ class LongestCommonSubsequenceTests(unittest.TestCase):
     def test__count_lcs_length__when_common_subsequence__then_common_subsequence_length():
         # when
         result = count_lcs_length(list(map(ord, "qwertyuiop")), list(map(ord, "zxrtyasdfuiopcvb")))
+
         # then
         assert_that(result).is_equal_to(len("rtyuiop"))

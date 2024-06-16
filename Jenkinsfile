@@ -4,7 +4,11 @@ pipeline {
   }
 
   parameters {
-    booleanParam(name: "sphinx", description: "Should generate Sphinx documentation?", defaultValue: false)
+    booleanParam(
+      name: "sphinx",
+      description: "Should generate Sphinx documentation?",
+      defaultValue: false
+    )
   }
 
   environment {
@@ -14,9 +18,9 @@ pipeline {
   }
 
   options {
-    skipDefaultCheckout(true)
+    skipDefaultCheckout true
     timeout(time: 20, unit: "MINUTES")
-    buildDiscarder(logRotator(numToKeepStr: "10", artifactNumToKeepStr: "5"))
+    buildDiscarder logRotator(numToKeepStr: "10", artifactNumToKeepStr: "5")
     timestamps()
   }
 
@@ -24,7 +28,7 @@ pipeline {
     stage("Preparation") {
       steps {
         script {
-          def scmEnv = checkout(scm)
+          def scmEnv = checkout scm
           currentBuild.displayName = "${env.BUILD_NUMBER} ${scmEnv.GIT_COMMIT.take(8)}"
         }
       }

@@ -26,12 +26,14 @@ class MultipartiteGraphTest(unittest.TestCase):
         edge = self.test_object.get_edge(0, 3)
         vertex_property = "x"
         edge_property = "y"
+
         # when
         self.test_object.properties[vertex] = vertex_property
         self.test_object.properties[edge] = edge_property
 
         result_vertex = self.test_object.properties[vertex]
         result_edge = self.test_object.properties[edge]
+
         # then
         assert_that(result_vertex).is_equal_to(vertex_property)
         assert_that(result_edge).is_equal_to(edge_property)
@@ -39,12 +41,14 @@ class MultipartiteGraphTest(unittest.TestCase):
     def test__vertices_count__then_number_of_vertices(self):
         # when
         result = self.test_object.vertices_count
+
         # then
         assert_that(result).is_equal_to(10)
 
     def test__vertices__then_all_vertices(self):
         # when
         result = self.test_object.vertices
+
         # then
         assert_that(sorted(result)).is_equal_to(
             [Vertex(0), Vertex(1), Vertex(2), Vertex(3), Vertex(4), Vertex(5), Vertex(6), Vertex(7),
@@ -53,12 +57,14 @@ class MultipartiteGraphTest(unittest.TestCase):
     def test__edges_count__then_number_of_edges(self):
         # when
         result = self.test_object.edges_count
+
         # then
         assert_that(result).is_equal_to(5)
 
     def test__edges__then_all_edges(self):
         # when
         result = self.test_object.edges
+
         # then
         assert_that(sorted(result)).is_equal_to(
             [Edge(Vertex(0), Vertex(3)), Edge(Vertex(1), Vertex(5)), Edge(Vertex(2), Vertex(9)),
@@ -67,8 +73,10 @@ class MultipartiteGraphTest(unittest.TestCase):
     def test__get_vertex__when_exists__then_vertex(self):
         # given
         vertex_id = 6
+
         # when
         result = self.test_object.get_vertex(vertex_id)
+
         # then
         assert_that(result.id).is_equal_to(vertex_id)
 
@@ -76,8 +84,10 @@ class MultipartiteGraphTest(unittest.TestCase):
         # given
         source = Vertex(2)
         destination = Vertex(9)
+
         # when
         result = self.test_object.get_edge(source, destination)
+
         # then
         assert_that(result.source).is_equal_to(source)
         assert_that(result.destination).is_equal_to(destination)
@@ -85,12 +95,14 @@ class MultipartiteGraphTest(unittest.TestCase):
     def test__neighbours__then_destination_vertices_of_outgoing_edges(self):
         # when
         result = self.test_object.neighbours(Vertex(9))
+
         # then
         assert_that(sorted(result)).is_equal_to([Vertex(2), Vertex(7)])
 
     def test__adjacent_edges__then_outgoing_edges(self):
         # when
         result = self.test_object.adjacent_edges(Vertex(9))
+
         # then
         assert_that(sorted(
             result)).is_equal_to([Edge(Vertex(2), Vertex(9)),
@@ -99,18 +111,21 @@ class MultipartiteGraphTest(unittest.TestCase):
     def test__output_degree__then_number_of_outgoing_edges(self):
         # when
         result = self.test_object.output_degree(Vertex(9))
+
         # then
         assert_that(result).is_equal_to(2)
 
     def test__input_degree__then_number_of_incoming_edges(self):
         # when
         result = self.test_object.input_degree(Vertex(9))
+
         # then
         assert_that(result).is_equal_to(2)
 
     def test__vertices_from_group__when_valid_group__then_vertices(self):
         # when
         result = self.test_object.vertices_from_group(2)
+
         # then
         assert_that(sorted(result)).is_equal_to([Vertex(5), Vertex(6), Vertex(7), Vertex(8)])
 
@@ -124,8 +139,10 @@ class MultipartiteGraphTest(unittest.TestCase):
         # given
         new_vertex_id = 13
         vertex_property = "qwerty"
+
         # when
         result = self.test_object.add_vertex(4, new_vertex_id, vertex_property)
+
         # then
         assert_that(result.id).is_equal_to(new_vertex_id)
         assert_that(self.test_object.vertices_count).is_equal_to(11)
@@ -160,8 +177,10 @@ class MultipartiteGraphTest(unittest.TestCase):
         vertex1 = Vertex(2)
         vertex2 = Vertex(8)
         edge_property = "asdfgh"
+
         # when
         result = self.test_object.add_edge_between(vertex1, vertex2, edge_property)
+
         # then
         assert_that(result.source).is_equal_to(vertex1)
         assert_that(result.destination).is_equal_to(vertex2)

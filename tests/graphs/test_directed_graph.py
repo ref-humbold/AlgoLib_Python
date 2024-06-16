@@ -21,12 +21,14 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         edge = self.test_object.add_edge_between(Vertex(0), Vertex(1))
         vertex_property = "x"
         edge_property = "y"
+
         # when
         self.test_object.properties[vertex] = vertex_property
         self.test_object.properties[edge] = edge_property
 
         result_vertex = self.test_object.properties[vertex]
         result_edge = self.test_object.properties[edge]
+
         # then
         assert_that(result_vertex).is_equal_to(vertex_property)
         assert_that(result_edge).is_equal_to(edge_property)
@@ -35,9 +37,11 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         # given
         vertex = Vertex(4)
         edge = self.test_object.add_edge_between(Vertex(6), Vertex(7))
+
         # when
         result_vertex = self.test_object.properties[vertex]
         result_edge = self.test_object.properties[edge]
+
         # then
         assert_that(result_vertex).is_none()
         assert_that(result_edge).is_none()
@@ -58,9 +62,11 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         edge = self.test_object.add_edge_between(Vertex(6), Vertex(7))
         self.test_object.properties[vertex] = "x"
         self.test_object.properties[edge] = "y"
+
         # when
         del self.test_object.properties[vertex]
         del self.test_object.properties[edge]
+
         # then
         assert_that(self.test_object.properties[vertex]).is_none()
         assert_that(self.test_object.properties[edge]).is_none()
@@ -68,6 +74,7 @@ class DirectedSimpleGraphTest(unittest.TestCase):
     def test__vertices_count__then_number_of_vertices(self):
         # when
         result = self.test_object.vertices_count
+
         # then
         assert_that(result).is_equal_to(10)
 
@@ -80,14 +87,17 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         self.test_object.add_edge_between(Vertex(6), Vertex(3))
         self.test_object.add_edge_between(Vertex(3), Vertex(6))
         self.test_object.add_edge_between(Vertex(9), Vertex(3))
+
         # when
         result = self.test_object.edges_count
+
         # then
         assert_that(result).is_equal_to(7)
 
     def test__vertices__then_all_vertices(self):
         # when
         result = self.test_object.vertices
+
         # then
         assert_that(sorted(result)).is_equal_to(
             [Vertex(0), Vertex(1), Vertex(2), Vertex(3), Vertex(4), Vertex(5), Vertex(6), Vertex(7),
@@ -102,8 +112,10 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         self.test_object.add_edge_between(Vertex(6), Vertex(3))
         self.test_object.add_edge_between(Vertex(3), Vertex(6))
         self.test_object.add_edge_between(Vertex(9), Vertex(3))
+
         # when
         result = self.test_object.edges
+
         # then
         assert_that(sorted(result)).is_equal_to(
             [Edge(Vertex(1), Vertex(5)), Edge(Vertex(2), Vertex(4)), Edge(Vertex(3), Vertex(6)),
@@ -113,8 +125,10 @@ class DirectedSimpleGraphTest(unittest.TestCase):
     def test__get_vertex__when_exists__then_vertex(self):
         # given
         vertex_id = 6
+
         # when
         result = self.test_object.get_vertex(vertex_id)
+
         # then
         assert_that(result.id).is_equal_to(vertex_id)
 
@@ -131,8 +145,10 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         source = Vertex(9)
         destination = Vertex(5)
         self.test_object.add_edge_between(source, destination)
+
         # when
         result = self.test_object.get_edge(source, destination)
+
         # then
         assert_that(result.source).is_equal_to(source)
         assert_that(result.destination).is_equal_to(destination)
@@ -167,8 +183,10 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         self.test_object.add_edge_between(Vertex(1), Vertex(9))
         self.test_object.add_edge_between(Vertex(2), Vertex(1))
         self.test_object.add_edge_between(Vertex(6), Vertex(1))
+
         # when
         result = self.test_object.adjacent_edges(Vertex(1))
+
         # then
         assert_that(sorted(result)).is_equal_to(
             [Edge(Vertex(1), Vertex(1)), Edge(Vertex(1), Vertex(3)), Edge(Vertex(1), Vertex(4)),
@@ -183,8 +201,10 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         self.test_object.add_edge_between(Vertex(1), Vertex(9))
         self.test_object.add_edge_between(Vertex(2), Vertex(1))
         self.test_object.add_edge_between(Vertex(6), Vertex(1))
+
         # when
         result = self.test_object.neighbours(Vertex(1))
+
         # then
         assert_that(sorted(
             result)).is_equal_to([Vertex(1),
@@ -202,8 +222,10 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         self.test_object.add_edge_between(Vertex(1), Vertex(9))
         self.test_object.add_edge_between(Vertex(2), Vertex(1))
         self.test_object.add_edge_between(Vertex(6), Vertex(1))
+
         # when
         result = self.test_object.output_degree(Vertex(1))
+
         # then
         assert_that(result).is_equal_to(5)
 
@@ -216,8 +238,10 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         self.test_object.add_edge_between(Vertex(9), Vertex(1))
         self.test_object.add_edge_between(Vertex(1), Vertex(2))
         self.test_object.add_edge_between(Vertex(1), Vertex(6))
+
         # when
         result = self.test_object.input_degree(Vertex(1))
+
         # then
         assert_that(result).is_equal_to(5)
 
@@ -225,8 +249,10 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         # given
         new_vertex_id = 13
         vertex_property = "qwerty"
+
         # when
         result = self.test_object.add_vertex(new_vertex_id, vertex_property)
+
         # then
         assert_that(result.id).is_equal_to(new_vertex_id)
         assert_that(self.test_object.vertices_count).is_equal_to(11)
@@ -253,9 +279,11 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         vertex1 = Vertex(1)
         vertex2 = Vertex(5)
         edge_property = "zxcvb"
+
         # when
         result = self.test_object.add_edge_between(vertex1, vertex2, edge_property)
         self.test_object.add_edge_between(vertex1, vertex1)
+
         # then
         assert_that(result.source).is_equal_to(vertex1)
         assert_that(result.destination).is_equal_to(vertex2)
@@ -293,8 +321,10 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         self.test_object.add_edge_between(Vertex(9), Vertex(6))
         self.test_object.properties[vertex] = vertex_property
         self.test_object.properties[edge] = edge_property
+
         # when
         self.test_object.reverse()
+
         # then
         assert_that(sorted(self.test_object.edges)).is_equal_to(
             [Edge(Vertex(1), Vertex(9)), Edge(Vertex(2), Vertex(1)), Edge(Vertex(2), Vertex(6)),
@@ -324,8 +354,10 @@ class DirectedSimpleGraphTest(unittest.TestCase):
         self.test_object.add_edge_between(Vertex(9), Vertex(6))
         self.test_object.properties[vertex] = vertex_property
         self.test_object.properties[edge] = edge_property
+
         # when
         result = self.test_object.reversed_copy()
+
         # then
         assert_that(sorted(result.vertices)).is_equal_to(sorted(self.test_object.vertices))
         assert_that(sorted(result.edges)).is_equal_to(

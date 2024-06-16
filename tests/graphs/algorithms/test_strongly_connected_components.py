@@ -30,8 +30,10 @@ class StronglyConnectedComponentsTest(unittest.TestCase):
         graph.add_edge_between(graph.get_vertex(8), graph.get_vertex(3))
         graph.add_edge_between(graph.get_vertex(8), graph.get_vertex(7))
         graph.add_edge_between(graph.get_vertex(9), graph.get_vertex(8))
+
         # when
         result = list(find_scc(graph))
+
         # then
         assert_that(result).is_length(4)
         assert_that(result).contains_only({graph.get_vertex(5)}, {graph.get_vertex(2)}, {
@@ -55,8 +57,10 @@ class StronglyConnectedComponentsTest(unittest.TestCase):
         graph.add_edge_between(graph.get_vertex(4), graph.get_vertex(5))
         graph.add_edge_between(graph.get_vertex(5), graph.get_vertex(6))
         graph.add_edge_between(graph.get_vertex(6), graph.get_vertex(0))
+
         # when
         result = find_scc(graph)
+
         # then
         assert_that(list(result)).is_equal_to([set(graph.vertices)])
 
@@ -64,8 +68,10 @@ class StronglyConnectedComponentsTest(unittest.TestCase):
     def test__find_scc__when_empty_graph__then_each_vertex_is_component():
         # given
         graph = DirectedSimpleGraph(range(4))
+
         # when
         result = list(find_scc(graph))
+
         # then
         assert_that(result).is_length(4)
         assert_that(result).contains_only({graph.get_vertex(0)}, {graph.get_vertex(1)},

@@ -30,8 +30,10 @@ class DisjointSetsTest(unittest.TestCase):
     def test__op_init__when_duplicates_in_same_set__then_constructed(self):
         # given
         sets = [[1, 2, 3], [10, 100, 10]]
+
         # when
         self.test_object = DisjointSets(sets)
+
         # then
         assert_that(self.test_object).is_length(len(sets))
 
@@ -39,18 +41,21 @@ class DisjointSetsTest(unittest.TestCase):
     def test__op_len__when_empty__then_zero():
         # when
         result = len(DisjointSets())
+
         # then
         assert_that(result).is_zero()
 
     def test__op_len__when_not_empty_then_number_of_sets(self):
         # when
         result = len(self.test_object)
+
         # then
         assert_that(result).is_equal_to(len(self.numbers))
 
     def test__clear__when_not_empty__then_empty(self):
         # when
         self.test_object.clear()
+
         # then
         assert_that(self.test_object).is_empty()
 
@@ -59,18 +64,21 @@ class DisjointSetsTest(unittest.TestCase):
     def test__op_contains__when_empty__then_false(self):
         # when
         result = self.numbers[0] in DisjointSets()
+
         # then
         assert_that(result).is_false()
 
     def test__op_contains__when_present__then_true(self):
         # when
         result = self.present[0] in self.test_object
+
         # then
         assert_that(result).is_true()
 
     def test__op_contains__when_absent__then_false(self):
         # when
         result = self.absent[0] in self.test_object
+
         # then
         assert_that(result).is_false()
 
@@ -80,8 +88,10 @@ class DisjointSetsTest(unittest.TestCase):
     def test__op_iadd__when_empty__then_new_set(self):
         # given
         self.test_object = DisjointSets()
+
         # when
         self.test_object += self.numbers
+
         # then
         assert_that(self.test_object).contains(*self.numbers)
 
@@ -93,12 +103,14 @@ class DisjointSetsTest(unittest.TestCase):
     def test__op_iadd__when_empty_new_elements__then_no_changes(self):
         # when
         self.test_object += []
+
         # then
         assert_that(self.test_object).is_length(len(self.numbers))
 
     def test__op_iadd__when_new_elements__then_new_set(self):
         # when
         self.test_object += self.absent
+
         # then
         assert_that(self.test_object).contains(*self.absent)
 
@@ -129,6 +141,7 @@ class DisjointSetsTest(unittest.TestCase):
     def test__add__when_empty_new_elements_to_present_represent__then_no_changes(self):
         # when
         result = self.test_object.add([], self.present[0])
+
         # then
         assert_that(result).is_same_as(self.test_object)
         assert_that(self.test_object).is_length(len(self.numbers))
@@ -136,8 +149,10 @@ class DisjointSetsTest(unittest.TestCase):
     def test__add__when_new_elements_to_present_represent__then_added_to_existing_set(self):
         # given
         represent = self.present[0]
+
         # when
         result = self.test_object.add(self.absent, represent)
+
         # then
         assert_that(result).is_same_as(self.test_object)
         assert_that(self.test_object).contains(*self.absent)
@@ -177,8 +192,10 @@ class DisjointSetsTest(unittest.TestCase):
     def test__op_getitem__when_present_element__then_represent(self):
         # given
         element = self.present[0]
+
         # when
         result = self.test_object[element]
+
         # then
         assert_that(result).is_equal_to(element)
 
@@ -194,8 +211,10 @@ class DisjointSetsTest(unittest.TestCase):
         # given
         element = self.present[0]
         default_value = self.absent[0]
+
         # when
         result = self.test_object.find_set(element, default_value)
+
         # then
         assert_that(result).is_equal_to(element)
 
@@ -203,14 +222,17 @@ class DisjointSetsTest(unittest.TestCase):
         # given
         element = self.absent[0]
         default_value = self.present[0]
+
         # when
         result = self.test_object.find_set(element, default_value)
+
         # then
         assert_that(result).is_equal_to(default_value)
 
     def test__find_set__when_absent_element_and_no_default__then_none(self):
         # when
         result = self.test_object.find_set(self.absent[0])
+
         # then
         assert_that(result).is_none()
 
@@ -221,8 +243,10 @@ class DisjointSetsTest(unittest.TestCase):
         # given
         element1 = self.present[0]
         element2 = self.present[1]
+
         # when
         result = self.test_object.union_set(element1, element2)
+
         # then
         assert_that(result).is_same_as(self.test_object)
         assert_that(self.test_object.is_same_set(element1, element2)).is_true()
@@ -232,8 +256,10 @@ class DisjointSetsTest(unittest.TestCase):
     def test__union_set__when_single_element__then_no_changes(self):
         # given
         element = self.present[0]
+
         # when
         result = self.test_object.union_set(element, element)
+
         # then
         assert_that(result).is_same_as(self.test_object)
         assert_that(self.test_object).is_length(len(self.numbers))
@@ -243,8 +269,10 @@ class DisjointSetsTest(unittest.TestCase):
         element1 = self.present[0]
         element2 = self.present[1]
         self.test_object = DisjointSets([self.absent, self.numbers])
+
         # when
         result = self.test_object.union_set(element1, element2)
+
         # then
         assert_that(result).is_same_as(self.test_object)
         assert_that(self.test_object.is_same_set(element1, element2)).is_true()
@@ -254,9 +282,11 @@ class DisjointSetsTest(unittest.TestCase):
         # given
         first = self.present[0]
         last = self.present[-1]
+
         # when
         for i in range(1, len(self.present)):
             self.test_object.union_set(self.present[i - 1], self.present[i])
+
         # then
         assert_that(self.test_object.is_same_set(first, last)).is_true()
         assert_that(self.test_object[last]).is_equal_to(self.test_object[first])
@@ -268,14 +298,17 @@ class DisjointSetsTest(unittest.TestCase):
     def test__is_same_set__when_different_sets__then_false(self):
         # when
         result = self.test_object.is_same_set(self.present[0], self.present[1])
+
         # then
         assert_that(result).is_false()
 
     def test__is_same_set__when_single_element__then_true(self):
         # given
         element = self.present[0]
+
         # when
         result = self.test_object.is_same_set(element, element)
+
         # then
         assert_that(result).is_true()
 
@@ -284,8 +317,10 @@ class DisjointSetsTest(unittest.TestCase):
         element1 = self.present[0]
         element2 = self.present[1]
         self.test_object.union_set(element1, element2)
+
         # when
         result = self.test_object.is_same_set(element2, element1)
+
         # then
         assert_that(result).is_true()
 

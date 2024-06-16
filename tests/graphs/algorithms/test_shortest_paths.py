@@ -104,8 +104,10 @@ class PathsTest(unittest.TestCase):
         # given
         distances = [20, 0, self.INF, 17, 7, 8, 12, 12, 10, 20]
         expected = _from_list(self._directed_graph, distances)
+
         # when
         result = bellman_ford(self._directed_graph, self._directed_graph.get_vertex(1))
+
         # then
         assert_that(result).is_equal_to(expected)
 
@@ -116,8 +118,10 @@ class PathsTest(unittest.TestCase):
 
         self._directed_graph.add_edge_between(self._directed_graph.get_vertex(8),
                                               self._directed_graph.get_vertex(3), self._Weight(-5))
+
         # when
         result = bellman_ford(self._directed_graph, self._directed_graph.get_vertex(1))
+
         # then
         assert_that(result).is_equal_to(expected)
 
@@ -125,9 +129,11 @@ class PathsTest(unittest.TestCase):
         # given
         distances = [4, 0, self.INF, 7, 7, 8, self.INF, 10, 10, self.INF]
         expected = _from_list(self._undirected_graph, distances)
+
         # when
         result = bellman_ford(self._undirected_graph.as_directed(),
                               self._undirected_graph.get_vertex(1))
+
         # then
         assert_that(result).is_equal_to(expected)
 
@@ -150,8 +156,10 @@ class PathsTest(unittest.TestCase):
         # given
         distances = [20, 0, self.INF, 17, 7, 8, 12, 12, 10, 20]
         expected = _from_list(self._directed_graph, distances)
+
         # when
         result = dijkstra(self._directed_graph, self._directed_graph.get_vertex(1))
+
         # then
         assert_that(result).is_equal_to(expected)
 
@@ -159,8 +167,10 @@ class PathsTest(unittest.TestCase):
         # given
         distances = [4, 0, self.INF, 7, 7, 8, self.INF, 10, 10, self.INF]
         expected = _from_list(self._undirected_graph, distances)
+
         # when
         result = dijkstra(self._undirected_graph, self._undirected_graph.get_vertex(1))
+
         # then
         assert_that(result).contains_only(*expected)
         assert_that(result).contains_entry(*({k: v} for k, v in expected.items()))
@@ -192,8 +202,10 @@ class PathsTest(unittest.TestCase):
                      [self.INF, self.INF, self.INF, self.INF, self.INF, 20, 13, self.INF, 0, 10],
                      [self.INF, self.INF, self.INF, self.INF, self.INF, 10, 3, self.INF, 12, 0]]
         expected = _from_matrix(self._directed_graph, distances)
+
         # when
         result = floyd_warshall(self._directed_graph)
+
         # then
         assert_that(result).is_equal_to(expected)
 
@@ -212,8 +224,10 @@ class PathsTest(unittest.TestCase):
 
         self._directed_graph.add_edge_between(self._directed_graph.get_vertex(8),
                                               self._directed_graph.get_vertex(3), self._Weight(-5))
+
         # when
         result = floyd_warshall(self._directed_graph)
+
         # then
         assert_that(result).is_equal_to(expected)
 
@@ -231,8 +245,10 @@ class PathsTest(unittest.TestCase):
              [12, 10, self.INF, 9, 3, 2, self.INF, 4, 0, self.INF],
              [self.INF, self.INF, 11, self.INF, self.INF, self.INF, 3, self.INF, self.INF, 0]]
         expected = _from_matrix(self._undirected_graph, distances)
+
         # when
         result = floyd_warshall(self._undirected_graph.as_directed())
+
         # then
         assert_that(result).is_equal_to(expected)
 

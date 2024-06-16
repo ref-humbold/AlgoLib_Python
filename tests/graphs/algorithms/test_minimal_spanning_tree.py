@@ -33,6 +33,7 @@ class MinimalSpanningTreeTest(unittest.TestCase):
     def test__kruskal__then_mst(self):
         # when
         result = kruskal(self.graph)
+
         # then
         assert_that(sorted(result.vertices)).is_equal_to(sorted(self.graph.vertices))
         assert_that(sorted(result.edges)).is_equal_to([self.graph.get_edge(0, 1),
@@ -44,6 +45,7 @@ class MinimalSpanningTreeTest(unittest.TestCase):
     def test__prim__then_mst(self):
         # when
         result = prim(self.graph, self.graph.get_vertex(0))
+
         # then
         assert_that(sorted(result.vertices)).is_equal_to(sorted(self.graph.vertices))
         assert_that(sorted(result.edges)).is_equal_to([self.graph.get_edge(0, 1),
@@ -56,6 +58,7 @@ class MinimalSpanningTreeTest(unittest.TestCase):
         # when
         result1 = prim(self.graph, self.graph.get_vertex(1))
         result4 = prim(self.graph, self.graph.get_vertex(4))
+
         # then
         assert_that(result1.edges_count).is_equal_to(result4.edges_count)
         assert_that(sorted(result1.edges)).is_equal_to(sorted(result4.edges))

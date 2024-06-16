@@ -12,6 +12,7 @@ class KnuthMorrisPrattTest(unittest.TestCase):
     def test__kmp_search__when_pattern_found__then_all_occurrences():
         # when
         result = kmp_search("abcdecdcdefgcdcdecdcdecdcdehijcdecdcdek", "cdecdcde")
+
         # then
         assert_that(list(result)).is_equal_to([2, 14, 19, 30])
 
@@ -19,6 +20,7 @@ class KnuthMorrisPrattTest(unittest.TestCase):
     def test__kmp_search__when_pattern_found_once__then_single_occurrence():
         # when
         result = kmp_search("abcde", "a")
+
         # then
         assert_that(list(result)).is_equal_to([0])
 
@@ -26,6 +28,7 @@ class KnuthMorrisPrattTest(unittest.TestCase):
     def test__kmp_search__when_pattern_found_twice__then_two_occurrences():
         # when
         result = kmp_search("abcdae", "a")
+
         # then
         assert_that(list(result)).is_equal_to([0, 4])
 
@@ -33,6 +36,7 @@ class KnuthMorrisPrattTest(unittest.TestCase):
     def test__kmp_search__when_pattern_found_twice_and_intersects__then_two_occurrences():
         # when
         result = kmp_search("aaaabcde", "aaa")
+
         # then
         assert_that(list(result)).is_equal_to([0, 1])
 
@@ -40,6 +44,7 @@ class KnuthMorrisPrattTest(unittest.TestCase):
     def test__kmp_search__when_pattern_not_found__then_empty_occurrences():
         # when
         result = kmp_search("abcde", "x")
+
         # then
         assert_that(list(result)).is_empty()
 
@@ -47,6 +52,7 @@ class KnuthMorrisPrattTest(unittest.TestCase):
     def test__kmp_search__when_pattern_is_empty_string__then_empty_occurrences():
         # when
         result = kmp_search("abcde", "")
+
         # then
         assert_that(list(result)).is_empty()
 
@@ -54,5 +60,6 @@ class KnuthMorrisPrattTest(unittest.TestCase):
     def test__kmp_search__when_text_is_empty_string__then_empty_occurrences():
         # when
         result = kmp_search("", "a")
+
         # then
         assert_that(list(result)).is_empty()

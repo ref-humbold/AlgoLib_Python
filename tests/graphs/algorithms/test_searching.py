@@ -63,6 +63,7 @@ class SearchingTest(unittest.TestCase):
         # when
         result = bfs(self._undirected_graph, EmptyStrategy(),
                      [self._undirected_graph.get_vertex(0)])
+
         # then
         assert_that(sorted(result)).is_equal_to(
             [self._undirected_graph.get_vertex(0), self._undirected_graph.get_vertex(1),
@@ -73,10 +74,12 @@ class SearchingTest(unittest.TestCase):
     def test__bfs__when_undirected_graph_and_many_roots__then_all_visited(self):
         # given
         strategy = self._TestingStrategy()
+
         # when
         result = bfs(self._undirected_graph, strategy,
                      [self._undirected_graph.get_vertex(0),
                       self._undirected_graph.get_vertex(6)])
+
         # then
         assert_that(sorted(result)).is_equal_to(sorted(self._undirected_graph.vertices))
         assert_that(sorted(strategy.entries)).is_equal_to(sorted(self._undirected_graph.vertices))
@@ -85,12 +88,14 @@ class SearchingTest(unittest.TestCase):
     def test__bfs__when_undirected_graph_and_no_roots__then_empty(self):
         # when
         result = bfs(self._undirected_graph, EmptyStrategy(), [])
+
         # then
         assert_that(list(result)).is_empty()
 
     def test__bfs__when_directed_graph_and_single_root__then_visited_visited(self):
         # when
         result = bfs(self._directed_graph, EmptyStrategy(), [self._directed_graph.get_vertex(1)])
+
         # then
         assert_that(sorted(result)).is_equal_to(
             [self._directed_graph.get_vertex(0), self._directed_graph.get_vertex(1),
@@ -100,10 +105,12 @@ class SearchingTest(unittest.TestCase):
     def test__bfs__when_directed_graph_and_many_roots__then_all_visited(self):
         # given
         strategy = self._TestingStrategy()
+
         # when
         result = bfs(self._directed_graph, strategy,
                      [self._directed_graph.get_vertex(8),
                       self._directed_graph.get_vertex(6)])
+
         # then
         assert_that(sorted(result)).is_equal_to(sorted(self._directed_graph.vertices))
         assert_that(sorted(strategy.entries)).is_equal_to(sorted(self._undirected_graph.vertices))
@@ -116,6 +123,7 @@ class SearchingTest(unittest.TestCase):
         # when
         result = dfs_iterative(self._undirected_graph, EmptyStrategy(),
                                [self._undirected_graph.get_vertex(0)])
+
         # then
         assert_that(sorted(result)).is_equal_to(
             [self._undirected_graph.get_vertex(0), self._undirected_graph.get_vertex(1),
@@ -126,10 +134,12 @@ class SearchingTest(unittest.TestCase):
     def test__dfs_iterative__when_undirected_graph_and_many_roots__then_all_visited(self):
         # given
         strategy = self._TestingStrategy()
+
         # when
         result = dfs_iterative(self._undirected_graph, strategy, [
             self._undirected_graph.get_vertex(0),
             self._undirected_graph.get_vertex(6)])
+
         # then
         assert_that(sorted(result)).is_equal_to(sorted(self._undirected_graph.vertices))
         assert_that(sorted(strategy.entries)).is_equal_to(sorted(self._undirected_graph.vertices))
@@ -138,6 +148,7 @@ class SearchingTest(unittest.TestCase):
     def test__dfs_iterative__when_undirected_graph_and_no_roots__then_empty(self):
         # when
         result = dfs_iterative(self._undirected_graph, EmptyStrategy(), [])
+
         # then
         assert_that(list(result)).is_empty()
 
@@ -145,6 +156,7 @@ class SearchingTest(unittest.TestCase):
         # when
         result = dfs_iterative(self._directed_graph, EmptyStrategy(),
                                [self._directed_graph.get_vertex(1)])
+
         # then
         assert_that(sorted(result)).is_equal_to(
             [self._directed_graph.get_vertex(0), self._directed_graph.get_vertex(1),
@@ -154,10 +166,12 @@ class SearchingTest(unittest.TestCase):
     def test__dfs_iterative__when_directed_graph_and_many_roots__then_all_visited(self):
         # given
         strategy = self._TestingStrategy()
+
         # when
         result = dfs_iterative(self._directed_graph, strategy, [
             self._directed_graph.get_vertex(8),
             self._directed_graph.get_vertex(6)])
+
         # then
         assert_that(sorted(result)).is_equal_to(sorted(self._directed_graph.vertices))
         assert_that(sorted(strategy.entries)).is_equal_to(sorted(self._undirected_graph.vertices))
@@ -170,6 +184,7 @@ class SearchingTest(unittest.TestCase):
         # when
         result = dfs_recursive(self._undirected_graph, EmptyStrategy(),
                                [self._undirected_graph.get_vertex(0)])
+
         # then
         assert_that(sorted(result)).is_equal_to(
             [self._undirected_graph.get_vertex(0), self._undirected_graph.get_vertex(1),
@@ -180,10 +195,12 @@ class SearchingTest(unittest.TestCase):
     def test__dfs_recursive__when_undirected_graph_and_many_roots__then_all_visited(self):
         # given
         strategy = self._TestingStrategy()
+
         # when
         result = dfs_recursive(self._undirected_graph, strategy, [
             self._undirected_graph.get_vertex(0),
             self._undirected_graph.get_vertex(6)])
+
         # then
         assert_that(sorted(result)).is_equal_to(sorted(self._undirected_graph.vertices))
         assert_that(sorted(strategy.entries)).is_equal_to(sorted(self._undirected_graph.vertices))
@@ -192,6 +209,7 @@ class SearchingTest(unittest.TestCase):
     def test__dfs_recursive__when_undirected_graph_and_no_roots__then_empty(self):
         # when
         result = dfs_recursive(self._undirected_graph, EmptyStrategy(), [])
+
         # then
         assert_that(list(result)).is_empty()
 
@@ -199,6 +217,7 @@ class SearchingTest(unittest.TestCase):
         # when
         result = dfs_recursive(self._directed_graph, EmptyStrategy(),
                                [self._directed_graph.get_vertex(1)])
+
         # then
         assert_that(sorted(result)).is_equal_to(
             [self._directed_graph.get_vertex(0), self._directed_graph.get_vertex(1),
@@ -208,10 +227,12 @@ class SearchingTest(unittest.TestCase):
     def test__dfs_recursive__when_directed_graph_and_many_roots__then_all_visited(self):
         # given
         strategy = self._TestingStrategy()
+
         # when
         result = dfs_recursive(self._directed_graph, strategy, [
             self._directed_graph.get_vertex(8),
             self._directed_graph.get_vertex(6)])
+
         # then
         assert_that(sorted(result)).is_equal_to(sorted(self._directed_graph.vertices))
         assert_that(sorted(strategy.entries)).is_equal_to(sorted(self._undirected_graph.vertices))

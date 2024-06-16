@@ -18,8 +18,10 @@ class Geometry2DTest(unittest.TestCase):
         sequence = [Point2D(0.0, 0.0), Point2D(-2.0, -3.0), Point2D(-3.0, 2.0), Point2D(2.0, 3.0),
                     Point2D(3.0, -2.0), Point2D(-2.0, 3.0), Point2D(3.0, 2.0), Point2D(2.0, -3.0),
                     Point2D(-3.0, -2.0)]
+
         # when
         result = sorted_by_x(sequence)
+
         # then
         assert_that(result).is_instance_of(list)
         assert_that(result).is_equal_to([Point2D(-3.0, 2.0), Point2D(-3.0, -2.0),
@@ -33,8 +35,10 @@ class Geometry2DTest(unittest.TestCase):
         sequence = (Point2D(0.0, 0.0), Point2D(-2.0, -3.0), Point2D(-3.0, 2.0), Point2D(2.0, 3.0),
                     Point2D(3.0, -2.0), Point2D(-2.0, 3.0), Point2D(3.0, 2.0), Point2D(2.0, -3.0),
                     Point2D(-3.0, -2.0))
+
         # when
         result = sorted_by_y(sequence)
+
         # then
         assert_that(result).is_instance_of(list)
         assert_that(result).is_equal_to([Point2D(-2.0, -3.0), Point2D(2.0, -3.0),
@@ -47,8 +51,10 @@ class Geometry2DTest(unittest.TestCase):
         # given
         sequence = [Point2D(0, 0), Point2D(-2, -3), Point2D(-3, -2), Point2D(3, -2), Point2D(-2, 3),
                     Point2D(3, 2), Point2D(2, -3), Point2D(2, 3), Point2D(-3, 2)]
+
         # when
         result = sorted_by_angle(sequence)
+
         # then
         assert_that(result).is_instance_of(list)
         assert_that(result).is_equal_to([Point2D(0, 0), Point2D(3, 2), Point2D(2, 3),
@@ -60,8 +66,10 @@ class Geometry2DTest(unittest.TestCase):
         # given
         sequence = [Point2D(0.0, 0.0), Point2D(1.0, 1.0), Point2D(-2.0, -2.0), Point2D(-3.0, -3.0),
                     Point2D(4.0, 4.0)]
+
         # when
         result = sorted_by_angle(sequence)
+
         # then
         assert_that(result).is_instance_of(list)
         assert_that(result).is_equal_to([Point2D(0.0, 0.0), Point2D(1.0, 1.0), Point2D(4.0, 4.0),
@@ -71,6 +79,7 @@ class Geometry2DTest(unittest.TestCase):
     def test__distance__when_different_points__then_distance():
         # when
         result = distance(Point2D(4.0, 5.0), Point2D(-2.0, -3.0))
+
         # then
         assert_that(result).is_equal_to(10.0)
 
@@ -78,8 +87,10 @@ class Geometry2DTest(unittest.TestCase):
     def test__distance__when_same_point__then_zero():
         # given
         point = Point2D(13.5, 6.5)
+
         # when
         result = distance(point, point)
+
         # then
         assert_that(result).is_equal_to(0.0)
 
@@ -87,6 +98,7 @@ class Geometry2DTest(unittest.TestCase):
     def test__translate__then_point_translated():
         # when
         result = translate(Point2D(13.7, 6.5), Vector2D(-10.4, 3.3))
+
         # then
         assert_that(result).is_equal_to(Point2D(3.3, 9.8))
 
@@ -94,7 +106,9 @@ class Geometry2DTest(unittest.TestCase):
     def test__translate__when_zero_vector__then_same_point():
         # given
         point = Point2D(13.5, 6.5)
+
         # when
         result = translate(point, Vector2D(0.0, 0.0))
+
         # then
         assert_that(result).is_equal_to(point)

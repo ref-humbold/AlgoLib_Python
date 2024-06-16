@@ -12,8 +12,10 @@ class TreeDiameterTest(unittest.TestCase):
     def test__count_diameter__when_one_vertex__then_zero():
         # given
         tree = TreeGraph(0)
+
         # when
         result = count_diameter(tree)
+
         # then
         assert_that(result).is_zero()
 
@@ -30,8 +32,10 @@ class TreeDiameterTest(unittest.TestCase):
         tree.add_vertex(7, tree.get_vertex(4), None, weight)
         tree.add_vertex(8, tree.get_vertex(6), None, weight)
         tree.add_vertex(9, tree.get_vertex(6), None, weight)
+
         # when
         result = count_diameter(tree)
+
         # then
         assert_that(result).is_equal_to(6)
 
@@ -43,8 +47,10 @@ class TreeDiameterTest(unittest.TestCase):
         tree.add_vertex(3, tree.get_vertex(1), None, self._Weight(10))
         tree.add_vertex(4, tree.get_vertex(2), None, self._Weight(5))
         tree.add_vertex(5, tree.get_vertex(3), None, self._Weight(5))
+
         # when
         result = count_diameter(tree)
+
         # then
         assert_that(result).is_equal_to(1015)
 

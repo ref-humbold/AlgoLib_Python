@@ -30,8 +30,10 @@ class LowestCommonAncestorTest(unittest.TestCase):
     def test__find_lca__when_same_vertex__then_vertex_is_lca(self):
         # given
         vertex = self.test_object.tree.get_vertex(6)
+
         # when
         result = self.test_object.find_lca(vertex, vertex)
+
         # then
         assert_that(result).is_equal_to(vertex)
 
@@ -39,6 +41,7 @@ class LowestCommonAncestorTest(unittest.TestCase):
         # when
         result = self.test_object.find_lca(self.test_object.tree.get_vertex(5),
                                            self.test_object.tree.get_vertex(7))
+
         # then
         assert_that(result).is_equal_to(self.test_object.tree.get_vertex(1))
 
@@ -48,6 +51,7 @@ class LowestCommonAncestorTest(unittest.TestCase):
                                             self.test_object.tree.get_vertex(7))
         result2 = self.test_object.find_lca(self.test_object.tree.get_vertex(7),
                                             self.test_object.tree.get_vertex(5))
+
         # then
         assert_that(result1).is_equal_to(self.test_object.tree.get_vertex(1))
         assert_that(result2).is_equal_to(result1)
@@ -56,6 +60,7 @@ class LowestCommonAncestorTest(unittest.TestCase):
         # when
         result = self.test_object.find_lca(self.test_object.tree.get_vertex(3),
                                            self.test_object.tree.get_vertex(9))
+
         # then
         assert_that(result).is_equal_to(self.test_object.root)
 
@@ -63,8 +68,10 @@ class LowestCommonAncestorTest(unittest.TestCase):
         # given
         vertex1 = self.test_object.tree.get_vertex(8)
         vertex2 = self.test_object.tree.get_vertex(2)
+
         # when
         result = self.test_object.find_lca(vertex1, vertex2)
+
         # then
         assert_that(result).is_equal_to(vertex2)
 
@@ -72,5 +79,6 @@ class LowestCommonAncestorTest(unittest.TestCase):
         # when
         result = self.test_object.find_lca(self.test_object.tree.get_vertex(4),
                                            self.test_object.root)
+
         # then
         assert_that(result).is_equal_to(self.test_object.root)

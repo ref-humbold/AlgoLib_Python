@@ -28,12 +28,14 @@ class TreeGraphTest(unittest.TestCase):
         edge = self.test_object.get_edge(6, 2)
         vertex_property = "x"
         edge_property = "y"
+
         # when
         self.test_object.properties[vertex] = vertex_property
         self.test_object.properties[edge] = edge_property
 
         result_vertex = self.test_object.properties[vertex]
         result_edge = self.test_object.properties[edge]
+
         # then
         assert_that(result_vertex).is_equal_to(vertex_property)
         assert_that(result_edge).is_equal_to(edge_property)
@@ -41,18 +43,21 @@ class TreeGraphTest(unittest.TestCase):
     def test__vertices_count__then_number_of_vertices(self):
         # when
         result = self.test_object.vertices_count
+
         # then
         assert_that(result).is_equal_to(8)
 
     def test__edges_count__then_number_of_edges(self):
         # when
         result = self.test_object.edges_count
+
         # then
         assert_that(result).is_equal_to(7)
 
     def test__vertices__then_all_vertices(self):
         # when
         result = self.test_object.vertices
+
         # then
         assert_that(sorted(result)).is_equal_to(
             [Vertex(0), Vertex(1), Vertex(2), Vertex(3), Vertex(4), Vertex(5), Vertex(6),
@@ -61,6 +66,7 @@ class TreeGraphTest(unittest.TestCase):
     def test__edges__then_all_edges(self):
         # when
         result = self.test_object.edges
+
         # then
         assert_that(sorted(result)).is_equal_to(
             [Edge(Vertex(1), Vertex(0)), Edge(Vertex(2), Vertex(0)), Edge(Vertex(3), Vertex(0)),
@@ -70,8 +76,10 @@ class TreeGraphTest(unittest.TestCase):
     def test__get_vertex__when_exists__then_vertex(self):
         # given
         vertex_id = 3
+
         # when
         result = self.test_object.get_vertex(vertex_id)
+
         # then
         assert_that(result.id).is_equal_to(vertex_id)
 
@@ -79,8 +87,10 @@ class TreeGraphTest(unittest.TestCase):
         # given
         source = Vertex(7)
         destination = Vertex(2)
+
         # when
         result = self.test_object.get_edge(source, destination)
+
         # then
         assert_that(result.source).is_equal_to(source)
         assert_that(result.destination).is_equal_to(destination)
@@ -88,12 +98,14 @@ class TreeGraphTest(unittest.TestCase):
     def test__neighbours__then_destination_vertices_of_outgoing_edges(self):
         # when
         result = self.test_object.neighbours(Vertex(1))
+
         # then
         assert_that(sorted(result)).is_equal_to([Vertex(0), Vertex(4), Vertex(5)])
 
     def test__adjacent_edges__then_outgoing_edges(self):
         # when
         result = self.test_object.adjacent_edges(Vertex(1))
+
         # then
         assert_that(sorted(result)).is_equal_to(
             [Edge(Vertex(1), Vertex(0)), Edge(Vertex(4), Vertex(1)), Edge(Vertex(5), Vertex(1))])
@@ -101,12 +113,14 @@ class TreeGraphTest(unittest.TestCase):
     def test__output_degree__then_number_of_outgoing_edges(self):
         # when
         result = self.test_object.output_degree(Vertex(1))
+
         # then
         assert_that(result).is_equal_to(3)
 
     def test__input_degree__then_number_of_incoming_edges(self):
         # when
         result = self.test_object.input_degree(Vertex(1))
+
         # then
         assert_that(result).is_equal_to(3)
 
@@ -116,9 +130,11 @@ class TreeGraphTest(unittest.TestCase):
         neighbour = Vertex(5)
         vertex_property = "qwerty"
         edge_property = "asdfg"
+
         # when
         result = self.test_object.add_vertex(new_vertex_id, neighbour, vertex_property,
                                              edge_property)
+
         # then
         assert_that(result.source.id).is_equal_to(new_vertex_id)
         assert_that(result.destination).is_equal_to(neighbour)

@@ -33,6 +33,7 @@ class PrimesTest(unittest.TestCase):
     def test__find_primes__when_min_greater_than_max__then_empty():
         # when
         result = find_primes(100, 30)
+
         # then
         assert_that(list(result)).is_empty()
 
@@ -41,6 +42,7 @@ class PrimesTest(unittest.TestCase):
         # when
         result1 = find_primes(100)
         result2 = find_primes(0, 100)
+
         # then
         assert_that(list(result1)).is_equal_to(list(result2))
 
@@ -48,6 +50,7 @@ class PrimesTest(unittest.TestCase):
     def test__find_primes__when_max_is_composite__then_all_primes():
         # when
         result = find_primes(100)
+
         # then
         assert_that(list(result)).is_equal_to(
             [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83,
@@ -57,6 +60,7 @@ class PrimesTest(unittest.TestCase):
     def test__find_primes__when_max_is_prime__then_max_exclusive():
         # when
         result = find_primes(67)
+
         # then
         assert_that(list(
             result
@@ -66,6 +70,7 @@ class PrimesTest(unittest.TestCase):
     def test__find_primes__when_max_is_two__then_empty():
         # when
         result = find_primes(2)
+
         # then
         assert_that(list(result)).is_empty()
 
@@ -73,6 +78,7 @@ class PrimesTest(unittest.TestCase):
     def test__find_primes__when_max_is_three__then_single_element():
         # when
         result = find_primes(3)
+
         # then
         assert_that(list(result)).is_equal_to([2])
 
@@ -80,6 +86,7 @@ class PrimesTest(unittest.TestCase):
     def test__find_primes__when_max_is_four__then_all_primes():
         # when
         result = find_primes(4)
+
         # then
         assert_that(list(result)).is_equal_to([2, 3])
 
@@ -87,6 +94,7 @@ class PrimesTest(unittest.TestCase):
     def test__find_primes__when_range__then_primes_between():
         # when
         result = find_primes(30, 200)
+
         # then
         assert_that(list(result)).is_equal_to(
             [31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113,
@@ -96,6 +104,7 @@ class PrimesTest(unittest.TestCase):
     def test__find_primes__when_min_is_two__then_two_included():
         # when
         result = find_primes(2, 30)
+
         # then
         assert_that(list(result)).is_equal_to([2, 3, 5, 7, 11, 13, 17, 19, 23, 29])
 
@@ -103,6 +112,7 @@ class PrimesTest(unittest.TestCase):
     def test__find_primes__when_min_is_three__then_two_not_included():
         # when
         result = find_primes(3, 30)
+
         # then
         assert_that(list(result)).is_equal_to([3, 5, 7, 11, 13, 17, 19, 23, 29])
 
@@ -110,6 +120,7 @@ class PrimesTest(unittest.TestCase):
     def test__find_primes__when_max_is_fourth_power_of_prime__then_all_primes_between():
         # when
         result = find_primes(9, 81)
+
         # then
         assert_that(list(
             result
@@ -119,6 +130,7 @@ class PrimesTest(unittest.TestCase):
     def test__find_primes__when_min_is_less_than_square_root_of_max__then_primes_between():
         # when
         result = find_primes(5, 150)
+
         # then
         assert_that(list(result)).is_equal_to(
             [5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89,
@@ -128,6 +140,7 @@ class PrimesTest(unittest.TestCase):
     def test__find_primes__when_min_and_max_are_primes__then_min_inclusive_and_max_exclusive():
         # when
         result = find_primes(137, 317)
+
         # then
         assert_that(list(result)).is_equal_to(
             [137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227,
@@ -137,6 +150,7 @@ class PrimesTest(unittest.TestCase):
     def test__find_primes__when_min_equals_max_and_prime__then_empty():
         # when
         result = find_primes(41, 41)
+
         # then
         assert_that(list(result)).is_empty()
 
@@ -144,5 +158,6 @@ class PrimesTest(unittest.TestCase):
     def test__find_primes__when_min_equals_max_and_composite__then_empty():
         # when
         result = find_primes(91, 91)
+
         # then
         assert_that(list(result)).is_empty()

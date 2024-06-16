@@ -18,12 +18,14 @@ class BaseWordsDictTest(unittest.TestCase):
     def test__op_getitem__when_empty_range__then_zero_and_zero(self):
         # when
         result = self.test_object[4:4]
+
         # then
         assert_that(result).is_equal_to((0, 0))
 
     def test__op_getitem__when_start_greater_than_end__then_zero_and_zero(self):
         # when
         result = self.test_object[6:2]
+
         # then
         assert_that(result).is_equal_to((0, 0))
 
@@ -33,6 +35,7 @@ class BaseWordsDictTest(unittest.TestCase):
         result2 = self.test_object[-11:-10]  # m
         result3 = self.test_object[8:9]  # p
         result4 = self.test_object[3:4]  # s
+
         # then
         assert_that(result1).is_equal_to((1, 0))
         assert_that(result2).is_equal_to((2, 0))
@@ -46,6 +49,7 @@ class BaseWordsDictTest(unittest.TestCase):
         result3 = self.test_object[8:-1]  # pp
         result4 = self.test_object[7:]  # ippi
         result5 = self.test_object[3:7]  # siss
+
         # then
         assert_that(result1).is_equal_to((2, 0))
         assert_that(result2).is_equal_to((6, 0))
@@ -57,6 +61,7 @@ class BaseWordsDictTest(unittest.TestCase):
         # when
         result1 = self.test_object[0:3]  # mis
         result2 = self.test_object[:]  # mississippi
+
         # then
         assert_that(result1).is_equal_to((7, 6))
         assert_that(result2).is_equal_to((20, 21))

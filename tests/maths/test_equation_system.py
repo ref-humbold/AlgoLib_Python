@@ -13,8 +13,10 @@ class EquationSystemTest(unittest.TestCase):
         # given
         test_object = EquationSystem(Equation([2, 3, -2], 15), Equation([7, -1, 0], 4),
                                      Equation([-1, 6, 4], 9))
+
         # when
         result = repr(test_object)
+
         # then
         assert_that(
             result
@@ -26,8 +28,10 @@ class EquationSystemTest(unittest.TestCase):
         # given
         test_object = EquationSystem(Equation([2, 3, -2], 15), Equation([7, -1, 0], 4),
                                      Equation([-1, 6, 4], 9))
+
         # when
         result = str(test_object)
+
         # then
         assert_that(result).is_equal_to(
             "{ 2 x_0 + 3 x_1 + -2 x_2 = 15 ; 7 x_0 + -1 x_1 = 4 ; -1 x_0 + 6 x_1 + 4 x_2 = 9 }")
@@ -37,8 +41,10 @@ class EquationSystemTest(unittest.TestCase):
         # given
         test_object = EquationSystem(Equation([2, 3, -2], 15), Equation([7, -1, 0], 4),
                                      Equation([-1, 6, 4], 9))
+
         # when
         result = test_object.solve()
+
         # then
         assert_that(result).is_equal_to([1, 3, -2])
         assert_that(test_object.has_solution(result)).is_true()
@@ -79,8 +85,10 @@ class EquationSystemTest(unittest.TestCase):
         # given
         test_object = EquationSystem(Equation([2, 3, -2], 15), Equation([7, -1, 0], 4),
                                      Equation([-1, 6, 4], 9))
+
         # when
         test_object.swap(0, 2)
+
         # then
         assert_that(str(test_object[0])).is_equal_to("-1 x_0 + 6 x_1 + 4 x_2 = 9")
         assert_that(str(test_object[2])).is_equal_to("2 x_0 + 3 x_1 + -2 x_2 = 15")
