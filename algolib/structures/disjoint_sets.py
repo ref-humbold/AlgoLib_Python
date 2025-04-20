@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """Structure of disjoint sets (union-find)."""
 from collections import Counter
-from collections.abc import Container, Sized
-from typing import Iterable, Optional, TypeVar
+from collections.abc import Container, Iterable, Sized
+from typing import Optional, TypeVar
 
 _T = TypeVar("_T")
 

@@ -50,24 +50,24 @@ class AvlTree(MutableSet, Reversible):
         :return: ``True`` if the element is present, otherwise ``False``"""
         return len(self) > 0 and self._find_node(element, lambda n, e: n.element == e) is not None
 
-    def add(self, element: _T):
+    def add(self, value: _T):
         """Adds new element to this tree.
 
-        :param element: the new element"""
+        :param value: the new element"""
         node_parent = self._find_node(
-            element, lambda n, e: self._search(n, e) is None or self._search(n, e).element == e)
+            value, lambda n, e: self._search(n, e) is None or self._search(n, e).element == e)
 
         if node_parent is None:
-            new_node = self._AVLNode(element)
+            new_node = self._AVLNode(value)
             self._root = new_node
             self._count += 1
         else:
-            the_node = self._search(node_parent, element)
+            the_node = self._search(node_parent, value)
 
             if the_node is None:
-                new_node = self._AVLNode(element)
+                new_node = self._AVLNode(value)
 
-                if element < node_parent.element:
+                if value < node_parent.element:
                     node_parent.left = new_node
                 else:
                     node_parent.right = new_node
@@ -75,24 +75,24 @@ class AvlTree(MutableSet, Reversible):
                 self._balance(new_node)
                 self._count += 1
 
-    def remove(self, element: _T):
+    def remove(self, value: _T):
         """Removes given element from this tree.
 
-        :param element: the element
+        :param value: the element
         :raises KeyError: if the element is not present"""
-        the_node = self._find_node(element, lambda n, e: n.element == e)
+        the_node = self._find_node(value, lambda n, e: n.element == e)
 
         if the_node is None:
-            raise KeyError(element)
+            raise KeyError(value)
 
         self._delete_node(the_node)
 
-    def discard(self, element: _T):
+    def discard(self, value: _T):
         """Removes given element from this tree, if present.
 
-        :param element: the element"""
+        :param value: the element"""
         try:
-            self.remove(element)
+            self.remove(value)
         except KeyError:
             pass
 

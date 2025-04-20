@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """Structure of pairing heap."""
 from collections import deque
-from typing import Iterable, Optional, Sized, TypeVar
+from collections.abc import Iterable, Sized
+from typing import Optional, TypeVar
 
 _T = TypeVar("_T")
 

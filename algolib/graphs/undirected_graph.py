@@ -45,8 +45,8 @@ class UndirectedSimpleGraph(SimpleGraph, UndirectedGraph):
                 self._representation.set_property(edge, property_)
 
             return edge
-        else:
-            raise ValueError(f"Edge {existing_edge} already exists")
+
+        raise ValueError(f"Edge {existing_edge} already exists")
 
     def as_directed(self) -> DirectedSimpleGraph:
         graph = DirectedSimpleGraph((v.id for v in self.vertices))

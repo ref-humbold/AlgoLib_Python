@@ -48,8 +48,8 @@ class DirectedSimpleGraph(SimpleGraph, DirectedGraph):
                 self._representation.set_property(edge, property_)
 
             return edge
-        else:
-            raise ValueError(f"Edge {existing_edge} already exists")
+
+        raise ValueError(f"Edge {existing_edge} already exists")
 
     def reverse(self):
         new_representation = _GraphRepresentation((v.id for v in self.vertices))
