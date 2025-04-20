@@ -41,7 +41,7 @@ def _get_base_primes(base_maximum):
         if is_prime[i]:
             prime_value = 2 * i + 3
 
-            for j in range(prime_value * prime_value, base_maximum, 2 * prime_value):
+            for j in range(prime_value * prime_value, base_maximum + 1, 2 * prime_value):
                 is_prime[(j - 3) // 2] = False
 
     return [2 * index + 3 for index, flag in enumerate(is_prime) if flag]

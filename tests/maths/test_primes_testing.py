@@ -7,173 +7,52 @@ from assertpy import assert_that
 from algolib.maths import test_prime_fermat, test_prime_miller
 
 
-class PrimesTest(unittest.TestCase):
+class PrimesTestingTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # 1001 = 7 * 11 * 13 ; 3481 = 59 ^ 2 ; 41041 = 7 * 11 * 13 * 41 ; 73627 = 17 * 61 * 71
+        self.params_not_primes = [0, 1, 77, 1001, 3481, 41041, 73627]
+        self.params_primes = [2, 107, 1013, 2131, 6199]
 
     # region test_test_prime_fermat
 
-    @staticmethod
-    def test__test_prime_fermat__when_zero__then_false():
-        # when
-        result = test_prime_fermat(0)
+    def test__test_prime_fermat__when_not_prime__then_false(self):
+        for number in self.params_not_primes:
+            with self.subTest(param=number):
+                # when
+                result = test_prime_fermat(number)
 
-        # then
-        assert_that(result).is_false()
+                # then
+                assert_that(result).is_false()
 
-    @staticmethod
-    def test__test_prime_fermat__when_one__then_false():
-        # when
-        result = test_prime_fermat(1)
+    def test__test_prime_fermat__when_prime__then_true(self):
+        for number in self.params_primes:
+            with self.subTest(param=number):
+                # when
+                result = test_prime_fermat(number)
 
-        # then
-        assert_that(result).is_false()
-
-    @staticmethod
-    def test__test_prime_fermat__when_two__then_true():
-        # when
-        result = test_prime_fermat(2)
-
-        # then
-        assert_that(result).is_true()
-
-    @staticmethod
-    def test__test_prime_fermat__when_prime_1__then_true():
-        # when
-        result = test_prime_fermat(1013)
-
-        # then
-        assert_that(result).is_true()
-
-    @staticmethod
-    def test__test_prime_fermat__when_prime_2__then_true():
-        # when
-        result = test_prime_fermat(2131)
-
-        # then
-        assert_that(result).is_true()
-
-    @staticmethod
-    def test__test_prime_fermat__when_prime_3__then_true():
-        # when
-        result = test_prime_fermat(6199)
-
-        # then
-        assert_that(result).is_true()
-
-    @staticmethod
-    def test__test_prime_fermat__when_composite_1__then_false():
-        # when
-        result = test_prime_fermat(1001)  # 1001 = 7 * 11 * 13
-
-        # then
-        assert_that(result).is_false()
-
-    @staticmethod
-    def test__test_prime_fermat__when_composite_2__then_false():
-        # when
-        result = test_prime_fermat(41041)  # 41041 = 7 * 11 * 13 * 41
-
-        # then
-        assert_that(result).is_false()
-
-    @staticmethod
-    def test__test_prime_fermat__when_composite_3__then_false():
-        # when
-        result = test_prime_fermat(73627)  # 73627 = 17 * 61 * 71
-
-        # then
-        assert_that(result).is_false()
-
-    @staticmethod
-    def test__test_prime_fermat__when_composite_square_of_prime__then_false():
-        # when
-        result = test_prime_fermat(3481)  # 3481 = 59 ^ 2
-
-        # then
-        assert_that(result).is_false()
+                # then
+                assert_that(result).is_true()
 
     # endregion
     # region test_test_prime_miller
 
-    @staticmethod
-    def test__test_prime_miller__when_zero__then_false():
-        # when
-        result = test_prime_miller(0)
+    def test__test_prime_miller__when_not_prime__then_false(self):
+        for number in self.params_not_primes:
+            with self.subTest(param=number):
+                # when
+                result = test_prime_miller(number)
 
-        # then
-        assert_that(result).is_false()
+                # then
+                assert_that(result).is_false()
 
-    @staticmethod
-    def test__test_prime_miller__when_one__then_false():
-        # when
-        result = test_prime_miller(1)
+    def test__test_prime_miller__when_prime__then_true(self):
+        for number in self.params_primes:
+            with self.subTest(param=number):
+                # when
+                result = test_prime_miller(number)
 
-        # then
-        assert_that(result).is_false()
-
-    @staticmethod
-    def test__test_prime_miller__when_two__then_true():
-        # when
-        result = test_prime_miller(2)
-
-        # then
-        assert_that(result).is_true()
-
-    @staticmethod
-    def test__test_prime_miller__when_prime_1__then_true():
-        # when
-        result = test_prime_miller(1013)
-
-        # then
-        assert_that(result).is_true()
-
-    @staticmethod
-    def test__test_prime_miller__when_prime_2__then_true():
-        # when
-        result = test_prime_miller(2131)
-
-        # then
-        assert_that(result).is_true()
-
-    @staticmethod
-    def test__test_prime_miller__when_prime_3__then_true():
-        # when
-        result = test_prime_miller(6199)
-
-        # then
-        assert_that(result).is_true()
-
-    @staticmethod
-    def test__test_prime_miller__when_composite_1__then_false():
-        # when
-        result = test_prime_miller(1001)
-
-        # then
-        assert_that(result).is_false()
-
-    @staticmethod
-    def test__test_prime_miller__when_composite_2__then_false():
-        # when
-        result = test_prime_miller(41041)
-
-        # then
-        assert_that(result).is_false()
-
-    @staticmethod
-    def test__test_prime_miller__when_composite_3__then_false():
-        # when
-        result = test_prime_miller(73627)
-
-        # then
-        assert_that(result).is_false()
-
-    @staticmethod
-    def test__test_prime_miller__when_composite_square_of_prime__then_false():
-        # when
-        result = test_prime_miller(3481)
-
-        # then
-        assert_that(result).is_false()
+                # then
+                assert_that(result).is_true()
 
     # endregion
