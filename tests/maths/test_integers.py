@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Algorithms for basic mathematics."""
+"""Tests: Algorithms for basic computations on integers."""
 import unittest
 
 from assertpy import assert_that

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Algorithms for basic mathematical operations."""
+"""Algorithms for basic computations on integers."""
 from typing import Optional, Union
 
 
