@@ -1,6 +1,8 @@
 name: GitHub Actions
 
-on: [ push, pull_request ]
+on:
+  - push
+  - pull_request
 
 jobs:
   build-and-test:
@@ -8,7 +10,9 @@ jobs:
 
     strategy:
       matrix:
-        python-version: [ "3.13", "3.12" ]
+        python-version:
+          - "3.13"
+          - "3.12"
 
     steps:
       - uses: actions/checkout@v4
@@ -22,3 +26,15 @@ jobs:
 
       - name: Test
         run: nose2 tests
+
+  build-and-test-all:
+    if: ${{ always() }}
+    needs:
+      - build-and-test
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check matrix status
+        if: ${{ needs.build-and-test.result != 'success' }}
+        run: exit 1
