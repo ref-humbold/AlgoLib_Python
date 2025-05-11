@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Algorithm for convex hull in 2D (monotone chain)."""
+"""Algorithm for convex hull in 2D (Graham's scan)."""
 from typing import List, Sequence
 
-from .geometry_2d import sorted_by_x
+from .geometry_2d import sorted_by_angle, translate
 from .point_2d import Point2D
 from .vector_2d import Vector2D
 
@@ -15,26 +15,18 @@ def find_convex_hull(points: Sequence[Point2D]) -> List[Point2D]:
     if len(points) < 3:
         return []
 
-    points = sorted_by_x(points)
-    lower_hull = _create_half_hull(points)
-    upper_hull = _create_half_hull(reversed(points))
+    moving = Vector2D.between(Point2D(0, 0), min(points, key=lambda p: (p.y, p.x)))
+    angle_points = sorted_by_angle(translate(pt, -moving) for pt in points)
 
-    lower_hull.pop()
-    upper_hull.pop()
-    return lower_hull + upper_hull
-
-
-def _create_half_hull(points):
-    # Creates a half of a convex hull for specified points.
     hull = []
 
-    for pt in points:
+    for pt in angle_points:
         while len(hull) > 1 and _cross_product(hull[-2], hull[-1], pt) >= 0:
             hull.pop()
 
         hull.append(pt)
 
-    return hull
+    return [translate(pt, moving) for pt in hull]
 
 
 def _cross_product(pt1, pt2, pt3):

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests: Algorithm for convex hull in 2D (monotone chain)."""
+"""Tests: Algorithm for convex hull in 2D (Graham's scan)."""
 import unittest
 
 from assertpy import assert_that
@@ -49,8 +49,8 @@ class ConvexHullTest(unittest.TestCase):
 
         # then
         assert_that(result).is_equal_to(
-            [Point2D(-8, -7), Point2D(-1, -8), Point2D(3, -6), Point2D(6, -4), Point2D(10, 2),
-             Point2D(5, 9), Point2D(-5, 10), Point2D(-7, 7)])
+            [Point2D(-1, -8), Point2D(3, -6), Point2D(6, -4), Point2D(10, 2), Point2D(5, 9),
+             Point2D(-5, 10), Point2D(-7, 7), Point2D(-8, -7)])
 
     @staticmethod
     def test__find_convex_hull__when_multiple_points_are_collinear__then_inner_points_omitted():
