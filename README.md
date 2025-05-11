@@ -1,7 +1,8 @@
 # AlgoLib_Python
 
-![GitHub Actions](https://github.com/ref-humbold/AlgoLib_Python/workflows/GitHub%20Actions/badge.svg?branch=master)
-[![CircleCI](https://circleci.com/gh/ref-humbold/AlgoLib_Python/tree/master.svg?style=shield)](https://circleci.com/gh/ref-humbold/AlgoLib_Python/tree/master)
+[![GitHub Actions](https://github.com/ref-humbold/AlgoLib_Python/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/ref-humbold/AlgoLib_Python/actions/workflows/build-and-test.yml)
+
+![License](https://img.shields.io/github/license/ref-humbold/AlgoLib_Python?style=plastic)
 
 ALGOrithms LIBrary - Python version
 
