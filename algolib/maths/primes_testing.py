@@ -2,7 +2,7 @@
 """Algorithms for testing prime numbers."""
 from random import randint
 
-from algolib.maths.maths import gcd, power
+from algolib.maths.integers import gcd, power
 
 
 def test_prime_fermat(number: int) -> bool:

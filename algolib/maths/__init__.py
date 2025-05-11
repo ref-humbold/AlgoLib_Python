@@ -2,7 +2,7 @@
 from .equation import Equation
 from .equation_system import EquationSystem, InfiniteSolutionsError, NoSolutionError
 from .fraction import Fraction
-from .maths import gcd, lcm, multiply, power
+from .integers import gcd, lcm, multiply, power
 from .primes_searching import find_primes
 from .primes_testing import test_prime_fermat, test_prime_miller
 

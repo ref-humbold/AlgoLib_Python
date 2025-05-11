@@ -2,7 +2,7 @@
 """Structure of fraction."""
 from typing import Tuple
 
-from .maths import gcd, lcm
+from .integers import gcd, lcm
 
 
 class Fraction:
