@@ -41,15 +41,19 @@ class BaseWordsDict:
     def _create(self):
         # Builds base words dictionary using Karp-Miller-Rosenberg algorithm.
         current_length = 2
-        code_value = self._extend(1, 0,
-                                  lambda i, length: (ord(self._text[i]), 1 + ord(self._text[i]),
-                                                     i, i + length))
+        code_value = self._extend(
+                1,
+                0,
+                (lambda i, _: self._ExtensionCode(ord(self._text[i]), 1 + ord(self._text[i]), i)))
 
         while current_length <= len(self._text):
-            code_value = self._extend(current_length, code_value,
-                                      lambda i, length: (self._factors[i, i + length // 2],
-                                                         self._factors[i + length // 2, i + length],
-                                                         i, i + length))
+            code_value = self._extend(
+                    current_length,
+                    code_value,
+                    (
+                            lambda i, length: self._ExtensionCode(
+                                    self._factors[i, i + length // 2], self._factors[
+                                            i + length // 2, i + length], i)))
             current_length *= 2
 
     def _extend(self, length, code_value, func):
@@ -58,13 +62,13 @@ class BaseWordsDict:
         codes = sorted(func(i, length) for i in range(len(self._text) - length + 1))
 
         for code in codes:
-            code_pair = (code[0], code[1])
+            code_pair = (code.prefix_code, code.suffix_code)
 
             if code_pair != previous_code:
                 code_value += 1
                 previous_code = code_pair
 
-            self._factors[code[2], code[3]] = code_value
+            self._factors[code.index, code.index + length] = code_value
 
         return code_value
 
@@ -90,3 +94,27 @@ class BaseWordsDict:
             power *= 2
 
         return prev
+
+    class _ExtensionCode:
+        def __init__(self, prefix_code, suffix_code, index):
+            self.prefix_code = prefix_code
+            self.suffix_code = suffix_code
+            self.index = index
+
+        def __eq__(self, other):
+            return (
+                    self.prefix_code == other.prefix_code and self.suffix_code == other.suffix_code
+                    and self.index == other.index)
+
+        def __lt__(self, other):
+            if self.prefix_code < other.prefix_code:
+                return True
+
+            if self.prefix_code == other.prefix_code:
+                if self.suffix_code < other.suffix_code:
+                    return True
+
+                if self.suffix_code == other.suffix_code:
+                    return self.index < other.index
+
+            return False
