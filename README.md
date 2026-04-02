@@ -4,6 +4,6 @@
 
 [![License](https://img.shields.io/github/license/ref-humbold/AlgoLib_Python?style=plastic)](./LICENSE)
 
-ALGOrithms LIBrary - Python version
+**Algo**rithms **Lib**rary - Python version
 
 Library of various algorithms and data structures.
