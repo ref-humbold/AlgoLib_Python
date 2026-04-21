@@ -14,7 +14,7 @@ class BasicFactorsDict:
         return self._text
 
     def __repr__(self):
-        return f"BaseWordsDict({self._text!r})"
+        return f"BasicFactorsDict({self._text!r})"
 
     __str__ = __repr__
 

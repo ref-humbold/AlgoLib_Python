@@ -7,7 +7,7 @@ from algolib.geometry.dim3 import Point3D, Vector3D
 
 
 class Vector3DTest(unittest.TestCase):
-    OFFSET = Vector3D.EPSILON
+    OFFSET = 1e-12
 
     @staticmethod
     def test__coordinates__then_triple_of_coordinates():
@@ -199,24 +199,24 @@ class Vector3DTest(unittest.TestCase):
 
     def test__volume__then_scalar_triple_product(self):
         # when
-        result = Vector3D.volume(Vector3D(1.5, -4.0, -3.5), Vector3D(9.0, -2.5, 8.5),
-                                 Vector3D(1.0, -1.0, 1.0))
+        result = Vector3D.volume(
+                Vector3D(1.5, -4.0, -3.5), Vector3D(9.0, -2.5, 8.5), Vector3D(1.0, -1.0, 1.0))
 
         # then
         assert_that(result).is_close_to(33.75, self.OFFSET)
 
     def test__volume__when_parallel__then_zero(self):
         # when
-        result = Vector3D.volume(Vector3D(3.0, 3.0, 3.0), Vector3D(-8.0, -8.0, -8.0),
-                                 Vector3D(2.0, -2.0, 2.0))
+        result = Vector3D.volume(
+                Vector3D(3.0, 3.0, 3.0), Vector3D(-8.0, -8.0, -8.0), Vector3D(2.0, -2.0, 2.0))
 
         # then
         assert_that(result).is_close_to(0.0, self.OFFSET)
 
     def test__volume__when_orthogonal__then_zero(self):
         # when
-        result = Vector3D.volume(Vector3D(3.0, 3.0, 3.0), Vector3D(1.0, 0.0, 1.0),
-                                 Vector3D(0.0, -2.0, 0.0))
+        result = Vector3D.volume(
+                Vector3D(3.0, 3.0, 3.0), Vector3D(1.0, 0.0, 1.0), Vector3D(0.0, -2.0, 0.0))
 
         # then
         assert_that(result).is_close_to(0.0, self.OFFSET)

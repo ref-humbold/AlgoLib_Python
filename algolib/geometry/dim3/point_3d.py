@@ -3,10 +3,12 @@
 from math import sqrt
 from typing import Tuple
 
-from ..geometry_object import GeometryObject
+from ..geometry_comparator import GeometryComparator
 
 
-class Point3D(GeometryObject):
+class Point3D:
+    __COMPARATOR = GeometryComparator()
+
     def __init__(self, x: float, y: float, z: float):
         super().__init__()
         self._x = x
@@ -44,8 +46,8 @@ class Point3D(GeometryObject):
         return f"({self._x}, {self._y}, {self._z})"
 
     def __eq__(self, pt: "Point3D"):
-        return self._are_equal(self._x, pt.x) and self._are_equal(self._y, pt.y) \
-            and self._are_equal(self._z, pt.z)
+        return self.__COMPARATOR.compare(self._x, pt.x) == 0 and self.__COMPARATOR.compare(
+                self._y, pt.y) == 0 and self.__COMPARATOR.compare(self._z, pt.z) == 0
 
     def __ne__(self, pt: "Point3D"):
         return not self == pt

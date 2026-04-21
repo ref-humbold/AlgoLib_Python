@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 """Structure of point in 2D."""
-from math import atan2, pi, sqrt
+from math import atan2, sqrt
 from typing import Tuple
 
-from ..geometry_object import GeometryObject
+from .angle import Angle, AngleUnit
+from ..geometry_comparator import GeometryComparator
 
 
-class Point2D(GeometryObject):
+class Point2D:
+    __COMPARATOR = GeometryComparator()
+
     def __init__(self, x: float, y: float):
         super().__init__()
         self._x = x
@@ -25,14 +28,9 @@ class Point2D(GeometryObject):
         return self._x, self._y
 
     @property
-    def angle_rad(self) -> float:
-        """:return: angle from X axis in radians (-PI < angle <= PI)"""
-        return atan2(self._y, self._x)
-
-    @property
-    def angle_deg(self) -> float:
-        """:return: angle from X axis in degrees (0 <= angle < 360)"""
-        return (self.angle_rad * 180.0 / pi) % 360.0
+    def angle(self) -> Angle:
+        """:return: angle from X axis"""
+        return Angle(atan2(self._y, self._x), AngleUnit.RADIANS)
 
     @property
     def radius(self) -> float:
@@ -49,7 +47,8 @@ class Point2D(GeometryObject):
         return f"({self._x}, {self._y})"
 
     def __eq__(self, pt: "Point2D"):
-        return self._are_equal(self._x, pt.x) and self._are_equal(self._y, pt.y)
+        return self.__COMPARATOR.compare(self._x, pt.x) == 0 and self.__COMPARATOR.compare(
+                self._y, pt.y) == 0
 
     def __ne__(self, pt: "Point2D"):
         return not self == pt

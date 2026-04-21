@@ -9,12 +9,20 @@ from algolib.maths import Fraction
 
 class FractionTest(TestCase):
     @staticmethod
-    def test__op_str__then_negated():
+    def test__op_str__then_string_representation():
         # when
         result = str(Fraction(23, -18))
 
         # then
         assert_that(result).is_equal_to("-23/18")
+
+    @staticmethod
+    def test__op_repr__then_string_representation():
+        # when
+        result = repr(Fraction(23, -18))
+
+        # then
+        assert_that(result).is_equal_to("Fraction(-23, 18)")
 
     @staticmethod
     def test__op_pos__then_copied():

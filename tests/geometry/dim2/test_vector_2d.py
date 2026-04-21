@@ -7,7 +7,7 @@ from algolib.geometry.dim2 import Point2D, Vector2D
 
 
 class Vector2DTest(unittest.TestCase):
-    OFFSET = Vector2D.EPSILON
+    OFFSET = 1e-12
 
     @staticmethod
     def test__coordinates__then_pair_of_coordinates():

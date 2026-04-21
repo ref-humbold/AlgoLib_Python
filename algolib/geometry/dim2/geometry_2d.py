@@ -29,7 +29,7 @@ def sorted_by_angle(points: Iterable[Point2D]) -> List[Point2D]:
 
     :param points: the points
     :return: the sorted points"""
-    return sorted(points, key=lambda pt: (pt.angle_deg, pt.radius))
+    return sorted(points, key=lambda pt: (pt.angle, pt.radius))
 
 
 def distance(point1: Point2D, point2: Point2D) -> float:
@@ -38,8 +38,9 @@ def distance(point1: Point2D, point2: Point2D) -> float:
     :param point1: the first point
     :param point2: the second point
     :return: the distance between the points"""
-    return sqrt((point2.x - point1.x) * (point2.x - point1.x)
-                + (point2.y - point1.y) * (point2.y - point1.y))
+    return sqrt(
+            (point2.x - point1.x) * (point2.x - point1.x) + (point2.y - point1.y) * (
+                    point2.y - point1.y))
 
 
 def translate(point: Point2D, vector: Vector2D) -> Point2D:

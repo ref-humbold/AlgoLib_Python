@@ -4,10 +4,12 @@ from math import sqrt
 from typing import Tuple
 
 from .point_2d import Point2D
-from ..geometry_object import GeometryObject
+from ..geometry_comparator import GeometryComparator
 
 
-class Vector2D(GeometryObject):
+class Vector2D:
+    __COMPARATOR = GeometryComparator()
+
     def __init__(self, x: float, y: float):
         super().__init__()
         self._x = x
@@ -33,7 +35,8 @@ class Vector2D(GeometryObject):
         return hash((self._x, self._y))
 
     def __eq__(self, vec: "Vector2D"):
-        return self._are_equal(self._x, vec.x) and self._are_equal(self._y, vec.y)
+        return self.__COMPARATOR.compare(self._x, vec.x) == 0 and self.__COMPARATOR.compare(
+                self._y, vec.y) == 0
 
     def __ne__(self, vec: "Vector2D"):
         return not self == vec

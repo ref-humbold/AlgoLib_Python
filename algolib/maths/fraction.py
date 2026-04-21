@@ -54,7 +54,7 @@ class Fraction:
     def __float__(self):
         return self._numerator / self._denominator
 
-    def __pos__(self):
+    def __pos__(self) -> "Fraction":
         return Fraction(+self._numerator, +self._denominator)
 
     def __neg__(self) -> "Fraction":
@@ -70,8 +70,9 @@ class Fraction:
         return Fraction(self._denominator, self._numerator)
 
     def __add__(self, frac: "Fraction") -> "Fraction":
-        return Fraction(self._numerator * frac._denominator + frac._numerator * self._denominator,
-                        self._denominator * frac._denominator)
+        return Fraction(
+                self._numerator * frac._denominator + frac._numerator * self._denominator,
+                self._denominator * frac._denominator)
 
     def __iadd__(self, frac: "Fraction"):
         self._numerator = self._numerator * frac._denominator + frac._numerator * self._denominator
@@ -80,8 +81,9 @@ class Fraction:
         return self
 
     def __sub__(self, frac: "Fraction") -> "Fraction":
-        return Fraction(self._numerator * frac._denominator - frac._numerator * self._denominator,
-                        self._denominator * frac._denominator)
+        return Fraction(
+                self._numerator * frac._denominator - frac._numerator * self._denominator,
+                self._denominator * frac._denominator)
 
     def __isub__(self, frac: "Fraction"):
         self._numerator = self._numerator * frac._denominator - frac._numerator * self._denominator
