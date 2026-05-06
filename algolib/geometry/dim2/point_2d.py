@@ -3,7 +3,7 @@
 from math import atan2, sqrt
 from typing import Tuple
 
-from .angle import Angle, AngleUnit
+from .angle_2d import Angle2D, AngleUnit
 from ..geometry_comparator import GeometryComparator
 
 
@@ -24,13 +24,13 @@ class Point2D:
         return self._y
 
     @property
-    def coordinates(self) -> Tuple[float, ...]:
+    def coordinates(self) -> Tuple[float, float]:
         return self._x, self._y
 
     @property
-    def angle(self) -> Angle:
+    def angle(self) -> Angle2D:
         """:return: angle from X axis"""
-        return Angle(atan2(self._y, self._x), AngleUnit.RADIANS)
+        return Angle2D(atan2(self._y, self._x), AngleUnit.RADIANS)
 
     @property
     def radius(self) -> float:
@@ -47,8 +47,9 @@ class Point2D:
         return f"({self._x}, {self._y})"
 
     def __eq__(self, pt: "Point2D"):
-        return self.__COMPARATOR.compare(self._x, pt.x) == 0 and self.__COMPARATOR.compare(
-                self._y, pt.y) == 0
+        return (self.__COMPARATOR.compare(self._x, pt.x) == 0 and self.__COMPARATOR.compare(self._y,
+                                                                                            pt.y)
+                == 0)
 
     def __ne__(self, pt: "Point2D"):
         return not self == pt

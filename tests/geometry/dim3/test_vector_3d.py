@@ -9,20 +9,41 @@ from algolib.geometry.dim3 import Point3D, Vector3D
 class Vector3DTest(unittest.TestCase):
     OFFSET = 1e-12
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.params_length = [
+            (Vector3D(0.0, 0.0, 0.0), 0.0), (Vector3D(14.0, 0.0, 0.0), 14.0),
+            (Vector3D(-14.0, 0.0, 0.0), 14.0), (Vector3D(0.0, 14.0, 0.0), 14.0),
+            (Vector3D(0.0, -14.0, 0.0), 14.0), (Vector3D(0.0, 0.0, 14.0), 14.0),
+            (Vector3D(0.0, 0.0, -14.0), 14.0), (Vector3D(8.0, 6.0, 0.0), 10.0),
+            (Vector3D(8.0, -6.0, 0.0), 10.0), (Vector3D(-8.0, 6.0, 0.0), 10.0),
+            (Vector3D(-8.0, -6.0, 0.0), 10.0), (Vector3D(8.0, 0.0, 6.0), 10.0),
+            (Vector3D(8.0, 0.0, -6.0), 10.0), (Vector3D(-8.0, 0.0, 6.0), 10.0),
+            (Vector3D(-8.0, 0.0, -6.0), 10.0), (Vector3D(0.0, 8.0, 6.0), 10.0),
+            (Vector3D(0.0, 8.0, -6.0), 10.0), (Vector3D(0.0, -8.0, 6.0), 10.0),
+            (Vector3D(0.0, -8.0, -6.0), 10.0), (Vector3D(18.0, 6.0, 13.0), 23.0),
+            (Vector3D(18.0, 6.0, -13.0), 23.0), (Vector3D(18.0, -6.0, 13.0), 23.0),
+            (Vector3D(18.0, -6.0, -13.0), 23.0), (Vector3D(-18.0, 6.0, 13.0), 23.0),
+            (Vector3D(-18.0, 6.0, -13.0), 23.0), (Vector3D(-18.0, -6.0, 13.0), 23.0),
+            (Vector3D(-18.0, -6.0, -13.0), 23.0)
+        ]
+
     @staticmethod
-    def test__coordinates__then_triple_of_coordinates():
+    def test__coordinates__then_tuple():
         # when
-        result = Vector3D(5.0, -19.0, 14.2).coordinates
+        result = Vector3D(150.123456789, -3700.987654321, 0.55555555).coordinates
 
         # then
-        assert_that(result).is_equal_to((5.0, -19.0, 14.2))
+        assert_that(result).is_equal_to((150.123456789, -3700.987654321, 0.55555555))
 
     def test__length__then_length_of_vector(self):
-        # when
-        result = Vector3D(18.0, -6.0, 13.0).length
+        for vector, expected in self.params_length:
+            with self.subTest(param=vector):
+                # when
+                result = vector.length
 
-        # then
-        assert_that(result).is_close_to(23.0, self.OFFSET)
+                # then
+                assert_that(result).is_close_to(expected, self.OFFSET)
 
     @staticmethod
     def test__op_pos__then_copied():
@@ -146,6 +167,14 @@ class Vector3DTest(unittest.TestCase):
         assert_that(vector).is_equal_to(Vector3D(1.8, 3.0, -4.1))
 
     @staticmethod
+    def test__op_str__then_string_representation():
+        # when
+        result = str(Vector3D(150.123456789, -3700.987654321, 0.55555555))
+
+        # then
+        assert_that(result).is_equal_to("[150.123456789, -3700.987654321, 0.55555555]")
+
+    @staticmethod
     def test__between__then_vector_from_begin_to_end():
         # when
         result = Vector3D.between(Point3D(2.4, 7.8, -10.3), Point3D(-1.5, 13.2, 15.8))
@@ -199,24 +228,24 @@ class Vector3DTest(unittest.TestCase):
 
     def test__volume__then_scalar_triple_product(self):
         # when
-        result = Vector3D.volume(
-                Vector3D(1.5, -4.0, -3.5), Vector3D(9.0, -2.5, 8.5), Vector3D(1.0, -1.0, 1.0))
+        result = Vector3D.volume(Vector3D(1.5, -4.0, -3.5), Vector3D(9.0, -2.5, 8.5),
+                                 Vector3D(1.0, -1.0, 1.0))
 
         # then
         assert_that(result).is_close_to(33.75, self.OFFSET)
 
     def test__volume__when_parallel__then_zero(self):
         # when
-        result = Vector3D.volume(
-                Vector3D(3.0, 3.0, 3.0), Vector3D(-8.0, -8.0, -8.0), Vector3D(2.0, -2.0, 2.0))
+        result = Vector3D.volume(Vector3D(3.0, 3.0, 3.0), Vector3D(-8.0, -8.0, -8.0),
+                                 Vector3D(2.0, -2.0, 2.0))
 
         # then
         assert_that(result).is_close_to(0.0, self.OFFSET)
 
     def test__volume__when_orthogonal__then_zero(self):
         # when
-        result = Vector3D.volume(
-                Vector3D(3.0, 3.0, 3.0), Vector3D(1.0, 0.0, 1.0), Vector3D(0.0, -2.0, 0.0))
+        result = Vector3D.volume(Vector3D(3.0, 3.0, 3.0), Vector3D(1.0, 0.0, 1.0),
+                                 Vector3D(0.0, -2.0, 0.0))
 
         # then
         assert_that(result).is_close_to(0.0, self.OFFSET)

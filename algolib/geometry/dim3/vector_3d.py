@@ -29,7 +29,7 @@ class Vector3D:
         return self._z
 
     @property
-    def coordinates(self) -> Tuple[float, ...]:
+    def coordinates(self) -> Tuple[float, float, float]:
         return self._x, self._y, self._z
 
     @property
@@ -46,8 +46,8 @@ class Vector3D:
         return f"[{self._x}, {self._y}, {self._z}]"
 
     def __eq__(self, vec: "Vector3D"):
-        return self.__COMPARATOR.compare(self._x, vec.x) == 0 and self.__COMPARATOR.compare(
-                self._y, vec.y) == 0 and self.__COMPARATOR.compare(self._z, vec.z) == 0
+        return (self.__COMPARATOR.compare(self._x, vec.x) == 0 and self.__COMPARATOR.compare(
+            self._y, vec.y) == 0 and self.__COMPARATOR.compare(self._z, vec.z) == 0)
 
     def __ne__(self, vec: "Vector3D"):
         return not self == vec
@@ -112,9 +112,8 @@ class Vector3D:
 
     @staticmethod
     def cross(vec1: "Vector3D", vec2: "Vector3D") -> "Vector3D":
-        return Vector3D(
-                vec1.y * vec2.z - vec1.z * vec2.y, vec1.z * vec2.x - vec1.x * vec2.z,
-                vec1.x * vec2.y - vec1.y * vec2.x)
+        return Vector3D(vec1.y * vec2.z - vec1.z * vec2.y, vec1.z * vec2.x - vec1.x * vec2.z,
+                        vec1.x * vec2.y - vec1.y * vec2.x)
 
     @staticmethod
     def area(vec1: "Vector3D", vec2: "Vector3D") -> float:

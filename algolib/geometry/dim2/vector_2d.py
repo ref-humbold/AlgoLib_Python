@@ -24,7 +24,7 @@ class Vector2D:
         return self._y
 
     @property
-    def coordinates(self) -> Tuple[float, ...]:
+    def coordinates(self) -> Tuple[float, float]:
         return self._x, self._y
 
     @property
@@ -35,8 +35,8 @@ class Vector2D:
         return hash((self._x, self._y))
 
     def __eq__(self, vec: "Vector2D"):
-        return self.__COMPARATOR.compare(self._x, vec.x) == 0 and self.__COMPARATOR.compare(
-                self._y, vec.y) == 0
+        return (self.__COMPARATOR.compare(self._x, vec.x) == 0 and self.__COMPARATOR.compare(
+            self._y, vec.y) == 0)
 
     def __ne__(self, vec: "Vector2D"):
         return not self == vec

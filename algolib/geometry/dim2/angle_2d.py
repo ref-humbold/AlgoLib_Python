@@ -10,7 +10,7 @@ class AngleUnit(Enum):
     RADIANS = "rad"
 
 
-class Angle:
+class Angle2D:
     __COMPARATOR = GeometryComparator()
     _FULL_ANGLE_DEG = 360.0
 
@@ -32,22 +32,22 @@ class Angle:
     def __hash__(self):
         return hash(self.degrees)
 
-    def __eq__(self, angle: "Angle"):
+    def __eq__(self, angle: "Angle2D"):
         return self.__COMPARATOR.compare(self.degrees, angle.degrees) == 0
 
-    def __ne__(self, angle: "Angle"):
+    def __ne__(self, angle: "Angle2D"):
         return self.__COMPARATOR.compare(self.degrees, angle.degrees) != 0
 
-    def __lt__(self, angle: "Angle"):
+    def __lt__(self, angle: "Angle2D"):
         return self.__COMPARATOR.compare(self.degrees, angle.degrees) < 0
 
-    def __le__(self, angle: "Angle"):
+    def __le__(self, angle: "Angle2D"):
         return self.__COMPARATOR.compare(self.degrees, angle.degrees) <= 0
 
-    def __gt__(self, angle: "Angle"):
+    def __gt__(self, angle: "Angle2D"):
         return self.__COMPARATOR.compare(self.degrees, angle.degrees) > 0
 
-    def __ge__(self, angle: "Angle"):
+    def __ge__(self, angle: "Angle2D"):
         return self.__COMPARATOR.compare(self.degrees, angle.degrees) >= 0
 
     def __repr__(self):

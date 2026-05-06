@@ -18,7 +18,7 @@ class AVLTreeTest(unittest.TestCase):
     def setUp(self):
         self.test_object = AvlTree(self.numbers)
 
-    def test__op_str__then_text_representation(self):
+    def test__op_str__then_string_representation(self):
         # when
         result = str(self.test_object)
 

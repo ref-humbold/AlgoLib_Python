@@ -9,8 +9,16 @@ from algolib.geometry.dim2 import Point2D, Vector2D
 class Vector2DTest(unittest.TestCase):
     OFFSET = 1e-12
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.params_length = [
+            (Vector2D(0.0, 0.0), 0.0), (Vector2D(14.0, 0.0), 14.0), (Vector2D(-14.0, 0.0), 14.0),
+            (Vector2D(0.0, 14.0), 14.0), (Vector2D(0.0, -14.0), 14.0), (Vector2D(8.0, 6.0), 10.0),
+            (Vector2D(8.0, -6.0), 10.0), (Vector2D(-8.0, 6.0), 10.0), (Vector2D(-8.0, -6.0), 10.0)
+        ]
+
     @staticmethod
-    def test__coordinates__then_pair_of_coordinates():
+    def test__coordinates__then_tuple():
         # when
         result = Vector2D(5.0, -19.0).coordinates
 
@@ -18,11 +26,13 @@ class Vector2DTest(unittest.TestCase):
         assert_that(result).is_equal_to((5.0, -19.0))
 
     def test__length__then_length_of_vector(self):
-        # when
-        result = Vector2D(8.0, -6.0).length
+        for vector, expected in self.params_length:
+            with self.subTest(param=vector):
+                # when
+                result = vector.length
 
-        # then
-        assert_that(result).is_close_to(10.0, self.OFFSET)
+                # then
+                assert_that(result).is_close_to(expected, self.OFFSET)
 
     @staticmethod
     def test__op_pos__then_copied():

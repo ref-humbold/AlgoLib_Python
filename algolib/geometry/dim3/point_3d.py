@@ -28,7 +28,7 @@ class Point3D:
         return self._z
 
     @property
-    def coordinates(self) -> Tuple[float, ...]:
+    def coordinates(self) -> Tuple[float, float, float]:
         return self._x, self._y, self._z
 
     @property
@@ -46,8 +46,10 @@ class Point3D:
         return f"({self._x}, {self._y}, {self._z})"
 
     def __eq__(self, pt: "Point3D"):
-        return self.__COMPARATOR.compare(self._x, pt.x) == 0 and self.__COMPARATOR.compare(
-                self._y, pt.y) == 0 and self.__COMPARATOR.compare(self._z, pt.z) == 0
+        return (self.__COMPARATOR.compare(self._x, pt.x) == 0 and self.__COMPARATOR.compare(self._y,
+                                                                                            pt.y)
+                == 0 and self.__COMPARATOR.compare(
+            self._z, pt.z) == 0)
 
     def __ne__(self, pt: "Point3D"):
         return not self == pt
