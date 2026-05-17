@@ -11,13 +11,13 @@ class PrimesTestingTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # 1001 = 7 * 11 * 13 ; 3481 = 59 ^ 2 ; 41041 = 7 * 11 * 13 * 41 ; 73627 = 17 * 61 * 71
-        self.params_not_primes = [0, 1, 77, 1001, 3481, 41041, 73627]
-        self.params_primes = [2, 107, 1013, 2131, 6199]
+        self.params_for__test_prime__when_not_prime = [0, 1, 77, 1001, 3481, 41041, 73627]
+        self.params_for__test_prime__when_prime = [2, 107, 1013, 2131, 6199]
 
     # region test_test_prime_fermat
 
     def test__test_prime_fermat__when_not_prime__then_false(self):
-        for number in self.params_not_primes:
+        for number in self.params_for__test_prime__when_not_prime:
             with self.subTest(param=number):
                 # when
                 result = test_prime_fermat(number)
@@ -26,7 +26,7 @@ class PrimesTestingTest(unittest.TestCase):
                 assert_that(result).is_false()
 
     def test__test_prime_fermat__when_prime__then_true(self):
-        for number in self.params_primes:
+        for number in self.params_for__test_prime__when_prime:
             with self.subTest(param=number):
                 # when
                 result = test_prime_fermat(number)
@@ -38,7 +38,7 @@ class PrimesTestingTest(unittest.TestCase):
     # region test_test_prime_miller
 
     def test__test_prime_miller__when_not_prime__then_false(self):
-        for number in self.params_not_primes:
+        for number in self.params_for__test_prime__when_not_prime:
             with self.subTest(param=number):
                 # when
                 result = test_prime_miller(number)
@@ -47,7 +47,7 @@ class PrimesTestingTest(unittest.TestCase):
                 assert_that(result).is_false()
 
     def test__test_prime_miller__when_prime__then_true(self):
-        for number in self.params_primes:
+        for number in self.params_for__test_prime__when_prime:
             with self.subTest(param=number):
                 # when
                 result = test_prime_miller(number)

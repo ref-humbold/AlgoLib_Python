@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Algorithms for convex hull in 2D."""
-from typing import Any, List, Sequence
+from typing import Any, Iterable, List, Sequence
 
 from .geometry_2d import sorted_by_angle, sorted_by_x, translate
 from .point_2d import Point2D
@@ -17,7 +17,7 @@ def find_andrew_convex_hull(points: Sequence[Point2D]) -> List[Point2D]:
 
     sorted_points = sorted_by_x(points)
     lower_hull = _collect_hull(sorted_points)
-    upper_hull = _collect_hull(list(reversed(sorted_points)))
+    upper_hull = _collect_hull(reversed(sorted_points))
 
     return lower_hull[:-1] + upper_hull[:-1]
 
@@ -38,7 +38,7 @@ def find_graham_convex_hull(points: Sequence[Point2D]) -> List[Point2D]:
     return [translate(pt, -moving) for pt in hull]
 
 
-def _collect_hull(points: list[Point2D]) -> list[Any]:
+def _collect_hull(points: Iterable[Point2D]) -> list[Any]:
     hull = []
 
     for pt in points:

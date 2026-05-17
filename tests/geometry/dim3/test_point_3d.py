@@ -11,7 +11,7 @@ class Point3DTest(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.params_radius = [
+        self.params_for__radius = [
             (Point3D(0.0, 0.0, 0.0), 0.0), (Point3D(14.0, 0.0, 0.0), 14.0),
             (Point3D(-14.0, 0.0, 0.0), 14.0), (Point3D(0.0, 14.0, 0.0), 14.0),
             (Point3D(0.0, -14.0, 0.0), 14.0), (Point3D(0.0, 0.0, 14.0), 14.0),
@@ -37,7 +37,7 @@ class Point3DTest(unittest.TestCase):
         assert_that(result).is_equal_to((150.123456789, -3700.987654321, 0.55555555))
 
     def test__radius__then_distance_from_zero_point(self):
-        for point, expected in self.params_radius:
+        for point, expected in self.params_for__radius:
             with self.subTest(param=point):
                 # when
                 result = point.radius

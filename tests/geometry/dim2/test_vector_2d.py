@@ -11,7 +11,7 @@ class Vector2DTest(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.params_length = [
+        self.params_for__length = [
             (Vector2D(0.0, 0.0), 0.0), (Vector2D(14.0, 0.0), 14.0), (Vector2D(-14.0, 0.0), 14.0),
             (Vector2D(0.0, 14.0), 14.0), (Vector2D(0.0, -14.0), 14.0), (Vector2D(8.0, 6.0), 10.0),
             (Vector2D(8.0, -6.0), 10.0), (Vector2D(-8.0, 6.0), 10.0), (Vector2D(-8.0, -6.0), 10.0)
@@ -26,7 +26,7 @@ class Vector2DTest(unittest.TestCase):
         assert_that(result).is_equal_to((5.0, -19.0))
 
     def test__length__then_length_of_vector(self):
-        for vector, expected in self.params_length:
+        for vector, expected in self.params_for__length:
             with self.subTest(param=vector):
                 # when
                 result = vector.length
